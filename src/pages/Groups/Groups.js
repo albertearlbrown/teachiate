@@ -39,35 +39,35 @@ const Groups = () => {
                             <div className="group_des text-center">
                                 <img src="assets/img/g1.png" alt=""/>
                                 <h4>Test group<span>created 2 weeks</span></h4>
-                                <div className="catagory"><a href="#">Public Group</a></div>
+                                <div className="catagory"><a href="/">Public Group</a></div>
                             </div>
                         </div>
                         <div className="col-md-3 col-sm-6 col-xs-12">
                             <div className="group_des text-center">
                                 <img src="assets/img/g2.png" alt=""/>
                                 <h4>Homeschool Martial Arts<span>created 2 weeks</span></h4>
-                                <div className="catagory"><a href="#">Public Group</a></div>
+                                <div className="catagory"><a href="/">Public Group</a></div>
                             </div>
                         </div>
                         <div className="col-md-3 col-sm-6 col-xs-12">
                             <div className="group_des text-center">
                                 <img src="assets/img/g3.png" alt=""/>
                                 <h4>Homeschooling gifted children<span>created 4 days ago</span></h4>
-                                <div className="catagory"><a href="#">Public Group</a></div>
+                                <div className="catagory"><a href="/">Public Group</a></div>
                             </div>
                         </div>
                         <div className="col-md-3 col-sm-6 col-xs-12">
                             <div className="group_des text-center">
                                 <img src="assets/img/g4.png" alt=""/>
                                 <h4>Middle school students<span>created 4 days ago</span></h4>
-                                <div className="catagory"><a href="#">Public Group</a></div>
+                                <div className="catagory"><a href="/">Public Group</a></div>
                             </div>
                         </div>
                         <div className="col-md-3 col-sm-6 col-xs-12">
                             <div className="group_des text-center">
                                 <img src="assets/img/g5.png" alt=""/>
                                 <h4>Homeschooling gifted children<span>created 2 weeks</span></h4>
-                                <div className="catagory"><a href="#">Public Group</a></div>
+                                <div className="catagory"><a href="/">Public Group</a></div>
 
                             </div>
                         </div>
@@ -75,14 +75,14 @@ const Groups = () => {
                             <div className="group_des text-center">
                                 <img src="assets/img/g6.png" alt=""/>
                                 <h4>Homeschool Martial Arts<span>created 2 weeks</span></h4>
-                                <div className="catagory"><a href="#">Public Group</a></div>
+                                <div className="catagory"><a href="/">Public Group</a></div>
                             </div>
                         </div>
                         <div className="col-md-3 col-sm-6 col-xs-12">
                             <div className="group_des text-center">
                                 <img src="assets/img/g3.png" alt=""/>
                                 <h4>Homeschooling gifted children<span>created 4 days ago</span></h4>
-                                <div className="catagory"><a href="#">Public Group</a></div>
+                                <div className="catagory"><a href="/">Public Group</a></div>
 
                             </div>
                         </div>
@@ -90,71 +90,71 @@ const Groups = () => {
                             <div className="group_des text-center">
                                 <img src="assets/img/g7.png" alt=""/>
                                 <h4>Albert Brown<span>6 hours ago</span></h4>
-                                <div className="catagory"><a href="#">Public Group</a></div>
+                                <div className="catagory"><a href="/">Public Group</a></div>
                             </div>
                         </div>
                         <div className="col-md-3 col-sm-6 col-xs-12">
                             <div className="group_des text-center">
                                 <img src="assets/img/g1.png" alt=""/>
                                 <h4>Test group<span>created 2 weeks</span></h4>
-                                <div className="catagory"><a href="#">Public Group</a></div>
+                                <div className="catagory"><a href="/">Public Group</a></div>
                             </div>
                         </div>
                         <div className="col-md-3 col-sm-6 col-xs-12">
                             <div className="group_des text-center">
                                 <img src="assets/img/g2.png" alt=""/>
                                 <h4>Alexa Jennings<span>6 hours ago</span></h4>
-                                <div className="catagory"><a href="#">Public Group</a></div>
+                                <div className="catagory"><a href="/">Public Group</a></div>
                             </div>
                         </div>
                         <div className="col-md-3 col-sm-6 col-xs-12">
                             <div className="group_des text-center">
                                 <img src="assets/img/g3.png" alt=""/>
                                 <h4>Homeschooling gifted children<span>created 4 days ago</span></h4>
-                                <div className="catagory"><a href="#">Public Group</a></div>
+                                <div className="catagory"><a href="/">Public Group</a></div>
                             </div>
                         </div>
                         <div className="col-md-3 col-sm-6 col-xs-12">
                             <div className="group_des text-center">
                                 <img src="assets/img/g4.png" alt=""/>
                                 <h4>Middle school students<span>created 4 days ago</span></h4>
-                                <div className="catagory"><a href="#">Public Group</a></div>
+                                <div className="catagory"><a href="/">Public Group</a></div>
                             </div>
                         </div>
                         <div className="col-md-3 col-sm-6 col-xs-12">
                             <div className="group_des text-center">
                                 <img src="assets/img/g3.png" alt=""/>
                                 <h4>Homeschooling gifted children<span>created 4 days ago</span></h4>
-                                <div className="catagory"><a href="#">Public Group</a></div>
+                                <div className="catagory"><a href="/">Public Group</a></div>
                             </div>
                         </div>
                         <div className="col-md-3 col-sm-6 col-xs-12">
                             <div className="group_des text-center">
                                 <img src="assets/img/g7.png" alt=""/>
                                 <h4>Isabel Forben<span>6 hours ago</span></h4>
-                                <div className="catagory"><a href="#">Public Group</a></div>
+                                <div className="catagory"><a href="/">Public Group</a></div>
                             </div>
                         </div>
                         <div className="col-md-3 col-sm-6 col-xs-12">
                             <div className="group_des text-center">
                                 <img src="assets/img/g1.png" alt=""/>
                                 <h4>Test group<span>created 2 weeks</span></h4>
-                                <div className="catagory"><a href="#">Public Group</a></div>
+                                <div className="catagory"><a href="/">Public Group</a></div>
                             </div>
                         </div>
                         <div className="col-md-3 col-sm-6 col-xs-12">
                             <div className="group_des text-center">
                                 <img src="assets/img/g2.png" alt=""/>
                                 <h4>Chuck Henley<span>6 hours ago</span></h4>
-                                <div className="catagory"><a href="#">Public Group</a></div>
+                                <div className="catagory"><a href="/">Public Group</a></div>
                             </div>
                         </div>
                     </div>
                     <ul className="pagination clearfix">
-                        <li><a href="#">1</a></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">4</a></li>
+                        <li><a href="/">1</a></li>
+                        <li><a href="/">2</a></li>
+                        <li><a href="/">3</a></li>
+                        <li><a href="/">4</a></li>
                     </ul>
                 </div>
             </section>            

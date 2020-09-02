@@ -18,7 +18,7 @@ const HomeBanner = () => {
                                 <h3>Join Today</h3>
                                 <p>Join One of the fastest growing social paltforms for teachers, parents and general educators to connect, engage and share with each other.</p>
                                 <Link to='/register' className="btn btn-primary">Register</Link>
-                                <a href="#" className="btn btn-info">Log In</a>
+                                <a href="/" className="btn btn-info">Log In</a>
                             </div>
                         </div>
                     </div>

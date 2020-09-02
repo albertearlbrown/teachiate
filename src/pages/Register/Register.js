@@ -30,13 +30,13 @@ const Register = () => {
                                 </div>
                             </div>
                             <ul class="made_accnt">
-                                <li><a href="#">Create New Account?</a></li>
-                                <li><a href="#">Forget Password?</a></li>
+                                <li><a href="/">Create New Account?</a></li>
+                                <li><a href="/">Forget Password?</a></li>
                             </ul>
                             <div class="other_login">
                                 <ul>
-                                    <li class="btn-with-facebook"><a href="#"><img src="assets/img/facebook_login.png" alt=""/>Continue With Facebook</a></li>
-                                    <li class="btn-with-google"><a href="#"><img src="assets/img/google_login.png" alt=""/>Continue With Google</a></li>
+                                    <li class="btn-with-facebook"><a href="/"><img src="assets/img/facebook_login.png" alt=""/>Continue With Facebook</a></li>
+                                    <li class="btn-with-google"><a href="/"><img src="assets/img/google_login.png" alt=""/>Continue With Google</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -76,7 +76,7 @@ const Register = () => {
                                 <div class="col-md-12">
                                     <div class="register_field_col">
                                         <p>Type of User</p>
-                                        <form action="#" class="choose_field">
+                                        <form action="/" class="choose_field">
                                         <p>
                                             <input type="radio" id="test1" name="radio-group" checked/>
                                             <label for="test1">Parent</label>
@@ -102,7 +102,7 @@ const Register = () => {
                                 <form>
                                     <div class="form-group">
                                     <input type="checkbox" id="html"/>
-                                    <label for="html">I accept the <a href="#">Terms And Conditions</a></label>
+                                    <label for="html">I accept the <a href="/">Terms And Conditions</a></label>
                                     </div>
                                 </form>
                                 </div>
@@ -135,13 +135,13 @@ const Register = () => {
                                 </div>
                             </div>
                             <ul class="made_accnt">
-                                <li><a href="#">Create New Account?</a></li>
-                                <li><a href="#">Forget Password?</a></li>
+                                <li><a href="/">Create New Account?</a></li>
+                                <li><a href="/">Forget Password?</a></li>
                             </ul>
                             <div class="other_login">
                                 <ul>
-                                    <li class="btn-with-facebook"><a href="#"><img src="assets/img/facebook_login.png" alt=""/>Continue With Facebook</a></li>
-                                    <li class="btn-with-google"><a href="#"><img src="assets/img/google_login.png" alt=""/>Continue With Google</a></li>
+                                    <li class="btn-with-facebook"><a href="/"><img src="assets/img/facebook_login.png" alt=""/>Continue With Facebook</a></li>
+                                    <li class="btn-with-google"><a href="/"><img src="assets/img/google_login.png" alt=""/>Continue With Google</a></li>
                                 </ul>
                             </div>
                         </div>

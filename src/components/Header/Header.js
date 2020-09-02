@@ -11,7 +11,7 @@ const Header = () => {
                     <div className="container clearfix">
                         <Logo/>
                         <div className="my_account">
-                            <a href="#" className="open-button"><img src="/assets/img/user-account.png"/>My Account</a>
+                            <a href="/" className="open-button"><img src="/assets/img/user-account.png" alt="My Account Icon"/>My Account</a>
                         </div>
                         <div className="form-popup" id="myForm">
                             <form className="form-container">
@@ -25,11 +25,11 @@ const Header = () => {
 
                                 <button type="submit" className="sign_in_btn">Sign In</button>
                                 <ul className="newnd_forget">
-                                    <li><a href="#">Create New Account?</a></li>
-                                    <li><a href="#">Forget Password?</a></li>
+                                    <li><a href="/">Create New Account?</a></li>
+                                    <li><a href="/">Forget Password?</a></li>
                                 </ul>
-                                <a href="#" className="btn-with-facebook"><img src="assets/img/facebook.png" alt=""/>Continue With Facebook</a>
-                                <a href="#" className="btn-with-google"><img src="assets/img/google.png" alt=""/>Continue With Google</a>
+                                <a href="/" className="btn-with-facebook"><img src="assets/img/facebook.png" alt=""/>Continue With Facebook</a>
+                                <a href="/" className="btn-with-google"><img src="assets/img/google.png" alt=""/>Continue With Google</a>
                                 <button type="button" className="btn cancel">Close</button>
                             </form>
                         </div>

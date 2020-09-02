@@ -29,7 +29,7 @@ const About = () => {
 
                     <ul className="about_us_about">
                         <li>
-                            <a href="#">
+                            <a href="/">
                                 <img src="/assets/img/mission.png" alt=""/>
                                 <div className="about_about_title">
                                     <h3>Mission</h3>
@@ -38,7 +38,7 @@ const About = () => {
                             </a>
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="/">
                                 <img src="/assets/img/vission.png" alt=""/>
                                 <div className="about_about_title">
                                     <h3>Vision</h3>
@@ -50,7 +50,7 @@ const About = () => {
 
                     <ul className="about_us_about1">
                         <li>
-                            <a href="#">
+                            <a href="/">
                                 <img src="assets/img/appriciation.png" alt=""/>
                                 <div className="about_about_title">
                                     <h3>Appreciation</h3>
@@ -60,7 +60,7 @@ const About = () => {
                         </li>
 
                         <li>
-                            <a href="#">
+                            <a href="/">
                                 <img src="assets/img/connectivity.png" alt=""/>
                                 <div className="about_about_title">
                                     <h3>Connectivity</h3>
@@ -70,7 +70,7 @@ const About = () => {
                         </li>
 
                         <li>
-                            <a href="#">
+                            <a href="/">
                                 <img src="/assets/img/help.png" alt=""/>
                                 <div className="about_about_title">
                                     <h3>Help</h3>
