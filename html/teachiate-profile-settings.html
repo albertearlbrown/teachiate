@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="assets/img/fav.png" type="image/x-icon" />
+    <title>Teachiate </title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+    <link href="assets/css/main.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;800;900&display=swap" rel="stylesheet">
+    <!--font-family: 'Poppins', sans-serif; -->
+
+</head>
+
+<body id="top">
+    <header class="page-header page-header-inner" id="page-header">
+        <div class="bottom-header">
+            <div class="container clearfix">
+                <div class="logo"><a href="index.html"><img src="assets/img/logo.png" alt=""></a></div>
+                <div class="my_account">
+                    <a href="#" class="open-button" onclick="openForm()">
+                        <img src="assets/img/profile-image.png"> Sarah Jones <i class="icon-chevron-right"></i>
+                    </a>
+                </div>
+                <div class="form-popup" id="myForm">
+                    <form action="/action_page.php" class="form-container">
+                        <h2>Sign in</h2>
+
+                        <label for="email">Name/Email</label>
+                        <input type="text" name="email" required>
+
+                        <label for="psw">Password</label>
+                        <input type="password" name="psw" required>
+
+                        <button type="submit" class="sign_in_btn">Sign In</button>
+                        <ul class="newnd_forget">
+                            <li><a href="#">Create New Account?</a></li>
+                            <li><a href="#">Forget Password?</a></li>
+                        </ul>
+                        <a href="#" class="btn-with-facebook"><img src="assets/img/facebook.png" alt="">Continue With Facebook</a>
+                        <a href="#" class="btn-with-google"><img src="assets/img/google.png" alt="">Continue With Google</a>
+                        <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+                    </form>
+                </div>
+                <div class="search-icon hidden-md-down"><i class="icon-search"></i></div>
+
+                <div class="page-header_main-menu">
+                    <nav class="nav-primary">
+                        <ul class="menu-main-navigation menu clearfix">
+                            <li class="menu-item-has-children"><a href="index.html">Home</a></li>
+                            <li class="menu-item-has-children"><a href="about.html">About Us</a></li>
+                            <li class="menu-item-has-children"><a href="groups.html">Groups</a>
+
+                            </li>
+                            <li class="menu-item-has-children"><a href="forums.html">Forums</a></li>
+                            <li class="menu-item-has-children"><a href="people.html"> People</a></li>
+                            <li class="menu-item-has-children"><a href="blog.html"> Blogs</a></li>
+
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+        <!-- nav-fixed -->
+        <div class="nav-fixed hidden-lg clearfix">
+            <ul class="clearfix">
+
+                <li>
+                    <div class="search-icon">
+                        <span class="icon-search"></span> Search
+                    </div>
+                </li>
+                <li>
+                    <div class="toggle-menu">
+                        <span class="icon-menu"></span> menu
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <!-- nav-fixed -->
+        <!-- search-div -->
+        <div class="search-div">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8 col-md-push-2">
+                        <div class="search-content">
+                            <input type="text" placeholder="Search">
+                            <input type="submit" value="Search">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- search-div -->
+    </header>
+
+
+
+    <div id="main">
+        
+        <section class="profile-banner-section">
+            <div class="container-fluid">
+                <!-- profile-banner -->
+                <div class="profile-banner">
+                    <div class="avatar-upload">
+                        <div class="avatar-edit">
+                            <input type='file' id="imageUpload2" accept=".png, .jpg, .jpeg" />
+                            <label for="imageUpload2"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Change Cover Image</label>
+                        </div>
+                        <div class="avatar-preview">
+                            <div id="imagePreview2" style="background-image: url(assets/img/profile_banner.jpg );">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- profile-banner -->
+                <!-- avatar-upload -->
+                <div class="avatar-upload-section clearfix">
+                    <div class="avatar-upload">
+                        <div class="avatar-edit">
+                            <input type='file' id="imageUpload" accept=".png, .jpg, .jpeg" />
+                            <label for="imageUpload"></label>
+                        </div>
+                        <div class="avatar-preview">
+                            <div id="imagePreview" style="background-image: url(assets/img/avatar.jpg );">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="avatar-info">
+                        <div class="avatar-name">
+                            <h3><a href="#">Sarah Jones  </a> </h3>
+                            <h4>@Sarahjones</h4>
+                            <div class="clear"></div>
+                        </div>
+                        <div class="avatar-status">
+                            <h3>Teacher</h3>
+                            <h4><span class="active"></span> Active </h4>
+                            <div class="clear"></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- avatar-upload -->
+            </div>
+        </section>
+
+
+        <!-- inner people page end end-->
+        <section class="profile-details clearfix">
+            <div class="container-fluid">
+                <!-- profile-left -->
+                <div class="profile-left">
+                    <div class="profile-wrapper">
+                        <div class="profile-nav">
+                            <ul class="clearfix">
+                                <li><a href="#">
+                                    <div class="profile-nav-icon">
+                                        <img src="assets/img/file.png" alt="">
+                                       
+                                    </div>
+                                    <p>Activity</p>
+                                    </a>
+                                </li>
+                                <li><a href="#">
+                                    <div class="profile-nav-icon">
+                                        <img src="assets/img/icon2.png" alt="">
+                                    </div>
+                                    <p>Profile</p>
+                                    </a>
+                                </li>
+                                <li><a href="#">
+                                    <div class="profile-nav-icon">
+                                        <img src="assets/img/icon3.png" alt="">
+                                    </div>
+                                    <p>Notifications</p>
+                                    </a>
+                                </li>
+                                <li><a href="#">
+                                    <div class="profile-nav-icon">
+                                        <img src="assets/img/icon4.png" alt="">
+                                    </div>
+                                    <p>Messages</p>
+                                    </a>
+                                </li>
+                                <li><a href="#">
+                                    <div class="profile-nav-icon">
+                                        <img src="assets/img/icon5.png" alt="">
+                                        <div class="profile-nav-notyfication">5</div>
+                                    </div>
+                                    <p> Friends</p>
+                                    </a>
+                                </li>
+                                <li><a href="#">
+                                    <div class="profile-nav-icon">
+                                        <img src="assets/img/icon6.png" alt="">
+                                    </div>
+                                    <p> Groups</p>
+                                    </a>
+                                </li>
+                                <li><a href="#">
+                                    <div class="profile-nav-icon">
+                                        <img src="assets/img/icon7.png" alt="">
+                                    </div>
+                                    <p>Forums</p>
+                                    </a>
+                                </li>
+                                <li><a href="#">
+                                    <div class="profile-nav-icon">
+                                        <img src="assets/img/icon8.png" alt="">
+                                    </div>
+                                    <p>Media</p>
+                                    </a>
+                                </li>
+                                <li class="active"><a href="#">
+                                    <div class="profile-nav-icon">
+                                        <img src="assets/img/icon9.png" alt="">
+                                    </div>
+                                    <p>Settings</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- profile-forum-details -->
+                        <div class="profile-forum-details">
+                            <div class="profile-forum-search forums_inner_page">
+                                <div class="search_flex">
+                                    <input type="search" placeholder="Search" class="form-control">
+                                    <button class="search_btn" type="submit"><img src="assets/img/search-icon.png" alt=""></button>
+                                </div>
+                            </div>
+                            <section class="tabbed-content2">
+                                <div class="tabs2">
+                                  <ul>
+                                    <li><a href="#General" class="active">General</a></li>
+                                    <li><a href="#Email">Email </a></li>
+                                    <li><a href="#Social">Social Accounts </a></li>
+                                    <li><a href="#Profile">Profile Visibility  </a></li>
+                                    <li><a href="#Export">Export Data </a></li>
+                                    <li><a href="#Delete">Delete Account</a></li>
+                                  </ul>
+                                </div>
+                                <div id="General" class="item2 active" data-title="General">
+                                  <div class="item-content2">
+                                        <div class="settings_details">
+                                            <!-- settings_form_col -->
+                                            <div class="settings_form_col">
+                                                <label>Current Password (required to update email or change current password)</label>
+                                                <div class="input_col">
+                                                    <input type="password" class="input" placeholder="**************">
+                                                    <i class="input_icon"><i class="fa fa-pencil" aria-hidden="true"></i></i>
+                                                </div>
+                                                <a href="#">Lost your password?</a>
+                                            </div>
+                                            <!-- settings_form_col -->
+                                            <!-- settings_form_col -->
+                                            <div class="settings_form_col">
+                                                <label>Account Email</label>
+                                                <div class="input_col">
+                                                    <input type="text" class="input" placeholder="sarah.jones@gmail.com">
+                                                    <i class="input_icon"><i class="fa fa-pencil" aria-hidden="true"></i></i>
+                                                </div>
+                                            </div>
+                                            <!-- settings_form_col -->
+                                            <!-- acordian -->
+                                            <div class="accordion2">
+                                                <h3>Change Password?</h3>
+                                                <div class="aaa">
+                                                    <!-- settings_form_col -->
+                                                    <div class="settings_form_col">
+                                                        <label>Current Password</label>
+                                                        <div class="input_col">
+                                                            <input type="password" class="input" placeholder="**************">
+                                                            <i class="input_icon"><i class="fa fa-pencil" aria-hidden="true"></i></i>
+                                                        </div>
+                                                    </div>
+                                                    <!-- settings_form_col -->
+                                                    <!-- settings_form_col -->
+                                                    <div class="settings_form_col">
+                                                        <label>Create new Password (leave blank for no change)</label>
+                                                        <div class="input_col">
+                                                            <input type="password" class="input" placeholder="**************">
+                                                            <i class="input_icon"><i class="fa fa-pencil" aria-hidden="true"></i></i>
+                                                        </div>
+                                                    </div>
+                                                    <!-- settings_form_col -->
+                                                    <!-- settings_form_col -->
+                                                    <div class="settings_form_col">
+                                                        <label>Repeat New Password</label>
+                                                        <div class="input_col">
+                                                            <input type="password" class="input" placeholder="**************">
+                                                            <i class="input_icon"><i class="fa fa-pencil" aria-hidden="true"></i></i>
+                                                        </div>
+                                                    </div>
+                                                    <!-- settings_form_col -->
+                                                    <!-- settings_form_col -->
+                                                    <div class="settings_form_col">
+                                                        <input type="submit" value="Save Changes" class="btn btn-primary">
+                                                    </div>
+                                                    <!-- settings_form_col -->
+                                                </div>
+
+                                            </div>
+                                            <!-- acordian -->
+                                        </div>
+                                  </div>
+                                </div>
+                                <div id="Email" class="item2" data-title="Email">
+                                    <div class="item-content2">
+                                        <div class="settings_details">
+                                            <!-- email_column -->
+                                            <div class="email_column">
+                                                <div class="email_column_sub clearfix">
+                                                    <h4>Mail Notification  <span> (Send an email notice when)</span></h4>
+                                                    <div class="email_status">
+                                                        <label class="switch" for="checkbox">
+                                                            <input class="checkbox" type="checkbox" name="checkbox" checked>
+                                                            <span class="slider round"></span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                             <!-- email_column -->
+                                             <!-- email_column -->
+                                            <div class="email_column">
+                                                <h3>Activity</h3>
+                                                <div class="email_column_sub clearfix">
+                                                    <p>A member mentions you in an update using "@gregorylee"</p>
+                                                    <div class="email_status">
+                                                        <label class="switch" for="checkbox">
+                                                            <input class="checkbox" type="checkbox" name="checkbox" checked>
+                                                            <span class="slider round"></span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="email_column_sub clearfix">
+                                                    <p>A member replies to an update or comment you've posted</p>
+                                                    <div class="email_status">
+                                                        <label class="switch" for="checkbox">
+                                                            <input class="checkbox" type="checkbox" name="checkbox">
+                                                            <span class="slider round"></span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                             <!-- email_column -->
+                                             <!-- email_column -->
+                                            <div class="email_column">
+                                                <h3>Messages</h3>
+                                                <div class="email_column_sub clearfix">
+                                                    <p>A member sends you a new message</p>
+                                                    <div class="email_status">
+                                                        <label class="switch" for="checkbox">
+                                                            <input class="checkbox" type="checkbox" name="checkbox" checked>
+                                                            <span class="slider round"></span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                
+                                            </div>
+                                             <!-- email_column -->
+                                             <!-- email_column -->
+                                            <div class="email_column">
+                                                <h3>Friends</h3>
+                                                <div class="email_column_sub clearfix">
+                                                    <p>A member sends you a friendship request</p>
+                                                    <div class="email_status">
+                                                        <label class="switch" for="checkbox">
+                                                            <input class="checkbox" type="checkbox" name="checkbox" checked>
+                                                            <span class="slider round"></span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="email_column_sub clearfix">
+                                                    <p>A member accepts your friendship request</p>
+                                                    <div class="email_status">
+                                                        <label class="switch" for="checkbox">
+                                                            <input class="checkbox" type="checkbox" name="checkbox" checked>
+                                                            <span class="slider round"></span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                             <!-- email_column -->
+                                              <!-- email_column -->
+                                            <div class="email_column">
+                                                <h3>Groups</h3>
+                                                <div class="email_column_sub clearfix">
+                                                    <p>A member invites you to join a group</p>
+                                                    <div class="email_status">
+                                                        <label class="switch" for="checkbox">
+                                                            <input class="checkbox" type="checkbox" name="checkbox" checked>
+                                                            <span class="slider round"></span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="email_column_sub clearfix">
+                                                    <p>Group information is updated</p>
+                                                    <div class="email_status">
+                                                        <label class="switch" for="checkbox">
+                                                            <input class="checkbox" type="checkbox" name="checkbox" checked>
+                                                            <span class="slider round"></span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="email_column_sub clearfix">
+                                                    <p>You are promoted to a group administrator or moderator</p>
+                                                    <div class="email_status">
+                                                        <label class="switch" for="checkbox">
+                                                            <input class="checkbox" type="checkbox" name="checkbox" checked>
+                                                            <span class="slider round"></span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="email_column_sub clearfix">
+                                                    <p>A member requests to join a private group for which you are an admin</p>
+                                                    <div class="email_status">
+                                                        <label class="switch" for="checkbox">
+                                                            <input class="checkbox" type="checkbox" name="checkbox" checked>
+                                                            <span class="slider round"></span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="email_column_sub clearfix">
+                                                    <p>Your request to join a group has been approved or denied</p>
+                                                    <div class="email_status">
+                                                        <label class="switch" for="checkbox">
+                                                            <input class="checkbox" type="checkbox" name="checkbox" checked>
+                                                            <span class="slider round"></span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                             <!-- email_column -->
+                                             <div class="settings_form_col">
+                                                <input type="submit" value="Save Changes" class="btn btn-primary">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="Social" class="item2" data-title="Social Accounts">
+                                    <div class="item-content2">
+                                        <div class="settings_details">
+                                            <div class="social_media">
+                                                <h3>Social Login</h3>
+                                                <div class="social_login">
+                                                    <ul>
+                                                        <li><a href="#"><img src="assets/img/facebook-icon.png"> Facebook</a> </li>
+                                                        <li><a href="#"><img src="assets/img/google_icon.png"> Google</a> </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                  </div>
+                                  <div id="Profile" class="item2" data-title="Profile Visibility">
+                                      <div class="item-content2">
+                                        <div class="settings_details">
+                                            <!-- email_column -->
+                                            <div class="email_column email_column2">
+                                                <h3>Profile Info</h3>
+                                                <div class="email_column_sub clearfix">
+                                                    <p>Name</p>
+                                                    <div class="email_status">
+                                                        <div class="parent">
+                                                            <div class="custom-select icon-imgs">
+                                                            <select>
+                                                                <option value="leonard" data-img-url="assets/img/every_icon.png"> Everyone</option>
+                                                                <option value="leonard" data-img-url="assets/img/user.png"> Only Me</option>
+                                                                <option value="leonard" data-img-url="assets/img/tezm.png"> All Members</option>
+                                                                <option value="leonard" data-img-url="assets/img/friend.png"> My Friends</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                                <div class="email_column_sub clearfix">
+                                                    <p>Member Type</p>
+                                                    <div class="email_status">
+                                                        <div class="parent">
+                                                            <div class="custom-select icon-imgs">
+                                                            <select>
+                                                                <option value="leonard" data-img-url="assets/img/every_icon.png"> Everyone</option>
+                                                                <option value="leonard" data-img-url="assets/img/user.png"> Only Me</option>
+                                                                <option value="leonard" data-img-url="assets/img/tezm.png"> All Members</option>
+                                                                <option value="leonard" data-img-url="assets/img/friend.png"> My Friends</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                                <div class="email_column_sub clearfix">
+                                                    <p>Location</p>
+                                                    <div class="email_status">
+                                                        <div class="parent">
+                                                            <div class="custom-select icon-imgs">
+                                                            <select>
+                                                                <option value="leonard" data-img-url="assets/img/every_icon.png"> Everyone</option>
+                                                                <option value="leonard" data-img-url="assets/img/user.png"> Only Me</option>
+                                                                <option value="leonard" data-img-url="assets/img/tezm.png"> All Members</option>
+                                                                <option value="leonard" data-img-url="assets/img/friend.png"> My Friends</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                                <div class="email_column_sub clearfix">
+                                                    <p>Gender</p>
+                                                    <div class="email_status">
+                                                        <div class="parent">
+                                                            <div class="custom-select icon-imgs">
+                                                            <select>
+                                                                <option value="leonard" data-img-url="assets/img/every_icon.png"> Everyone</option>
+                                                                <option value="leonard" data-img-url="assets/img/user.png"> Only Me</option>
+                                                                <option value="leonard" data-img-url="assets/img/tezm.png"> All Members</option>
+                                                                <option value="leonard" data-img-url="assets/img/friend.png"> My Friends</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                                <div class="email_column_sub clearfix">
+                                                    <p>Birthdate</p>
+                                                    <div class="email_status">
+                                                        <div class="parent">
+                                                            <div class="custom-select icon-imgs">
+                                                            <select>
+                                                                <option value="leonard" data-img-url="assets/img/every_icon.png"> Everyone</option>
+                                                                <option value="leonard" data-img-url="assets/img/user.png"> Only Me</option>
+                                                                <option value="leonard" data-img-url="assets/img/tezm.png"> All Members</option>
+                                                                <option value="leonard" data-img-url="assets/img/friend.png"> My Friends</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                             <!-- email_column -->
+                                             <!-- email_column -->
+                                            <div class="email_column email_column2">
+                                                <h3>Background Info</h3>
+                                                <div class="email_column_sub clearfix">
+                                                    <p>Job Title</p>
+                                                    <div class="email_status">
+                                                        <div class="parent">
+                                                            <div class="custom-select icon-imgs">
+                                                            <select>
+                                                                <option value="leonard" data-img-url="assets/img/every_icon.png"> Everyone</option>
+                                                                <option value="leonard" data-img-url="assets/img/user.png"> Only Me</option>
+                                                                <option value="leonard" data-img-url="assets/img/tezm.png"> All Members</option>
+                                                                <option value="leonard" data-img-url="assets/img/friend.png"> My Friends</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="email_column_sub clearfix">
+                                                    <p>Organization/School</p>
+                                                    <div class="email_status">
+                                                        <div class="parent">
+                                                            <div class="custom-select icon-imgs">
+                                                            <select>
+                                                                <option value="leonard" data-img-url="assets/img/every_icon.png"> Everyone</option>
+                                                                <option value="leonard" data-img-url="assets/img/user.png"> Only Me</option>
+                                                                <option value="leonard" data-img-url="assets/img/tezm.png"> All Members</option>
+                                                                <option value="leonard" data-img-url="assets/img/friend.png"> My Friends</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                                <div class="email_column_sub clearfix">
+                                                    <p>Website</p>
+                                                    <div class="email_status">
+                                                        <div class="parent">
+                                                            <div class="custom-select icon-imgs">
+                                                            <select>
+                                                                <option value="leonard" data-img-url="assets/img/every_icon.png"> Everyone</option>
+                                                                <option value="leonard" data-img-url="assets/img/user.png"> Only Me</option>
+                                                                <option value="leonard" data-img-url="assets/img/tezm.png"> All Members</option>
+                                                                <option value="leonard" data-img-url="assets/img/friend.png"> My Friends</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                                
+                                            </div>
+                                             <!-- email_column -->
+                                             <!-- email_column -->
+                                            <div class="email_column email_column2">
+                                                <h3>About Me</h3>
+                                                <div class="email_column_sub clearfix">
+                                                    <p>Get to know me...</p>
+                                                    <div class="email_status">
+                                                        <div class="parent">
+                                                            <div class="custom-select icon-imgs">
+                                                            <select>
+                                                                <option value="leonard" data-img-url="assets/img/every_icon.png"> Everyone</option>
+                                                                <option value="leonard" data-img-url="assets/img/user.png"> Only Me</option>
+                                                                <option value="leonard" data-img-url="assets/img/tezm.png"> All Members</option>
+                                                                <option value="leonard" data-img-url="assets/img/friend.png"> My Friends</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                             <!-- email_column -->
+                                             <div class="settings_form_col">
+                                                <input type="submit" value="Save Changes" class="btn btn-primary">
+                                            </div>
+                                        </div>
+                                      </div>
+                                  </div>
+                                  <div id="Export" class="item2" data-title="Export Data">
+                                    <div class="item-content2">
+                                        <div class="settings_details">
+                                            <div class="data_details">
+                                                <h3>Data Export</h3>
+                                                <div class="data_listing">
+                                                    <ul>
+                                                        <li><a href="#"><i class="icon-chevron-right"></i> Nextend Social Login</a></li>
+                                                        <li><a href="#"><i class="icon-chevron-right"></i> Personal information</a></li>
+                                                        <li><a href="#"><i class="icon-chevron-right"></i> Comments</a></li>
+                                                        <li><a href="#"><i class="icon-chevron-right"></i> Media</a></li>
+                                                        <li><a href="#"><i class="icon-chevron-right"></i> rtMedia Shortcode Uploads</a></li>
+                                                        <li><a href="#"><i class="icon-chevron-right"></i> rtMedia Activities</a></li>
+                                                        <li><a href="#"><i class="icon-chevron-right"></i> rtMedia Comments</a></li>
+                                                        <li><a href="#"><i class="icon-chevron-right"></i> rtMedia Media Views</a></li>
+                                                        <li><a href="#"><i class="icon-chevron-right"></i> rtMedia Media Likes</a></li>
+                                                        <li><a href="#"><i class="icon-chevron-right"></i> Paid Memberships Pro Data</a></li>
+                                                        <li><a href="#"><i class="icon-chevron-right"></i> Extended Profile information</a></li>
+                                                        <li><a href="#"><i class="icon-chevron-right"></i> Activity Data</a></li>
+                                                        <li><a href="#"><i class="icon-chevron-right"></i> Friends</a></li>
+                                                        <li><a href="#"><i class="icon-chevron-right"></i> Friend Requests (Sent)</a></li>
+                                                        <li><a href="#"><i class="icon-chevron-right"></i> Friend Requests (Received)</a></li>
+                                                        <li><a href="#"><i class="icon-chevron-right"></i> Group Memberships</a></li>
+                                                        <li><a href="#"><i class="icon-chevron-right"></i> Pending Group Membership Requests</a></li>
+                                                        <li><a href="#"><i class="icon-chevron-right"></i> Pending Group Invitations (Received)</a></li>
+                                                        <li><a href="#"><i class="icon-chevron-right"></i> Pending Group Invitations (Sent)</a></li>
+                                                        <li><a href="#"><i class="icon-chevron-right"></i> Private Messages</a></li>
+                                                        <li><a href="#"><i class="icon-chevron-right"></i> Notifications Data</a></li>
+                                                        <li><a href="#"><i class="icon-chevron-right"></i> Personal settings</a></li>
+                                                    </ul>
+                                                </div>
+                                                <div class="settings_form_col settings_form_col2">
+                                                    <p>If you want to make a request, please click on the button below:</p>
+                                                    <input type="submit" value="Request personal data export" class="btn btn-primary">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                  </div>
+                                  <div id="Delete" class="item2" data-title="Delete Account">
+                                      <div class="item-content2">
+                                            <div class="settings_details">
+                                                <div class="delete_account">
+                                                    <div class="white-logo"><a href="index.html"><img src="assets/img/white-logo.png" alt=""></a></div>
+                                                    <p>Deleting your account will delete all of the content you have created. It will be completely irrecoverable.</p>
+                                                    <div class="bb">
+                                                        <div class="form_group">
+                                                            <input type="checkbox" id="html" class="check">
+                                                            <label for="html">I Accept All<span> Terms & Conditions</span></label>
+                                                        </div>
+                                                        <div class="settings_form_col settings_form_col3">
+                                                            <input type="submit" value="Delete Account" class="btn btn-primary">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                      </div>
+                                  </div>
+                              </section>
+                        </div>
+                        <!-- profile-forum-details -->
+                    </div>
+                </div>
+                <!-- profile-left -->
+                <!---profile-right---->
+                <div class="profile-right ">
+                    <div class="articles_title">
+                        <h2>Blog Articles</h2>
+                    </div>
+                    <div class="articles clearfix">
+                        <ul class="d-flex">
+                            <li>
+                                <div class="art_left_img"><img src="assets/img/article1.jpg" width="92px;" alt=""></div>
+                                <div class="art_des">
+                                    <p>My struggle with homeschooling my youngins</p>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="art_left_img"><img src="assets/img/article2.jpg" alt=""></div>
+                                <div class="art_des">
+                                    <p>COVID19 has led to parents appreciating teachers more</p>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="art_left_img"><img src="assets/img/article3.jpg" alt=""></div>
+                                <div class="art_des">
+                                    <p>Teachers, like myself, getting used to virtual teaching</p>
+                                </div>
+                            </li>
+                        </ul>
+                        <a href="#" class="view_more">View More Articles</a>
+                    </div>
+                    <div class="letest_sec">
+                        <div class="articles_title">
+                            <h2>Latest News</h2>
+                        </div>
+                        <div class="articles clearfix">
+                            <ul class="d-flex">
+                                <li>
+                                    <div class="art_left_img"><img src="assets/img/article1.jpg" alt=""></div>
+                                    <div class="art_des">
+                                        <p>‘Let’s get those kids back in school!’ Parents rally for…
+                                        </p>
+                                        <div class="wtrk d_flex1">
+                                            <h5>WTKR News 3 </h5>
+                                            <h5> -July 07, 2020</h5>
+                                        </div>
+                                    </div>
+                                </li>
+
+                            </ul>
+                            <a href="#" class="view_more">View More Articles</a>
+                        </div>
+                    </div>
+                    <div class="recent_blog_comments">
+                        <div class="comment_title"><span><img src="assets/img/comments.png" alt=""></span>Recent Blog Comments</div>
+                        <div class="d_flex2">
+                            <div class="sad_img"><img src="assets/img/sad.png" alt=""></div>
+                            <div class="des">
+                                <h4>Sorry,There are no comments to display.</h4>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="Recent_topics">
+                        <div class="articles_title">
+                            <h2>Recent Forum Topics</h2>
+                        </div>
+                        <div class="articles clearfix">
+                            <ul class="tag">
+                                <li><a href="#">covid education</a></li>
+                                <li><a href="#">What homeschooling activity do you enjoy?</a></li>
+                                <li><a href="#">Home school meet ups</a></li>
+                                <li><a href="#">Virtual classroom to replace classroom lecturing in future</a></li>
+                                <li><a href="#">Evaluating the effectiveness of distance learning</a></li>
+                            </ul>
+                            <a href="#" class="view_more">View More Articles</a>
+
+                        </div>
+                    </div>
+                    <div class="Recent_topics_form">
+                        <div class="articles_title">
+                            <h2>Recent Forums</h2>
+                        </div>
+                        <div class="articles clearfix">
+                            <ul class="tag">
+                                <li><a href="#">General Community Chat </a></li>
+                                <li><a href="#">Higher Education Chat </a></li>
+                                <li><a href="#">Parental Connection </a></li>
+                                <li><a href="#">Parents and Teachers Lounge </a></li>
+                                <li><a href="#">Teachers Lounge</a></li>
+                            </ul>
+                            <a href="#" class="view_more">View More Articles</a>
+
+                        </div>
+                    </div>
+                  
+                </div>
+                <!---rofile-right---->
+            </div>
+        </section>
+
+    </div>
+    <!----main end ---->
+    <!-- footer -->
+    <footer class="page-footer">
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <div class="ftr_logo"><a href="index.html"><img src="assets/img/ftr-logo.png" alt=""></a></div>
+                    <div class="ftr_des">
+                        <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution.</p>
+                    </div>
+
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                    <div class="footer-column clearfix">
+                        <h3>Quick Links</h3>
+                        <ul class="footer-menu">
+                            <li><a href="index.html">Home</a></li>
+                            <li><a href="about.html">About Us</a></li>
+                            <li><a href="groups.html">Groups</a></li>
+                            <li><a href="forums.html">Forums</a></li>
+                            <li><a href="people.html">People</a></li>
+                            <li><a href="blog.html">Blogs</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                    <div class="footer-column clearfix">
+                        <h3>Language</h3>
+                        <ul class="footer-menu">
+                            <li><a href="#">Spanish</a></li>
+                            <li><a href="#">English</a></li>
+                            <li><a href="#">Hindi</a></li>
+                            <li><a href="#">Arabic</a></li>
+                            <li><a href="#">Bengali</a></li>
+                            <li><a href="#">Portuguese</a></li>
+                            <li><a href="#">Russian </a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                    <div class="footer-column clearfix">
+                        <h3>My Account</h3>
+                        <ul class="footer-menu-last">
+                            <a href="#">Log In</a>
+                            <a href="#">Sign Up</a>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom text-center">
+
+
+            <div class="copyright"><strong>Teachiate</strong> @ All right reserve 2020.</div>
+            <div id="back-to-top" class="back-to-top">
+                <a href="javascript:void(0)">Back to Top <i class="icon-arrow-up"></i> </a>
+            </div>
+
+        </div>
+    </footer>
+
+
+
+    <!-----footer end------->
+    <!----js  start------->
+    <script src="assets/js/vendor/jquery.min.js"></script>
+    <script src="assets/js/plugins.js"></script>
+    <script  src="assets/js/script.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/bootstrap.js"></script>
+    <script>
+        // tabbed content
+        // http://www.entheosweb.com/tutorials/css/tabs.asp
+        $(".tab_content").hide();
+        $(".tab_content:first").show();
+
+        /* if in tab mode */
+        $("ul.tabs li").click(function() {
+
+            $(".tab_content").hide();
+            var activeTab = $(this).attr("rel");
+            $("#" + activeTab).fadeIn();
+
+            $("ul.tabs li").removeClass("active");
+            $(this).addClass("active");
+
+            $(".tab_drawer_heading").removeClass("d_active");
+            $(".tab_drawer_heading[rel^='" + activeTab + "']").addClass("d_active");
+
+        });
+        /* if in drawer mode */
+        $(".tab_drawer_heading").click(function() {
+
+            $(".tab_content").hide();
+            var d_activeTab = $(this).attr("rel");
+            $("#" + d_activeTab).fadeIn();
+
+            $(".tab_drawer_heading").removeClass("d_active");
+            $(this).addClass("d_active");
+
+            $("ul.tabs li").removeClass("active");
+            $("ul.tabs li[rel^='" + d_activeTab + "']").addClass("active");
+        });
+
+
+        /* Extra class "tab_last" 
+           to add border to right side
+           of last tab */
+        $('ul.tabs li').last().addClass("tab_last");
+
+    </script>
+    <!---------js end --------->
+</body>
+
+</html>

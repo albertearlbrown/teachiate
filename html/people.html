@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="assets/img/fav.png" type="image/x-icon" />
+    <title>Teachiate | People</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+    <link href="assets/css/main.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;800;900&display=swap" rel="stylesheet">
+    <!--font-family: 'Poppins', sans-serif; -->
+
+</head>
+
+<body id="top">
+    <header class="page-header" id="page-header">
+        <div class="bottom-header">
+            <div class="container clearfix">
+                <div class="logo"><a href="index.html"><img src="assets/img/logo.png" alt=""></a></div>
+                <div class="my_account">
+                    <a href="#" class="open-button" onclick="openForm()"><img src="assets/img/user-account.png">My Account</a>
+
+
+                </div>
+                <div class="form-popup" id="myForm">
+                    <form action="/action_page.php" class="form-container">
+                        <h2>Sign in</h2>
+
+                        <label for="email">Name/Email</label>
+                        <input type="text" name="email" required>
+
+                        <label for="psw">Password</label>
+                        <input type="password" name="psw" required>
+
+                        <button type="submit" class="sign_in_btn">Sign In</button>
+                        <ul class="newnd_forget">
+                            <li><a href="#">Create New Account?</a></li>
+                            <li><a href="#">Forget Password?</a></li>
+                        </ul>
+                        <a href="#" class="btn-with-facebook"><img src="assets/img/facebook.png" alt="">Continue With Facebook</a>
+                        <a href="#" class="btn-with-google"><img src="assets/img/google.png" alt="">Continue With Google</a>
+                        <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+                    </form>
+                </div>
+                <div class="search-icon hidden-md-down"><i class="icon-search"></i></div>
+
+                <div class="page-header_main-menu">
+                    <nav class="nav-primary">
+                        <ul class="menu-main-navigation menu clearfix">
+                            <li class="menu-item-has-children"><a href="index.html">Home</a></li>
+                            <li class="menu-item-has-children"><a href="about.html">About Us</a></li>
+                            <li class="menu-item-has-children"><a href="groups.html">Groups</a>
+
+                            </li>
+                            <li class="menu-item-has-children"><a href="forums.html">Forums</a></li>
+                            <li class="menu-item-has-children"><a href="people.html"> People</a></li>
+                            <li class="menu-item-has-children"><a href="blog.html"> Blogs</a></li>
+
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+        <!-- nav-fixed -->
+        <div class="nav-fixed hidden-lg clearfix">
+            <ul class="clearfix">
+
+                <li>
+                    <div class="search-icon">
+                        <span class="icon-search"></span> Search
+                    </div>
+                </li>
+                <li>
+                    <div class="toggle-menu">
+                        <span class="icon-menu"></span> menu
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <!-- nav-fixed -->
+        <!-- search-div -->
+        <div class="search-div">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8 col-md-push-2">
+                        <div class="search-content">
+                            <input type="text" placeholder="Search">
+                            <input type="submit" value="Search">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- search-div -->
+    </header>
+
+
+
+    <div id="main">
+        <!-- inner people page start---->
+        <section class="innder_page people">
+            <div class="container">
+                <div class="inner_title">
+                    <h2>Teachiate Members</h2>
+                    <img src="assets/img/title-divaider.png" alt="">
+                </div>
+            </div>
+        </section>
+
+        <!-- inner people page end end-->
+        <section class="inner_content people_content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-9 col-sm-8">
+                        <h3 class="main_sec_title">All Members</h3>
+                    </div>
+                    <div class="col-md-3 col-sm-4">
+                        <div class="short profile_short">
+                            <label>Sort by:</label>
+                            <select>
+                                <option value="all people" selected>Last Active</option>
+                                <option value="all people">Last Active</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="search_flex text-center">
+                            <input type="search" placeholder="Search" class="form-control">
+                            <button class="search_btn" type="button"><img src="assets/img/search-icon.png" alt=""></button>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 col-sm-6 col-xs-12">
+                        <div class="add_frnd text-center">
+                            <img src="assets/img/m1.png" alt="">
+                            <h4>Albert Brown<span>6 hours ago</span></h4>
+                            <div class="catagory">Parent</div>
+                            <a href="#">Add Friend</a>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6 col-xs-12">
+                        <div class="add_frnd text-center">
+                            <img src="assets/img/m2.png" alt="">
+                            <h4>Al Brown<span>6 hours ago</span></h4>
+                            <div class="catagory">Student</div>
+                            <a href="#">Add Friend</a>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6 col-xs-12">
+                        <div class="add_frnd text-center">
+                            <img src="assets/img/m3.png" alt="">
+                            <h4>Greg Lee<span>6 hours ago</span></h4>
+                            <div class="catagory">Parent</div>
+                            <a href="#">Add Friend</a>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6 col-xs-12">
+                        <div class="add_frnd text-center">
+                            <img src="assets/img/m4.png" alt="">
+                            <h4>Nargess Demarco<span>6 hours ago</span></h4>
+                            <div class="catagory">Parent</div>
+                            <a href="#">Add Friend</a>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6 col-xs-12">
+                        <div class="add_frnd text-center">
+                            <img src="assets/img/m5.png" alt="">
+                            <h4>Jon Smith<span>6 hours ago</span></h4>
+                            <div class="catagory">General Educator</div>
+                            <a href="#">Add Friend</a>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6 col-xs-12">
+                        <div class="add_frnd text-center">
+                            <img src="assets/img/m6.png" alt="">
+                            <h4>Kamelia Drew<span>6 hours ago</span></h4>
+                            <div class="catagory">Teacher</div>
+                            <a href="#">Add Friend</a>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6 col-xs-12">
+                        <div class="add_frnd text-center">
+                            <img src="assets/img/m7.png" alt="">
+                            <h4>Kelley Anne Marking<span>6 hours ago</span></h4>
+                            <div class="catagory">General Educator</div>
+                            <a href="#">Add Friend</a>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6 col-xs-12">
+                        <div class="add_frnd text-center">
+                            <img src="assets/img/m8.png" alt="">
+                            <h4>Albert Brown<span>6 hours ago</span></h4>
+                            <div class="catagory">Student</div>
+                            <a href="#">Add Friend</a>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6 col-xs-12">
+                        <div class="add_frnd text-center">
+                            <img src="assets/img/m9.png" alt="">
+                            <h4>James Shermann<span>6 hours ago</span></h4>
+                            <div class="catagory">Student</div>
+                            <a href="#">Add Friend</a>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6 col-xs-12">
+                        <div class="add_frnd text-center">
+                            <img src="assets/img/m10.png" alt="">
+                            <h4>Alexa Jennings<span>6 hours ago</span></h4>
+                            <div class="catagory">Student</div>
+                            <a href="#">Add Friend</a>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6 col-xs-12">
+                        <div class="add_frnd text-center">
+                            <img src="assets/img/m11.png" alt="">
+                            <h4>Joanne Shuven<span>6 hours ago</span></h4>
+                            <div class="catagory">General Educator</div>
+                            <a href="#">Add Friend</a>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6 col-xs-12">
+                        <div class="add_frnd text-center">
+                            <img src="assets/img/m12.png" alt="">
+                            <h4>Andy Yang<span>6 hours ago</span></h4>
+                            <div class="catagory">Parent</div>
+                            <a href="#">Add Friend</a>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6 col-xs-12">
+                        <div class="add_frnd text-center">
+                            <img src="assets/img/m13.png" alt="">
+                            <h4>Katie Knapp<span>6 hours ago</span></h4>
+                            <div class="catagory">Student</div>
+                            <a href="#">Add Friend</a>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6 col-xs-12">
+                        <div class="add_frnd text-center">
+                            <img src="assets/img/m14.png" alt="">
+                            <h4>Isabel Forben<span>6 hours ago</span></h4>
+                            <div class="catagory">Parent</div>
+                            <a href="#">Add Friend</a>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6 col-xs-12">
+                        <div class="add_frnd text-center">
+                            <img src="assets/img/m15.png" alt="">
+                            <h4>Antoine Jackson<span>6 hours ago</span></h4>
+                            <div class="catagory">Student</div>
+                            <a href="#">Add Friend</a>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6 col-xs-12">
+                        <div class="add_frnd text-center">
+                            <img src="assets/img/m16.png" alt="">
+                            <h4>Chuck Henley<span>6 hours ago</span></h4>
+                            <div class="catagory">Student</div>
+                            <a href="#">Add Friend</a>
+                        </div>
+                    </div>
+                </div>
+                <ul class="pagination clearfix">
+                    <li><a href="#">1</a></li>
+                    <li><a href="#">2</a></li>
+                    <li><a href="#">3</a></li>
+                    <li><a href="#">4</a></li>
+                </ul>
+            </div>
+        </section>
+
+
+
+
+
+
+    </div>
+    <!----main end ---->
+    <!-- footer -->
+    <footer class="page-footer">
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <div class="ftr_logo"><a href="index.html"><img src="assets/img/ftr-logo.png" alt=""></a></div>
+                    <div class="ftr_des">
+                        <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution.</p>
+                    </div>
+
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                    <div class="footer-column clearfix">
+                        <h3>Quick Links</h3>
+                        <ul class="footer-menu">
+                            <li><a href="#">Home</a></li>
+                            <li><a href="#">About Us</a></li>
+                            <li><a href="#">Groups</a></li>
+                            <li><a href="#">Forums</a></li>
+                            <li><a href="#">People</a></li>
+                            <li><a href="#">Blogs</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                    <div class="footer-column clearfix">
+                        <h3>Language</h3>
+                        <ul class="footer-menu">
+                            <li><a href="#">Spanish</a></li>
+                            <li><a href="#">English</a></li>
+                            <li><a href="#">Hindi</a></li>
+                            <li><a href="#">Arabic</a></li>
+                            <li><a href="#">Bengali</a></li>
+                            <li><a href="#">Portuguese</a></li>
+                            <li><a href="#">Russian </a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                    <div class="footer-column clearfix">
+                        <h3>My Account</h3>
+                        <ul class="footer-menu-last">
+                            <a href="#">Log In</a>
+                            <a href="#">Sign Up</a>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom text-center">
+
+
+            <div class="copyright"><strong>Teachiate</strong> @ All right reserve 2020.</div>
+            <div id="back-to-top" class="back-to-top">
+                <a href="javascript:void(0)">Back to Top <i class="icon-arrow-up"></i> </a>
+            </div>
+
+        </div>
+    </footer>
+
+
+
+    <!-----footer end------->
+    <!----js  start------->
+    <script src="assets/js/vendor/jquery.min.js"></script>
+    <script src="assets/js/plugins.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/bootstrap.js"></script>
+
+    <!---------js end --------->
+</body>
+
+</html>

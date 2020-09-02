@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="assets/img/fav.png" type="image/x-icon" />
+    <title>Teachiate </title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+    <link href="assets/css/main.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;800;900&display=swap" rel="stylesheet">
+    <!--font-family: 'Poppins', sans-serif; -->
+
+</head>
+
+<body id="top">
+    <header class="page-header page-header-inner" id="page-header">
+        <div class="bottom-header">
+            <div class="container clearfix">
+                <div class="logo"><a href="index.html"><img src="assets/img/logo.png" alt=""></a></div>
+                <div class="my_account">
+                    <a href="#" class="open-button" onclick="openForm()">
+                        <img src="assets/img/profile-image.png"> Sarah Jones <i class="icon-chevron-right"></i>
+                    </a>
+                </div>
+                <div class="form-popup" id="myForm">
+                    <form action="/action_page.php" class="form-container">
+                        <h2>Sign in</h2>
+
+                        <label for="email">Name/Email</label>
+                        <input type="text" name="email" required>
+
+                        <label for="psw">Password</label>
+                        <input type="password" name="psw" required>
+
+                        <button type="submit" class="sign_in_btn">Sign In</button>
+                        <ul class="newnd_forget">
+                            <li><a href="#">Create New Account?</a></li>
+                            <li><a href="#">Forget Password?</a></li>
+                        </ul>
+                        <a href="#" class="btn-with-facebook"><img src="assets/img/facebook.png" alt="">Continue With Facebook</a>
+                        <a href="#" class="btn-with-google"><img src="assets/img/google.png" alt="">Continue With Google</a>
+                        <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+                    </form>
+                </div>
+                <div class="search-icon hidden-md-down"><i class="icon-search"></i></div>
+
+                <div class="page-header_main-menu">
+                    <nav class="nav-primary">
+                        <ul class="menu-main-navigation menu clearfix">
+                            <li class="menu-item-has-children"><a href="index.html">Home</a></li>
+                            <li class="menu-item-has-children"><a href="about.html">About Us</a></li>
+                            <li class="menu-item-has-children"><a href="groups.html">Groups</a>
+
+                            </li>
+                            <li class="menu-item-has-children"><a href="forums.html">Forums</a></li>
+                            <li class="menu-item-has-children"><a href="people.html"> People</a></li>
+                            <li class="menu-item-has-children"><a href="blog.html"> Blogs</a></li>
+
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+        <!-- nav-fixed -->
+        <div class="nav-fixed hidden-lg clearfix">
+            <ul class="clearfix">
+
+                <li>
+                    <div class="search-icon">
+                        <span class="icon-search"></span> Search
+                    </div>
+                </li>
+                <li>
+                    <div class="toggle-menu">
+                        <span class="icon-menu"></span> menu
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <!-- nav-fixed -->
+        <!-- search-div -->
+        <div class="search-div">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8 col-md-push-2">
+                        <div class="search-content">
+                            <input type="text" placeholder="Search">
+                            <input type="submit" value="Search">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- search-div -->
+    </header>
+
+
+
+    <div id="main">
+        
+        <section class="profile-banner-section">
+            <div class="container-fluid">
+                <!-- profile-banner -->
+                <div class="profile-banner">
+                    <div class="avatar-upload">
+                        <div class="avatar-edit">
+                            <input type='file' id="imageUpload2" accept=".png, .jpg, .jpeg" />
+                            <label for="imageUpload2"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Change Cover Image</label>
+                        </div>
+                        <div class="avatar-preview">
+                            <div id="imagePreview2" style="background-image: url(assets/img/profile_banner.jpg );">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- profile-banner -->
+                <!-- avatar-upload -->
+                <div class="avatar-upload-section clearfix">
+                    <div class="avatar-upload">
+                        <div class="avatar-edit">
+                            <input type='file' id="imageUpload" accept=".png, .jpg, .jpeg" />
+                            <label for="imageUpload"></label>
+                        </div>
+                        <div class="avatar-preview">
+                            <div id="imagePreview" style="background-image: url(assets/img/avatar.jpg );">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="avatar-info">
+                        <div class="avatar-name">
+                            <h3><a href="#">Sarah Jones  </a> </h3>
+                            <h4>@Sarahjones</h4>
+                            <div class="clear"></div>
+                        </div>
+                        <div class="avatar-status">
+                            <h3>Teacher</h3>
+                            <h4><span class="active"></span> Active </h4>
+                            <div class="clear"></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- avatar-upload -->
+            </div>
+        </section>
+
+
+        <!-- inner people page end end-->
+        <section class="profile-details clearfix">
+            <div class="container-fluid">
+                <!-- profile-left -->
+                <div class="profile-left">
+                    <div class="profile-wrapper">
+                        <div class="profile-nav">
+                            <ul class="clearfix">
+                                <li><a href="#">
+                                    <div class="profile-nav-icon">
+                                        <img src="assets/img/file.png" alt="">
+                                       
+                                    </div>
+                                    <p>Activity</p>
+                                    </a>
+                                </li>
+                                <li><a href="#">
+                                    <div class="profile-nav-icon">
+                                        <img src="assets/img/icon2.png" alt="">
+                                    </div>
+                                    <p>Profile</p>
+                                    </a>
+                                </li>
+                                <li><a href="#">
+                                    <div class="profile-nav-icon">
+                                        <img src="assets/img/icon3.png" alt="">
+                                    </div>
+                                    <p>Notifications</p>
+                                    </a>
+                                </li>
+                                <li><a href="#">
+                                    <div class="profile-nav-icon">
+                                        <img src="assets/img/icon4.png" alt="">
+                                    </div>
+                                    <p>Messages</p>
+                                    </a>
+                                </li>
+                                <li><a href="#">
+                                    <div class="profile-nav-icon">
+                                        <img src="assets/img/icon5.png" alt="">
+                                        <div class="profile-nav-notyfication">5</div>
+                                    </div>
+                                    <p> Friends</p>
+                                    </a>
+                                </li>
+                                <li><a href="#">
+                                    <div class="profile-nav-icon">
+                                        <img src="assets/img/icon6.png" alt="">
+                                    </div>
+                                    <p> Groups</p>
+                                    </a>
+                                </li>
+                                <li class="active"><a href="#">
+                                    <div class="profile-nav-icon">
+                                        <img src="assets/img/icon7.png" alt="">
+                                    </div>
+                                    <p>Forums</p>
+                                    </a>
+                                </li>
+                                <li><a href="#">
+                                    <div class="profile-nav-icon">
+                                        <img src="assets/img/icon8.png" alt="">
+                                    </div>
+                                    <p>Media</p>
+                                    </a>
+                                </li>
+                                <li><a href="#">
+                                    <div class="profile-nav-icon">
+                                        <img src="assets/img/icon9.png" alt="">
+                                    </div>
+                                    <p>Settings</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- profile-forum-details -->
+                        <div class="profile-forum-details">
+                            <section class="tabbed-content2">
+                                <div class="tabs2">
+                                  <ul>
+                                    <li><a href="#General" class="active">Topics Started  </a></li>
+                                    <li><a href="#Email">Replies Created  </a></li>
+                                    <li><a href="#Social"> Engagements </a></li>
+                                    <li><a href="#Profile"> Favourites  </a></li>
+                                    <li><a href="#Export"> Subscriptions </a></li>
+                                  </ul>
+                                </div>
+                                <div id="General" class="item2 active" data-title="Topics Started">
+                                  <div class="item-content2">
+                                        <div class="profile-forum-column">
+                                            <div class="profile-forum-search forums_inner_page">
+                                                <div class="search_flex">
+                                                    <input type="search" placeholder="Search" class="form-control">
+                                                    <button class="search_btn" type="submit"><img src="assets/img/search-icon.png" alt=""></button>
+                                                </div>
+                                            </div>
+                                            <!-- profile-forum-listing -->
+                                            <div class="profile-forum-listing clearfix">
+                                                <div class="profile-forum-image">
+                                                    <div class="forum-image-image"><img src="assets/img/pro-image.png" alt=""></div>
+                                                    <div class="forum-chat-icon"><i class="flaticon-chat"></i></div>
+                                                </div>
+                                                <div class="profile-forum-info">
+                                                    <h4>Social and Racial Injustice Forum</h4>
+                                                    <h3>  <span> Katie Knapp</span> replied in your topics:  <a href="#"> Show Your Students that Black Lives Matter at School</a></h3>
+                                                </div>
+                                                <div class="profile-forum-date-info">1 Month Ago</div>
+                                            </div>
+                                            <!-- profile-forum-listing -->
+                                            <!-- profile-forum-listing -->
+                                            <div class="profile-forum-listing clearfix">
+                                                <div class="profile-forum-image">
+                                                    <div class="forum-image-image"><img src="assets/img/pro-image2.png" alt=""></div>
+                                                    <div class="forum-chat-icon"><i class="flaticon-chat"></i></div>
+                                                </div>
+                                                <div class="profile-forum-info">
+                                                    <h4>Teacher Appreciation</h4>
+                                                    <h3>  <span> Lauren Zhum </span> replied in your topics::  <a href="#"> Why should we appreciate teachers?</a></h3>
+                                                </div>
+                                                <div class="profile-forum-date-info">6 Month Ago</div>
+                                            </div>
+                                            <!-- profile-forum-listing -->
+                                            <!-- profile-forum-listing -->
+                                            <div class="profile-forum-listing clearfix">
+                                                <div class="profile-forum-image">
+                                                    <div class="forum-image-image"><img src="assets/img/pro-image3.png" alt=""></div>
+                                                    <div class="forum-chat-icon"><i class="flaticon-chat"></i></div>
+                                                </div>
+                                                <div class="profile-forum-info">
+                                                    <h4>Options for College and Beyond</h4>
+                                                    <h3>  <span> Anthony Hay</span> replied in your topics:  <a href="#"> Tips for New College Students</a></h3>
+                                                </div>
+                                                <div class="profile-forum-date-info">9 Month Ago</div>
+                                            </div>
+                                            <!-- profile-forum-listing -->
+                                            <div class="pager">Viewing 1 - 3 of 3</div>
+                                        </div>
+                                  </div>
+                                </div>
+                                <div id="Email" class="item2" data-title="Replies Created">
+                                    <div class="item-content2">
+                                        <div class="profile-forum-column">
+                                            <div class="profile-forum-search forums_inner_page">
+                                                <div class="search_flex">
+                                                    <input type="search" placeholder="Search" class="form-control">
+                                                    <button class="search_btn" type="submit"><img src="assets/img/search-icon.png" alt=""></button>
+                        
+                                                </div>
+                                            </div>
+                                            <!-- profile-forum-listing -->
+                                            <div class="profile-forum-listing clearfix">
+                                                <div class="profile-forum-image">
+                                                    <div class="forum-image-image"><img src="assets/img/pro-image.png" alt=""></div>
+                                                    <div class="forum-chat-icon"><i class="flaticon-chat"></i></div>
+                                                </div>
+                                                <div class="profile-forum-info">
+                                                    <h4>Ways to Motivate Your Child</h4>
+                                                    <h3> in  <span>Katie Knapp’s</span> topics, you replied:  <a href="#">  this sounds good to me.</a></h3>
+                                                </div>
+                                                <div class="profile-forum-date-info">1 Month Ago</div>
+                                            </div>
+                                            <!-- profile-forum-listing -->
+                                            
+                                            <div class="pager">Viewing 1 - 1 of 1</div>
+                                        </div>
+                                  </div>
+                                </div>
+                                <div id="Social" class="item2" data-title="Engagements">
+                                    <div class="item-content2">
+                                        <div class="profile-forum-column">
+                                            <div class="profile-forum-search forums_inner_page">
+                                                <div class="search_flex">
+                                                    <input type="search" placeholder="Search" class="form-control">
+                                                    <button class="search_btn" type="submit"><img src="assets/img/search-icon.png" alt=""></button>
+                        
+                                                </div>
+                                            </div>
+                                            <!-- profile-forum-listing -->
+                                            <div class="profile-forum-listing clearfix">
+                                                <div class="profile-forum-image">
+                                                    <div class="forum-image-image"><img src="assets/img/pro-image.png" alt=""></div>
+                                                    <div class="forum-chat-icon"><i class="flaticon-chat"></i></div>
+                                                </div>
+                                                <div class="profile-forum-info">
+                                                    <h4>Social and Racial Injustice Forum</h4>
+                                                    <h3>  <span> Katie Knapp</span> replied in your topics:  <a href="#"> Show Your Students that Black Lives Matter at School</a></h3>
+                                                </div>
+                                                <div class="profile-forum-date-info">1 Month Ago</div>
+                                            </div>
+                                            <!-- profile-forum-listing -->
+                                            <!-- profile-forum-listing -->
+                                            <div class="profile-forum-listing clearfix">
+                                                <div class="profile-forum-image">
+                                                    <div class="forum-image-image"><img src="assets/img/pro-image2.png" alt=""></div>
+                                                    <div class="forum-chat-icon"><i class="flaticon-chat"></i></div>
+                                                </div>
+                                                <div class="profile-forum-info">
+                                                    <h4>Teacher Appreciation</h4>
+                                                    <h3>  <span> Lauren Zhum </span> replied in your topics::  <a href="#"> Why should we appreciate teachers?</a></h3>
+                                                </div>
+                                                <div class="profile-forum-date-info">6 Month Ago</div>
+                                            </div>
+                                            <!-- profile-forum-listing -->
+                                            <!-- profile-forum-listing -->
+                                            <div class="profile-forum-listing clearfix">
+                                                <div class="profile-forum-image">
+                                                    <div class="forum-image-image"><img src="assets/img/pro-image3.png" alt=""></div>
+                                                    <div class="forum-chat-icon"><i class="flaticon-chat"></i></div>
+                                                </div>
+                                                <div class="profile-forum-info">
+                                                    <h4>Options for College and Beyond</h4>
+                                                    <h3>  <span> Anthony Hay</span> replied in your topics:  <a href="#"> Tips for New College Students</a></h3>
+                                                </div>
+                                                <div class="profile-forum-date-info">9 Month Ago</div>
+                                            </div>
+                                            <!-- profile-forum-listing -->
+                                            <div class="pager">Viewing 1 - 3 of 3</div>
+                                        </div>
+                                  </div>
+                                </div>
+                                <div id="Profile" class="item2" data-title="Favourites">
+                                    <div class="item-content2">
+                                        <div class="profile-forum-column">
+                                            <div class="profile-forum-search forums_inner_page">
+                                                <div class="search_flex">
+                                                    <input type="search" placeholder="Search" class="form-control">
+                                                    <button class="search_btn" type="submit"><img src="assets/img/search-icon.png" alt=""></button>
+                        
+                                                </div>
+                                            </div>
+                                            <!-- profile-forum-listing -->
+                                            <div class="profile-forum-listing clearfix">
+                                                <div class="Favourites-star"><i class="fa fa-star" aria-hidden="true"></i></div>
+                                                <div class="profile-forum-image">
+                                                    <div class="forum-image-image"><img src="assets/img/pro-image3.png" alt=""></div>
+                                                    <div class="forum-chat-icon"><i class="flaticon-chat"></i></div>
+                                                </div>
+                                                <div class="profile-forum-info">
+                                                    <h4>Students</h4>
+                                                    <h3><span>you </span> last commented on your topics:   <a href="#">   testing add new by user</a></h3>
+                                                </div>
+                                                <div class="profile-forum-date-info">1 Month Ago</div>
+                                            </div>
+                                            <!-- profile-forum-listing -->
+                                            
+                                            <div class="pager">Viewing 1 - 1 of 1</div>
+                                        </div>
+                                  </div>
+                                  </div>
+                                  <div id="Export" class="item2" data-title="Subscriptions">
+                                    <div class="item-content2">
+                                        <div class="profile-forum-column">
+                                            <div class="profile-forum-search forums_inner_page">
+                                                <div class="search_flex">
+                                                    <input type="search" placeholder="Search" class="form-control">
+                                                    <button class="search_btn" type="submit"><img src="assets/img/search-icon.png" alt=""></button>
+                        
+                                                </div>
+                                            </div>
+                                            <!-- profile-forum-listing -->
+                                            <div class="profile-forum-listing clearfix">
+                                                <div class="Favourites-star"><i class="fa fa-star" aria-hidden="true"></i></div>
+                                                <div class="profile-forum-image">
+                                                    <div class="forum-image-image"><img src="assets/img/pro-image3.png" alt=""></div>
+                                                    <div class="forum-chat-icon"><i class="flaticon-chat"></i></div>
+                                                </div>
+                                                <div class="profile-forum-info">
+                                                    <h4>Students</h4>
+                                                    <h3><span>you </span> last commented on your topics:   <a href="#">   testing add new by user</a></h3>
+                                                </div>
+                                                <div class="profile-forum-date-info">1 Month Ago</div>
+                                            </div>
+                                            <!-- profile-forum-listing -->
+                                            
+                                            <div class="pager">Viewing 1 - 1 of 1</div>
+                                        </div>
+                                  </div>
+                                  </div>
+                              </section>
+                        </div>
+                        <!-- profile-forum-details -->
+                    </div>
+                </div>
+                <!-- profile-left -->
+                <!---profile-right---->
+                <div class="profile-right ">
+                    <div class="articles_title">
+                        <h2>Blog Articles</h2>
+                    </div>
+                    <div class="articles clearfix">
+                        <ul class="d-flex">
+                            <li>
+                                <div class="art_left_img"><img src="assets/img/article1.jpg" width="92px;" alt=""></div>
+                                <div class="art_des">
+                                    <p>My struggle with homeschooling my youngins</p>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="art_left_img"><img src="assets/img/article2.jpg" alt=""></div>
+                                <div class="art_des">
+                                    <p>COVID19 has led to parents appreciating teachers more</p>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="art_left_img"><img src="assets/img/article3.jpg" alt=""></div>
+                                <div class="art_des">
+                                    <p>Teachers, like myself, getting used to virtual teaching</p>
+                                </div>
+                            </li>
+                        </ul>
+                        <a href="#" class="view_more">View More Articles</a>
+                    </div>
+                    <div class="letest_sec">
+                        <div class="articles_title">
+                            <h2>Latest News</h2>
+                        </div>
+                        <div class="articles clearfix">
+                            <ul class="d-flex">
+                                <li>
+                                    <div class="art_left_img"><img src="assets/img/article1.jpg" alt=""></div>
+                                    <div class="art_des">
+                                        <p>‘Let’s get those kids back in school!’ Parents rally for…
+                                        </p>
+                                        <div class="wtrk d_flex1">
+                                            <h5>WTKR News 3 </h5>
+                                            <h5> -July 07, 2020</h5>
+                                        </div>
+                                    </div>
+                                </li>
+
+                            </ul>
+                            <a href="#" class="view_more">View More Articles</a>
+                        </div>
+                    </div>
+                    <div class="recent_blog_comments">
+                        <div class="comment_title"><span><img src="assets/img/comments.png" alt=""></span>Recent Blog Comments</div>
+                        <div class="d_flex2">
+                            <div class="sad_img"><img src="assets/img/sad.png" alt=""></div>
+                            <div class="des">
+                                <h4>Sorry,There are no comments to display.</h4>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="Recent_topics">
+                        <div class="articles_title">
+                            <h2>Recent Forum Topics</h2>
+                        </div>
+                        <div class="articles clearfix">
+                            <ul class="tag">
+                                <li><a href="#">covid education</a></li>
+                                <li><a href="#">What homeschooling activity do you enjoy?</a></li>
+                                <li><a href="#">Home school meet ups</a></li>
+                                <li><a href="#">Virtual classroom to replace classroom lecturing in future</a></li>
+                                <li><a href="#">Evaluating the effectiveness of distance learning</a></li>
+                            </ul>
+                            <a href="#" class="view_more">View More Articles</a>
+
+                        </div>
+                    </div>
+                    <div class="Recent_topics_form">
+                        <div class="articles_title">
+                            <h2>Recent Forums</h2>
+                        </div>
+                        <div class="articles clearfix">
+                            <ul class="tag">
+                                <li><a href="#">General Community Chat </a></li>
+                                <li><a href="#">Higher Education Chat </a></li>
+                                <li><a href="#">Parental Connection </a></li>
+                                <li><a href="#">Parents and Teachers Lounge </a></li>
+                                <li><a href="#">Teachers Lounge</a></li>
+                            </ul>
+                            <a href="#" class="view_more">View More Articles</a>
+
+                        </div>
+                    </div>
+                   
+                </div>
+                <!---rofile-right---->
+            </div>
+        </section>
+
+    </div>
+    <!----main end ---->
+    <!-- footer -->
+    <footer class="page-footer">
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <div class="ftr_logo"><a href="index.html"><img src="assets/img/ftr-logo.png" alt=""></a></div>
+                    <div class="ftr_des">
+                        <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution.</p>
+                    </div>
+
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                    <div class="footer-column clearfix">
+                        <h3>Quick Links</h3>
+                        <ul class="footer-menu">
+                            <li><a href="index.html">Home</a></li>
+                            <li><a href="about.html">About Us</a></li>
+                            <li><a href="groups.html">Groups</a></li>
+                            <li><a href="forums.html">Forums</a></li>
+                            <li><a href="people.html">People</a></li>
+                            <li><a href="blog.html">Blogs</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                    <div class="footer-column clearfix">
+                        <h3>Language</h3>
+                        <ul class="footer-menu">
+                            <li><a href="#">Spanish</a></li>
+                            <li><a href="#">English</a></li>
+                            <li><a href="#">Hindi</a></li>
+                            <li><a href="#">Arabic</a></li>
+                            <li><a href="#">Bengali</a></li>
+                            <li><a href="#">Portuguese</a></li>
+                            <li><a href="#">Russian </a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                    <div class="footer-column clearfix">
+                        <h3>My Account</h3>
+                        <ul class="footer-menu-last">
+                            <a href="#">Log In</a>
+                            <a href="#">Sign Up</a>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom text-center">
+
+
+            <div class="copyright"><strong>Teachiate</strong> @ All right reserve 2020.</div>
+            <div id="back-to-top" class="back-to-top">
+                <a href="javascript:void(0)">Back to Top <i class="icon-arrow-up"></i> </a>
+            </div>
+
+        </div>
+    </footer>
+
+
+
+    <!-----footer end------->
+    <!----js  start------->
+    <script src="assets/js/vendor/jquery.min.js"></script>
+    <script src="assets/js/plugins.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/bootstrap.js"></script>
+    <script>
+        // tabbed content
+        // http://www.entheosweb.com/tutorials/css/tabs.asp
+        $(".tab_content").hide();
+        $(".tab_content:first").show();
+
+        /* if in tab mode */
+        $("ul.tabs li").click(function() {
+
+            $(".tab_content").hide();
+            var activeTab = $(this).attr("rel");
+            $("#" + activeTab).fadeIn();
+
+            $("ul.tabs li").removeClass("active");
+            $(this).addClass("active");
+
+            $(".tab_drawer_heading").removeClass("d_active");
+            $(".tab_drawer_heading[rel^='" + activeTab + "']").addClass("d_active");
+
+        });
+        /* if in drawer mode */
+        $(".tab_drawer_heading").click(function() {
+
+            $(".tab_content").hide();
+            var d_activeTab = $(this).attr("rel");
+            $("#" + d_activeTab).fadeIn();
+
+            $(".tab_drawer_heading").removeClass("d_active");
+            $(this).addClass("d_active");
+
+            $("ul.tabs li").removeClass("active");
+            $("ul.tabs li[rel^='" + d_activeTab + "']").addClass("active");
+        });
+
+
+        /* Extra class "tab_last" 
+           to add border to right side
+           of last tab */
+        $('ul.tabs li').last().addClass("tab_last");
+
+    </script>
+    <!---------js end --------->
+</body>
+
+</html>

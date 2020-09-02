@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="assets/img/fav.png" type="image/x-icon" />
+    <title>Teachiate </title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link href="assets/css/main.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;800;900&display=swap" rel="stylesheet">
+    <!--font-family: 'Poppins', sans-serif; -->
+
+</head>
+
+<body id="top">
+    <header class="page-header page-header-inner" id="page-header">
+        <div class="bottom-header">
+            <div class="container clearfix">
+                <div class="logo"><a href="index.html"><img src="assets/img/logo.png" alt=""></a></div>
+                <div class="my_account">
+                    <a href="#" class="open-button" onclick="openForm()">
+                        <img src="assets/img/profile-image.png"> Sarah Jones <i class="icon-chevron-right"></i>
+                    </a>
+                </div>
+                <div class="form-popup" id="myForm">
+                    <form action="/action_page.php" class="form-container">
+                        <h2>Sign in</h2>
+
+                        <label for="email">Name/Email</label>
+                        <input type="text" name="email" required>
+
+                        <label for="psw">Password</label>
+                        <input type="password" name="psw" required>
+
+                        <button type="submit" class="sign_in_btn">Sign In</button>
+                        <ul class="newnd_forget">
+                            <li><a href="#">Create New Account?</a></li>
+                            <li><a href="#">Forget Password?</a></li>
+                        </ul>
+                        <a href="#" class="btn-with-facebook"><img src="assets/img/facebook.png" alt="">Continue With Facebook</a>
+                        <a href="#" class="btn-with-google"><img src="assets/img/google.png" alt="">Continue With Google</a>
+                        <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+                    </form>
+                </div>
+                <div class="search-icon hidden-md-down"><i class="icon-search"></i></div>
+
+                <div class="page-header_main-menu">
+                    <nav class="nav-primary">
+                        <ul class="menu-main-navigation menu clearfix">
+                            <li class="menu-item-has-children"><a href="index.html">Home</a></li>
+                            <li class="menu-item-has-children"><a href="about.html">About Us</a></li>
+                            <li class="menu-item-has-children"><a href="groups.html">Groups</a>
+
+                            </li>
+                            <li class="menu-item-has-children"><a href="forums.html">Forums</a></li>
+                            <li class="menu-item-has-children"><a href="people.html"> People</a></li>
+                            <li class="menu-item-has-children"><a href="blog.html"> Blogs</a></li>
+
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+        <!-- nav-fixed -->
+        <div class="nav-fixed hidden-lg clearfix">
+            <ul class="clearfix">
+
+                <li>
+                    <div class="search-icon">
+                        <span class="icon-search"></span> Search
+                    </div>
+                </li>
+                <li>
+                    <div class="toggle-menu">
+                        <span class="icon-menu"></span> menu
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <!-- nav-fixed -->
+        <!-- search-div -->
+        <div class="search-div">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8 col-md-push-2">
+                        <div class="search-content">
+                            <input type="text" placeholder="Search">
+                            <input type="submit" value="Search">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- search-div -->
+    </header>
+
+
+
+    <div id="main">
+        
+        <section class="profile-banner-section">
+            <div class="container-fluid">
+                <!-- profile-banner -->
+                <div class="profile-banner">
+                    <div class="avatar-upload">
+                        <div class="avatar-edit">
+                            <input type='file' id="imageUpload2" accept=".png, .jpg, .jpeg" />
+                            <label for="imageUpload2"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Change Cover Image</label>
+                        </div>
+                        <div class="avatar-preview">
+                            <div id="imagePreview2" style="background-image: url(assets/img/profile_banner.jpg );">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- profile-banner -->
+                <!-- avatar-upload -->
+                <div class="avatar-upload-section clearfix">
+                    <div class="avatar-upload">
+                        <div class="avatar-edit">
+                            <input type='file' id="imageUpload" accept=".png, .jpg, .jpeg" />
+                            <label for="imageUpload"></label>
+                        </div>
+                        <div class="avatar-preview">
+                            <div id="imagePreview" style="background-image: url(assets/img/avatar.jpg );">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="avatar-info">
+                        <div class="avatar-name">
+                            <h3><a href="#">Sarah Jones  </a> </h3>
+                            <h4>@Sarahjones</h4>
+                            <div class="clear"></div>
+                        </div>
+                        <div class="avatar-status">
+                            <h3>Teacher</h3>
+                            <h4><span class="active"></span> Active </h4>
+                            <div class="clear"></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- avatar-upload -->
+            </div>
+        </section>
+
+
+        <!-- inner people page end end-->
+        <section class="profile-details clearfix">
+            <div class="container-fluid">
+                <!-- profile-left -->
+                <div class="profile-left">
+                    <div class="profile-wrapper">
+                        <div class="profile-nav">
+                            <ul class="clearfix">
+                                <li class="active"><a href="#">
+                                    <div class="profile-nav-icon">
+                                        <img src="assets/img/file.png" alt="">
+                                       
+                                    </div>
+                                    <p>Activity</p>
+                                    </a>
+                                </li>
+                                <li><a href="#">
+                                    <div class="profile-nav-icon">
+                                        <img src="assets/img/icon2.png" alt="">
+                                    </div>
+                                    <p>Profile</p>
+                                    </a>
+                                </li>
+                                <li><a href="#">
+                                    <div class="profile-nav-icon">
+                                        <img src="assets/img/icon3.png" alt="">
+                                    </div>
+                                    <p>Notifications</p>
+                                    </a>
+                                </li>
+                                <li><a href="#">
+                                    <div class="profile-nav-icon">
+                                        <img src="assets/img/icon4.png" alt="">
+                                    </div>
+                                    <p>Messages</p>
+                                    </a>
+                                </li>
+                                <li><a href="#">
+                                    <div class="profile-nav-icon">
+                                        <img src="assets/img/icon5.png" alt="">
+                                        <div class="profile-nav-notyfication">5</div>
+                                    </div>
+                                    <p> Friends</p>
+                                    </a>
+                                </li>
+                                <li><a href="#">
+                                    <div class="profile-nav-icon">
+                                        <img src="assets/img/icon6.png" alt="">
+                                    </div>
+                                    <p> Groups</p>
+                                    </a>
+                                </li>
+                                <li><a href="#">
+                                    <div class="profile-nav-icon">
+                                        <img src="assets/img/icon7.png" alt="">
+                                    </div>
+                                    <p>Forums</p>
+                                    </a>
+                                </li>
+                                <li><a href="#">
+                                    <div class="profile-nav-icon">
+                                        <img src="assets/img/icon8.png" alt="">
+                                    </div>
+                                    <p>Media</p>
+                                    </a>
+                                </li>
+                                <li><a href="#">
+                                    <div class="profile-nav-icon">
+                                        <img src="assets/img/icon9.png" alt="">
+                                    </div>
+                                    <p>Settings</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- profile-forum-details -->
+                        <div class="profile-forum-details favorites_deatils_section">
+                            <div class="profile-forum-search forums_inner_page">
+              
+                                <div class="short profile_short">
+                                    <label>Show:</label>
+                                    <select>
+                                        <option value="all people" selected>Everything</option>
+                                        <option value="all people">Everything</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <section class="tabbed-content2">
+                                <div class="tabs2">
+                                  <ul>
+                                    <li><a href="#Personal" class="active">Personal </a></li>
+                                    <li><a href="#Mentions">Mentions</a></li>
+                                    <li><a href="#Favorites">Favorites</a></li>
+                                    <li><a href="#Friends">Friends</a></li>
+                                    <li><a href="#Groups">Groups</a></li>
+                                  </ul>
+                                </div>
+                                <div id="Personal" class="item2 active" data-title="Personal">
+                                  <div class="item-content2">
+                                        <div class="favorites-details clearfix">
+                                            <div class="post_share">
+                                                <h2>Share your thoughts</h2>
+                                                <div class="post_share_area">
+                                                    <div class="posted_avtar"><img src="assets/img/g4.png" alt=""></div>
+                                                    <div class="post_share_field">
+                                                        <textarea placeholder="Sarah What’s are your mind?"></textarea>
+                                                        <div class="adv_post_opt clearfix">
+                                                            <div class="share_type">
+                                                                <ul>
+                                                                    <li>
+                                                                        <div class="share_type_col">
+                                                                            <input type='file' id="imageUpload3" accept=".png, .jpg, .jpeg" />
+                                                                            <label for="imageUpload3"><span><img src="assets/img/upload_photo_icon.png" alt=""></span>Photos</label>
+                                                                        </div>
+                                                                    </li>
+                                                                    <li>
+                                                                        <div class="share_type_col">
+                                                                            <input type='file' id="imageUpload4" accept=".mp3" />
+                                                                            <label for="imageUpload5"><span><img src="assets/img/upload_music_icon.png" alt=""></span>Music</label>
+                                                                        </div>
+                                                                    </li>
+                                                                    <li>
+                                                                        <div class="share_type_col">
+                                                                            <input type='file' id="imageUpload5" accept=".mp4, .flv" />
+                                                                            <label for="imageUpload5"><span><img src="assets/img/upload_video_icon.png" alt=""></span>Video</label>
+                                                                        </div>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                        <div class="share_option_right">
+                                                            <h4>Post In:</h4>
+                                                            <div class="custom-select">
+                                                              <select>
+                                                                <option value="1">My Profile</option>
+                                                                <option value="2">My Profile</option>
+                                                                <option value="3">My Profile</option>
+                                                                <option value="4">My Profile</option>
+                                                              </select>
+                                                            </div>
+                                                            <input type="submit" value="Post" name="">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="blog_sec1">
+                                                <div class="star"><img src="assets/img/star2.png" alt=""></div>
+                                                <div class="blog_title">
+                                                    <div class="title_img"><img src="assets/img/katei-knapp.png" alt=""></div>
+                                                    <div class="user_des">
+                                                        <h4>Katie Knapp <span>(Teacher)</span></h4>
+                                                        <p>posted an update in the group <span>Teachers library <img src="assets/img/user_icon.png" alt=""></span> </p>
+                                                    </div>
+                                                    <div class="time">11 hours ago</div>
+                                                </div>
+                                                <div class="blog_img_holder1"><img src="assets/img/blog-img1.jpg" alt=""></div>
+                                                <div class="blog_des">
+                                                    <p>“The mediocre teacher tells. The good teacher explains. The superior teacher demonstrates. The great teacher inspires.”
+                        
+                                                        <span>- William Arthur Ward</span></p>
+                                                </div>
+                                                <div class="blog_feedback clearfox">
+                                                    <a href="#">
+                                                        <div class="flower"><img src="assets/img/flower.svg" alt=""><span>25</span></div>
+                                                    </a>
+                                                    <a href="#">
+                                                        <div class="love"><img src="assets/img/love.svg" alt=""><span>12</span></div>
+                                                    </a>
+                                                </div>
+                                                <div class="comm_se">
+                                                    <ul>
+                                                        <li><a href="#"> <span>like <i class="fa fa-thumbs-o-up" aria-hidden="true"></i></span></a></li>
+                                                        <li> <a href="#"> <span>Comment <i class="fa fa-comment-o" aria-hidden="true"></i></span></a></li>
+                                                        <li><a href="#"> <span>Share <i class="fa fa-share" aria-hidden="true"></i></span></a></li>
+                                                        <li><a href="#"> <span>Delete <i class="fa fa-trash" aria-hidden="true"></i></span></a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="blog_sec2">
+                                                <div class="star"><img src="assets/img/star2.png" alt=""></div>
+                                                <div class="blog_title">
+                                                    <div class="title_img"><img src="assets/img/katie-kanapp.jpg" alt=""></div>
+                                                    <div class="user_des">
+                                                        <h4>Katie Knapp <span>(Parent)</span></h4>
+                                                        <p>posted an update </p>
+                                                    </div>
+                                                    <div class="time"> 2 Days ago</div>
+                                                </div>
+                                                <div class="blog_img_holder1"><img src="assets/img/blog-img4.jpg" alt=""></div>
+                                                <div class="blog_des">
+                                                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since.</p>
+                                                </div>
+                                                <div class="blog_feedback clearfox">
+                                                    <a href="#">
+                                                        <div class="flower"><img src="assets/img/flower.svg" alt=""><span>25</span></div>
+                                                    </a>
+                                                    <a href="#">
+                                                        <div class="love"><img src="assets/img/love.svg" alt=""><span>12</span></div>
+                                                    </a>
+                                                </div>
+                                                <div class="comm_se">
+                                                    <ul>
+                                                        <li><a href="#"> <span>like <i class="fa fa-thumbs-o-up" aria-hidden="true"></i></span></a></li>
+                                                        <li> <a href="#"> <span>Comment <i class="fa fa-comment-o" aria-hidden="true"></i></span></a></li>
+                                                        <li><a href="#"> <span>Share <i class="fa fa-share" aria-hidden="true"></i></span></a></li>
+                                                        <li><a href="#"> <span>Delete <i class="fa fa-trash" aria-hidden="true"></i></span></a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="blog_sec3">
+                                                <div class="star"><img src="assets/img/star2.png" alt=""></div>
+                                                <div class="blog_title">
+                                                    <div class="title_img"><img src="assets/img/katei-kanapp-student.jpg" alt=""></div>
+                                                    <div class="user_des">
+                                                        <h4>Katie Knapp <span>(Student)</span></h4>
+                                                        <p>posted an update </p>
+                                                    </div>
+                                                    <div class="time"> 2 Days ago</div>
+                                                </div>
+                                                <div class="blog-sec4">
+                        
+                                                    <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. </p>
+                                                </div>
+                                                <div class="blog_feedback clearfox">
+                                                    <a href="#">
+                                                        <div class="flower"><img src="assets/img/flower.svg" alt=""><span>25</span></div>
+                                                    </a>
+                                                    <a href="#">
+                                                        <div class="love"><img src="assets/img/love.svg" alt=""><span>12</span></div>
+                                                    </a>
+                                                </div>
+                                                <div class="comm_se">
+                                                    <ul>
+                                                        <li><a href="#"> <span>like <i class="fa fa-thumbs-o-up" aria-hidden="true"></i></span></a></li>
+                                                        <li> <a href="#"> <span>Comment <i class="fa fa-comment-o" aria-hidden="true"></i></span></a></li>
+                                                        <li><a href="#"> <span>Share <i class="fa fa-share" aria-hidden="true"></i></span></a></li>
+                                                        <li><a href="#"> <span>Delete <i class="fa fa-trash" aria-hidden="true"></i></span></a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="blog_sec4">
+                                                <div class="star"><img src="assets/img/star2.png" alt=""></div>
+                                                <div class="blog_title">
+                                                    <div class="title_img"><img src="assets/img/katie-kanapp.jpg" alt=""></div>
+                                                    <div class="user_des">
+                                                        <h4>Katie Knapp <span>(Parent)</span></h4>
+                                                        <p>posted an update </p>
+                                                    </div>
+                                                    <div class="time"> 2 Days ago</div>
+                                                </div>
+                                                <div class="blog_img_holder1"><img src="assets/img/blog-img5.jpg" alt=""></div>
+                                                <div class="blog_des blog_des3">
+                                                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. <a href="#">#Lorem Ipsum</a>  has been the industry's standard dummy text ever since.</p>
+                                                </div>
+                                                <div class="blog_feedback clearfox">
+                                                    <a href="#">
+                                                        <div class="flower"><img src="assets/img/flower.svg" alt=""><span>25</span></div>
+                                                    </a>
+                                                    <a href="#">
+                                                        <div class="love"><img src="assets/img/love.svg" alt=""><span>12</span></div>
+                                                    </a>
+                                                </div>
+                                                <div class="comm_se">
+                                                    <ul>
+                                                        <li><a href="#"> <span>like <i class="fa fa-thumbs-o-up" aria-hidden="true"></i></span></a></li>
+                                                        <li> <a href="#"> <span>Comment <i class="fa fa-comment-o" aria-hidden="true"></i></span></a></li>
+                                                        <li><a href="#"> <span>Share <i class="fa fa-share" aria-hidden="true"></i></span></a></li>
+                                                        <li><a href="#"> <span>Delete <i class="fa fa-trash" aria-hidden="true"></i></span></a></li>
+                                                    </ul>
+                                                </div>
+                                                <div class="blog_title margin_btm">
+                                                    <div class="title_img"><img src="assets/img/katei-re.png" alt=""></div>
+                                                    <div class="user_des">
+                                                        <h4>Katie Knapp <span>(Parent)</span></h4>
+                                                        <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution. </p>
+                                                        <div class="replaied">
+                                                            <div class="hour">12 Hours ago</div>
+                                                            <div>Replied</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="blog_title margin_right">
+                                                    <div class="title_img"><img src="assets/img/katei-girl.png" alt=""></div>
+                                                    <div class="user_des padding_left">
+                                                        <h4>Katie Knapp <span>(Parent)</span></h4>
+                                                        <p>Readable content of a page when looking at its layout. The point of using Lorem .</p>
+                                                        <div class="replaied">
+                                                            <div class="hour">12 Hours ago</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                  </div>
+                                </div>
+                                <div id="Mentions" class="item2" data-title="Mentions">
+                                    <div class="item-content2">
+                                        <div class="favorites-details clearfix">
+                                            
+                                        </div>
+                                  </div>
+                                </div>
+                                <div id="Favorites" class="item2" data-title="Favorites">
+                                    <div class="item-content2">
+                                        <div class="favorites-details clearfix">
+                                            <div class="blog_sec1">
+                                                <div class="star"><img src="assets/img/star.png" alt=""></div>
+                                                <div class="blog_title">
+                                                    <div class="title_img"><img src="assets/img/katei-knapp.png" alt=""></div>
+                                                    <div class="user_des">
+                                                        <h4>Katie Knapp <span>(Teacher)</span></h4>
+                                                        <p>posted an update in the group <span>Teachers library <img src="assets/img/user_icon.png" alt=""></span> </p>
+                                                    </div>
+                                                    <div class="time">11 hours ago</div>
+                                                </div>
+                                                <div class="blog_img_holder1"><img src="assets/img/blog-img1.jpg" alt=""></div>
+                                                <div class="blog_des">
+                                                    <p>“The mediocre teacher tells. The good teacher explains. The superior teacher demonstrates. The great teacher inspires.”
+                        
+                                                        <span>- William Arthur Ward</span></p>
+                                                </div>
+                                                <div class="blog_feedback clearfox">
+                                                    <a href="#">
+                                                        <div class="flower"><img src="assets/img/flower.svg" alt=""><span>25</span></div>
+                                                    </a>
+                                                    <a href="#">
+                                                        <div class="love"><img src="assets/img/love.svg" alt=""><span>12</span></div>
+                                                    </a>
+                                                </div>
+                                                <div class="comm_se">
+                                                    <ul>
+                                                        <li><a href="#"> <span>like <i class="fa fa-thumbs-o-up" aria-hidden="true"></i></span></a></li>
+                                                        <li> <a href="#"> <span>Comment <i class="fa fa-comment-o" aria-hidden="true"></i></span></a></li>
+                                                        <li> <a href="#"> <span>Share <i class="fa fa-share" aria-hidden="true"></i>
+                                                                </span></a></li>
+                                                        <li> <a href="#"> <span>Report <i class="fa fa-exclamation-triangle" aria-hidden="true"></i></span></a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="blog_sec2">
+                                                <div class="star"><img src="assets/img/star.png" alt=""></div>
+                                                <div class="blog_title">
+                                                    <div class="title_img"><img src="assets/img/katie-kanapp.jpg" alt=""></div>
+                                                    <div class="user_des">
+                                                        <h4>Katie Knapp <span>(Parent)</span></h4>
+                                                        <p>posted an update </p>
+                                                    </div>
+                                                    <div class="time"> 2 Days ago</div>
+                                                </div>
+                                                <div class="blog_img_holder1"><img src="assets/img/blog-img4.jpg" alt=""></div>
+                                                <div class="blog_des">
+                                                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since.</p>
+                                                </div>
+                                                <div class="blog_feedback clearfox">
+                                                    <a href="#">
+                                                        <div class="flower"><img src="assets/img/flower.svg" alt=""><span>25</span></div>
+                                                    </a>
+                                                    <a href="#">
+                                                        <div class="love"><img src="assets/img/love.svg" alt=""><span>12</span></div>
+                                                    </a>
+                                                </div>
+                                                <div class="comm_se">
+                                                    <ul>
+                                                        <li><a href="#"> <span>like <i class="fa fa-thumbs-o-up" aria-hidden="true"></i></span></a></li>
+                                                        <li> <a href="#"> <span>Comment <i class="fa fa-comment-o" aria-hidden="true"></i></span></a></li>
+                                                        <li> <a href="#"> <span>Share <i class="fa fa-share" aria-hidden="true"></i>
+                                                                </span></a></li>
+                                                        <li> <a href="#"> <span>Report <i class="fa fa-exclamation-triangle" aria-hidden="true"></i></span></a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="blog_sec3">
+                                                <div class="star"><img src="assets/img/star.png" alt=""></div>
+                                                <div class="blog_title">
+                                                    <div class="title_img"><img src="assets/img/katei-kanapp-student.jpg" alt=""></div>
+                                                    <div class="user_des">
+                                                        <h4>Katie Knapp <span>(Student)</span></h4>
+                                                        <p>posted an update </p>
+                                                    </div>
+                                                    <div class="time"> 2 Days ago</div>
+                                                </div>
+                                                <div class="blog-sec4">
+                        
+                                                    <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. </p>
+                                                </div>
+                                                <div class="blog_feedback clearfox">
+                                                    <a href="#">
+                                                        <div class="flower"><img src="assets/img/flower.svg" alt=""><span>25</span></div>
+                                                    </a>
+                                                    <a href="#">
+                                                        <div class="love"><img src="assets/img/love.svg" alt=""><span>12</span></div>
+                                                    </a>
+                                                </div>
+                                                <div class="comm_se">
+                                                    <ul>
+                                                        <li><a href="#"> <span>like <i class="fa fa-thumbs-o-up" aria-hidden="true"></i></span></a></li>
+                                                        <li> <a href="#"> <span>Comment <i class="fa fa-comment-o" aria-hidden="true"></i></span></a></li>
+                                                        <li> <a href="#"> <span>Share <i class="fa fa-share" aria-hidden="true"></i>
+                                                                </span></a></li>
+                                                        <li> <a href="#"> <span>Report <i class="fa fa-exclamation-triangle" aria-hidden="true"></i></span></a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="blog_sec4">
+                                                <div class="star"><img src="assets/img/star.png" alt=""></div>
+                                                <div class="blog_title">
+                                                    <div class="title_img"><img src="assets/img/katie-kanapp.jpg" alt=""></div>
+                                                    <div class="user_des">
+                                                        <h4>Katie Knapp <span>(Parent)</span></h4>
+                                                        <p>posted an update </p>
+                                                    </div>
+                                                    <div class="time"> 2 Days ago</div>
+                                                </div>
+                                                <div class="blog_img_holder1"><img src="assets/img/blog-img5.jpg" alt=""></div>
+                                                <div class="blog_des blog_des3">
+                                                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. <a href="#">#Lorem Ipsum</a>  has been the industry's standard dummy text ever since.</p>
+                                                </div>
+                                                <div class="blog_feedback clearfox">
+                                                    <a href="#">
+                                                        <div class="flower"><img src="assets/img/flower.svg" alt=""><span>25</span></div>
+                                                    </a>
+                                                    <a href="#">
+                                                        <div class="love"><img src="assets/img/love.svg" alt=""><span>12</span></div>
+                                                    </a>
+                                                </div>
+                                                <div class="comm_se">
+                                                    <ul>
+                                                        <li><a href="#"> <span>like <i class="fa fa-thumbs-o-up" aria-hidden="true"></i></span></a></li>
+                                                        <li> <a href="#"> <span>Comment <i class="fa fa-comment-o" aria-hidden="true"></i></span></a></li>
+                                                        <li> <a href="#"> <span>Share <i class="fa fa-share" aria-hidden="true"></i>
+                                                                </span></a></li>
+                                                        <li> <a href="#"> <span>Report <i class="fa fa-exclamation-triangle" aria-hidden="true"></i></span></a></li>
+                                                    </ul>
+                                                </div>
+                                                <div class="blog_title margin_btm">
+                                                    <div class="title_img"><img src="assets/img/katei-re.png" alt=""></div>
+                                                    <div class="user_des">
+                                                        <h4>Katie Knapp <span>(Parent)</span></h4>
+                                                        <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution. </p>
+                                                        <div class="replaied">
+                                                            <div class="hour">12 Hours ago</div>
+                                                            <div>Replied</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="blog_title margin_right">
+                                                    <div class="title_img"><img src="assets/img/katei-girl.png" alt=""></div>
+                                                    <div class="user_des padding_left">
+                                                        <h4>Katie Knapp <span>(Parent)</span></h4>
+                                                        <p>Readable content of a page when looking at its layout. The point of using Lorem .</p>
+                                                        <div class="replaied">
+                                                            <div class="hour">12 Hours ago</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                  </div>
+                                </div>
+                                <div id="Friends" class="item2" data-title="Friends">
+                                    <div class="item-content2">
+                                        <div class="favorites-details clearfix">
+                                            
+                                        </div>
+                                  </div>
+                                </div>
+                                <div id="Groups" class="item2" data-title="Groups">
+                                    <div class="item-content2">
+                                        <div class="favorites-details clearfix">
+                                            <div class="blog_sec1 white">
+                                                <div class="star"><img src="assets/img/star2.png" alt=""></div>
+                                                <div class="blog_title">
+                                                    <div class="title_img"><img src="assets/img/katei-knapp.png" alt=""></div>
+                                                    <div class="user_des">
+                                                        <h4>Katie Knapp <span>(Teacher)</span></h4>
+                                                        <p>posted an update in the group  <span>COVID19 and K-12 Education <img src="assets/img/user_icon.png" alt=""></span> </p>
+                                                    </div>
+                                                    <div class="time">a month ago</div>
+                                                </div>
+                                                <div class="blog_img_holder1"><img src="assets/img/group_image.jpg" alt=""></div>
+                                                <div class="blog_des">
+                                                    <p>start planing now, please</p>
+                                                </div>
+                                                <div class="blog_feedback clearfox">
+                                                    <a href="#">
+                                                        <div class="flower"><img src="assets/img/flower.svg" alt=""><span>25</span></div>
+                                                    </a>
+                                                    <a href="#">
+                                                        <div class="love"><img src="assets/img/love.svg" alt=""><span>12</span></div>
+                                                    </a>
+                                                </div>
+                                                <div class="comm_se">
+                                                    <ul>
+                                                        <li><a href="#"> <span>like <i class="fa fa-thumbs-o-up" aria-hidden="true"></i></span></a></li>
+                                                        <li> <a href="#"> <span>Comment <i class="fa fa-comment-o" aria-hidden="true"></i></span></a></li>
+                                                        <li> <a href="#"> <span>Share <i class="fa fa-share" aria-hidden="true"></i>
+                                                                </span></a></li>
+                                                        <li> <a href="#"> <span>Report <i class="fa fa-exclamation-triangle" aria-hidden="true"></i></span></a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="blog_sec3 white">
+                                                <div class="star"><img src="assets/img/star2.png" alt=""></div>
+                                                <div class="blog_title">
+                                                    <div class="title_img"><img src="assets/img/katei-kanapp-student.jpg" alt=""></div>
+                                                    <div class="user_des">
+                                                        <h4>Katie Knapp <span>(Student)</span></h4>
+                                                        <p>posted an update in the group  <span>COVID19 and K-12 Education <img src="assets/img/user_icon.png" alt=""></span></p>
+                                                    </div>
+                                                    <div class="time"> 2 Days ago</div>
+                                                </div>
+                                                <div class="blog-sec4">
+                        
+                                                    <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.  </p>
+                                                </div>
+                                                <div class="blog_feedback clearfox">
+                                                    <a href="#">
+                                                        <div class="flower"><img src="assets/img/flower.svg" alt=""><span>25</span></div>
+                                                    </a>
+                                                    <a href="#">
+                                                        <div class="love"><img src="assets/img/love.svg" alt=""><span>12</span></div>
+                                                    </a>
+                                                </div>
+                                                <div class="comm_se">
+                                                    <ul>
+                                                        <li><a href="#"> <span>like <i class="fa fa-thumbs-o-up" aria-hidden="true"></i></span></a></li>
+                                                        <li> <a href="#"> <span>Comment <i class="fa fa-comment-o" aria-hidden="true"></i></span></a></li>
+                                                        <li> <a href="#"> <span>Share <i class="fa fa-share" aria-hidden="true"></i>
+                                                                </span></a></li>
+                                                        <li> <a href="#"> <span>Report <i class="fa fa-exclamation-triangle" aria-hidden="true"></i></span></a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="blog_sec4 white">
+                                                <div class="star"><img src="assets/img/star2.png" alt=""></div>
+                                                <div class="blog_title">
+                                                    <div class="title_img"><img src="assets/img/katie-kanapp.jpg" alt=""></div>
+                                                    <div class="user_des">
+                                                        <h4>Katie Knapp <span>(Parent)</span></h4>
+                                                        <p>posted an update in the group  <span>COVID19 and K-12 Education <img src="assets/img/user_icon.png" alt=""></span></p>
+                                                    </div>
+                                                    <div class="time"> 7 Days ago</div>
+                                                </div>
+                                                <div class="blog_img_holder1"><img src="assets/img/group_image2.jpg" alt=""></div>
+                                                <div class="blog_des blog_des3">
+                                                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. <a href="#">#Lorem Ipsum</a>  has been the industry's standard dummy text ever since.</p>
+                                                </div>
+                                                <div class="blog_feedback clearfox">
+                                                    <a href="#">
+                                                        <div class="flower"><img src="assets/img/flower.svg" alt=""><span>25</span></div>
+                                                    </a>
+                                                    <a href="#">
+                                                        <div class="love"><img src="assets/img/love.svg" alt=""><span>12</span></div>
+                                                    </a>
+                                                </div>
+                                                <div class="comm_se">
+                                                    <ul>
+                                                        <li><a href="#"> <span>like <i class="fa fa-thumbs-o-up" aria-hidden="true"></i></span></a></li>
+                                                        <li> <a href="#"> <span>Comment <i class="fa fa-comment-o" aria-hidden="true"></i></span></a></li>
+                                                        <li> <a href="#"> <span>Share <i class="fa fa-share" aria-hidden="true"></i>
+                                                                </span></a></li>
+                                                        <li> <a href="#"> <span>Report <i class="fa fa-exclamation-triangle" aria-hidden="true"></i></span></a></li>
+                                                    </ul>
+                                                </div>
+                                                <div class="blog_title margin_btm">
+                                                    <div class="title_img"><img src="assets/img/katei-re.png" alt=""></div>
+                                                    <div class="user_des">
+                                                        <h4>Katie Knapp <span>(Parent)</span></h4>
+                                                        <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution. </p>
+                                                        <div class="replaied">
+                                                            <div class="hour">12 Hours ago</div>
+                                                            <div>Replied</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="blog_title margin_right">
+                                                    <div class="title_img"><img src="assets/img/katei-girl.png" alt=""></div>
+                                                    <div class="user_des padding_left">
+                                                        <h4>Katie Knapp <span>(Parent)</span></h4>
+                                                        <p>Readable content of a page when looking at its layout. The point of using Lorem .</p>
+                                                        <div class="replaied">
+                                                            <div class="hour">12 Hours ago</div>
+                                                        </div>
+                                                    </div>
+                        
+                                                </div>
+                                                
+                        
+                                            </div>
+
+                                        </div>
+                                  </div>
+                                </div>
+                              </section>
+                        </div>
+                        <!-- profile-forum-details -->
+                    </div>
+                </div>
+                <!-- profile-left -->
+                <!---profile-right---->
+                <div class="profile-right ">
+                    <div class="articles_title">
+                        <h2>Blog Articles</h2>
+                    </div>
+                    <div class="articles clearfix">
+                        <ul class="d-flex">
+                            <li>
+                                <div class="art_left_img"><img src="assets/img/article1.jpg" width="92px;" alt=""></div>
+                                <div class="art_des">
+                                    <p>My struggle with homeschooling my youngins</p>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="art_left_img"><img src="assets/img/article2.jpg" alt=""></div>
+                                <div class="art_des">
+                                    <p>COVID19 has led to parents appreciating teachers more</p>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="art_left_img"><img src="assets/img/article3.jpg" alt=""></div>
+                                <div class="art_des">
+                                    <p>Teachers, like myself, getting used to virtual teaching</p>
+                                </div>
+                            </li>
+                        </ul>
+                        <a href="#" class="view_more">View More Articles</a>
+                    </div>
+                    <div class="letest_sec">
+                        <div class="articles_title">
+                            <h2>Latest News</h2>
+                        </div>
+                        <div class="articles clearfix">
+                            <ul class="d-flex">
+                                <li>
+                                    <div class="art_left_img"><img src="assets/img/article1.jpg" alt=""></div>
+                                    <div class="art_des">
+                                        <p>‘Let’s get those kids back in school!’ Parents rally for…
+                                        </p>
+                                        <div class="wtrk d_flex1">
+                                            <h5>WTKR News 3 </h5>
+                                            <h5> -July 07, 2020</h5>
+                                        </div>
+                                    </div>
+                                </li>
+
+                            </ul>
+                            <a href="#" class="view_more">View More Articles</a>
+                        </div>
+                    </div>
+                    <div class="recent_blog_comments">
+                        <div class="comment_title"><span><img src="assets/img/comments.png" alt=""></span>Recent Blog Comments</div>
+                        <div class="d_flex2">
+                            <div class="sad_img"><img src="assets/img/sad.png" alt=""></div>
+                            <div class="des">
+                                <h4>Sorry,There are no comments to display.</h4>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="Recent_topics">
+                        <div class="articles_title">
+                            <h2>Recent Forum Topics</h2>
+                        </div>
+                        <div class="articles clearfix">
+                            <ul class="tag">
+                                <li><a href="#">covid education</a></li>
+                                <li><a href="#">What homeschooling activity do you enjoy?</a></li>
+                                <li><a href="#">Home school meet ups</a></li>
+                                <li><a href="#">Virtual classroom to replace classroom lecturing in future</a></li>
+                                <li><a href="#">Evaluating the effectiveness of distance learning</a></li>
+                            </ul>
+                            <a href="#" class="view_more">View More Articles</a>
+
+                        </div>
+                    </div>
+                    <div class="Recent_topics_form">
+                        <div class="articles_title">
+                            <h2>Recent Forums</h2>
+                        </div>
+                        <div class="articles clearfix">
+                            <ul class="tag">
+                                <li><a href="#">General Community Chat </a></li>
+                                <li><a href="#">Higher Education Chat </a></li>
+                                <li><a href="#">Parental Connection </a></li>
+                                <li><a href="#">Parents and Teachers Lounge </a></li>
+                                <li><a href="#">Teachers Lounge</a></li>
+                            </ul>
+                            <a href="#" class="view_more">View More Articles</a>
+
+                        </div>
+                    </div>
+                  
+                </div>
+                <!---rofile-right---->
+            </div>
+        </section>
+
+    </div>
+    <!----main end ---->
+    <!-- footer -->
+    <footer class="page-footer">
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <div class="ftr_logo"><a href="index.html"><img src="assets/img/ftr-logo.png" alt=""></a></div>
+                    <div class="ftr_des">
+                        <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution.</p>
+                    </div>
+
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                    <div class="footer-column clearfix">
+                        <h3>Quick Links</h3>
+                        <ul class="footer-menu">
+                            <li><a href="index.html">Home</a></li>
+                            <li><a href="about.html">About Us</a></li>
+                            <li><a href="groups.html">Groups</a></li>
+                            <li><a href="forums.html">Forums</a></li>
+                            <li><a href="people.html">People</a></li>
+                            <li><a href="blog.html">Blogs</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                    <div class="footer-column clearfix">
+                        <h3>Language</h3>
+                        <ul class="footer-menu">
+                            <li><a href="#">Spanish</a></li>
+                            <li><a href="#">English</a></li>
+                            <li><a href="#">Hindi</a></li>
+                            <li><a href="#">Arabic</a></li>
+                            <li><a href="#">Bengali</a></li>
+                            <li><a href="#">Portuguese</a></li>
+                            <li><a href="#">Russian </a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                    <div class="footer-column clearfix">
+                        <h3>My Account</h3>
+                        <ul class="footer-menu-last">
+                            <a href="#">Log In</a>
+                            <a href="#">Sign Up</a>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom text-center">
+
+
+            <div class="copyright"><strong>Teachiate</strong> @ All right reserve 2020.</div>
+            <div id="back-to-top" class="back-to-top">
+                <a href="javascript:void(0)">Back to Top <i class="icon-arrow-up"></i> </a>
+            </div>
+
+        </div>
+    </footer>
+
+
+
+    <!-----footer end------->
+    <!----js  start------->
+    <script src="assets/js/vendor/jquery.min.js"></script>
+    <script src="assets/js/plugins.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/bootstrap.js"></script>
+    <script>
+        // tabbed content
+        // http://www.entheosweb.com/tutorials/css/tabs.asp
+        $(".tab_content").hide();
+        $(".tab_content:first").show();
+
+        /* if in tab mode */
+        $("ul.tabs li").click(function() {
+
+            $(".tab_content").hide();
+            var activeTab = $(this).attr("rel");
+            $("#" + activeTab).fadeIn();
+
+            $("ul.tabs li").removeClass("active");
+            $(this).addClass("active");
+
+            $(".tab_drawer_heading").removeClass("d_active");
+            $(".tab_drawer_heading[rel^='" + activeTab + "']").addClass("d_active");
+
+        });
+        /* if in drawer mode */
+        $(".tab_drawer_heading").click(function() {
+
+            $(".tab_content").hide();
+            var d_activeTab = $(this).attr("rel");
+            $("#" + d_activeTab).fadeIn();
+
+            $(".tab_drawer_heading").removeClass("d_active");
+            $(this).addClass("d_active");
+
+            $("ul.tabs li").removeClass("active");
+            $("ul.tabs li[rel^='" + d_activeTab + "']").addClass("active");
+        });
+
+
+        /* Extra class "tab_last" 
+           to add border to right side
+           of last tab */
+        $('ul.tabs li').last().addClass("tab_last");
+
+    </script>
+    <!---------js end --------->
+</body>
+
+</html>

@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="assets/img/fav.png" type="image/x-icon" />
+    <title>Teachiate | School Opening</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+    <link href="assets/css/main.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;800;900&display=swap" rel="stylesheet">
+    <!--font-family: 'Poppins', sans-serif; -->
+
+</head>
+
+<body id="top">
+    <header class="page-header" id="page-header">
+        <div class="bottom-header">
+            <div class="container clearfix">
+                <div class="logo"><a href="index.html"><img src="assets/img/logo.png" alt=""></a></div>
+                <div class="my_account">
+                    <a href="#" class="open-button" onclick="openForm()"><img src="assets/img/user-account.png">My Account</a>
+
+
+                </div>
+                <div class="form-popup" id="myForm">
+                    <form action="/action_page.php" class="form-container">
+                        <h2>Sign in</h2>
+
+                        <label for="email">Name/Email</label>
+                        <input type="text" name="email" required>
+
+                        <label for="psw">Password</label>
+                        <input type="password" name="psw" required>
+
+                        <button type="submit" class="sign_in_btn">Sign In</button>
+                        <ul class="newnd_forget">
+                            <li><a href="#">Create New Account?</a></li>
+                            <li><a href="#">Forget Password?</a></li>
+                        </ul>
+                        <a href="#" class="btn-with-facebook"><img src="assets/img/facebook.png" alt="">Continue With Facebook</a>
+                        <a href="#" class="btn-with-google"><img src="assets/img/google.png" alt="">Continue With Google</a>
+                        <button type="submit" class="btn cancel" onclick="closeForm()">Close</button>
+                    </form>
+                </div>
+                <div class="search-icon hidden-md-down"><i class="icon-search"></i></div>
+
+                <div class="page-header_main-menu">
+                    <nav class="nav-primary">
+                        <ul class="menu-main-navigation menu clearfix">
+                            <li class="menu-item-has-children"><a href="index.html">Home</a></li>
+                            <li class="menu-item-has-children"><a href="about.html">About Us</a></li>
+                            <li class="menu-item-has-children"><a href="groups.html">Groups</a>
+
+                            </li>
+                            <li class="menu-item-has-children"><a href="forums.html">Forums</a></li>
+                            <li class="menu-item-has-children"><a href="people.html"> People</a></li>
+                            <li class="menu-item-has-children"><a href="blog.html"> Blogs</a></li>
+
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+        <!-- nav-fixed -->
+        <div class="nav-fixed hidden-lg clearfix">
+            <ul class="clearfix">
+
+                <li>
+                    <div class="search-icon">
+                        <span class="icon-search"></span> Search
+                    </div>
+                </li>
+                <li>
+                    <div class="toggle-menu">
+                        <span class="icon-menu"></span> menu
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <!-- nav-fixed -->
+        <!-- search-div -->
+        <div class="search-div">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8 col-md-push-2">
+                        <div class="search-content">
+                            <input type="text" placeholder="Search">
+                            <input type="submit" value="Search">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- search-div -->
+    </header>
+    <div id="main">
+
+        <!----blog--------------->
+
+        <section class="blog profile_mt clearfix">
+            <div class="container">
+                <div class="opening_sec">
+                    <h2>COVID-19 School Update Page</h2>
+                    <!-- <div class="opening_whaite_box">
+                        <div class="opening_slider responsive">
+                            <div>
+                                <div class="img_holder"><img src="assets/img/alabama.png" alt=""></div>
+                                <div class="slider_des">
+                                    <h5>Alabama - A<span><i class="fa fa-map-marker" aria-hidden="true"></i>
+                                            USA</span></h5>
+                                    <p>Last Update: <span>12 Hours ago</span></p>
+                                    <h6>It is a long established fact that a...</h6>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="img_holder"><img src="assets/img/alaska.png" alt=""></div>
+                                <div class="slider_des">
+                                    <h5>Alaska - A<span><i class="fa fa-map-marker" aria-hidden="true"></i>
+                                            USA</span></h5>
+                                    <p>Last Update: <span>12 Hours ago</span></p>
+                                    <h6>It is a long established fact that a...</h6>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="img_holder"><img src="assets/img/arizona.png" alt=""></div>
+                                <div class="slider_des">
+                                    <h5>Arizona - A<span><i class="fa fa-map-marker" aria-hidden="true"></i>
+                                            USA</span></h5>
+                                    <p>Last Update: <span>12 Hours ago</span></p>
+                                    <h6>It is a long established fact that a...</h6>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="img_holder"><img src="assets/img/arkansas.png" alt=""></div>
+                                <div class="slider_des">
+                                    <h5>Arkansas - A<span><i class="fa fa-map-marker" aria-hidden="true"></i>
+                                            USA</span></h5>
+                                    <p>Last Update: <span>12 Hours ago</span></p>
+                                    <h6>It is a long established fact that a...</h6>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="img_holder"><img src="assets/img/california.png" alt=""></div>
+                                <div class="slider_des">
+                                    <h5>california - A<span><i class="fa fa-map-marker" aria-hidden="true"></i>
+                                            USA</span></h5>
+                                    <p>Last Update: <span>5 Hours ago</span></p>
+                                    <h6>It is a long established fact that a...</h6>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="img_holder"><img src="assets/img/alabama.png" alt=""></div>
+                                <div class="slider_des">
+                                    <h5>Alabama - A<span><i class="fa fa-map-marker" aria-hidden="true"></i>
+                                            USA</span></h5>
+                                    <p>Last Update: <span>12 Hours ago</span></p>
+                                    <h6>It is a long established fact that a...</h6>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="img_holder"><img src="assets/img/alabama.png" alt=""></div>
+                                <div class="slider_des">
+                                    <h5>Alabama - A<span><i class="fa fa-map-marker" aria-hidden="true"></i>
+                                            USA</span></h5>
+                                    <p>Last Update: <span>12 Hours ago</span></p>
+                                    <h6>It is a long established fact that a...</h6>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="img_holder"><img src="assets/img/alaska.png" alt=""></div>
+                                <div class="slider_des">
+                                    <h5>Alaska - A<span><i class="fa fa-map-marker" aria-hidden="true"></i>
+                                            USA</span></h5>
+                                    <p>Last Update: <span>12 Hours ago</span></p>
+                                    <h6>It is a long established fact that a...</h6>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="img_holder"><img src="assets/img/arizona.png" alt=""></div>
+                                <div class="slider_des">
+                                    <h5>Arizona - A<span><i class="fa fa-map-marker" aria-hidden="true"></i>
+                                            USA</span></h5>
+                                    <p>Last Update: <span>12 Hours ago</span></p>
+                                    <h6>It is a long established fact that a...</h6>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="img_holder"><img src="assets/img/arkansas.png" alt=""></div>
+                                <div class="slider_des">
+                                    <h5>Arkansas - A<span><i class="fa fa-map-marker" aria-hidden="true"></i>
+                                            USA</span></h5>
+                                    <p>Last Update: <span>12 Hours ago</span></p>
+                                    <h6>It is a long established fact that a...</h6>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="img_holder"><img src="assets/img/california.png" alt=""></div>
+                                <div class="slider_des">
+                                    <h5>california - A<span><i class="fa fa-map-marker" aria-hidden="true"></i>
+                                            USA</span></h5>
+                                    <p>Last Update: <span>5 Hours ago</span></p>
+                                    <h6>It is a long established fact that a...</h6>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div> -->
+                </div>
+                <div class="opening_search_form">
+                    <div class="row">
+                        <div class="col-md-4 col-xs-12">
+                            <label>State</label>
+                            <select>
+                                <option selected>Arizona</option>
+                                <option>Arizona1</option>
+                                <option>Arizona2</option>
+                                <option>Arizona3</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4 col-xs-12">
+                            <label>City</label>
+                            <select>
+                                <option selected>Phoenix</option>
+                                <option>Phoenix</option>
+                                <option>Phoenix</option>
+                                <option>Phoenix</option>
+                            </select></div>
+                        <div class="col-md-4 col-xs-12">
+                            <div class="datepicker_sec"> <label for="dateofbirth">Date</label>
+                                <input type="date" name="dateofbirth" id="dateofbirth" placeholder="Select a Date (optionally)">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="blog_left school">
+                    <div class="padding_all_side opening_schhol">
+                        <ul class="list_city">
+                            <li>State: <span>Arizona</span></li>
+                            <li>City: <span>Pheonix</span></li>
+                        </ul>
+                    </div>
+                    <div class="blog_sec4 open">
+                        <div class="opeing_list">
+
+                            <div class="blog_title">
+                                <div class="title_img"><img src="assets/img/admin-img.png" alt=""></div>
+                                <div class="user_des">
+                                    <h4>Admin</h4>
+                                    <p>Arizona - A | USA </p>
+                                </div>
+                                <div class="star_icon"><i class="fa fa-star-o" aria-hidden="true"></i>
+                                </div>
+                                <div class="time"> 2 Days ago</div>
+                            </div>
+                            <div class="blog_img_holder1"><img src="assets/img/admin.jpg" alt=""></div>
+                            <div class="blog_des">
+                                <div class="admin_details">
+                                    <div class="haeding">
+                                        <h4>Arizona Central Model High School</h4>
+                                    </div>
+                                    <div class="reoping_date">
+                                        <h6><i class="fa fa-clock-o" aria-hidden="true"></i>Re-Opening Date: <span>28th September, 2020</span></h6>
+                                    </div>
+                                </div>
+                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. <strong>#Lorem Ipsum</strong> has been the industry's standard dummy text ever since.</p>
+                            </div>
+                            <div class="opening_flex">
+                                <div class="locaton">
+                                    <p><i class="fa fa-map-marker" aria-hidden="true"></i>
+                                        State: <span>Arizona</span> </p>
+                                    <p>City: <span>Pheonix</span></p>
+                                </div>
+                                <div class="bbc_news">
+                                    <P><a href="#">BBC NEWS</a></P>
+                                </div>
+                            </div>
+                            <div class="blog_feedback clearfox">
+                                <a href="#">
+                                    <div class="flower"><img src="assets/img/flower.svg" alt=""><span>25</span></div>
+                                </a>
+                                <a href="#">
+                                    <div class="love"><img src="assets/img/love.svg" alt=""><span>12</span></div>
+                                </a>
+                            </div>
+                            <div class="comm_se">
+                                <ul>
+                                    <li><a href="#"> <span>like <i class="fa fa-thumbs-o-up" aria-hidden="true"></i></span></a></li>
+                                    <li> <a href="#"> <span>Comment <i class="fa fa-comment-o" aria-hidden="true"></i></span></a></li>
+                                    <li> <a href="#"> <span>Share <i class="fa fa-share" aria-hidden="true"></i>
+                                            </span></a></li>
+                                    <li> <a href="#"> <span>Report <i class="fa fa-exclamation-triangle" aria-hidden="true"></i></span></a></li>
+                                </ul>
+                            </div>
+                            <div class="blog_title margin_btm">
+                                <div class="title_img"><img src="assets/img/katei-re.png" alt=""></div>
+                                <div class="user_des">
+                                    <h4>Katie Knapp <span>(Parent)</span></h4>
+                                    <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution. </p>
+                                    <div class="replaied">
+                                        <div class="hour">12 Hours ago</div>
+                                        <div>Replied</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="blog_title margin_right">
+                                <div class="title_img"><img src="assets/img/katei-girl.png" alt=""></div>
+                                <div class="user_des">
+                                    <h4>Katie Knapp <span>(Parent)</span></h4>
+                                    <p>Readable content of a page when looking at its layout. The point of using Lorem .</p>
+                                    <div class="replaied">
+                                        <div class="hour">12 Hours ago</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+
+                        </div>
+                        <div class="opeing_list">
+
+                            <div class="blog_title">
+                                <div class="title_img"><img src="assets/img/admin-img.png" alt=""></div>
+                                <div class="user_des">
+                                    <h4>Admin</h4>
+                                    <p>Arizona - A | USA </p>
+                                </div>
+                                <div class="star_icon"><i class="fa fa-star-o" aria-hidden="true"></i>
+                                </div>
+                                <div class="time"> 2 Days ago</div>
+                            </div>
+                            <div class="blog_img_holder1"><img src="assets/img/admin.jpg" alt=""></div>
+                            <div class="blog_des">
+                                <div class="admin_details">
+                                    <div class="haeding">
+                                        <h4>Arizona Central Model High School</h4>
+                                    </div>
+                                    <div class="reoping_date">
+                                        <h6><i class="fa fa-clock-o" aria-hidden="true"></i>
+                                            Re-Opening Date: <span>28th September, 2020</span></h6>
+                                    </div>
+                                </div>
+                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. <strong>#Lorem Ipsum</strong> has been the industry's standard dummy text ever since.</p>
+                            </div>
+                            <div class="opening_flex">
+                                <div class="locaton">
+                                    <p><i class="fa fa-map-marker" aria-hidden="true"></i>State: <span>Arizona</span> </p>
+                                    <p>City: <span>Pheonix</span></p>
+                                </div>
+                                <div class="bbc_news">
+                                    <P><a href="#">BBC NEWS</a></P>
+                                </div>
+                            </div>
+                            <div class="blog_feedback clearfox">
+                                <a href="#">
+                                    <div class="flower"><img src="assets/img/flower.svg" alt=""><span>25</span></div>
+                                </a>
+                                <a href="#">
+                                    <div class="love"><img src="assets/img/love.svg" alt=""><span>12</span></div>
+                                </a>
+                            </div>
+                            <div class="comm_se">
+                                <ul>
+                                    <li><a href="#"> <span>like <i class="fa fa-thumbs-o-up" aria-hidden="true"></i></span></a></li>
+                                    <li> <a href="#"> <span>Comment <i class="fa fa-comment-o" aria-hidden="true"></i></span></a></li>
+                                    <li> <a href="#"> <span>Share <i class="fa fa-share" aria-hidden="true"></i>
+                                            </span></a></li>
+                                    <li> <a href="#"> <span>Report <i class="fa fa-exclamation-triangle" aria-hidden="true"></i></span></a></li>
+                                </ul>
+                            </div>
+                            <div class="blog_title margin_btm">
+                                <div class="title_img"><img src="assets/img/katei-re.png" alt=""></div>
+                                <div class="user_des">
+                                    <h4>Katie Knapp <span>(Parent)</span></h4>
+                                    <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution. </p>
+                                    <div class="replaied">
+                                        <div class="hour">12 Hours ago</div>
+                                        <div>Replied</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="blog_title margin_right">
+                                <div class="title_img"><img src="assets/img/katei-girl.png" alt=""></div>
+                                <div class="user_des">
+                                    <h4>Katie Knapp <span>(Parent)</span></h4>
+                                    <p>Readable content of a page when looking at its layout. The point of using Lorem .</p>
+                                    <div class="replaied">
+                                        <div class="hour">12 Hours ago</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="post_sec">
+                        <div class="contribute"><a href="#">Contribute Information</a></div>
+                        <div class="contribute_sec">
+                            <div class="conversetion">
+                                <h3>Community Conversation</h3>
+                            </div>
+
+                            <div class="black_box"></div>
+                        </div>
+
+
+                        <div class="post_share">
+                                
+                                <div class="post_share_area out_select">
+                                    <h2>Share your thoughts</h2>
+                                    <div class="posted_avtar"><img src="assets/img/g4.png" alt=""></div>
+                                    <div class="post_share_field">
+                                        <textarea placeholder="Sarah What’s are your mind?"></textarea>
+                                        <div class="share_option_right">
+                                            <input type="submit" value="Submit" name="">
+                                        </div>
+                                    </div>
+                                </div>                  
+                            </div>
+
+                    </div>
+                    <div class="blog_sec4 open">
+                        <div class="opeing_list">
+
+                            <div class="blog_title">
+                                <div class="title_img"><img src="assets/img/katie-kanapp.jpg" alt=""></div>
+                                <div class="user_des">
+                                    <h4>Katie Knapp</h4>
+                                    <p>Teacher</p>
+                                </div>
+                                <div class="star_icon"><i class="fa fa-star-o" aria-hidden="true"></i>
+                                </div>
+                                <div class="time"> 2 Days ago</div>
+                            </div>
+                            <div class="blog_img_holder1"><img src="assets/img/admin2.jpg" alt=""></div>
+                            <div class="blog_des">
+                                <div class="admin_details">
+                                    <div class="haeding">
+                                        <h4>Arizona Central Model High School</h4>
+                                    </div>
+
+                                </div>
+                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. <strong>#Lorem Ipsum</strong> has been the industry's standard dummy text ever since.</p>
+                            </div>
+                            <div class="opening_flex">
+                                <div class="locaton">
+                                    <p><i class="fa fa-map-marker" aria-hidden="true"></i>
+                                        State: <span>Arizona</span> </p>
+                                    <p>City: <span>Pheonix</span></p>
+                                </div>
+
+                            </div>
+                            <div class="blog_feedback clearfox">
+                                <a href="#">
+                                    <div class="flower"><img src="assets/img/flower.svg" alt=""><span>25</span></div>
+                                </a>
+                                <a href="#">
+                                    <div class="love"><img src="assets/img/love.svg" alt=""><span>12</span></div>
+                                </a>
+                            </div>
+                            <div class="comm_se">
+                                <ul>
+                                    <li><a href="#"> <span>like <i class="fa fa-thumbs-o-up" aria-hidden="true"></i></span></a></li>
+                                    <li> <a href="#"> <span>Comment <i class="fa fa-comment-o" aria-hidden="true"></i></span></a></li>
+                                    <li> <a href="#"> <span>Share <i class="fa fa-share" aria-hidden="true"></i>
+                                            </span></a></li>
+                                    <li> <a href="#"> <span>Report <i class="fa fa-exclamation-triangle" aria-hidden="true"></i></span></a></li>
+                                </ul>
+                            </div>
+                            <div class="blog_title margin_btm">
+                                <div class="title_img"><img src="assets/img/katei-re.png" alt=""></div>
+                                <div class="user_des">
+                                    <h4>Katie Knapp <span>(Parent)</span></h4>
+                                    <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution. </p>
+                                    <div class="replaied">
+                                        <div class="hour">12 Hours ago</div>
+                                        <div>Replied</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="blog_title margin_right">
+                                <div class="title_img"><img src="assets/img/katei-girl.png" alt=""></div>
+                                <div class="user_des">
+                                    <h4>Katie Knapp <span>(Parent)</span></h4>
+                                    <p>Readable content of a page when looking at its layout. The point of using Lorem .</p>
+                                    <div class="replaied">
+                                        <div class="hour">12 Hours ago</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="opeing_list">
+
+                            <div class="blog_title">
+                                <div class="title_img"><img src="assets/img/katei-knapp.png" alt=""></div>
+                                <div class="user_des">
+                                    <h4>Nancy Laves</h4>
+                                    <p>Parent</p>
+                                </div>
+                                <div class="star_icon"><i class="fa fa-star-o" aria-hidden="true"></i>
+                                </div>
+                                <div class="time"> 2 Days ago</div>
+                            </div>
+                            <div class="blog_img_holder1"><img src="assets/img/admin.jpg" alt=""></div>
+                            <div class="blog_des">
+                                <div class="admin_details">
+                                    <div class="haeding">
+                                        <h4>Arizona Central Model High School</h4>
+                                    </div>
+                                    <div class="reoping_date">
+                                        <h6><i class="fa fa-clock-o" aria-hidden="true"></i>
+                                            Re-Opening Date: <span>28th September, 2020</span></h6>
+                                    </div>
+                                </div>
+                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. <strong>#Lorem Ipsum</strong> has been the industry's standard dummy text ever since.</p>
+                            </div>
+                            <div class="opening_flex">
+                                <div class="locaton">
+                                    <p><i class="fa fa-map-marker" aria-hidden="true"></i>
+                                        State: <span>Arizona</span> </p>
+                                    <p>City: <span>Pheonix</span></p>
+                                </div>
+                                <div class="bbc_news">
+                                    <P><a href="#">BBC NEWS</a></P>
+                                </div>
+                            </div>
+                            <div class="blog_feedback clearfox">
+                                <a href="#">
+                                    <div class="flower"><img src="assets/img/flower.svg" alt=""><span>25</span></div>
+                                </a>
+                                <a href="#">
+                                    <div class="love"><img src="assets/img/love.svg" alt=""><span>12</span></div>
+                                </a>
+                            </div>
+                            <div class="comm_se">
+                                <ul>
+                                    <li><a href="#"> <span>like <i class="fa fa-thumbs-o-up" aria-hidden="true"></i></span></a></li>
+                                    <li> <a href="#"> <span>Comment <i class="fa fa-comment-o" aria-hidden="true"></i></span></a></li>
+                                    <li> <a href="#"> <span>Share <i class="fa fa-share" aria-hidden="true"></i>
+                                            </span></a></li>
+                                    <li> <a href="#"> <span>Report <i class="fa fa-exclamation-triangle" aria-hidden="true"></i></span></a></li>
+                                </ul>
+                            </div>
+                            <div class="blog_title margin_btm">
+                                <div class="title_img"><img src="assets/img/katei-re.png" alt=""></div>
+                                <div class="user_des">
+                                    <h4>Katie Knapp <span>(Parent)</span></h4>
+                                    <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution. </p>
+                                    <div class="replaied">
+                                        <div class="hour">12 Hours ago</div>
+                                        <div>Replied</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="blog_title margin_right">
+                                <div class="title_img"><img src="assets/img/katei-girl.png" alt=""></div>
+                                <div class="user_des">
+                                    <h4>Katie Knapp <span>(Parent)</span></h4>
+                                    <p>Readable content of a page when looking at its layout. The point of using Lorem .</p>
+                                    <div class="replaied">
+                                        <div class="hour">12 Hours ago</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+                <div class="blog_right">
+                    <div class="articles_title">
+                        <h2>Blog Articles</h2>
+                    </div>
+                    <div class="articles clearfix">
+                        <ul class="d-flex">
+                            <li>
+                                <div class="art_left_img"><img src="assets/img/article1.jpg" alt="" width="92px;"></div>
+                                <div class="art_des">
+                                    <p>My struggle with homeschooling my youngins</p>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="art_left_img"><img src="assets/img/article2.jpg" alt=""></div>
+                                <div class="art_des">
+                                    <p>COVID19 has led to parents appreciating teachers more</p>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="art_left_img"><img src="assets/img/article3.jpg" alt=""></div>
+                                <div class="art_des">
+                                    <p>Teachers, like myself, getting used to virtual teaching</p>
+                                </div>
+                            </li>
+                        </ul>
+                        <a href="#" class="view_more">View More Articles</a>
+                    </div>
+                    <div class="letest_sec">
+                        <div class="articles_title">
+                            <h2>Latest News</h2>
+                        </div>
+                        <div class="articles clearfix">
+                            <ul class="d-flex">
+                                <li>
+                                    <div class="art_left_img"><img src="assets/img/article1.jpg" alt=""></div>
+                                    <div class="art_des">
+                                        <p>‘Let’s get those kids back in school!’ Parents rally for…
+                                        </p>
+                                        <div class="wtrk d_flex1">
+                                            <h5>WTKR News 3 </h5>
+                                            <h5> -July 07, 2020</h5>
+                                        </div>
+                                    </div>
+                                </li>
+
+                            </ul>
+                            <a href="#" class="view_more">View More Articles</a>
+                        </div>
+                    </div>
+                    <div class="Recent_topics">
+                        <div class="articles_title">
+                            <h2>Recent Forum Topics</h2>
+                        </div>
+                        <div class="articles clearfix">
+                            <ul class="tag">
+                                <li><a href="#">covid education</a></li>
+                                <li><a href="#">What homeschooling activity do you enjoy?</a></li>
+                                <li><a href="#">Home school meet ups</a></li>
+                                <li><a href="#">Virtual classroom to replace classroom lecturing in future</a></li>
+                                <li><a href="#">Evaluating the effectiveness of distance learning</a></li>
+                            </ul>
+                            <a href="#" class="view_more">View More Topics</a>
+
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+            </div>
+        </section>
+    </div>
+    <!-- blog end  -->
+
+    <!-- footer -->
+    <footer class="page-footer">
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <div class="ftr_logo"><a href="index.html"><img src="assets/img/ftr-logo.png" alt=""></a></div>
+                    <div class="ftr_des">
+                        <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution.</p>
+                    </div>
+
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                    <div class="footer-column clearfix">
+                        <h3>Quick Links</h3>
+                        <ul class="footer-menu">
+                            <li><a href="#">Home</a></li>
+                            <li><a href="#">About Us</a></li>
+                            <li><a href="#">Groups</a></li>
+                            <li><a href="#">Forums</a></li>
+                            <li><a href="#">People</a></li>
+                            <li><a href="#">Blogs</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                    <div class="footer-column clearfix">
+                        <h3>Language</h3>
+                        <ul class="footer-menu">
+                            <li><a href="#">Spanish</a></li>
+                            <li><a href="#">English</a></li>
+                            <li><a href="#">Hindi</a></li>
+                            <li><a href="#">Arabic</a></li>
+                            <li><a href="#">Bengali</a></li>
+                            <li><a href="#">Portuguese</a></li>
+                            <li><a href="#">Russian </a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                    <div class="footer-column clearfix">
+                        <h3>My Account</h3>
+                        <ul class="footer-menu-last">
+                            <a href="#">Log In</a>
+                            <a href="#">Sign Up</a>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom text-center">
+
+
+            <div class="copyright"><strong>Teachiate</strong> @ All right reserve 2020.</div>
+            <div id="back-to-top" class="back-to-top">
+                <a href="javascript:void(0)">Back to Top <i class="icon-arrow-up"></i> </a>
+            </div>
+
+        </div>
+    </footer>
+    <!-- footer -->
+
+    <script src="assets/js/vendor/jquery.min.js"></script>
+    <script src="assets/js/plugins.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/bootstrap.js"></script>
+
+<!--     <script>
+        $('.responsive').slick({
+            dots: true,
+            infinite: false,
+            speed: 300,
+            loop: true,
+            slidesToShow: 5,
+            arrow: true,
+            autoplay: true,
+            slidesToScroll: 1,
+            responsive: [{
+                    breakpoint: 1200,
+                    settings: {
+                        slidesToShow: 3,
+                        slidesToScroll: 3,
+                        infinite: true,
+                        dots: true
+                    }
+                }, {
+                    breakpoint: 1024,
+                    settings: {
+                        slidesToShow: 3,
+                        slidesToScroll: 3,
+                        infinite: true,
+                        dots: true
+                    }
+                },
+                {
+                    breakpoint: 600,
+                    settings: {
+                        slidesToShow: 2,
+                        slidesToScroll: 2
+                    }
+                },
+                {
+                    breakpoint: 480,
+                    settings: {
+                        slidesToShow: 1,
+                        slidesToScroll: 1
+                    }
+                }
+                // You can unslick at a given breakpoint now by adding:
+                // settings: "unslick"
+                // instead of a settings object
+            ]
+        });
+
+    </script> -->
+
+    <script>
+        // tabbed content
+        // http://www.entheosweb.com/tutorials/css/tabs.asp
+        $(".tab_content").hide();
+        $(".tab_content:first").show();
+
+        /* if in tab mode */
+        $("ul.tabs li").click(function() {
+
+            $(".tab_content").hide();
+            var activeTab = $(this).attr("rel");
+            $("#" + activeTab).fadeIn();
+
+            $("ul.tabs li").removeClass("active");
+            $(this).addClass("active");
+
+            $(".tab_drawer_heading").removeClass("d_active");
+            $(".tab_drawer_heading[rel^='" + activeTab + "']").addClass("d_active");
+
+        });
+        /* if in drawer mode */
+        $(".tab_drawer_heading").click(function() {
+
+            $(".tab_content").hide();
+            var d_activeTab = $(this).attr("rel");
+            $("#" + d_activeTab).fadeIn();
+
+            $(".tab_drawer_heading").removeClass("d_active");
+            $(this).addClass("d_active");
+
+            $("ul.tabs li").removeClass("active");
+            $("ul.tabs li[rel^='" + d_activeTab + "']").addClass("active");
+        });
+
+
+        /* Extra class "tab_last" 
+           to add border to right side
+           of last tab */
+        $('ul.tabs li').last().addClass("tab_last");
+
+    </script>
+    <script>
+        //TOGGLING NESTED ul
+        $(".drop-down .selected a").click(function() {
+            $(".drop-down .options ul").toggle();
+        });
+
+        //SELECT OPTIONS AND HIDE OPTION AFTER SELECTION
+        $(".drop-down .options ul li a").click(function() {
+            var text = $(this).html();
+            $(".drop-down .selected a span").html(text);
+            $(".drop-down .options ul").hide();
+        });
+
+
+        //HIDE OPTIONS IF CLICKED ANYWHERE ELSE ON PAGE
+        $(document).bind('click', function(e) {
+            var $clicked = $(e.target);
+            if (!$clicked.parents().hasClass("drop-down"))
+                $(".drop-down .options ul").hide();
+        });
+
+    </script>
+  
+</body>
+
+</html>
