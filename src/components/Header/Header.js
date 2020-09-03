@@ -1,9 +1,13 @@
-import React from 'react'
+import React, { useEffect } from 'react';
 import MainMenu from '../MainMenu';
 import SearchBox from '../SearchBox/SearchBox';
 import Logo from '../Logo/Logo';
 
 const Header = () => {
+
+    useEffect(() => {
+    }, []);
+
     return (
         <>
             <header className="page-header" id="page-header">
