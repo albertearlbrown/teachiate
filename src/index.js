@@ -31,7 +31,10 @@ const store = createStore({
   islogin: false,
   userLogin: action((state) => {
     state.islogin = true;
-  })
+  }),
+  userLogout: action((state) => {
+    state.islogin = false;
+  })  
 });
 
 ReactDOM.render(

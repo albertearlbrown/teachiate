@@ -1,46 +1,142 @@
-import React from 'react'
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
+import { useStoreActions, useStoreState } from 'easy-peasy';
 
-const Login = () => {
+// Firebase App (the core Firebase SDK) is always required and
+// must be listed before other Firebase SDKs
+import * as firebase from "firebase/app";
+// // Add the Firebase services that you want to use
+import "firebase/auth";
+import "firebase/firestore";
+
+function Login() {
+
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const authStatus = useStoreState(state => state.islogin);
+    const loginAction = useStoreActions(actions => actions.userLogin);
+
+    const formHandler = async (e) => {
+        e.preventDefault();
+        try {
+            await firebase.auth().signInWithEmailAndPassword(email, password);
+        }      
+        catch(error) {
+            // Handle Errors here.
+            var errorMessage = error.message;
+
+            console.log(errorMessage);
+        }  
+    };
+
+    const facebookLogin = async (e) => {
+        e.preventDefault();        
+        try  {
+            const provider = new firebase.auth.FacebookAuthProvider();
+            const auth = await firebase.auth();
+            auth.signInWithPopup(provider).then((result) => {
+                
+                // The signed-in user info.
+                var user = result.user;    
+
+                if(user) {
+                    const property = {
+                        name: user.displayName,
+                        email: user.email,
+                        photoUrl: user.photoURL,
+                        emailVerified: user.emailVerified,
+                        uid: user.uid                        
+                    }
+                    localStorage.setItem('jwt_token', property);
+                    loginAction();
+                } 
+            });
+        }
+        catch(error) {
+            // Handle Errors here.
+            var errorMessage = error.message;            
+            console.log(errorMessage);
+        }
+    };
+
+    const googleLogin = async (e) => {
+        e.preventDefault();        
+        try  {
+            const provider = new firebase.auth.GoogleAuthProvider();
+            const auth = await firebase.auth();
+            auth.signInWithPopup(provider).then((result) => {
+
+                // The signed-in user info.
+                var user = result.user;    
+
+                if(user) {
+                    const property = {
+                        name: user.displayName,
+                        email: user.email,
+                        photoUrl: user.photoURL,
+                        emailVerified: user.emailVerified,
+                        uid: user.uid                        
+                    }
+                    localStorage.setItem('jwt_token', property);
+                    loginAction();
+                } 
+            });
+        }
+        catch(error) {
+            // Handle Errors here.
+            var errorMessage = error.message;            
+            console.log(errorMessage);
+        }
+    }
+
+
     return (
         <>
+            {authStatus ? <Redirect to='/'/> : null}
             <section className="main_register">
                 <div className="container">
                     <div className="main_signin_area">
                         <h2>Sign In</h2>
-                        <div className="register_field">
-                            <div className="row">
-                                <div className="col-md-12">
-                                    <div className="register_field_col">
-                                        <p>Email</p>
-                                        <input type="text" className="register_input" placeholder="" name=""/>
+                        <form method='POST' onSubmit={formHandler}>
+                            <div className="register_field">
+                                <div className="row">
+                                    <div className="col-md-12">
+                                        <div className="register_field_col">
+                                            <p>Email</p>
+                                            <input type="text" className="register_input" value={email}  onChange={(e) => setEmail(e.target.value)}/>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div className="row">
-                                <div className="col-md-12">
-                                    <div className="register_field_col">
-                                        <p>Password</p>
-                                        <input type="password" className="register_input" name=""/>
+                                <div className="row">
+                                    <div className="col-md-12">
+                                        <div className="register_field_col">
+                                            <p>Password</p>
+                                            <input type="password" className="register_input" value={password}  onChange={(e) => setPassword(e.target.value)}/>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div className="row">
-                                <div className="col-md-12">
-                                    <input type="submit" className="register_submit" value="Sign In" name=""/>
+                                <div className="row">
+                                    <div className="col-md-12">
+                                        <input type="submit" className="register_submit" value="Sign In"/>
+                                    </div>
                                 </div>
-                            </div>
-                            <ul className="made_accnt">
-                                <li><a href="/">Create New Account?</a></li>
-                                <li><a href="/">Forget Password?</a></li>
-                            </ul>
-                            <div className="other_login">
-                                <ul>
-                                    <li className="btn-with-facebook"><a href="/"><img src="/assets/img/facebook_login.png" alt=""/>Continue With Facebook</a></li>
-                                    <li className="btn-with-google"><a href="/"><img src="/assets/img/google_login.png" alt=""/>Continue With Google</a></li>
-                                    <li className="btn-with-apple"><a href="/"><img src="/assets/img/apple_login.png" alt=""/>Continue With Apple</a></li>
+                                <ul className="made_accnt">
+                                    <li><a href="/">Create New Account?</a></li>
+                                    <li><a href="/">Forget Password?</a></li>
                                 </ul>
-                            </div>
-                        </div>
+                                <div className="other_login">
+                                    <ul>
+                                        <li className="btn-with-facebook" onClick={facebookLogin}>
+                                            <Link to="#"><img src="/assets/img/facebook_login.png" alt=""/>Continue With Facebook</Link>
+                                        </li>
+                                        <li className="btn-with-google" onClick={googleLogin}>
+                                            <Link to="#"><img src="/assets/img/google_login.png" alt=""/>Continue With Google</Link>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>                            
+                        </form>
                     </div>
                 </div>
             </section>

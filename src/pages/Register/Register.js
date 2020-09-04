@@ -27,27 +27,11 @@ function Register() {
     const formHandler = async (e) => {
         e.preventDefault();
 
-        var roleIdentify;
-        switch(role) {
-            case 'Parent':
-                roleIdentify = 'P';
-                break;
-            case 'Teacher':
-                roleIdentify = 'T';
-                break;
-            case 'Student':
-                roleIdentify = 'S';
-                break;
-            default:
-                roleIdentify = 'E';
-                break;
-        }
-        console.log(`Accepted Term Condition: ${acceptTermCond}`);
-
         try {
+            console.log(role);
             await firebase.auth().createUserWithEmailAndPassword(email, password);
             var user = firebase.auth().currentUser;
-            await user.updateProfile({ displayName: fullName+roleIdentify });            
+            await user.updateProfile({ displayName: fullName });            
             await user.sendEmailVerification();
             await firebase.auth().signInWithEmailAndPassword(email, password);
             const auth = await firebase.auth();

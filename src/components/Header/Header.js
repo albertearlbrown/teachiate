@@ -2,40 +2,28 @@ import React, { useEffect } from 'react';
 import MainMenu from '../MainMenu';
 import SearchBox from '../SearchBox/SearchBox';
 import Logo from '../Logo/Logo';
+import { useStoreState } from 'easy-peasy';
 
-const Header = () => {
+const Header = () => {    
+
+    const auth = useStoreState(state => state.islogin);
 
     useEffect(() => {
     }, []);
 
     return (
         <>
-            <header className="page-header" id="page-header">
+           <header className="page-header page-header-inner" id="page-header">
                 <div className="bottom-header">
                     <div className="container clearfix">
                         <Logo/>
+
                         <div className="my_account">
-                            <a href="/" className="open-button"><img src="/assets/img/user-account.png" alt="My Account Icon"/>My Account</a>
-                        </div>
-                        <div className="form-popup" id="myForm">
-                            <form className="form-container">
-                                <h2>Sign in</h2>
-
-                                <label htmlFor="email">Name/Email</label>
-                                <input type="text" name="email" required/>
-
-                                <label htmlFor="psw">Password</label>
-                                <input type="password" name="psw" required/>
-
-                                <button type="submit" className="sign_in_btn">Sign In</button>
-                                <ul className="newnd_forget">
-                                    <li><a href="/">Create New Account?</a></li>
-                                    <li><a href="/">Forget Password?</a></li>
-                                </ul>
-                                <a href="/" className="btn-with-facebook"><img src="assets/img/facebook.png" alt=""/>Continue With Facebook</a>
-                                <a href="/" className="btn-with-google"><img src="assets/img/google.png" alt=""/>Continue With Google</a>
-                                <button type="button" className="btn cancel">Close</button>
-                            </form>
+                            <a href="/"  className="open-button">
+                                {auth ? (
+                                   <> <img src="assets/img/profile-image.png" alt="Sarah Jones"/> Sarah Jones <i className="icon-chevron-right"></i></>
+                                ) : <><img src="/assets/img/user-account.png" alt="My Account Icon"/>My Account</> }
+                            </a>
                         </div>
 
                         <div className="search-icon hidden-md-down"><i className="icon-search"></i></div>
