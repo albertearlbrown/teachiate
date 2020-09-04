@@ -12,9 +12,9 @@ const Home = () => {
 
     return (
         <>
-            {auth ? <div style={{marginBottom: '100px'}}></div> : <Banner/> }
+            {auth ? <div></div> : <Banner/> }
 
-        <section className="blog clearfix">
+        <section className="blog clearfix" style={{marginTop: '300px'}}>
             <div className="container">
                 <div className="blog_left">
                     <div className="blog_sec1">
