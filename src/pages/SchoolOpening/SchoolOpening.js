@@ -56,7 +56,7 @@ const SchoolOpening = () => {
         return (
             <>
                 <select onChange={stateHandler}>
-                    <option value=''>All States</option>
+                    <option value='All'>All States</option>
                     {states.map(i =>  <option data-state={i.state} value={i.state_code} key={i.state_code}>{i.state}</option>)}
                 </select>
             </>
@@ -67,7 +67,7 @@ const SchoolOpening = () => {
         return (
             <>
                 <select onChange={cityHandler}>
-                    <option value=''>Select a City</option>
+                    <option value='All'>Select a City</option>
                     {cities.map(i =>  <option value={i.city} key={i.id}>{i.city}</option>)}
                 </select>
             </>
