@@ -12,17 +12,14 @@ const Footer = () => {
             <footer className="page-footer">
                 <div className="container">
                     <div className="row">
-                        <div className="col-md-3 col-sm-6 col-xs-12">
+                        <div className="col-md-4 col-sm-6 col-xs-12">
                             <Logo/>
                             <FooterDesc/>
                         </div>
-                        <div className="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                        <div className="col-lg-4 col-md-4 col-sm-6 col-xs-12">
                             <FtrQuickLinks/>
-                        </div>                        
-                        <div className="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                            <FtrLanguageLinks/>
-                        </div>
-                        <div className="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                        </div>                 
+                        <div className="col-lg-4 col-md-4 col-sm-6 col-xs-12">
                             <FtrMyAccountLinks/>
                         </div>
                     </div>

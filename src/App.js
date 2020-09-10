@@ -7,9 +7,12 @@ import About from './pages/About';
 import Register from './pages/Register';
 import Groups from './pages/Groups';
 import Login from './pages/Login';
+import CreateSchoolOpeningUpdates from './pages/CreateSchoolOpeningUpdates';
 
+// Components
 import Header from './components/Header';
 import Footer from './components/Footer';
+import SchoolOpening from './pages/SchoolOpening/SchoolOpening';
 
 
 function App() {
@@ -41,6 +44,12 @@ function App() {
               </Route>         
               <Route path="/groups">
                 <Groups />
+              </Route>
+              <Route path="/opening-school-in-covid-siutation">
+                <SchoolOpening/>
+              </Route>
+              <Route path='/create-updates-for-school'>
+                <CreateSchoolOpeningUpdates/>
               </Route>
             </Switch>
           </div>

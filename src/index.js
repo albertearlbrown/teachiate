@@ -39,9 +39,7 @@ const store = createStore({
 
 ReactDOM.render(
   <StoreProvider store={store}>
-    <React.StrictMode>
       <App />
-    </React.StrictMode>
   </StoreProvider>,
 
   document.getElementById('root')

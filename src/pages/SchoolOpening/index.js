@@ -1,2 +1,2 @@
-import ProfileSettings from './ProfileSettings';
-export default ProfileSettings;
+import SchoolOpening from './SchoolOpening';
+export default SchoolOpening;

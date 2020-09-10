@@ -55,9 +55,7 @@
                         <ul class="menu-main-navigation menu clearfix">
                             <li class="menu-item-has-children"><a href="index.html">Home</a></li>
                             <li class="menu-item-has-children"><a href="about.html">About Us</a></li>
-                            <li class="menu-item-has-children"><a href="groups.html">Groups</a>
-
-                            </li>
+                            <li class="menu-item-has-children"><a href="groups.html">Groups</a></li>
                             <li class="menu-item-has-children"><a href="forums.html">Forums</a></li>
                             <li class="menu-item-has-children"><a href="people.html"> People</a></li>
                             <li class="menu-item-has-children"><a href="blog.html"> Blogs</a></li>
@@ -120,9 +118,7 @@
                 <div class="blog_article_left">
                     <div class="blog_article_title">
                         <h2>If you would like to submit your Blog Article to <a href="">Teachiate.com</a></h2>
-                        <div class="text-center">
-                            <input type="file" class="sub_btn">
-                        </div>
+                        <button type="button" class="btn btn-primary create_blog_btn" data-toggle="modal" data-target="#exampleModal"><span>Submit Your Blog</span></button>
                     </div>
                     <div class="blog_article_list">
                         <div class="row">
@@ -600,6 +596,52 @@
 
         </div>
     </footer>
+
+
+
+    <div class="create_blog_page modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="container">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <h2>Create Blog</h2>
+                <div class="blog_create_area">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="register_field_col">
+                                <p>Add Image</p>
+                                <div class="field input">
+                                  <input id="atch_photo" type="text" name="new_file" value="" class="register_input" placeholder="Select file">
+                                  <input type="file" name="uploaded_file" class="file_input_with_replacement">
+                                  <label for="atch_photo" class="photo_attatch_btn">Select Image</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="register_field_col">
+                            <p>Title</p>
+                                <input type="text" class="register_input" name="" placeholder="Enter title">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="register_field_col">
+                                <p>Description</p>
+                                <textarea class="register_textarea" placeholder="Enter description"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <input type="submit" class="register_submit" value="SUBMIT" name="">
+                        </div>
+                    </div>
+                </div>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+          </div>
+      </div>
+    </div>
 
 
 

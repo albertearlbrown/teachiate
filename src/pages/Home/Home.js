@@ -14,7 +14,7 @@ const Home = () => {
         <>
             {auth ? <div></div> : <Banner/> }
 
-        <section className="blog clearfix" style={{marginTop: '300px'}}>
+        <section className="blog clearfix">
             <div className="container">
                 <div className="blog_left">
                     <div className="blog_sec1">
