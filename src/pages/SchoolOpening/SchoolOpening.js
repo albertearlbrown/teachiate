@@ -12,8 +12,8 @@ const SchoolOpening = () => {
     const [posts, setPosts] = useState([]);
     const [loadPosts, setLoadPosts] = useState(false);    
 
-    const [state, setState] = useState('');
-    const [city, setCity] = useState('');
+    const [state, setState] = useState('All');
+    const [city, setCity] = useState('All');
 
     useEffect(() => {
 
@@ -107,14 +107,15 @@ const SchoolOpening = () => {
                         <div className="blog_left school">
                             <div className="padding_all_side opening_schhol">
                                 <ul className="list_city">
-                                    <li>State: <span>{state === '' ? 'All' : state}</span></li>
-                                    <li>City: <span>{city === '' ? 'All' : city}</span></li>
+                                    <li>State: <span>{state === 'All' ? 'All' : state}</span></li>
+                                    <li>City: <span>{city === 'All' ? 'All' : city}</span></li>
                                 </ul>
                             </div>                        
 
 
-                            {loadPosts && state === '' & city === '' ? (
+                            {loadPosts && state === 'All' & city === 'All' ? (
                                 posts
+                                .filter(post => post.spotlight === 1)
                                 .map(post => (
                                     <div className="blog_sec4 open" key={post.id}>
                                         <div className="opeing_list">
@@ -192,9 +193,9 @@ const SchoolOpening = () => {
                                 ))
                             ): null }
 
-                            {loadPosts && state !== '' && city === '' ? (
+                            {loadPosts && state !== 'All' && city === 'All' ? (
                                 posts
-                                .filter(post => post.state_code === state )
+                                .filter(post => post.state_code === state && post.spotlight === 1)
                                 .map(post => (
                                     <div className="blog_sec4 open" key={post.id}>
                                         <div className="opeing_list">
@@ -273,9 +274,9 @@ const SchoolOpening = () => {
                             ): null }                                                                   
 
 
-                            {loadPosts && state !== '' && city !== '' ? (
+                            {loadPosts && state !== 'All' && city !== 'All' ? (
                                 posts
-                                .filter(post => post.state_code === state  && post.city === city)
+                                .filter(post => post.state_code === state  && post.city === city && post.spotlight === 1)
                                 .map(post => (
                                     <div className="blog_sec4 open" key={post.id}>
                                         <div className="opeing_list">

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { useStoreActions } from 'easy-peasy'; 
+import { useStoreActions, useStoreState } from 'easy-peasy'; 
 
 import Home from './pages/Home';
 import About from './pages/About';
@@ -13,10 +13,11 @@ import CreateSchoolOpeningUpdates from './pages/CreateSchoolOpeningUpdates';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import SchoolOpening from './pages/SchoolOpening/SchoolOpening';
-
+import PrivateRoute from './components/PrivateRoute';
 
 function App() {
 
+  let islogin = useStoreState(state => state.islogin);
   let userLogin = useStoreActions(actions => actions.userLogin);
   
   useEffect(() => {
@@ -48,10 +49,8 @@ function App() {
               <Route path="/opening-school-in-covid-siutation">
                 <SchoolOpening/>
               </Route>
-              <Route path='/create-updates-for-school'>
-                <CreateSchoolOpeningUpdates/>
-              </Route>
-            </Switch>
+              <PrivateRoute path='/create-post' component={CreateSchoolOpeningUpdates}/>              
+             </Switch>
           </div>
           <Footer/>
       </Router>

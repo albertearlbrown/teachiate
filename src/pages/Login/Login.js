@@ -9,6 +9,7 @@ import * as firebase from "firebase/app";
 // // Add the Firebase services that you want to use
 import "firebase/auth";
 import "firebase/firestore";
+import axios from 'axios';
 
 function Login() {
 
@@ -16,18 +17,25 @@ function Login() {
     const [password, setPassword] = useState('');
     const authStatus = useStoreState(state => state.islogin);
     const loginAction = useStoreActions(actions => actions.userLogin);
+    const [error, setError] = useState('');
 
     const formHandler = async (e) => {
         e.preventDefault();
-        try {
-            await firebase.auth().signInWithEmailAndPassword(email, password);
-        }      
-        catch(error) {
-            // Handle Errors here.
-            var errorMessage = error.message;
 
-            console.log(errorMessage);
-        }  
+        const resp = await axios.post('http://localhost:3000/auth/login', {
+            email: email,
+            password: password            
+        });
+
+        if(resp.data.success === true) {
+            localStorage.setItem('jwt_token', resp.data.token);
+            setError('');
+            loginAction();            
+        }
+
+        else {
+            setError(resp.data.message);
+        }
     };
 
     const facebookLogin = async (e) => {
@@ -93,7 +101,7 @@ function Login() {
 
     return (
         <>
-            {authStatus ? <Redirect to='/'/> : null}
+            {authStatus ? <Redirect to='/opening-school-in-covid-siutation'/> : null}
             <section className="main_register">
                 <div className="container">
                     <div className="main_signin_area">
@@ -102,6 +110,7 @@ function Login() {
                             <div className="register_field">
                                 <div className="row">
                                     <div className="col-md-12">
+                                        {error !== '' ? <p>Error: {error}</p> : null}
                                         <div className="register_field_col">
                                             <p>Email</p>
                                             <input type="text" className="register_input" value={email}  onChange={(e) => setEmail(e.target.value)}/>
@@ -125,7 +134,7 @@ function Login() {
                                     <li><a href="/">Create New Account?</a></li>
                                     <li><a href="/">Forget Password?</a></li>
                                 </ul>
-                                <div className="other_login">
+                                {/* <div className="other_login">
                                     <ul>
                                         <li className="btn-with-facebook" onClick={facebookLogin}>
                                             <Link to="#"><img src="/assets/img/facebook_login.png" alt=""/>Continue With Facebook</Link>
@@ -134,7 +143,7 @@ function Login() {
                                             <Link to="#"><img src="/assets/img/google_login.png" alt=""/>Continue With Google</Link>
                                         </li>
                                     </ul>
-                                </div>
+                                </div> */}
                             </div>                            
                         </form>
                     </div>

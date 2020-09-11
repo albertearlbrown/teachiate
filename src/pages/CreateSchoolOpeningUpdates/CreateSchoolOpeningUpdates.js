@@ -18,6 +18,7 @@ function CreateSchoolOpeningUpdates() {
     const [stateCode, setStateCode] = useState('');
     const [cityID, setCityID] = useState('');
     const [status, setStatus] = useState(false);
+    const [token, setToken] = useState('');
 
     useEffect(() => {
        async function fetchStates() {
@@ -25,8 +26,9 @@ function CreateSchoolOpeningUpdates() {
             setStates([...resp.data.data]);
             setLoadStates(true);           
        }
-       
-       fetchStates();
+
+       fetchStates();  
+       setToken(localStorage.getItem('jwt_token'));
     }, []);
 
     const stateHandler = async (e) => {
@@ -73,42 +75,53 @@ function CreateSchoolOpeningUpdates() {
     }
 
     const formHandler = async (e) => {
-        e.preventDefault();
-        const data = new FormData()
-        data.append('file', selectedFile);
-        const resp =  await axios.post("https://teachiate-backend.fnmotivations.com/upload", data); 
+        e.preventDefault();       
 
-        if(resp.data.success === true) {
-            
-            const finalResp = await axios.post('https://teachiate-backend.fnmotivations.com/posts', {
-                title,
-                description,
-                filePath: resp.data.filePath,
-                sourceName,
-                sourceUrl,
-                stateCode,
-                cityID
-            });
+        var filePath = null;
 
-            if(finalResp.data.success == true) {
-                setStatus(true);
-
-                // Make Empty
-                setTitle('');
-                setDescription('');
-                setSourceName('');
-                setSourceUrl('');
-                setStateCode('')
-                setCityID('');
-                setStates([]);
-                setSelectedFile(null);
+        if(selectedFile !== null) {
+            const data = new FormData()
+            data.append('file', selectedFile);
+            const resp =  await axios.post("https://teachiate-backend.fnmotivations.com/upload", data); 
+            if(resp.data.success === true) { 
+                filePath = resp.data.filePath;
             }
         }
+    
+        const postData = {
+            title,
+            description,
+            filePath,
+            sourceName,
+            sourceUrl,
+            stateCode,
+            cityID                
+        }            
+        const finalResp = await axios.post('https://teachiate-backend.fnmotivations.com/posts', postData, {
+            headers: {
+            'authorization': `Bearer ${token}`
+            }
+        });
+
+        if(finalResp.data.success == true) {
+            setStatus(true);
+
+            // Make Empty
+            setTitle('');
+            setDescription('');
+            setSourceName('');
+            setSourceUrl('');
+            setStateCode('')
+            setCityID('');
+            setStates([]);
+            setSelectedFile(null);
+        }
+        
     }
 
     return (
         <>
-            {status === true ? <Redirect to="/create-updates-for-school"/> : null}
+            {status === true ? <Redirect to="/opening-school-in-covid-siutation"/> : null}
         
             <section className="teachiate_create_forum_post">
                 <div className="container">

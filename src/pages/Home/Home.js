@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import Banner from '../../components/HomeBanner';
 import { useStoreState } from 'easy-peasy';
+import PageTitle from '../../components/PageTitle';
 
 const Home = () => {
     
@@ -12,7 +13,7 @@ const Home = () => {
 
     return (
         <>
-            {auth ? <div></div> : <Banner/> }
+         {auth ? <div style={{marginTop: '100px'}}></div> : <Banner/> }        
 
         <section className="blog clearfix">
             <div className="container">

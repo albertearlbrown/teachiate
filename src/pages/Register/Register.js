@@ -8,6 +8,7 @@ import * as firebase from "firebase/app";
 // // Add the Firebase services that you want to use
 import "firebase/auth";
 import "firebase/firestore";
+import axios from 'axios';
 
 function Register() {
 
@@ -28,26 +29,20 @@ function Register() {
         e.preventDefault();
 
         try {
-            console.log(role);
-            await firebase.auth().createUserWithEmailAndPassword(email, password);
-            var user = firebase.auth().currentUser;
-            await user.updateProfile({ displayName: fullName });            
-            await user.sendEmailVerification();
-            await firebase.auth().signInWithEmailAndPassword(email, password);
-            const auth = await firebase.auth();
-            auth.onAuthStateChanged((user) => {
-                if(user) {
-                    const property = {
-                        name: user.displayName,
-                        email: user.email,
-                        photoUrl: user.photoURL,
-                        emailVerified: user.emailVerified,
-                        uid: user.uid                        
-                    }
-                    localStorage.setItem('jwt_token', property);
-                    loginAction();
-                }               
-            });          
+
+            const data = {
+                fullname: fullName,
+                email,
+                password,
+                role
+            };
+
+            const resp = await axios.post('http://localhost:3000/auth/join', data);
+
+            if(resp.data.success === true) {
+                localStorage.setItem('jwt_token', resp.data.token);
+                loginAction();
+            }
         }
         catch(error) {
             console.log(error);

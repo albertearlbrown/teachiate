@@ -3364,8 +3364,7 @@ label {
 
 .open {
     overflow: scroll;
-    /* height: 1000px; */
-
+    height: auto;
 }
 
 .school .blog_sec4 {
@@ -13197,6 +13196,3 @@ h2.sec_title {
     margin-bottom: 0;
 }
 }
-
-/*ritam*/
-

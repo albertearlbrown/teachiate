@@ -1,18 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
-import { useStoreState, useStoreActions } from 'easy-peasy';
 
 function MainMenu() {
-    
-    const authState = useStoreState(state => state.islogin); 
-    const logoutAction = useStoreActions(actions => actions.userLogout); 
-
-    const logoutUser = (e) => {
-        e.preventDefault();
-        logoutAction();
-        localStorage.clear();   
-        window.location.replace("/");
-    };
 
     return (
         <>
@@ -25,7 +14,6 @@ function MainMenu() {
                         <li className="menu-item-has-children"><Link to="/">Forums</Link></li>
                         <li className="menu-item-has-children"><Link to="/"> People</Link></li>
                         <li className="menu-item-has-children"><Link to="/"> Blogs</Link></li>
-                        {authState ? <li className="menu-item-has-children"><Link to="/" onClick={logoutUser}> Logout</Link></li> : <></>}                        
                     </ul>
                 </nav>
             </div>           
