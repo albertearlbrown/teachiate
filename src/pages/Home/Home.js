@@ -15,7 +15,7 @@ const Home = () => {
         <>
          {auth ? <div style={{marginTop: '100px'}}></div> : <Banner/> }        
 
-        {/* <section className="blog clearfix">
+        <section className="blog clearfix">
             <div className="container">
                 <div className="blog_left">
                     <div className="blog_sec1">
@@ -419,7 +419,7 @@ const Home = () => {
                 </div>
 
             </div>
-        </section> */}
+        </section>
 
         </>
     );

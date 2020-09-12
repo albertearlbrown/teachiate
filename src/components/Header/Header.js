@@ -36,7 +36,6 @@ const Header = () => {
 
                                     <div class="my_account_open">
                                         <ul>                                            
-                                            <li><Link to='/my-profile'>My Profile</Link></li>
                                             <li><Link to="/create-post">Create Post</Link></li>
                                             <li><Link to="/" onClick={logoutUser}>Lagout</Link></li>                                            
                                         </ul>
