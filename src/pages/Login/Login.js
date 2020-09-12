@@ -22,7 +22,7 @@ function Login() {
     const formHandler = async (e) => {
         e.preventDefault();
 
-        const resp = await axios.post('http://localhost:3000/auth/login', {
+        const resp = await axios.post('https://teachiate-backend.fnmotivations.com/auth/login', {
             email: email,
             password: password            
         });
