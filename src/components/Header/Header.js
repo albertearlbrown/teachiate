@@ -10,7 +10,8 @@ const Header = () => {
 
     const auth = useStoreState(state => state.islogin);
     const logoutAction = useStoreActions(actions => actions.userLogout); 
-   
+    const [dropdown, setDropdown] = useState(false);
+
     useEffect(() => {
 
     }, []);
@@ -21,6 +22,15 @@ const Header = () => {
         localStorage.clear();   
     };    
 
+    const toggle = () => {
+        if(dropdown) {
+            setDropdown(false);
+        }
+        else {
+            setDropdown(true);
+        }
+    }
+
     return (
         <>
            <header className="page-header page-header-inner" id="page-header">
@@ -28,7 +38,7 @@ const Header = () => {
                     <div className="container clearfix">
                         <Logo/>
 
-                        <div className='my_account active'>
+                        <div className={dropdown ? 'my_account active' : 'my_account'}  onClick={toggle}>
                             {auth ? (
                                 <> <img src="assets/img/user-account.png" alt="Sarah Jones"/> {
                                         jwt_decode(localStorage.getItem('jwt_token')).payload.fullname

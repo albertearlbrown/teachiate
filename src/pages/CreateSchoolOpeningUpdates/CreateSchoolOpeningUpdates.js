@@ -102,7 +102,7 @@ function CreateSchoolOpeningUpdates() {
             }
         });
 
-        if(finalResp.data.success == true) {
+        if(finalResp.data.success === true) {
             setStatus(true);
 
             // Make Empty

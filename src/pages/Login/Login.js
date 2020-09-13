@@ -101,7 +101,7 @@ function Login() {
 
     return (
         <>
-            {authStatus ? <Redirect to='/opening-school-in-covid-siutation'/> : null}
+            {authStatus ? <Redirect to='/'/> : null}
             <section className="main_register">
                 <div className="container">
                     <div className="main_signin_area">

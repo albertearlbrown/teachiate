@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Banner from '../../components/HomeBanner';
+import Moment from 'react-moment';
 import { useStoreState } from 'easy-peasy';
 import axios from 'axios';
 
@@ -7,12 +8,15 @@ const Home = () => {
     
     const auth = useStoreState(state => state.islogin);
     const [postData, setPostData] = useState([]);
+    const [description, setDescription] = useState('');
     const [load, setLoad] = useState(false);
+    const [selectedFile, setSelectedFile] = useState(null);
+    const [token, setToken] = useState('');
 
     useEffect(() => {
         window.scrollTo(0, 0);
         async function fetchPosts() {
-            const resp = await axios.get('https://teachiate-backend.fnmotivations.com/posts');
+            const resp = await axios.get('http://localhost:3000/thoughts');
             if(resp.data.success === true) {
                 setPostData([...resp.data.data]);        
                 setLoad(true);
@@ -20,7 +24,46 @@ const Home = () => {
         }
 
         fetchPosts();
+        if(localStorage.getItem('jwt_token')) {
+            setToken(localStorage.getItem('jwt_token'));
+        }
     }, []);
+
+
+    const formHandler = async (e) => {
+        setDescription('');
+        setSelectedFile(null);
+
+        e.preventDefault();
+
+        var filepath = null;
+
+        if(selectedFile !== null) {
+            const data = new FormData()
+            data.append('file', selectedFile);
+            const resp =  await axios.post("https://teachiate-backend.fnmotivations.com/upload", data); 
+            if(resp.data.success === true) { 
+                filepath = resp.data.filePath;
+            }
+        }               
+
+        const data = {
+            description,
+            filepath
+        }
+
+        const resp = await axios.post('http://localhost:3000/thoughts', data, {
+            headers: {
+                'authorization': `Bearer ${token}`
+            }
+        });
+
+        if(resp.data.success === true) {
+            setDescription('');
+            setSelectedFile(null);
+            alert('Post Created');            
+        }   
+    }
 
     return (
         <>
@@ -33,41 +76,43 @@ const Home = () => {
                     {auth ? (
                         <div className="post_share">
                         <h2>Share your thoughts</h2>
-                        <div class="post_share_area">
-                            <div class="posted_avtar"><img src="assets/img/g4.png" alt=""/></div>
-                            <div class="post_share_field">
-                                <textarea placeholder="Sarah What’s are your mind?"></textarea>
-                                <div class="adv_post_opt clearfix">
-                                    <div class="share_type">
-                                        <ul>
-                                            <li>
-                                                <div class="share_type_col">
-                                                    <input type='file' id="imageUpload3" accept=".png, .jpg, .jpeg" />
-                                                    <label for="imageUpload3"><span><img src="assets/img/upload_photo_icon.png" alt=""/></span>Photos</label>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="share_type_col">
-                                                    <input type='file' id="imageUpload4" accept=".mp3" />
-                                                    <label for="imageUpload5"><span><img src="assets/img/upload_music_icon.png" alt=""/>
-                                                    </span>Music</label>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="share_type_col">
-                                                    <input type='file' id="imageUpload5" accept=".mp4, .flv" />
-                                                    <label for="imageUpload5"><span><img src="assets/img/upload_video_icon.png" alt=""/>
-                                                    </span>Video</label>
-                                                </div>
-                                            </li>
-                                        </ul>
+                        <div className="post_share_area">
+                            <div className="posted_avtar"><img src="assets/img/g4.png" alt=""/></div>
+                            <form method="POST" encType="multipart/form-data" onSubmit={formHandler}>
+                                <div className="post_share_field">
+                                    <textarea placeholder="Sarah What’s are your mind?" onChange={(e) => setDescription(e.target.value)}></textarea>
+                                    <div className="adv_post_opt clearfix">
+                                        <div className="share_type">
+                                            <ul>
+                                                <li>
+                                                    <div className="share_type_col">
+                                                        <input type='file' name="file" id="imageUpload3" accept=".png, .jpg, .jpeg"  onChange={(e) => setSelectedFile(e.target.files[0])}/>
+                                                        <label htmlFor="imageUpload3"><span><img src="assets/img/upload_photo_icon.png" alt=""/></span>Photos</label>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div className="share_type_col">
+                                                        <input type='file'  name="file"  id="imageUpload4" accept=".mp3" onChange={(e) => setSelectedFile(e.target.files[0])}/>
+                                                        <label htmlFor="imageUpload5"><span><img src="assets/img/upload_music_icon.png" alt=""/>
+                                                        </span>Music</label>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div className="share_type_col">
+                                                        <input type='file'  name="file"  id="imageUpload5" accept=".mp4, .flv" onChange={(e) => setSelectedFile(e.target.files[0])}/>
+                                                        <label htmlFor="imageUpload5"><span><img src="assets/img/upload_video_icon.png" alt=""/>
+                                                        </span>Video</label>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div className="share_option_right">
+                                        <h4>Post In:</h4>
+                                        <input type="submit" value="Post" name=""/>
                                     </div>
                                 </div>
-                                <div class="share_option_right">
-                                    <h4>Post In:</h4>
-                                    <input type="submit" value="Post" name=""/>
-                                </div>
-                            </div>
+                            </form>
                         </div>
                     </div>
                     ) : null}
@@ -76,23 +121,26 @@ const Home = () => {
 
                     {load ? 
                         postData
-                        .filter(post => post.spotlight === 0)
                         .map(post => (
 
-                            <div className="blog_sec1">
+                            <div className="blog_sec1" key={post.id}>
                                 <div className="blog_title">
                                     <div className="title_img"><img src="assets/img/katei-knapp.png" alt=""/></div>
                                     <div className="user_des">
-                                        <h4>Katie Knapp <span>(Teacher)</span></h4>
-                                        <p>posted an update in the group <strong>Teachers library </strong> </p>
+                                        <h4>{post.fullname} <span>{post.role}</span></h4>
+                                        <p>posted in the (<strong>profile</strong>)</p>
                                     </div>
-                                    <div className="time">11 hours ago</div>
+                                    <div className="time">
+                                        {console.log(post.created_at)}
+                                        <Moment fromNow>
+                                            {post.created_at}
+                                        </Moment>
+                                    </div>
                                 </div>
-                                <div className="blog_img_holder1"><img src="assets/img/blog-img1.jpg" alt=""/></div>
+                                {post.filepath ? <div className="blog_img_holder1"><img src={post.filepath} alt=""/></div> : null }
+
                                 <div className="blog_des">
-                                    <p>“The mediocre teacher tells. The good teacher explains. The superior teacher demonstrates. The great teacher inspires.”
-        
-                                        <span>- William Arthur Ward</span></p>
+                                    <p>{post.description}</p>
                                 </div>
                                 <div className="blog_feedback clearfox">
                                     <a href="/">
