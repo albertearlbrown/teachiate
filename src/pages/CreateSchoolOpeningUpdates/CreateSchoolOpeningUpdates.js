@@ -92,12 +92,11 @@ function CreateSchoolOpeningUpdates() {
             title,
             description,
             filePath,
-            sourceName,
             sourceUrl,
             stateCode,
             cityID                
         }            
-        const finalResp = await axios.post('https://teachiate-backend.fnmotivations.com/posts', postData, {
+        const finalResp = await axios.post('https://teachiate-backend.fnmotivations.com/posts/covid', postData, {
             headers: {
             'authorization': `Bearer ${token}`
             }

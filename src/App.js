@@ -49,7 +49,7 @@ function App() {
               <Route path="/opening-school-in-covid-siutation">
                 <SchoolOpening/>
               </Route>
-              <PrivateRoute path='/create-post' component={CreateSchoolOpeningUpdates}/>              
+              <PrivateRoute path='/create-covid-post' component={CreateSchoolOpeningUpdates}/>              
              </Switch>
           </div>
           <Footer/>

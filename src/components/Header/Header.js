@@ -35,8 +35,10 @@ const Header = () => {
                                     } <i className="icon-chevron-right"></i>
 
                                     <div class="my_account_open">
-                                        <ul>                                            
-                                            <li><Link to="/create-post">Create Post</Link></li>
+                                        <ul>                                         
+                                            {jwt_decode(localStorage.getItem('jwt_token')).payload.role === 'Admin' ? 
+                                                (<li><Link to="/create-covid-post">Create Covid Post</Link></li>)  : null
+                                            }
                                             <li><Link to="/" onClick={logoutUser}>Lagout</Link></li>                                            
                                         </ul>
                                     </div>                                        

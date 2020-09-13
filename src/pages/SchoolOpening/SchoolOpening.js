@@ -18,7 +18,7 @@ const SchoolOpening = () => {
     useEffect(() => {
 
         async function fetchUpdates() {
-            const resp =  await axios.get('https://teachiate-backend.fnmotivations.com/posts');
+            const resp =  await axios.get('https://teachiate-backend.fnmotivations.com/posts/covid');
             setPosts([...resp.data.data]);
             setLoadPosts(true);   
         }
@@ -115,7 +115,6 @@ const SchoolOpening = () => {
 
                             {loadPosts && state === 'All' & city === 'All' ? (
                                 posts
-                                .filter(post => post.spotlight === 1)
                                 .map(post => (
                                     <div className="blog_sec4 open" key={post.id}>
                                         <div className="opeing_list">
@@ -195,7 +194,7 @@ const SchoolOpening = () => {
 
                             {loadPosts && state !== 'All' && city === 'All' ? (
                                 posts
-                                .filter(post => post.state_code === state && post.spotlight === 1)
+                                .filter(post => post.state_code === state)
                                 .map(post => (
                                     <div className="blog_sec4 open" key={post.id}>
                                         <div className="opeing_list">
@@ -276,7 +275,7 @@ const SchoolOpening = () => {
 
                             {loadPosts && state !== 'All' && city !== 'All' ? (
                                 posts
-                                .filter(post => post.state_code === state  && post.city === city && post.spotlight === 1)
+                                .filter(post => post.state_code === state  && post.city === city)
                                 .map(post => (
                                     <div className="blog_sec4 open" key={post.id}>
                                         <div className="opeing_list">

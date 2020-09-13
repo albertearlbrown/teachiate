@@ -1,14 +1,25 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Banner from '../../components/HomeBanner';
 import { useStoreState } from 'easy-peasy';
-import PageTitle from '../../components/PageTitle';
+import axios from 'axios';
 
 const Home = () => {
     
     const auth = useStoreState(state => state.islogin);
+    const [postData, setPostData] = useState([]);
+    const [load, setLoad] = useState(false);
 
     useEffect(() => {
         window.scrollTo(0, 0);
+        async function fetchPosts() {
+            const resp = await axios.get('https://teachiate-backend.fnmotivations.com/posts');
+            if(resp.data.success === true) {
+                setPostData([...resp.data.data]);        
+                setLoad(true);
+            }
+        }
+
+        fetchPosts();
     }, []);
 
     return (
@@ -18,135 +29,42 @@ const Home = () => {
         <section className="blog clearfix">
             <div className="container">
                 <div className="blog_left">
-                    <div className="blog_sec1">
-                        <div className="blog_title">
-                            <div className="title_img"><img src="assets/img/katei-knapp.png" alt=""/></div>
-                            <div className="user_des">
-                                <h4>Katie Knapp <span>(Teacher)</span></h4>
-                                <p>posted an update in the group <strong>Teachers library </strong> </p>
-                            </div>
-                            <div className="time">11 hours ago</div>
-                        </div>
-                        <div className="blog_img_holder1"><img src="assets/img/blog-img1.jpg" alt=""/></div>
-                        <div className="blog_des">
-                            <p>“The mediocre teacher tells. The good teacher explains. The superior teacher demonstrates. The great teacher inspires.”
 
-                                <span>- William Arthur Ward</span></p>
-                        </div>
-                        <div className="blog_feedback clearfox">
-                            <a href="/">
-                                <div className="flower"><img src="assets/img/flower.svg" alt=""/><span>25</span></div>
-                            </a>
-                            <a href="/">
-                                <div className="love"><img src="assets/img/love.svg" alt=""/><span>12</span></div>
-                            </a>
-                            <a href="/">
-                                <div className="share"><span>share</span><img src="assets/img/share.svg" alt=""/></div>
-                            </a>
-                        </div>
-                    </div>
-                    <div className="blog_sec2">
-                        <div className="blog_title">
-                            <div className="title_img"><img src="assets/img/katie-kanapp.jpg" alt=""/></div>
-                            <div className="user_des">
-                                <h4>Katie Knapp <span>(Parent)</span></h4>
-                                <p>posted an update </p>
-                            </div>
-                            <div className="time"> 2 Days ago</div>
-                        </div>
-                        <div className="blog_img_holder1"><img src="assets/img/blog-img4.jpg" alt=""/></div>
-                        <div className="blog_des">
-                            <p>“The mediocre teacher tells. The good teacher explains. The superior teacher demonstrates. The great teacher inspires.”
+                    {load ? 
+                        postData
+                        .filter(post => post.spotlight === 0)
+                        .map(post => (
 
-                            </p>
-                        </div>
-                        <div className="blog_feedback clearfox">
-                            <a href="/">
-                                <div className="flower"><img src="assets/img/flower.svg" alt=""/><span>25</span></div>
-                            </a>
-                            <a href="/">
-                                <div className="love"><img src="assets/img/love.svg" alt=""/><span>12</span></div>
-                            </a>
-                            <a href="/">
-                                <div className="share"><span>share</span><img src="assets/img/share.svg" alt=""/></div>
-                            </a>
-                        </div>
-                    </div>
-                    <div className="blog_sec3">
-                        <div className="blog_title">
-                            <div className="title_img"><img src="assets/img/katei-kanapp-student.jpg" alt=""/></div>
-                            <div className="user_des">
-                                <h4>Katie Knapp <span>(Student)</span></h4>
-                                <p>posted an update </p>
-                            </div>
-                            <div className="time"> 2 Days ago</div>
-                        </div>
-                        <div className="blog-sec4">
-
-                            <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. </p>
-                        </div>
-                        <div className="blog_feedback clearfox">
-                            <a href="/">
-                                <div className="flower"><img src="assets/img/flower.svg" alt=""/><span>25</span></div>
-                            </a>
-                            <a href="/">
-                                <div className="love"><img src="assets/img/love.svg" alt=""/><span>12</span></div>
-                            </a>
-                            <a href="/">
-                                <div className="share"><span>share</span><img src="assets/img/share.svg" alt=""/></div>
-                            </a>
-                        </div>
-                    </div>
-                    <div className="blog_sec4">
-                        <div className="blog_title">
-                            <div className="title_img"><img src="assets/img/katie-kanapp.jpg" alt=""/></div>
-                            <div className="user_des">
-                                <h4>Katie Knapp <span>(Parent)</span></h4>
-                                <p>posted an update </p>
-                            </div>
-                            <div className="time"> 2 Days ago</div>
-                        </div>
-                        <div className="blog_img_holder1"><img src="assets/img/blog-img5.jpg" alt=""/></div>
-                        <div className="blog_des">
-                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. /Lorem Ipsum has been the industry's standard dummy text ever since.</p>
-                        </div>
-                        <div className="blog_feedback clearfox">
-                            <a href="/">
-                                <div className="flower"><img src="assets/img/flower.svg" alt=""/><span>25</span></div>
-                            </a>
-                            <a href="/">
-                                <div className="love"><img src="assets/img/love.svg" alt=""/><span>12</span></div>
-                            </a>
-                            <a href="/">
-                                <div className="share"><span>share</span><img src="assets/img/share.svg" alt=""/></div>
-                            </a>
-                        </div>
-                        <div className="blog_title margin_btm">
-                            <div className="title_img"><img src="assets/img/katei-re.png" alt=""/></div>
-                            <div className="user_des">
-                                <h4>Katie Knapp <span>(Parent)</span></h4>
-                                <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution. </p>
-                                <div className="replaied">
-                                    <div className="hour">12 Hours ago</div>
-                                    <div>Replied</div>
+                            <div className="blog_sec1">
+                                <div className="blog_title">
+                                    <div className="title_img"><img src="assets/img/katei-knapp.png" alt=""/></div>
+                                    <div className="user_des">
+                                        <h4>Katie Knapp <span>(Teacher)</span></h4>
+                                        <p>posted an update in the group <strong>Teachers library </strong> </p>
+                                    </div>
+                                    <div className="time">11 hours ago</div>
                                 </div>
-                            </div>
-                        </div>
-                        
-                        <div className="blog_title margin_right">
-                            <div className="title_img"><img src="assets/img/katei-girl.png" alt=""/></div>
-                            <div className="user_des">
-                                <h4>Katie Knapp <span>(Parent)</span></h4>
-                                <p>Readable content of a page when looking at its layout. The point of using Lorem .</p>
-                                <div className="replaied">
-                                    <div className="hour">12 Hours ago</div>
+                                <div className="blog_img_holder1"><img src="assets/img/blog-img1.jpg" alt=""/></div>
+                                <div className="blog_des">
+                                    <p>“The mediocre teacher tells. The good teacher explains. The superior teacher demonstrates. The great teacher inspires.”
+        
+                                        <span>- William Arthur Ward</span></p>
+                                </div>
+                                <div className="blog_feedback clearfox">
+                                    <a href="/">
+                                        <div className="flower"><img src="assets/img/flower.svg" alt=""/><span>25</span></div>
+                                    </a>
+                                    <a href="/">
+                                        <div className="love"><img src="assets/img/love.svg" alt=""/><span>12</span></div>
+                                    </a>
+                                    <a href="/">
+                                        <div className="share"><span>share</span><img src="assets/img/share.svg" alt=""/></div>
+                                    </a>
                                 </div>
                             </div>
 
-                        </div>
-                        
+                    )) : null}                    
 
-                    </div>
                     <a href="/" className="view_more mb-30">Load More Feeds</a>
                 </div>
 
