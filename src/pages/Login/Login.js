@@ -131,8 +131,8 @@ function Login() {
                                     </div>
                                 </div>
                                 <ul className="made_accnt">
-                                    <li><a href="/">Create New Account?</a></li>
-                                    <li><a href="/">Forget Password?</a></li>
+                                    <li><Link to="/register">Create New Account?</Link></li>
+                                    <li><Link to="/">Forget Password?</Link></li>
                                 </ul>
                                 {/* <div className="other_login">
                                     <ul>

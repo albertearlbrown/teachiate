@@ -26,9 +26,53 @@ const Home = () => {
         <>
          {auth ? <div style={{marginTop: '100px'}}></div> : <Banner/> }        
 
+
         <section className="blog clearfix">
             <div className="container">
                 <div className="blog_left">
+                    {auth ? (
+                        <div className="post_share">
+                        <h2>Share your thoughts</h2>
+                        <div class="post_share_area">
+                            <div class="posted_avtar"><img src="assets/img/g4.png" alt=""/></div>
+                            <div class="post_share_field">
+                                <textarea placeholder="Sarah What’s are your mind?"></textarea>
+                                <div class="adv_post_opt clearfix">
+                                    <div class="share_type">
+                                        <ul>
+                                            <li>
+                                                <div class="share_type_col">
+                                                    <input type='file' id="imageUpload3" accept=".png, .jpg, .jpeg" />
+                                                    <label for="imageUpload3"><span><img src="assets/img/upload_photo_icon.png" alt=""/></span>Photos</label>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="share_type_col">
+                                                    <input type='file' id="imageUpload4" accept=".mp3" />
+                                                    <label for="imageUpload5"><span><img src="assets/img/upload_music_icon.png" alt=""/>
+                                                    </span>Music</label>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="share_type_col">
+                                                    <input type='file' id="imageUpload5" accept=".mp4, .flv" />
+                                                    <label for="imageUpload5"><span><img src="assets/img/upload_video_icon.png" alt=""/>
+                                                    </span>Video</label>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="share_option_right">
+                                    <h4>Post In:</h4>
+                                    <input type="submit" value="Post" name=""/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    ) : null}
+
+
 
                     {load ? 
                         postData

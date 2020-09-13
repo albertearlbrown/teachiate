@@ -34,7 +34,7 @@ const Header = () => {
                                         jwt_decode(localStorage.getItem('jwt_token')).payload.fullname
                                     } <i className="icon-chevron-right"></i>
 
-                                    <div class="my_account_open">
+                                    <div className="my_account_open">
                                         <ul>                                         
                                             {jwt_decode(localStorage.getItem('jwt_token')).payload.role === 'Admin' ? 
                                                 (<li><Link to="/create-covid-post">Create Covid Post</Link></li>)  : null
