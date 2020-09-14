@@ -12,7 +12,8 @@ const Home = () => {
     const [load, setLoad] = useState(false);
     const [selectedFile, setSelectedFile] = useState(null);
     const [token, setToken] = useState('');
-
+    const [preview, setPreview] = useState(false);
+  
     useEffect(() => {
         window.scrollTo(0, 0);
         async function fetchPosts() {
@@ -29,6 +30,10 @@ const Home = () => {
         }
     }, []);
 
+
+    const fileHandler = (e) => {
+        setSelectedFile(e.target.files[0]);
+    };
 
     const formHandler = async (e) => {
         setDescription('');
@@ -86,7 +91,7 @@ const Home = () => {
                                             <ul>
                                                 <li>
                                                     <div className="share_type_col">
-                                                        <input type='file' name="file" id="imageUpload3" accept=".png, .jpg, .jpeg"  onChange={(e) => setSelectedFile(e.target.files[0])}/>
+                                                        <input type='file' name="file" id="imageUpload3" accept=".png, .jpg, .jpeg"  onChange={fileHandler}/>
                                                         <label htmlFor="imageUpload3"><span><img src="assets/img/upload_photo_icon.png" alt=""/></span>Photos</label>
                                                     </div>
                                                 </li>
@@ -109,12 +114,20 @@ const Home = () => {
                                     </div>
                                     <div className="share_option_right">
                                         <h4>Post In:</h4>
-                                        <input type="submit" value="Post" name=""/>
+                                        <input type="submit" value="Post" name=""/>                                                                                   
                                     </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
+                                </div>                                
+                            </form>                            
+                        </div>     
+
+
+                        {selectedFile !== null ? (
+                            <div className="preview">
+                                <img src={URL.createObjectURL(selectedFile)} style={{width: '100%'}}/>
+                                <button class="btn" onClick={() => setSelectedFile(null)}>X</button>
+                            </div>
+                        ) : null}                                                                              
+                    </div>                    
                     ) : null}
 
 
