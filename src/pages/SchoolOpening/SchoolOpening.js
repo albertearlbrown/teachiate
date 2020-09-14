@@ -153,7 +153,7 @@ const SchoolOpening = () => {
                                                         <p>City: <span>{post.city}</span></p>
                                                 </div>
                                                 <div className="bbc_news">
-                                                    <p><a href={post.source_url}>{post.source_name}</a></p>
+                                                    <p><a href={post.source_url}>Source</a></p>
                                                 </div>
                                             </div>
 
@@ -233,7 +233,7 @@ const SchoolOpening = () => {
                                                         <p>City: <span>{post.city}</span></p>
                                                 </div>
                                                 <div className="bbc_news">
-                                                    <p><a href={post.source_url}>{post.source_name}</a></p>
+                                                    <p><a href={post.source_url}>Source</a></p>
                                                 </div>
                                             </div>
 
@@ -314,7 +314,7 @@ const SchoolOpening = () => {
                                                         <p>City: <span>{post.city}</span></p>
                                                 </div>
                                                 <div className="bbc_news">
-                                                    <p><a href={post.source_url}>{post.source_name}</a></p>
+                                                    <p><a href={post.source_url}>Source</a></p>
                                                 </div>
                                             </div>
 

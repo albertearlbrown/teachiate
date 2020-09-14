@@ -126,7 +126,8 @@ const Home = () => {
                                 <img src={URL.createObjectURL(selectedFile)} style={{width: '100%'}}/>
                                 <button class="btn" onClick={() => setSelectedFile(null)}>X</button>
                             </div>
-                        ) : null}                                                                              
+                        ) : null}             
+                                                                                         
                     </div>                    
                     ) : null}
 

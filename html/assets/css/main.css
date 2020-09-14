@@ -12036,6 +12036,43 @@ h3.main_sec_title{
 .my_account_open ul li:hover{
     background-color: #dbe3e7;
 }
+.direct_cmnt_area {
+    width: 100%;
+    display: inline-block;
+    border-radius: 4px;
+    background-color: #fff;
+    box-shadow: 0 4px 20px rgb(0 0 0 / 8%);
+    padding: 10px;
+    margin-top: 15px;
+}
+.direct_cmnt_area textarea{
+    width: calc(100% - 100px);
+    float: left;
+    height: 60px;
+    border: none;
+    resize: none;
+    padding: 15px;
+    font-size: 16px;
+    color: #2b2a2a;
+    background-color: #dce3e8;
+}
+.direct_cmnt_area input[type=submit] {
+    float: right;
+    padding: 0 25px;
+    border-radius: 4px;
+    background-color: #043c6c;
+    line-height: 32px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    transition: all ease-in-out 0.3s;
+    margin-top: 13px;
+}
+.direct_cmnt_area input[type=submit]:hover{
+    background-color: #00aeef;
+}
 
 @media (max-width: 1400px){
     .post_share_field textarea {
@@ -13195,6 +13232,21 @@ h2.sec_title {
 .footer-column h3 {
     font-size: 16px;
     margin-bottom: 0;
+}
+.direct_cmnt_area input[type=submit]{
+    width: 100%;
+    margin-top: 8px;
+}
+.direct_cmnt_area textarea {
+    width: 100%;
+    font-size: 14px;
+    padding: 10px;
+}
+.direct_cmnt_area {
+    margin-top: 30px;
+}
+.blog_des p {
+    padding-bottom: 5px;
 }
 }
 
