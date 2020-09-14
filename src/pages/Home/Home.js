@@ -12,15 +12,26 @@ const Home = () => {
     const [load, setLoad] = useState(false);
     const [selectedFile, setSelectedFile] = useState(null);
     const [token, setToken] = useState('');
-    const [preview, setPreview] = useState(false);
+    const [startPost, setStartPost] = useState(0);
+    const [LoadMoreFeedBtn, setLoadMoreFeedBtn] = useState(false);
   
     useEffect(() => {
         window.scrollTo(0, 0);
         async function fetchPosts() {
-            const resp = await axios.get('https://teachiate-backend.fnmotivations.com/thoughts');
+            const resp = await axios.get('https://teachiate-backend.fnmotivations.com/thoughts', {
+                params: {
+                    from: startPost,
+                    to: 3
+                }
+            });
             if(resp.data.success === true) {
+                setStartPost(3);
                 setPostData([...resp.data.data]);        
                 setLoad(true);
+                setLoadMoreFeedBtn(true);
+            }
+            else {
+                setLoadMoreFeedBtn(false);                
             }
         }
 
@@ -69,6 +80,28 @@ const Home = () => {
             alert('Post Created');            
         }   
     }
+
+    const loadMoreArticles = async (e) => {
+        e.preventDefault();       
+
+        setStartPost(startPost + 3);        
+        const from = startPost + 3;
+
+        const resp = await axios.get('https://teachiate-backend.fnmotivations.com/thoughts', {
+            params: {
+                from: from,
+                to: 3
+            }
+        });
+        if(resp.data.success === true) {
+            const data =  postData.concat([...resp.data.data]);
+            setPostData([...data]);        
+        }    
+                
+        else {
+            setLoadMoreFeedBtn(false);
+        }
+    };
 
     return (
         <>
@@ -136,7 +169,6 @@ const Home = () => {
                     {load ? 
                         postData
                         .map(post => (
-
                             <div className="blog_sec1" key={post.id}>
                                 <div className="blog_title">
                                     <div className="title_img"><img src="assets/img/katei-knapp.png" alt=""/></div>
@@ -145,7 +177,6 @@ const Home = () => {
                                         <p>posted in the (<strong>profile</strong>)</p>
                                     </div>
                                     <div className="time">
-                                        {console.log(post.created_at)}
                                         <Moment fromNow>
                                             {post.created_at}
                                         </Moment>
@@ -171,7 +202,7 @@ const Home = () => {
 
                     )) : null}                    
 
-                    <a href="/" className="view_more mb-30">Load More Feeds</a>
+                    {LoadMoreFeedBtn ? <a href="#" onClick={loadMoreArticles} className="view_more mb-30">Load More Feeds</a> : null}
                 </div>
 
 
@@ -201,7 +232,7 @@ const Home = () => {
                                 </div>
                             </li>
                         </ul>
-                        <a href="/" className="view_more">View More Articles</a>
+                        <a href="#"  className="view_more">View More Articles</a>
                     </div>
                     <div className="letest_sec">
                         <div className="articles_title">
