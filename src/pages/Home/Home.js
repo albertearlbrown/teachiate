@@ -16,7 +16,7 @@ const Home = () => {
     useEffect(() => {
         window.scrollTo(0, 0);
         async function fetchPosts() {
-            const resp = await axios.get('http://localhost:3000/thoughts');
+            const resp = await axios.get('https://teachiate-backend.fnmotivations.com/thoughts');
             if(resp.data.success === true) {
                 setPostData([...resp.data.data]);        
                 setLoad(true);
@@ -52,7 +52,7 @@ const Home = () => {
             filepath
         }
 
-        const resp = await axios.post('http://localhost:3000/thoughts', data, {
+        const resp = await axios.post('https://teachiate-backend.fnmotivations.com/thoughts', data, {
             headers: {
                 'authorization': `Bearer ${token}`
             }
