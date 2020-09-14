@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Banner from '../../components/HomeBanner';
 import Moment from 'react-moment';
 import { useStoreState } from 'easy-peasy';
+import InfiniteLoader from 'react-infinite-loader';
 import axios from 'axios';
 
 const Home = () => {
@@ -14,6 +15,8 @@ const Home = () => {
     const [token, setToken] = useState('');
     const [startPost, setStartPost] = useState(0);
     const [LoadMoreFeedBtn, setLoadMoreFeedBtn] = useState(false);
+
+    
   
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -21,11 +24,11 @@ const Home = () => {
             const resp = await axios.get('https://teachiate-backend.fnmotivations.com/thoughts', {
                 params: {
                     from: startPost,
-                    to: 3
+                    to: 2
                 }
             });
             if(resp.data.success === true) {
-                setStartPost(3);
+                setStartPost(2);
                 setPostData([...resp.data.data]);        
                 setLoad(true);
                 setLoadMoreFeedBtn(true);
@@ -41,6 +44,9 @@ const Home = () => {
         }
     }, []);
 
+    window.scroll = (event) => {
+
+    };
 
     const fileHandler = (e) => {
         setSelectedFile(e.target.files[0]);
@@ -81,16 +87,15 @@ const Home = () => {
         }   
     }
 
-    const loadMoreArticles = async (e) => {
-        e.preventDefault();       
+    const loadMoreArticles = async () => {
 
-        setStartPost(startPost + 3);        
-        const from = startPost + 3;
+        setStartPost(startPost + 2);        
+        const from = startPost + 2;
 
         const resp = await axios.get('https://teachiate-backend.fnmotivations.com/thoughts', {
             params: {
                 from: from,
-                to: 3
+                to: 2
             }
         });
         if(resp.data.success === true) {
@@ -165,7 +170,6 @@ const Home = () => {
                     ) : null}
 
 
-
                     {load ? 
                         postData
                         .map(post => (
@@ -201,8 +205,9 @@ const Home = () => {
                             </div>
 
                     )) : null}                    
+                    
+                    {LoadMoreFeedBtn ? <InfiniteLoader onVisited={() => loadMoreArticles()}/>: null }
 
-                    {LoadMoreFeedBtn ? <a href="#" onClick={loadMoreArticles} className="view_more mb-30">Load More Feeds</a> : null}
                 </div>
 
 
