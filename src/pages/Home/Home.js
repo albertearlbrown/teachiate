@@ -162,7 +162,7 @@ const Home = () => {
                         {selectedFile !== null ? (
                             <div className="preview">
                                 <img src={URL.createObjectURL(selectedFile)} style={{width: '100%'}}/>
-                                <button class="btn" onClick={() => setSelectedFile(null)}>X</button>
+                                <button className="btn" onClick={() => setSelectedFile(null)}>X</button>
                             </div>
                         ) : null}             
                                                                                          
@@ -193,15 +193,39 @@ const Home = () => {
                                 </div>
                                 <div className="blog_feedback clearfox">
                                     <a href="/">
-                                        <div className="flower"><img src="assets/img/flower.svg" alt=""/><span>25</span></div>
+                                        <div className="flower"><img src="assets/img/flower.svg" alt=""/><span>0</span></div>
                                     </a>
                                     <a href="/">
-                                        <div className="love"><img src="assets/img/love.svg" alt=""/><span>12</span></div>
-                                    </a>
-                                    <a href="/">
-                                        <div className="share"><span>share</span><img src="assets/img/share.svg" alt=""/></div>
+                                        <div className="love"><img src="assets/img/love.svg" alt=""/><span>0</span></div>
                                     </a>
                                 </div>
+
+                                <div className="comm_se">
+                                    <ul>
+                                        <li><a href="#"> <span>like <i className="fa fa-thumbs-o-up" aria-hidden="true"></i></span></a></li>
+                                        <li> <a href="#"> <span>Comment <i className="fa fa-comment-o" aria-hidden="true"></i></span></a></li>
+                                        <li id='share-btn'><span>Share <i className="fa fa-share" aria-hidden="true"> 
+                                            </i></span>
+                                            <div className="share_post_via">
+                                                <ul>
+                                                    <li><a href="https://www.facebook.com/sharer.php?u="><span><i className="fa fa-facebook-square"></i></span>Facebook</a></li>
+                                                    <li><a href="http://twitter.com/share?text=&url="><span><i className="fa fa-twitter"></i></span>Twitter</a></li>
+                                                    <li><a href="https://www.instagram.com/?url="><span><i className="fa fa-instagram"></i></span>Instagram</a></li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li> <a href="#"> <span>Report <i className="fa fa-exclamation-triangle" aria-hidden="true"></i></span></a></li>
+                                    </ul>
+                                </div>
+                                {auth ? (
+                                    <>
+                                        <div className="direct_cmnt_area">
+                                            <textarea placeholder="write a comment"></textarea>
+                                            <input type="submit" value="Post" name=""/>
+                                        </div>                                    
+                                        </>
+                                ) : null}                                            
+                                
                             </div>
 
                     )) : null}                    
@@ -237,7 +261,7 @@ const Home = () => {
                                 </div>
                             </li>
                         </ul>
-                        <a href="#"  className="view_more">View More Articles</a>
+                        <a href="#"  className="view_more">View More</a>
                     </div>
                     <div className="letest_sec">
                         <div className="articles_title">
@@ -258,7 +282,7 @@ const Home = () => {
                                 </li>
 
                             </ul>
-                            <a href="/" className="view_more">View More Articles</a>
+                            <a href="/" className="view_more">View More</a>
                         </div>
                     </div>
                     <div className="recent_blog_comments">
@@ -283,7 +307,7 @@ const Home = () => {
                                 <li><a href="/">Virtual classNameroom to replace classNameroom lecturing in future</a></li>
                                 <li><a href="/">Evaluating the effectiveness of distance learning</a></li>
                             </ul>
-                            <a href="/" className="view_more">View More Articles</a>
+                            <a href="/" className="view_more">View More</a>
 
                         </div>
                     </div>
@@ -299,7 +323,7 @@ const Home = () => {
                                 <li><a href="/">Parents and Teachers Lounge </a></li>
                                 <li><a href="/">Teachers Lounge</a></li>
                             </ul>
-                            <a href="/" className="view_more">View More Articles</a>
+                            <a href="/" className="view_more">View More</a>
 
                         </div>
                     </div>

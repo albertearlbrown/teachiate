@@ -722,10 +722,3 @@ $(".open-button").click(function(){
 			// instead of a settings object
 		]
 	});
-
-	$(document).ready(function() {
-		$(document).on('click', '.my_account', function() {
-			alert(',,,');
-			$(this).toggleClass('active');
-		});
-	});

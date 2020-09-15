@@ -55,10 +55,12 @@ const SchoolOpening = () => {
      const displayStates = () => {    
         return (
             <>
-                <select onChange={stateHandler}>
-                    <option value='All'>All States</option>
-                    {states.map(i =>  <option data-state={i.state} value={i.state_code} key={i.state_code}>{i.state}</option>)}
-                </select>
+                <div className='select'>
+                    <select id="slct" onChange={stateHandler}>
+                        <option value='All'>All States</option>
+                        {states.map(i =>  <option data-state={i.state} value={i.state_code} key={i.state_code}>{i.state}</option>)}
+                    </select>
+                </div>
             </>
         );
     }     
@@ -66,10 +68,12 @@ const SchoolOpening = () => {
     const displayCities = () => {
         return (
             <>
-                <select onChange={cityHandler}>
-                    <option value='All'>Select a City</option>
-                    {cities.map(i =>  <option value={i.city} key={i.id}>{i.city}</option>)}
-                </select>
+                <div className='select'>
+                    <select id="slct" onChange={cityHandler}>
+                        <option value='All'>Select a City</option>
+                        {cities.map(i =>  <option value={i.city} key={i.id}>{i.city}</option>)}
+                    </select>
+                </div>
             </>
         );        
     }
@@ -91,14 +95,14 @@ const SchoolOpening = () => {
                                     <label>State</label>
 
                                     {loadStates === true ? displayStates() : (
-                                        <div><select disabled><option>All States</option></select></div>
+                                        <div className='select'><select id="slct" disabled><option>All States</option></select></div>
                                     )}        
                                 </div>
                         
                                 <div className="col-md-6 col-xs-12">
                                     <label>City</label>
                                     {loadCities === true ? displayCities() : (
-                                        <div><select disabled><option>Select a City</option></select></div>
+                                        <div className='select'><select id="slct" disabled><option>Select a City</option></select></div>
                                     )}
                                 </div>
                             </div>

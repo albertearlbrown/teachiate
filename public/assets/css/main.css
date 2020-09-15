@@ -163,7 +163,6 @@ img.aligncenter,
 [class^="icon-"],
 [class*=" icon-"] {
     font-family: 'icomoon' !important;
-    speak: never;
     font-style: normal;
     font-weight: normal;
     font-variant: normal;
@@ -373,7 +372,15 @@ p {
     font-weight: 400;
 }
 
-@media (min-width: 768px) {}
+@media only screen and (max-width: 768px) {
+    .blog_right {
+        display: none;
+    }
+}
+
+@media (min-width: 768px) {
+    
+}
 
 @media (min-width: 1025px) {}
 
@@ -2752,7 +2759,7 @@ input.wpcf7-not-valid,
 
 /***groups**/
 .groups .short {
-    margin-top: -8px;
+    margin-top: 9px;
 }
 
 .short label strong {
@@ -3263,8 +3270,36 @@ label {
 .opening_search_form option {
     display: block;
     color: #fff;
+    line-height: 20px;
+    background-color: #1c1c1d;
+}
+.opening_search_form .select {
+    color: #ffffff;
+    line-height: 42px;
+    background-color: #043c6c;
+    border-radius: 4px;
+    border-bottom: none;
+    
+}
+.opening_search_form select {
+    color: #fff;
+    padding: 0 20px;
+    line-height: 49px;
+}
+.opening_search_form .select::after {
+    top: 18px;
+    right: 20px;
+    width: 22px;
+    height: 12px;
+    background: url(../img/forum_choose_select.png) 0 0 no-repeat;
 }
 
+
+
+
+
+
+.opening_search_form
 .opening_search_form .selectric:after {}
 
 .opening_search_form .selectric .button {
@@ -3364,7 +3399,6 @@ label {
 
 .open {
     overflow: scroll;
-    height: auto;
 }
 
 .school .blog_sec4 {
@@ -5177,6 +5211,7 @@ img {
 
 
 @media screen and (max-width: 480px) {
+
     .tabs {
         display: none;
     }
@@ -9952,8 +9987,8 @@ blockquote {
     display: block;
 }
 .profile_short {
-    width: 250px;
-    float: right;
+    width: 100%;
+    display: inline-block;
 }
 .short.profile_short .selectric {
     width: 65%;
@@ -10823,7 +10858,7 @@ blockquote {
 }
 
 .share_option_right input[type=submit]{
-    float: left;
+    float: right;
     padding: 0 25px;
     border-radius: 4px;
     background-color: #043c6c;
@@ -12035,6 +12070,149 @@ h3.main_sec_title{
 .my_account_open ul li:hover{
     background-color: #dbe3e7;
 }
+.direct_cmnt_area {
+    width: 100%;
+    display: inline-block;
+    border-radius: 4px;
+    background-color: #fff;
+    box-shadow: 0 4px 20px rgb(0 0 0 / 8%);
+    padding: 10px;
+    margin-top: 15px;
+}
+.direct_cmnt_area textarea{
+    width: calc(100% - 100px);
+    float: left;
+    height: 60px;
+    border: none;
+    resize: none;
+    padding: 15px;
+    font-size: 16px;
+    color: #2b2a2a;
+    background-color: #dce3e8;
+}
+.direct_cmnt_area input[type=submit] {
+    float: right;
+    padding: 0 25px;
+    border-radius: 4px;
+    background-color: #043c6c;
+    line-height: 32px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    transition: all ease-in-out 0.3s;
+    margin-top: 13px;
+}
+.direct_cmnt_area input[type=submit]:hover{
+    background-color: #00aeef;
+}
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  appearance: none;
+  outline: 0;
+  box-shadow: none;
+  border: 0 !important;
+  background: #fff;
+  background-image: none;
+}
+/* Remove IE arrow */
+select::-ms-expand {
+  display: none;
+}
+/* Custom Select */
+.select {
+    position: relative;
+    display: inline-block;
+    width: unset;
+    font-size: 15px;
+    line-height: 20px;
+    color: #232323;
+    padding: 0;
+    background: transparent;
+    overflow: hidden;
+    border-radius: .25em;
+    width: 100%;
+    border-radius: 0;
+    float: right;
+    border-bottom: 1px solid #102542;
+}
+.short .select {
+    width: calc(100% - 70px);
+    float: right;
+}
+select {
+    flex: 1;
+    padding: 0 .5em;
+    color: #232323;
+    cursor: pointer;
+    font-weight: normal;
+    font-size: 15px;
+    width: 100%;
+    background-color: transparent;
+}
+/* Arrow */
+.select::after {
+    content: '';
+    position: absolute;
+    top: 8px;
+    right: 0;
+    padding: 0;
+    background: #34495e;
+    width: 10px;
+    height: 7px;
+    cursor: pointer;
+    pointer-events: none;
+    -webkit-transition: .25s all ease;
+    -o-transition: .25s all ease;
+    transition: .25s all ease;
+    background: url(../img/select_arrow.png) 0 0 no-repeat;
+}
+/* Transition */
+.select:hover::after {
+  color: #f39c12;
+}
+.short label{
+    float: left;
+}
+
+.register_field_col option {
+    display: block;
+    color: #fff;
+    line-height: 20px;
+    background-color: #1c1c1d;
+}
+.register_field_col .select {
+    color: #ffffff;
+    background-color: #043c6c;
+    border-radius: 4px;
+    border-bottom: none;
+    
+}
+.register_field_col select {
+    color: #fff;
+    padding: 0 20px;
+    line-height: 49px;
+}
+.register_field_col .select::after {
+    top: 18px;
+    right: 20px;
+    width: 22px;
+    height: 12px;
+    background: url(../img/forum_choose_select.png) 0 0 no-repeat;
+}
+.profile-forum-search .profile_short {
+    width: 230px;
+    float: right;
+}
+.share_option_right .short {
+    width: 190px;
+    float: right;
+    margin-right: 25px;
+    margin-top: 8px;
+}
 
 @media (max-width: 1400px){
     .post_share_field textarea {
@@ -12192,6 +12370,17 @@ h2.sec_title {
 .create_blog_page h2{
     font-size: 26px;
 }
+.register_field_col select {
+    line-height: 34px;
+    font-size: 13px;
+}
+.register_field_col .select::after {
+    top: 14px;
+    right: 20px;
+    width: 14px;
+    height: 8px;
+    background-size: 14px;
+}
 }
 
 @media (max-width: 1199px){
@@ -12233,7 +12422,6 @@ h2.sec_title {
 }
 .share_option_right input[type=submit] {
     position: relative;
-    top: -42px;
 }
 .out_select .share_option_right {
     margin-top: 0;
@@ -12249,10 +12437,7 @@ h2.sec_title {
     position: absolute;
     bottom: 0;
 }
-.share_option_right {
-    position: relative;
-    margin-top: 44px;
-}
+
 .share_option_right h4 {
     font-size: 14px;
     margin-right: 40px;
@@ -12370,11 +12555,7 @@ h2.sec_title {
 
 
 @media (max-width: 992px){
-.post_share_field .share_option_right {
-    margin-top: 8px;
-    float: left;
-    width: 100%;
-}
+
 .main_signin_area {
     width: 100%;
     margin-bottom: 40px;
@@ -12515,10 +12696,7 @@ h2.sec_title {
     display: inline-block;
     margin-bottom: 4px;
 }
-.profile_view .profile-forum-search {
-    top: 30px;
-    position: relative;
-}
+
 .gorup_members_view .friends_inner_details {
     margin-top: 70px;
 }
@@ -12548,8 +12726,8 @@ h2.sec_title {
 .forgot_password .main_register h2 {
     font-size: 20px;
 }
-.people_content .short{
-    margin: 15px 0 30px 0;
+.people_content .short {
+    margin: 15px 0;
 }
 h3.main_sec_title {
     font-size: 20px;
@@ -12587,6 +12765,11 @@ h3.main_sec_title {
 .register_submit {
     font-size: 14px;
     line-height: 36px;
+}
+
+.profile-forum-search .profile_short.activity_select {
+    top: -34px;
+    position: relative;
 }
 }
 
@@ -13195,4 +13378,39 @@ h2.sec_title {
     font-size: 16px;
     margin-bottom: 0;
 }
+.direct_cmnt_area input[type=submit]{
+    width: 100%;
+    margin-top: 8px;
 }
+.direct_cmnt_area textarea {
+    width: 100%;
+    font-size: 14px;
+    padding: 10px;
+}
+.direct_cmnt_area {
+    margin-top: 30px;
+}
+.blog_des p {
+    padding-bottom: 5px;
+}
+.profile_view .profile-forum-search {
+    top: 30px;
+    position: relative;
+}
+.profile-forum-search .profile_short {
+    width: 100%;
+}
+.share_option_right {
+    float: right;
+    position: relative;
+    padding-bottom: 45px;
+}
+.share_option_right .short {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    margin-right: 0;
+}
+}
+
+/*ritam*/

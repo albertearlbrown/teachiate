@@ -4,28 +4,13 @@
     <meta charset="utf-8" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="%PUBLIC_URL%/assets/css/main.css"/>
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;800;900&display=swap" rel="stylesheet">
     <link rel="icon" href="assets/img/fav.png" type="image/x-icon" />
     <title>Teachiate</title>
     <style>
-
-        body {
-          height: 100v;
-        }
-
-        select {
-          width: 100%;
-          padding: 12px 20px;
-          margin: 8px 0;
-          box-sizing: border-box;
-          background-color: #08406f;
-          color: #FFF;
-          border: 1px solid #555;
-          outline: none;
-        }   
-
 
         .preview {
           position: relative;
@@ -63,9 +48,16 @@
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
     <script src="%PUBLIC_URL%/assets/js/vendor/jquery.min.js"></script>
-    <!-- <script src="%PUBLIC_URL%/assets/js/plugins.js"></script> -->
+    <script src="%PUBLIC_URL%/assets/js/plugins.js"></script>
     <script src="%PUBLIC_URL%/assets/js/main.js"></script>
     <script src="%PUBLIC_URL%/assets/js/bootstrap.js"></script>    
+
+    <script>
+      $(document).on('click', '#share-btn',function(e) {
+        e.stopPropagation();
+        $(this).toggleClass('active');
+      });
+    </script>
 
     <script>
       // tabbed content
