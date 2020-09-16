@@ -2,7 +2,6 @@ import React from 'react'
 import Logo from '../FtrLogo';
 import FooterDesc from '../FtrDesc';
 import FtrQuickLinks from '../FtrQuickLinks';
-import FtrLanguageLinks from '../FtrLanguageLinks';
 import FtrMyAccountLinks from '../FtrMyAccountLinks';
 import FtrCopyrightText from '../FtrCopyrightText';
 

@@ -8,6 +8,7 @@ import Register from './pages/Register';
 import Groups from './pages/Groups';
 import Login from './pages/Login';
 import CreateSchoolOpeningUpdates from './pages/CreateSchoolOpeningUpdates';
+import Profile from './pages/ProfileView';
 
 // Components
 import Header from './components/Header';
@@ -34,6 +35,7 @@ function App() {
               <Route path="/" exact>
                 <Home />
               </Route>
+              <PrivateRoute path='/my-profile' component={Profile}/>
               <Route path="/about">
                 <About />
               </Route> 
