@@ -8,6 +8,7 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import InfiniteLoader from 'react-infinite-loader';
 import jwt_decode from 'jwt-decode';
+import { Link } from '@material-ui/core';
 
 const ProfileView = () => {
 
@@ -92,7 +93,7 @@ const ProfileView = () => {
 
         if(resp.data.success === true) {          
             setSelectedFile(null);
-            alert('Post Published!');
+            setDescription('');            
         }   
     }
 
@@ -277,7 +278,7 @@ const ProfileView = () => {
                                                 </li>
                                                 <li>
                                                     <div className="share_type_col">
-                                                        <input type='file'  name="file"  id="imageUpload5" accept=".mp4, .flv" onChange={(e) => setSelectedFile(e.target.files[0])}/>
+                                                        <input type='file'  name="file"  id="imageUpload5" accept=".mp4, .flv"  onChange={fileHandler}/>
                                                         <label htmlFor="imageUpload5"><span><img src="assets/img/upload_video_icon.png" alt=""/>
                                                         </span>Video</label>
                                                     </div>
@@ -296,7 +297,15 @@ const ProfileView = () => {
                         {selectFileUploadStart && selectFileUploadProgress !== 100  ? (
                             <LinearProgressWithLabel value={selectFileUploadProgress} />
                         ) : null}       
-                                                                                         
+
+
+ 
+                        {selectedFile !== null && selectFileUploadStart === false ? (
+                            <div>
+                                <p>You have selected file. <Link to="/" style={{cursor: 'pointer'}} onClick={() => setSelectedFile(null)}>Remove</Link></p>
+                            </div>
+                        ) : null}   
+
                     </div>    
 
 
