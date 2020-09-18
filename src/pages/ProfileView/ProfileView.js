@@ -102,7 +102,7 @@ const ProfileView = () => {
         setStartPost(startPost + 2);        
         const from = startPost + 2;
 
-        const resp = await axios.get(`http://localhost:4000/thoughts/users/${user_id}`, {
+        const resp = await axios.get(`https://teachiate-backend.fnmotivations.com/thoughts/users/${user_id}`, {
             params: {
                 from: from,
                 to: 2
