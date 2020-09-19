@@ -51,10 +51,12 @@ function CreateSchoolOpeningUpdates() {
     const displayStates = () => {    
         return (
             <>
-                <select  onChange={stateHandler}>
-                    <option value='All'>All States</option>
-                    {states.map(i =>  <option value={i.state_code} key={i.state_code}>{i.state}</option>)}
-                </select>
+                <div className='select'>
+                    <select  onChange={stateHandler}  id="slct">
+                        <option value='All'>All States</option>
+                        {states.map(i =>  <option value={i.state_code} key={i.state_code}>{i.state}</option>)}
+                    </select>
+                </div>
             </>
         );
     }
@@ -62,10 +64,12 @@ function CreateSchoolOpeningUpdates() {
     const displayCities = () => {
         return (
             <>
-                <select  onChange={cityHandler}>
-                    <option value='All'>Select a City</option>
-                    {cities.map(i =>  <option value={i.id} key={i.id}>{i.city}</option>)}
-                </select>
+                <div className='select'>
+                    <select  onChange={cityHandler}  id="slct">
+                        <option value='All'>Select a City</option>
+                        {cities.map(i =>  <option value={i.id} key={i.id}>{i.city}</option>)}
+                    </select>
+                </div>
             </>
         );        
     }
@@ -133,7 +137,9 @@ function CreateSchoolOpeningUpdates() {
                                         <div className="only_field register_field_col">
                                             <p>State</p>    
                                             {loadStates === true ? displayStates() : (
-                                                <div><select  disabled><option>All States</option></select></div>
+                                                <div className='select'>
+                                                    <select  id="slct" disabled><option>All States</option></select>
+                                                </div>
                                             )}
                                         </div>
                                     </div>
@@ -141,7 +147,9 @@ function CreateSchoolOpeningUpdates() {
                                         <div className="only_field register_field_col">
                                             <p>City</p>                    
                                             {loadCities === true ? displayCities() : (
-                                                <div><select  disabled><option>Select a City</option></select></div>
+                                                <div className='select'>
+                                                    <select id="slct"  disabled><option>Select a City</option></select>
+                                                </div>
                                             )}
                                         </div>
                                     </div>
