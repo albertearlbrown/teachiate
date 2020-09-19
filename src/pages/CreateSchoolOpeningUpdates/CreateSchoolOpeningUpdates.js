@@ -173,20 +173,6 @@ function CreateSchoolOpeningUpdates() {
                                     </div>
                                 </div>
                                 <div className="row">
-                                    <div className="col-md-6">
-                                        <div className="register_field_col">
-                                            <p>Source of Information</p>
-                                            <input type="text" className="register_input" value={sourceName} onChange={e => setSourceName(e.target.value)} placeholder="Enter source of information"/>
-                                        </div>
-                                    </div>
-                                    <div className="col-md-6">
-                                        <div className="register_field_col">
-                                            <p>Url Source</p>
-                                            <input type="text" className="register_input" value={sourceUrl} onChange={e => setSourceUrl(e.target.value)} placeholder="Enter url"/>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="row">
                                     <div className="col-md-12">
                                         <div className="register_field_col">
                                             <p>Description</p>
@@ -194,6 +180,16 @@ function CreateSchoolOpeningUpdates() {
                                         </div>
                                     </div>
                                 </div>
+
+                                <div className="row">                                    
+                                    <div className="col-md-12">
+                                        <div className="register_field_col">
+                                            <p>Url Source</p>
+                                            <input type="text" className="register_input" value={sourceUrl} onChange={e => setSourceUrl(e.target.value)} placeholder="Enter url"/>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <input type="submit" className="register_submit" value='Submit'/>
                             </div>                        
                         </form>

@@ -1,21 +1,28 @@
 import React, { useEffect, useState } from 'react';
 import Banner from '../../components/HomeBanner';
+import LinearProgress from '@material-ui/core/LinearProgress';
+import Box from '@material-ui/core/Box';
+import Typography from '@material-ui/core/Typography';
 import Moment from 'react-moment';
 import { useStoreState } from 'easy-peasy';
 import InfiniteLoader from 'react-infinite-loader';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 const Home = () => {
     
     const auth = useStoreState(state => state.islogin);
     const [postData, setPostData] = useState([]);
+    const [newPost, setNewPost] = useState([]);
     const [description, setDescription] = useState('');
     const [load, setLoad] = useState(false);
     const [selectedFile, setSelectedFile] = useState(null);
+    const [selectFileUploadStart, setSelectFileUploadStart]  = useState(false);  
+    const [selectFileUploadProgress, setSelectedFileUploadProgress]  = useState(0);
     const [token, setToken] = useState('');
     const [startPost, setStartPost] = useState(0);
     const [LoadMoreFeedBtn, setLoadMoreFeedBtn] = useState(false);    
-  
+      
     useEffect(() => {
         window.scrollTo(0, 0);
         async function fetchPosts() {
@@ -57,7 +64,17 @@ const Home = () => {
         if(selectedFile !== null) {
             const data = new FormData()
             data.append('file', selectedFile);
-            const resp =  await axios.post("https://teachiate-backend.fnmotivations.com/upload", data); 
+
+            const options = {
+                onUploadProgress : (progressEvent) => {
+                    const {loaded, total}  =  progressEvent;
+                    const percentage = Math.floor(loaded * 100 / total);
+                    setSelectFileUploadStart(true);
+                    setSelectedFileUploadProgress(percentage);
+                }
+            }
+
+            const resp =  await axios.post("https://teachiate-backend.fnmotivations.com/upload", data, options); 
             if(resp.data.success === true) { 
                 filepath = resp.data.filePath;
             }
@@ -77,7 +94,12 @@ const Home = () => {
         if(resp.data.success === true) {
             setDescription('');
             setSelectedFile(null);
-            alert('Post Created');            
+            var x = resp.data.data.insertId;
+            const createPost = await axios.get(`https://teachiate-backend.fnmotivations.com/thoughts/${x}`);
+            if(createPost.data.success) {
+                const data =  newPost.concat([...createPost.data.data]);
+                setNewPost([...data]);
+            }
         }   
     }
 
@@ -102,6 +124,48 @@ const Home = () => {
         }
     };
 
+    const LinearProgressWithLabel = (props) => {
+        return (
+          <Box display="flex" alignItems="center">
+            <Box width="100%" mr={1}>
+              <LinearProgress variant="determinate" {...props} />
+            </Box>
+            <Box minWidth={35}>
+              <Typography variant="body2" color="textSecondary">{`${Math.round(
+                props.value,
+              )}%`}</Typography>
+            </Box>
+          </Box>
+        );
+    }
+
+    const fileExtension = (fileName) => {        
+        var extension = fileName.split('.').pop();
+        return extension;
+     }
+ 
+     const postMedia = (filepath) => {
+ 
+         if(filepath) {
+             const extension = fileExtension(filepath);
+         
+             if(extension === 'mp4') {
+                 return (
+                     <video width="100%" height="100%" controls>
+                         <source src={filepath} type="video/mp4"/>
+                     </video>                
+                 );
+             }
+     
+             else if(extension === 'jpg' || extension === 'png' || extension === 'jpeg') {
+                 return (
+                     <div className="blog_img_holder1"><img src={filepath} alt=""/></div>
+                 );
+             }
+         }
+ 
+     }    
+
     return (
         <>
          {auth ? <div style={{marginTop: '100px'}}></div> : <Banner/> }        
@@ -117,7 +181,7 @@ const Home = () => {
                             <div className="posted_avtar"><img src="assets/img/g4.png" alt=""/></div>
                             <form method="POST" encType="multipart/form-data" onSubmit={formHandler}>
                                 <div className="post_share_field">
-                                    <textarea placeholder="Sarah What’s are your mind?" onChange={(e) => setDescription(e.target.value)}></textarea>
+                                    <textarea placeholder="Sarah What’s are your mind?" value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
                                     <div className="adv_post_opt clearfix">
                                         <div className="share_type">
                                             <ul>
@@ -146,16 +210,78 @@ const Home = () => {
                         </div>     
 
 
-                        {selectedFile !== null ? (
-                            <div className="preview">
-                                <img src={URL.createObjectURL(selectedFile)} style={{width: '100%'}}/>
-                                <button className="btn" onClick={() => setSelectedFile(null)}>X</button>
+                        {selectFileUploadStart && selectFileUploadProgress !== 100  ? (
+                            <LinearProgressWithLabel value={selectFileUploadProgress} />
+                        ) : null}       
+
+
+ 
+                        {selectedFile !== null && selectFileUploadStart === false ? (
+                            <div>
+                                <p>You have selected file. <Link to="/" style={{cursor: 'pointer'}} onClick={() => setSelectedFile(null)}>Remove</Link></p>
                             </div>
                         ) : null}             
                                                                                          
                     </div>                    
                     ) : null}
+                    
+                    {newPost.map(post => (
+                            <div className="blog_sec1" key={post.id}>
+                            <div className="blog_title">
+                                <div className="title_img"><img src="assets/img/katei-knapp.png" alt=""/></div>
+                                <div className="user_des">
+                                    <h4>{post.fullname} <span>{post.role}</span></h4>
+                                    <p>posted in the (<strong>profile</strong>)</p>
+                                </div>
+                                <div className="time">
+                                    <Moment fromNow>
+                                        {post.created_at}
+                                    </Moment>
+                                </div>
+                            </div>
 
+                            {postMedia(post.filepath)}
+
+                            <div className="blog_des">
+                                <p>{post.description}</p>
+                            </div>
+                            <div className="blog_feedback clearfox">
+                                <a href="/">
+                                    <div className="flower"><img src="assets/img/flower.svg" alt=""/><span>0</span></div>
+                                </a>
+                                <a href="/">
+                                    <div className="love"><img src="assets/img/love.svg" alt=""/><span>0</span></div>
+                                </a>
+                            </div>
+
+                            <div className="comm_se">
+                                <ul>
+                                    <li><a href="#"> <span>like <i className="fa fa-thumbs-o-up" aria-hidden="true"></i></span></a></li>
+                                    <li> <a href="#"> <span>Comment <i className="fa fa-comment-o" aria-hidden="true"></i></span></a></li>
+                                    <li id='share-btn'><span>Share <i className="fa fa-share" aria-hidden="true"> 
+                                        </i></span>
+                                        <div className="share_post_via">
+                                            <ul>
+                                                <li><a href="https://www.facebook.com/sharer.php?u="><span><i className="fa fa-facebook-square"></i></span>Facebook</a></li>
+                                                <li><a href="http://twitter.com/share?text=&url="><span><i className="fa fa-twitter"></i></span>Twitter</a></li>
+                                                <li><a href="https://www.instagram.com/?url="><span><i className="fa fa-instagram"></i></span>Instagram</a></li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li> <a href="#"> <span>Report <i className="fa fa-exclamation-triangle" aria-hidden="true"></i></span></a></li>
+                                </ul>
+                            </div>
+                            {auth ? (
+                                <>
+                                    <div className="direct_cmnt_area">
+                                        <textarea placeholder="write a comment"></textarea>
+                                        <input type="submit" value="Post" name=""/>
+                                    </div>                                    
+                                    </>
+                            ) : null}                                            
+                            
+                        </div>     
+                    ))}
 
                     {load ? 
                         postData
@@ -173,7 +299,7 @@ const Home = () => {
                                         </Moment>
                                     </div>
                                 </div>
-                                {post.filepath ? <div className="blog_img_holder1"><img src={post.filepath} alt=""/></div> : null }
+                                {postMedia(post.filepath)}
 
                                 <div className="blog_des">
                                     <p>{post.description}</p>
@@ -214,7 +340,6 @@ const Home = () => {
                                 ) : null}                                            
                                 
                             </div>
-
                     )) : null}                    
                     
                     {LoadMoreFeedBtn ? <InfiniteLoader onVisited={() => loadMoreArticles()}/>: null }

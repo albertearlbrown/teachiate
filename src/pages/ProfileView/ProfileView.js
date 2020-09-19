@@ -1,18 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import Moment from 'react-moment';
-import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core/styles'
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import InfiniteLoader from 'react-infinite-loader';
 import jwt_decode from 'jwt-decode';
-import { Link } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 
 const ProfileView = () => {
 
     const [postData, setPostData] = useState([]);
+    const [newPost, setNewPost] = useState([]);
     const [description, setDescription] = useState('');
     const [load, setLoad] = useState(false);
     const [selectedFile, setSelectedFile] = useState(null);
@@ -93,7 +92,13 @@ const ProfileView = () => {
 
         if(resp.data.success === true) {          
             setSelectedFile(null);
-            setDescription('');            
+            setDescription('');      
+            var x = resp.data.data.insertId;
+            const createPost = await axios.get(`https://teachiate-backend.fnmotivations.com/thoughts/${x}`);
+            if(createPost.data.success) {
+                const data =  newPost.concat([...createPost.data.data]);
+                setNewPost([...data]);
+            }                  
         }   
     }
 
@@ -137,6 +142,29 @@ const ProfileView = () => {
        var extension = fileName.split('.').pop();
        return extension;
     }
+
+    const postMedia = (filepath) => {
+
+        if(filepath) {
+            const extension = fileExtension(filepath);
+        
+            if(extension === 'mp4') {
+                return (
+                    <video width="100%" height="100%" controls>
+                        <source src={filepath} type="video/mp4"/>
+                    </video>                
+                );
+            }
+    
+            else if(extension === 'jpg' || extension === 'png' || extension === 'jpeg') {
+                return (
+                    <div className="blog_img_holder1"><img src={filepath} alt=""/></div>
+                );
+            }
+        }
+
+    }
+    
 
     return (
         <>              
@@ -308,6 +336,59 @@ const ProfileView = () => {
 
                     </div>    
 
+                    {newPost.map(post => (
+                            <div className="blog_sec1" key={post.id}>
+                            <div className="blog_title">
+                                <div className="title_img"><img src="assets/img/katei-knapp.png" alt=""/></div>
+                                <div className="user_des">
+                                    <h4>{post.fullname} <span>{post.role}</span></h4>
+                                    <p>posted in the (<strong>profile</strong>)</p>
+                                </div>
+                                <div className="time">
+                                    <Moment fromNow>
+                                        {post.created_at}
+                                    </Moment>
+                                </div>
+                            </div>
+
+                            {postMedia(post.filepath)}
+
+                            <div className="blog_des">
+                                <p>{post.description}</p>
+                            </div>
+                            <div className="blog_feedback clearfox">
+                                <a href="/">
+                                    <div className="flower"><img src="assets/img/flower.svg" alt=""/><span>0</span></div>
+                                </a>
+                                <a href="/">
+                                    <div className="love"><img src="assets/img/love.svg" alt=""/><span>0</span></div>
+                                </a>
+                            </div>
+
+                            <div className="comm_se">
+                                <ul>
+                                    <li><a href="#"> <span>like <i className="fa fa-thumbs-o-up" aria-hidden="true"></i></span></a></li>
+                                    <li> <a href="#"> <span>Comment <i className="fa fa-comment-o" aria-hidden="true"></i></span></a></li>
+                                    <li id='share-btn'><span>Share <i className="fa fa-share" aria-hidden="true"> 
+                                        </i></span>
+                                        <div className="share_post_via">
+                                            <ul>
+                                                <li><a href="https://www.facebook.com/sharer.php?u="><span><i className="fa fa-facebook-square"></i></span>Facebook</a></li>
+                                                <li><a href="http://twitter.com/share?text=&url="><span><i className="fa fa-twitter"></i></span>Twitter</a></li>
+                                                <li><a href="https://www.instagram.com/?url="><span><i className="fa fa-instagram"></i></span>Instagram</a></li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li> <a href="#"> <span>Report <i className="fa fa-exclamation-triangle" aria-hidden="true"></i></span></a></li>
+                                </ul>
+                            </div>
+
+                            <div className="direct_cmnt_area">
+                                <textarea placeholder="write a comment"></textarea>
+                                <input type="submit" value="Post" name=""/>
+                            </div>                                                                
+                        </div>     
+                    ))}
 
                     {load ? 
                         postData
@@ -327,13 +408,7 @@ const ProfileView = () => {
                                 </div>
                                 
 
-                                {fileExtension(post.filepath) === 'mp4' ?  (
-                                    <div>
-                                        <video width="100%" height="100%" controls>
-                                            <source src={post.filepath} type="video/mp4"/>
-                                        </video>                                    
-                                    </div>
-                                ) : <div className="blog_img_holder1"><img src={post.filepath} alt=""/></div> }
+                                {postMedia(post.filepath)}
 
                                 <div className="blog_des">
                                     <p>{post.description}</p>
