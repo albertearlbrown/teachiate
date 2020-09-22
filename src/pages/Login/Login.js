@@ -33,7 +33,7 @@ function Login() {
 
     return (
         <>
-            {authStatus ? <Redirect to='/'/> : null}
+            {authStatus ? window.location.replace("/") : null}
             <section className="main_register">
                 <div className="container">
                     <div className="main_signin_area">

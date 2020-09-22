@@ -7,7 +7,7 @@ export const PrivateRoute = (({ component: Component, ...rest }) => {
             {...rest}  
             render={props => {  
                 if(typeof localStorage !== "undefined" && localStorage.getItem('jwt_token') !== null) {
-                    return <Component {...props} />;
+                    return <Component {...props} {...rest}/>
                 }
                 else {
                     return <Redirect to="/login"/>

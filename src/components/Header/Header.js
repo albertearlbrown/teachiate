@@ -20,6 +20,7 @@ const Header = ({ userData }) => {
         e.preventDefault();
         logoutAction();
         localStorage.clear();   
+        window.location.replace("/");
     };    
 
     const toggle = () => {
@@ -41,7 +42,7 @@ const Header = ({ userData }) => {
                         <div className={dropdown ? 'my_account active' : 'my_account'}  onClick={toggle}>
                             {auth ? (
                                 <>                                     
-                                    <img src={userData.avatar === null ? "assets/img/user-account.png" : userData.avatar} alt="Sarah Jones"/>
+                                    <img src={userData.avatar !== null ?  userData.avatar : "/assets/img/user-account.png"} alt={userData.fullname}/>
                                     {userData.fullname}
 
                                     <i className="icon-chevron-right"></i>

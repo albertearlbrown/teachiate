@@ -177,7 +177,7 @@ function Home({userData}) {
                         <h2>Share your thoughts</h2>
                         <div className="post_share_area">
                             <div className="posted_avtar">
-                                <img src={userData.avatar == null ? "assets/img/user-account.png" : userData.avatar} alt="Sarah Jones"/>
+                                <img src={userData.avatar == null ? "/assets/img/account.png" : userData.avatar} alt={userData.fullname}/>
                             </div>
                             <form method="POST" encType="multipart/form-data" onSubmit={formHandler}>
                                 <div className="post_share_field">
@@ -229,7 +229,7 @@ function Home({userData}) {
                             <div className="blog_sec1" key={post.id}>
                             <div className="blog_title">
                                 <div className="title_img">
-                                    <img src={post.avatar == null ? '/assets/img/placeholder/user.png' : post.avatar } alt=""/>
+                                    <img src={post.avatar == null ? '/assets/img/user-account.png' : post.avatar } alt=""/>
                                 </div>
                                 <div className="user_des">
                                     <h4>{post.fullname} <span>{post.role}</span></h4>
@@ -291,7 +291,7 @@ function Home({userData}) {
                             <div className="blog_sec1" key={post.id}>
                                 <div className="blog_title">
                                     <div className="title_img">
-                                        <img src={post.avatar == null ? '/assets/img/placeholder/user.png' : post.avatar } alt=""/>
+                                        <img src={post.avatar == null ? '/assets/img/account.png' : post.avatar } alt=""/>
                                     </div>
                                     <div className="user_des">
                                         <h4>{post.fullname} <span>{post.role}</span></h4>

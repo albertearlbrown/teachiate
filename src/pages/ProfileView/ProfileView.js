@@ -9,7 +9,6 @@ import jwt_decode from 'jwt-decode';
 import { Link } from 'react-router-dom';
 
 const ProfileView = ({userData}) => {
-
     const [postData, setPostData] = useState([]);
     const [newPost, setNewPost] = useState([]);
     const [description, setDescription] = useState('');
