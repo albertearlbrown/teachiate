@@ -69,7 +69,7 @@ function App() {
                 <SchoolOpening/>
               </Route>
               <PrivateRoute path='/create-covid-post' component={CreateSchoolOpeningUpdates}/>              
-              <Route path='*' exact={true} component={NotFound}></Route>
+              <Route component={NotFound}></Route>
              </Switch>
           </div>
           <Footer/>
