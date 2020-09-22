@@ -64,7 +64,7 @@ function Login() {
                                 </div>
                                 <ul className="made_accnt">
                                     <li><Link to="/register">Create New Account?</Link></li>
-                                    <li><Link to="/">Forget Password?</Link></li>
+                                    <li><Link to="/forgot-password">Forget Password?</Link></li>
                                 </ul>
                             </div>                            
                         </form>

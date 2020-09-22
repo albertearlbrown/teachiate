@@ -17,13 +17,7 @@ const Groups = () => {
                             <h3 className="main_sec_title">All Groups</h3>
                         </div>
                         <div className="col-md-3 col-sm-4">
-                            <div className="short profile_short">
-                                <label>Sort by:</label>
-                                <select>
-                                    <option value="all people" defaultValue>All People</option>
-                                    <option value="all people">All People 1</option>
-                                </select>
-                            </div>
+                            
                         </div>
                     </div>
                     <div className="row">

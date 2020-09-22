@@ -12,8 +12,6 @@ function MainMenu() {
                         <li className="menu-item-has-children"><Link to="/opening-school-in-covid-siutation">School Opening</Link></li>                        
                         <li className="menu-item-has-children"><Link to="/groups">Groups</Link></li>
                         <li className="menu-item-has-children"><Link to="/">Forums</Link></li>
-                        <li className="menu-item-has-children"><Link to="/"> People</Link></li>
-                        <li className="menu-item-has-children"><Link to="/"> Blogs</Link></li>
                     </ul>
                 </nav>
             </div>           

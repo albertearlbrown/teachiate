@@ -128,7 +128,8 @@ const SchoolOpening = () => {
                                                     <h4>Admin</h4>
                                                     <p>{post.state} | USA </p>
                                                 </div>
-                                                <div className="star_icon"><i className="fa fa-star-o" aria-hidden="true"></i>
+                                                <div className="star_icon">
+                                                    <i className="fa fa-star-o" aria-hidden="true"></i>
                                                 </div>
                                                 {/* <div className="time"> 2 Days ago</div> */}
                                             </div>
@@ -152,45 +153,15 @@ const SchoolOpening = () => {
 
                                             <div className="opening_flex">
                                                 <div className="locaton">
-                                                    <p><i className="fa fa-map-marker" aria-hidden="true"></i>
-                                                        State: <span>{post.state}</span> </p>
+                                                    <p>
+                                                        <i className="fa fa-map-marker" aria-hidden="true"></i> 
+                                                         State: <span>{post.state}</span> </p>
                                                         <p>City: <span>{post.city}</span></p>
                                                 </div>
                                                 <div className="bbc_news">
                                                     <p><a href={post.source_url}>Source</a></p>
                                                 </div>
-                                            </div>
-
-                                            <div className="blog_feedback clearfox">
-                                                <a href="#">
-                                                    <div className="flower"><img src="/assets/img/flower.svg" alt=""/><span>25</span></div>
-                                                </a>
-                                                <a href="#">
-                                                    <div className="love"><img src="/assets/img/love.svg" alt=""/><span>12</span></div>
-                                                </a>
-                                            </div>
-
-                                            <div className="comm_se">
-                                                <ul>
-                                                    <li><a href="#"> <span>like <i className="fa fa-thumbs-o-up" aria-hidden="true"></i></span></a></li>
-                                                    <li> <a href="#"> <span>Comment <i className="fa fa-comment-o" aria-hidden="true"></i></span></a></li>
-                                                    <li> <a href="#"> <span>Share <i className="fa fa-share" aria-hidden="true"></i>
-                                                            </span></a></li>
-                                                    <li> <a href="#"> <span>Report <i className="fa fa-exclamation-triangle" aria-hidden="true"></i></span></a></li>
-                                                </ul>
-                                            </div>
-
-                                            <div className="blog_title margin_btm">
-                                                <div className="title_img"><img src="assets/img/katei-re.png" alt=""/></div>
-                                                <div className="user_des">
-                                                    <h4>Katie Knapp <span>(Parent)</span></h4>
-                                                    <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution. </p>
-                                                    <div className="replaied">
-                                                        <div className="hour">12 Hours ago</div>
-                                                        <div>Replied</div>
-                                                    </div>
-                                                </div>
-                                            </div>                                                                        
+                                            </div>                                                                     
                                         </div>
                                     </div>
                                 ))
@@ -239,38 +210,7 @@ const SchoolOpening = () => {
                                                 <div className="bbc_news">
                                                     <p><a href={post.source_url}>Source</a></p>
                                                 </div>
-                                            </div>
-
-                                            <div className="blog_feedback clearfox">
-                                                <a href="#">
-                                                    <div className="flower"><img src="/assets/img/flower.svg" alt=""/><span>25</span></div>
-                                                </a>
-                                                <a href="#">
-                                                    <div className="love"><img src="/assets/img/love.svg" alt=""/><span>12</span></div>
-                                                </a>
-                                            </div>
-
-                                            <div className="comm_se">
-                                                <ul>
-                                                    <li><a href="#"> <span>like <i className="fa fa-thumbs-o-up" aria-hidden="true"></i></span></a></li>
-                                                    <li> <a href="#"> <span>Comment <i className="fa fa-comment-o" aria-hidden="true"></i></span></a></li>
-                                                    <li> <a href="#"> <span>Share <i className="fa fa-share" aria-hidden="true"></i>
-                                                            </span></a></li>
-                                                    <li> <a href="#"> <span>Report <i className="fa fa-exclamation-triangle" aria-hidden="true"></i></span></a></li>
-                                                </ul>
-                                            </div>
-
-                                            <div className="blog_title margin_btm">
-                                                <div className="title_img"><img src="assets/img/katei-re.png" alt=""/></div>
-                                                <div className="user_des">
-                                                    <h4>Katie Knapp <span>(Parent)</span></h4>
-                                                    <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution. </p>
-                                                    <div className="replaied">
-                                                        <div className="hour">12 Hours ago</div>
-                                                        <div>Replied</div>
-                                                    </div>
-                                                </div>
-                                            </div>                                                                        
+                                            </div>                                                                      
                                         </div>
                                     </div>
                                 ))
@@ -308,50 +248,7 @@ const SchoolOpening = () => {
                                                     </div>
                                                 </div>
                                                 <p>{post.description}</p>
-                                            </div>
-
-
-                                            <div className="opening_flex">
-                                                <div className="locaton">
-                                                    <p><i className="fa fa-map-marker" aria-hidden="true"></i>
-                                                        State: <span>{post.state}</span> </p>
-                                                        <p>City: <span>{post.city}</span></p>
-                                                </div>
-                                                <div className="bbc_news">
-                                                    <p><a href={post.source_url}>Source</a></p>
-                                                </div>
-                                            </div>
-
-                                            <div className="blog_feedback clearfox">
-                                                <a href="#">
-                                                    <div className="flower"><img src="/assets/img/flower.svg" alt=""/><span>25</span></div>
-                                                </a>
-                                                <a href="#">
-                                                    <div className="love"><img src="/assets/img/love.svg" alt=""/><span>12</span></div>
-                                                </a>
-                                            </div>
-
-                                            <div className="comm_se">
-                                                <ul>
-                                                    <li><a href="#"> <span>like <i className="fa fa-thumbs-o-up" aria-hidden="true"></i></span></a></li>
-                                                    <li> <a href="#"> <span>Comment <i className="fa fa-comment-o" aria-hidden="true"></i></span></a></li>
-                                                    <li> <a href="#"> <span>Share <i className="fa fa-share" aria-hidden="true"></i>
-                                                            </span></a></li>
-                                                    <li> <a href="#"> <span>Report <i className="fa fa-exclamation-triangle" aria-hidden="true"></i></span></a></li>
-                                                </ul>
-                                            </div>
-
-                                            <div className="blog_title margin_btm">
-                                                <div className="title_img"><img src="assets/img/katei-re.png" alt=""/></div>
-                                                <div className="user_des">
-                                                    <h4>Katie Knapp <span>(Parent)</span></h4>
-                                                    <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution. </p>
-                                                    <div className="replaied">
-                                                        <div className="hour">12 Hours ago</div>
-                                                        <div>Replied</div>
-                                                    </div>
-                                                </div>
-                                            </div>                                                                        
+                                            </div>                                                                      
                                         </div>
                                     </div>
                                 ))

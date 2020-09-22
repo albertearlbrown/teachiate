@@ -11,6 +11,8 @@ import Groups from './pages/Groups';
 import Login from './pages/Login';
 import CreateSchoolOpeningUpdates from './pages/CreateSchoolOpeningUpdates';
 import Profile from './pages/ProfileView';
+import PasswordForgot from './pages/PasswordForgot';
+import NotFound from './pages/NotFound';
 
 // Components
 import Header from './components/Header';
@@ -22,18 +24,16 @@ function App() {
 
   let userLogin = useStoreActions(actions => actions.userLogin);
   const [userData, setUserData] = useState({});
-  const [loadUserData, setloadUserData] = useState(false);
 
   useEffect(() => {
 
       async function fetchUserInfo() {
         const token = localStorage.getItem('jwt_token');
         const user_id = jwt_decode(token).payload.user_id;
-        const resp = await axios.get(`http://localhost:4000/users/${user_id}/profile`);
+        const resp = await axios.get(`https://teachiate-backend.fnmotivations.com/users/${user_id}/profile`);
 
         if(resp.data.success === true) {
           setUserData(resp.data.data);
-          setloadUserData(true);
         }
       };      
 
@@ -59,6 +59,9 @@ function App() {
               <Route path="/register">
                 <Register/>
               </Route>         
+              <Route path="/forgot-password">
+                <PasswordForgot/>
+              </Route>
               <Route path="/groups">
                 <Groups />
               </Route>
@@ -66,6 +69,7 @@ function App() {
                 <SchoolOpening/>
               </Route>
               <PrivateRoute path='/create-covid-post' component={CreateSchoolOpeningUpdates}/>              
+              <Route path='*' exact={true} component={NotFound}></Route>
              </Switch>
           </div>
           <Footer/>

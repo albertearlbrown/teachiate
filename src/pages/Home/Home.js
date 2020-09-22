@@ -247,32 +247,7 @@ function Home({userData}) {
                             <div className="blog_des">
                                 <p>{post.description}</p>
                             </div>
-                            <div className="blog_feedback clearfox">
-                                <a href="/">
-                                    <div className="flower"><img src="assets/img/flower.svg" alt=""/><span>0</span></div>
-                                </a>
-                                <a href="/">
-                                    <div className="love"><img src="assets/img/love.svg" alt=""/><span>0</span></div>
-                                </a>
-                            </div>
 
-                            <div className="comm_se">
-                                <ul>
-                                    <li><a href="#"> <span>like <i className="fa fa-thumbs-o-up" aria-hidden="true"></i></span></a></li>
-                                    <li> <a href="#"> <span>Comment <i className="fa fa-comment-o" aria-hidden="true"></i></span></a></li>
-                                    <li id='share-btn'><span>Share <i className="fa fa-share" aria-hidden="true"> 
-                                        </i></span>
-                                        <div className="share_post_via">
-                                            <ul>
-                                                <li><a href="https://www.facebook.com/sharer.php?u="><span><i className="fa fa-facebook-square"></i></span>Facebook</a></li>
-                                                <li><a href="http://twitter.com/share?text=&url="><span><i className="fa fa-twitter"></i></span>Twitter</a></li>
-                                                <li><a href="https://www.instagram.com/?url="><span><i className="fa fa-instagram"></i></span>Instagram</a></li>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                    <li> <a href="#"> <span>Report <i className="fa fa-exclamation-triangle" aria-hidden="true"></i></span></a></li>
-                                </ul>
-                            </div>
                             {auth ? (
                                 <>
                                     <div className="direct_cmnt_area">
@@ -308,32 +283,7 @@ function Home({userData}) {
                                 <div className="blog_des">
                                     <p>{post.description}</p>
                                 </div>
-                                <div className="blog_feedback clearfox">
-                                    <a href="/">
-                                        <div className="flower"><img src="assets/img/flower.svg" alt=""/><span>0</span></div>
-                                    </a>
-                                    <a href="/">
-                                        <div className="love"><img src="assets/img/love.svg" alt=""/><span>0</span></div>
-                                    </a>
-                                </div>
 
-                                <div className="comm_se">
-                                    <ul>
-                                        <li><a href="#"> <span>like <i className="fa fa-thumbs-o-up" aria-hidden="true"></i></span></a></li>
-                                        <li> <a href="#"> <span>Comment <i className="fa fa-comment-o" aria-hidden="true"></i></span></a></li>
-                                        <li id='share-btn'><span>Share <i className="fa fa-share" aria-hidden="true"> 
-                                            </i></span>
-                                            <div className="share_post_via">
-                                                <ul>
-                                                    <li><a href="https://www.facebook.com/sharer.php?u="><span><i className="fa fa-facebook-square"></i></span>Facebook</a></li>
-                                                    <li><a href="http://twitter.com/share?text=&url="><span><i className="fa fa-twitter"></i></span>Twitter</a></li>
-                                                    <li><a href="https://www.instagram.com/?url="><span><i className="fa fa-instagram"></i></span>Instagram</a></li>
-                                                </ul>
-                                            </div>
-                                        </li>
-                                        <li> <a href="#"> <span>Report <i className="fa fa-exclamation-triangle" aria-hidden="true"></i></span></a></li>
-                                    </ul>
-                                </div>
                                 {auth ? (
                                     <>
                                         <div className="direct_cmnt_area">
