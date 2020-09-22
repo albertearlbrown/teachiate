@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { useStoreActions, useStoreState } from 'easy-peasy'; 
+import axios from 'axios';
 
 import Home from './pages/Home';
 import About from './pages/About';
@@ -18,24 +19,40 @@ import PrivateRoute from './components/PrivateRoute';
 
 function App() {
 
-  let islogin = useStoreState(state => state.islogin);
   let userLogin = useStoreActions(actions => actions.userLogin);
-  
+  const [userData, setUserData] = useState({});
+  const [loadUserData, setloadUserData] = useState(false);
+
   useEffect(() => {
+
+      async function fetchUserInfo() {
+        const token = localStorage.getItem('jwt_token');
+
+        const resp = await axios.post('https://teachiate-backend.fnmotivations.com/users/profile', {}, {
+          headers: {
+            'authorization': `Bearer ${token}`
+          }
+        });
+
+        if(resp.data.success === true) {
+          setUserData(resp.data.data);
+          setloadUserData(true);
+        }
+      };      
+
       if(localStorage.getItem('jwt_token') !== null)  {
         userLogin();
+        fetchUserInfo();
       }  
-  });  
+  }, []);  
 
   return (
-      <Router>
-          <Header />
+      <Router>    
+          <Header userData={userData}/>  
           <div id="main">
             <Switch>
-              <Route path="/" exact>
-                <Home />
-              </Route>
-              <PrivateRoute path='/my-profile' component={Profile}/>
+              <Route path="/"  exact><Home userData={userData}/></Route>
+              <Route path='/my-profile'><Profile userData={userData}/></Route>
               <Route path="/about">
                 <About />
               </Route> 

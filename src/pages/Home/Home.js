@@ -9,8 +9,7 @@ import InfiniteLoader from 'react-infinite-loader';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
-const Home = () => {
-    
+function Home({userData}) {
     const auth = useStoreState(state => state.islogin);
     const [postData, setPostData] = useState([]);
     const [newPost, setNewPost] = useState([]);
@@ -22,8 +21,9 @@ const Home = () => {
     const [token, setToken] = useState('');
     const [startPost, setStartPost] = useState(0);
     const [LoadMoreFeedBtn, setLoadMoreFeedBtn] = useState(false);    
-      
+
     useEffect(() => {
+
         window.scrollTo(0, 0);
         async function fetchPosts() {
             const resp = await axios.get('https://teachiate-backend.fnmotivations.com/thoughts', {
@@ -168,9 +168,7 @@ const Home = () => {
 
     return (
         <>
-         {auth ? <div style={{marginTop: '100px'}}></div> : <Banner/> }        
-
-
+        {auth ? <div style={{marginTop: '100px'}}></div> : <Banner/> }        
         <section className="blog clearfix">
             <div className="container">
                 <div className="blog_left">
@@ -178,10 +176,12 @@ const Home = () => {
                         <div className="post_share">
                         <h2>Share your thoughts</h2>
                         <div className="post_share_area">
-                            <div className="posted_avtar"><img src="assets/img/g4.png" alt=""/></div>
+                            <div className="posted_avtar">
+                                <img src={userData.avatar == null ? "assets/img/user-account.png" : userData.avatar} alt="Sarah Jones"/>
+                            </div>
                             <form method="POST" encType="multipart/form-data" onSubmit={formHandler}>
                                 <div className="post_share_field">
-                                    <textarea placeholder="Sarah What’s are your mind?" value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
+                                    <textarea placeholder="What’s are your mind?" value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
                                     <div className="adv_post_opt clearfix">
                                         <div className="share_type">
                                             <ul>
@@ -228,7 +228,9 @@ const Home = () => {
                     {newPost.map(post => (
                             <div className="blog_sec1" key={post.id}>
                             <div className="blog_title">
-                                <div className="title_img"><img src="assets/img/katei-knapp.png" alt=""/></div>
+                                <div className="title_img">
+                                    <img src={post.avatar == null ? '/assets/img/placeholder/user.png' : post.avatar } alt=""/>
+                                </div>
                                 <div className="user_des">
                                     <h4>{post.fullname} <span>{post.role}</span></h4>
                                     <p>posted in the (<strong>profile</strong>)</p>
@@ -288,7 +290,9 @@ const Home = () => {
                         .map(post => (
                             <div className="blog_sec1" key={post.id}>
                                 <div className="blog_title">
-                                    <div className="title_img"><img src="assets/img/katei-knapp.png" alt=""/></div>
+                                    <div className="title_img">
+                                        <img src={post.avatar == null ? '/assets/img/placeholder/user.png' : post.avatar } alt=""/>
+                                    </div>
                                     <div className="user_des">
                                         <h4>{post.fullname} <span>{post.role}</span></h4>
                                         <p>posted in the (<strong>profile</strong>)</p>
@@ -345,275 +349,6 @@ const Home = () => {
                     {LoadMoreFeedBtn ? <InfiniteLoader onVisited={() => loadMoreArticles()}/>: null }
 
                 </div>
-
-
-
-                <div className="blog_right">
-                    <div className="articles_title">
-                        <h2>Blog Articles</h2>
-                    </div>
-                    <div className="articles clearfix">
-                        <ul className="d-flex">
-                            <li>
-                                <div className="art_left_img"><img src="assets/img/article1.jpg" width="92px;" alt=""/></div>
-                                <div className="art_des">
-                                    <p>My struggle with homeschooling my youngins</p>
-                                </div>
-                            </li>
-                            <li>
-                                <div className="art_left_img"><img src="assets/img/article2.jpg" alt=""/></div>
-                                <div className="art_des">
-                                    <p>COVID19 has led to parents appreciating teachers more</p>
-                                </div>
-                            </li>
-                            <li>
-                                <div className="art_left_img"><img src="assets/img/article3.jpg" alt=""/></div>
-                                <div className="art_des">
-                                    <p>Teachers, like myself, getting used to virtual teaching</p>
-                                </div>
-                            </li>
-                        </ul>
-                        <a href="#"  className="view_more">View More</a>
-                    </div>
-                    <div className="letest_sec">
-                        <div className="articles_title">
-                            <h2>Latest News</h2>
-                        </div>
-                        <div className="articles clearfix">
-                            <ul className="d-flex">
-                                <li>
-                                    <div className="art_left_img"><img src="assets/img/article1.jpg" alt=""/></div>
-                                    <div className="art_des">
-                                        <p>‘Let’s get those kids back in school!’ Parents rally for…
-                                        </p>
-                                        <div className="wtrk d_flex1">
-                                            <h5>WTKR News 3 </h5>
-                                            <h5> -July 07, 2020</h5>
-                                        </div>
-                                    </div>
-                                </li>
-
-                            </ul>
-                            <a href="/" className="view_more">View More</a>
-                        </div>
-                    </div>
-                    <div className="recent_blog_comments">
-                        <div className="comment_title"><span><img src="assets/img/comments.png" alt=""/></span>Recent Blog Comments</div>
-                        <div className="d_flex2">
-                            <div className="sad_img"><img src="assets/img/sad.png" alt=""/></div>
-                            <div className="des">
-                                <h4>Sorry,There are no comments to display.</h4>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="Recent_topics">
-                        <div className="articles_title">
-                            <h2>Recent Forum Topics</h2>
-                        </div>
-                        <div className="articles clearfix">
-                            <ul className="tag">
-                                <li><a href="/">covid education</a></li>
-                                <li><a href="/">What homeschooling activity do you enjoy?</a></li>
-                                <li><a href="/">Home school meet ups</a></li>
-                                <li><a href="/">Virtual classNameroom to replace classNameroom lecturing in future</a></li>
-                                <li><a href="/">Evaluating the effectiveness of distance learning</a></li>
-                            </ul>
-                            <a href="/" className="view_more">View More</a>
-
-                        </div>
-                    </div>
-                    <div className="Recent_topics_form">
-                        <div className="articles_title">
-                            <h2>Recent Forums</h2>
-                        </div>
-                        <div className="articles clearfix">
-                            <ul className="tag">
-                                <li><a href="/">General Community Chat </a></li>
-                                <li><a href="/">Higher Education Chat </a></li>
-                                <li><a href="/">Parental Connection </a></li>
-                                <li><a href="/">Parents and Teachers Lounge </a></li>
-                                <li><a href="/">Teachers Lounge</a></li>
-                            </ul>
-                            <a href="/" className="view_more">View More</a>
-
-                        </div>
-                    </div>
-                    <div className="Groups">
-                        <div className="articles_title">
-                            <h2>Groups</h2>
-                        </div>
-                        <div className="articles clearfix">
-                            <ul className="tabs">
-                                <li className="active" rel="tab1">Newest</li>
-                                <li rel="tab2">Active</li>
-                                <li rel="tab3">Popular</li>
-                                <li rel="tab4">Alphabetical</li>
-                            </ul>
-                            <div className="tab_container">
-                                <h3 className="d_active tab_drawer_heading" rel="tab1">Newest</h3>
-                                <div id="tab1" className="tab_content">
-                                    <div className="row">
-                                        <div className="col-md-6 col-sm-12 col-xs-6">
-                                            <div className="boder_box text-center">
-                                                <a href="/">
-                                                    <img src="assets/img/t.png" alt=""/>
-                                                    <h4>Test group<span>created 2 weeks</span></h4>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div className="col-md-6 col-sm-12 col-xs-6">
-                                            <div className="boder_box text-center">
-                                                <a href="/">
-                                                    <img src="assets/img/martial-art.png" alt=""/>
-                                                    <h4>Homeschool Martial Arts<span>created 1 month ago</span></h4>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div className="col-md-6 col-sm-12 col-xs-6">
-                                            <div className="boder_box text-center">
-                                                <a href="/">
-                                                    <img src="assets/img/gift-child.png" alt=""/>
-                                                    <h4>Homeschooling gifted
-                                                        children<span>created 2 weeks, 4 days ago</span></h4>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div className="col-md-6 col-sm-12 col-xs-6">
-                                            <div className="boder_box text-center">
-                                                <a href="/">
-                                                    <img src="assets/img/student.png" alt=""/>
-                                                    <h4>Middle school students<span>created 1 Month ago</span></h4>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <h3 className="tab_drawer_heading" rel="tab2">Active</h3>
-                                <div id="tab2" className="tab_content">
-                                    <div className="row">
-                                        <div className="col-md-6 col-sm-12 col-xs-6">
-                                            <div className="boder_box text-center">
-                                                <a href="/">
-                                                    <img src="assets/img/t.png" alt=""/>
-                                                    <h4>Test group<span>created 2 weeks</span></h4>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div className="col-md-6 col-sm-12 col-xs-6">
-                                            <div className="boder_box text-center">
-                                                <a href="/">
-                                                    <img src="assets/img/martial-art.png" alt=""/>
-                                                    <h4>Homeschool Martial Arts<span>created 1 month ago</span></h4>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div className="col-md-6 col-sm-12 col-xs-6">
-                                            <div className="boder_box text-center">
-                                                <a href="/">
-                                                    <img src="assets/img/gift-child.png" alt=""/>
-                                                    <h4>Homeschooling gifted
-                                                        children<span>created 2 weeks, 4 days ago</span></h4>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div className="col-md-6 col-sm-12 col-xs-6">
-                                            <div className="boder_box text-center">
-                                                <a href="/">
-                                                    <img src="assets/img/student.png" alt=""/>
-                                                    <h4>Middle school students<span>created 1 Month ago</span></h4>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <h3 className="tab_drawer_heading" rel="tab3">Popular</h3>
-                                <div id="tab3" className="tab_content">
-                                    <div className="row">
-                                        <div className="col-md-6 col-sm-12 col-xs-6">
-                                            <div className="boder_box text-center">
-                                                <a href="/">
-                                                    <img src="assets/img/t.png" alt=""/>
-                                                    <h4>Test group<span>created 2 weeks</span></h4>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div className="col-md-6 col-sm-12 col-xs-6">
-                                            <div className="boder_box text-center">
-                                                <a href="/">
-                                                    <img src="assets/img/martial-art.png" alt="" />
-                                                    <h4>Homeschool Martial Arts<span>created 1 month ago</span></h4>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div className="col-md-6 col-sm-12 col-xs-6">
-                                            <div className="boder_box text-center">
-                                                <a href="/">
-                                                    <img src="assets/img/gift-child.png" alt="" />
-                                                    <h4>Homeschooling gifted
-                                                        children<span>created 2 weeks, 4 days ago</span></h4>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div className="col-md-6 col-sm-12 col-xs-6">
-                                            <div className="boder_box text-center">
-                                                <a href="/">
-                                                    <img src="assets/img/student.png" alt="" />
-                                                    <h4>Middle school students<span>created 1 Month ago</span></h4>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <h3 className="tab_drawer_heading" rel="tab4">Alphabetical</h3>
-                                <div id="tab4" className="tab_content">
-                                    <div className="row">
-                                        <div className="col-md-6 col-sm-12 col-xs-6">
-                                            <div className="boder_box text-center">
-                                                <a href="/">
-                                                    <img src="assets/img/t.png" alt="" />
-                                                    <h4>Test group<span>created 2 weeks</span></h4>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div className="col-md-6 col-sm-12 col-xs-6">
-                                            <div className="boder_box text-center">
-                                                <a href="/">
-                                                    <img src="assets/img/martial-art.png" alt="" />
-                                                    <h4>Homeschool Martial Arts<span>created 1 month ago</span></h4>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div className="col-md-6 col-sm-12 col-xs-6">
-                                            <div className="boder_box text-center">
-                                                <a href="/">
-                                                    <img src="assets/img/gift-child.png" alt="" />
-                                                    <h4>Homeschooling gifted
-                                                        children<span>created 2 weeks, 4 days ago</span></h4>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div className="col-md-6 col-sm-12 col-xs-6">
-                                            <div className="boder_box text-center">
-                                                <a href="/">
-                                                    <img src="assets/img/student.png" alt="" />
-                                                    <h4>Middle school students<span>created 1 Month ago</span></h4>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-                </div>
-
             </div>
         </section>
 

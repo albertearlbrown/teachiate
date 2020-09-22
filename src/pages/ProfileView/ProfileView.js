@@ -8,7 +8,7 @@ import InfiniteLoader from 'react-infinite-loader';
 import jwt_decode from 'jwt-decode';
 import { Link } from 'react-router-dom';
 
-const ProfileView = () => {
+const ProfileView = ({userData}) => {
 
     const [postData, setPostData] = useState([]);
     const [newPost, setNewPost] = useState([]);
@@ -192,17 +192,17 @@ const ProfileView = () => {
                             <label htmlFor="imageUpload"></label>
                         </div>
                         <div className="avatar-preview">
-                            <div id="imagePreview" style={{backgroundImage: `url('assets/img/avatar.jpg')`}}>
+                            <div id="imagePreview" style={userData.avatar === null ?  {backgroundImage: `url('/assets/img/placeholder/user.png')`} : {backgroundImage: `url('${userData.avatar}')`}}>
                             </div>
                         </div>
                     </div>
                     <div className="avatar-info">
                         <div className="avatar-name">
-                            <h3><a href="#">{jwt_decode(localStorage.getItem('jwt_token')).payload.fullname} </a> </h3>
+                            <h3><a href="#">{userData.fullname} </a> </h3>
                             <div className="clear"></div>
                         </div>
                         <div className="avatar-status">
-                            <h3>{jwt_decode(localStorage.getItem('jwt_token')).payload.role}</h3>
+                            <h3>{userData.role}</h3>
                             <div className="clear"></div>
                         </div>
                     </div>
@@ -291,10 +291,12 @@ const ProfileView = () => {
                         <div className="post_share">
                         <h2>Share your thoughts</h2>
                         <div className="post_share_area">
-                            <div className="posted_avtar"><img src="assets/img/g4.png" alt=""/></div>
+                            <div className="posted_avtar">
+                                <img src={userData.avatar == null ? "assets/img/user-account.png" : userData.avatar} alt="Sarah Jones"/>
+                            </div>
                             <form method="POST" encType="multipart/form-data" onSubmit={formHandler}>
                                 <div className="post_share_field">
-                                    <textarea placeholder="Sarah What’s are your mind?" value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
+                                    <textarea placeholder="What’s are your mind?" value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
                                     <div className="adv_post_opt clearfix">
                                         <div className="share_type">
                                             <ul>
@@ -339,7 +341,9 @@ const ProfileView = () => {
                     {newPost.map(post => (
                             <div className="blog_sec1" key={post.id}>
                             <div className="blog_title">
-                                <div className="title_img"><img src="assets/img/katei-knapp.png" alt=""/></div>
+                                <div className="title_img">
+                                    <img src={post.avatar == null ? "assets/img/user-account.png" : userData.avatar} alt="Sarah Jones"/>
+                                </div>
                                 <div className="user_des">
                                     <h4>{post.fullname} <span>{post.role}</span></h4>
                                     <p>posted in the (<strong>profile</strong>)</p>
@@ -395,7 +399,9 @@ const ProfileView = () => {
                         .map(post => (
                             <div className="blog_sec1" key={post.id}>
                                 <div className="blog_title">
-                                    <div className="title_img"><img src="assets/img/katei-knapp.png" alt=""/></div>
+                                    <div className="title_img">                                
+                                        <img src={post.avatar == null ? "assets/img/user-account.png" : userData.avatar} alt="Sarah Jones"/>
+                                    </div>
                                     <div className="user_des">
                                         <h4>{post.fullname} <span>{post.role}</span></h4>
                                         <p>posted in the (<strong>profile</strong>)</p>

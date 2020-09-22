@@ -5,15 +5,15 @@ import Logo from '../Logo/Logo';
 import { useStoreState, useStoreActions } from 'easy-peasy';
 import { Link } from 'react-router-dom';
 import jwt_decode from "jwt-decode";
+import axios from 'axios';
 
-const Header = () => {    
+const Header = ({ userData }) => {    
 
     const auth = useStoreState(state => state.islogin);
     const logoutAction = useStoreActions(actions => actions.userLogout); 
     const [dropdown, setDropdown] = useState(false);
 
     useEffect(() => {
-
     }, []);
 
     const logoutUser = (e) => {
@@ -40,9 +40,11 @@ const Header = () => {
 
                         <div className={dropdown ? 'my_account active' : 'my_account'}  onClick={toggle}>
                             {auth ? (
-                                <> <img src="assets/img/user-account.png" alt="Sarah Jones"/> {
-                                        jwt_decode(localStorage.getItem('jwt_token')).payload.fullname
-                                    } <i className="icon-chevron-right"></i>
+                                <>                                     
+                                    <img src={userData.avatar === null ? "assets/img/user-account.png" : userData.avatar} alt="Sarah Jones"/>
+                                    {userData.fullname}
+
+                                    <i className="icon-chevron-right"></i>
 
                                     <div className="my_account_open">
                                         <ul>                                         
