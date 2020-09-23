@@ -251,7 +251,21 @@ const SchoolOpening = () => {
                                                     </div>
                                                 </div>
                                                 <p>{post.description}</p>
-                                            </div>                                                                      
+                                            </div>
+
+
+                                            <div className="opening_flex">
+                                                <div className="locaton">
+                                                    <p>
+                                                        <i className="fa fa-map-marker" aria-hidden="true"></i> 
+                                                         State: <span>{post.state}</span> </p>
+                                                        <p>City: <span>{post.city}</span></p>
+                                                </div>
+                                                <div className="bbc_news">
+                                                    <p><a href={post.source_url}>Source</a></p>
+                                                </div>
+                                            </div>   
+                                                                                                                                                              
                                         </div>
                                     </div>
                                 ))
