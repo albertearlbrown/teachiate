@@ -13,6 +13,7 @@ import CreateSchoolOpeningUpdates from './pages/CreateSchoolOpeningUpdates';
 import Profile from './pages/ProfileView';
 import PasswordForgot from './pages/PasswordForgot';
 import NotFound from './pages/NotFound';
+import Forums from './pages/Forums';
 
 // Components
 import Header from './components/Header';
@@ -50,6 +51,9 @@ function App() {
             <Switch>
               <Route path="/" exact><Home userData={userData}/></Route>
               <PrivateRoute path='/my-profile' userData={userData} component={Profile}/>
+              <Route path="/forums">
+                <Forums/>
+              </Route>
               <Route path="/about">
                 <About />
               </Route> 
@@ -69,7 +73,6 @@ function App() {
                 <SchoolOpening/>
               </Route>
               <PrivateRoute path='/create-covid-post' component={CreateSchoolOpeningUpdates}/>              
-              <Route component={NotFound}></Route>
              </Switch>
           </div>
           <Footer/>

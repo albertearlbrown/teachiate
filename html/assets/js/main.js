@@ -90,25 +90,25 @@ var FX = (function(FX, $) {
 	/**
 	 * General functionality — ideal for one-liners or super-duper short code blocks
 	 */
-	FX.General = {
-		init: function() {
-			this.bind();
-		},
+	// FX.General = {
+	// 	init: function() {
+	// 		this.bind();
+	// 	},
 
-		bind: function() {
+	// 	bind: function() {
 
-			// Selectric
-			$('select').selectric({
-				arrowButtonMarkup: '<b class="button"></b>'
-			});
+	// 		// Selectric
+	// 		$('select').selectric({
+	// 			arrowButtonMarkup: '<b class="button"></b>'
+	// 		});
 			
-			// IE CSS object-fit support
-			objectFitImages();
+	// 		// IE CSS object-fit support
+	// 		objectFitImages();
 
-			// TODO: Add additional small scripts below
+	// 		// TODO: Add additional small scripts below
 
-		}
-	},
+	// 	}
+	// },
 	
 	/**
      * Example Code Block - This should be removed
@@ -644,7 +644,6 @@ $(document).ready(function(){
 		$(this).toggleClass('active')
 	});
 });
-
 
 
     function openForm() {
