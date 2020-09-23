@@ -35,7 +35,9 @@ const SchoolOpening = () => {
  
      const stateHandler = async (e) => {
         setState(e.target.value);
-        const stateCode = e.target.value;
+
+        const selectedIndex = e.target.options.selectedIndex;
+        const stateCode = e.target.options[selectedIndex].getAttribute('data-key');
         
          if(e.target.value !== 'All') {
              const resp = await axios.get(`https://teachiate-backend.fnmotivations.com/cities/${stateCode}`);
@@ -58,7 +60,7 @@ const SchoolOpening = () => {
                 <div className='select'>
                     <select id="slct" onChange={stateHandler}>
                         <option value='All'>All States</option>
-                        {states.map(i =>  <option data-state={i.state} value={i.state_code} key={i.state_code}>{i.state}</option>)}
+                        {states.map(i =>  <option value={i.state} data-key={i.state_code} key={i.state_code}>{i.state}</option>)}
                     </select>
                 </div>
             </>
@@ -169,7 +171,7 @@ const SchoolOpening = () => {
 
                             {loadPosts && state !== 'All' && city === 'All' ? (
                                 posts
-                                .filter(post => post.state_code === state)
+                                .filter(post => post.state === state)
                                 .map(post => (
                                     <div className="blog_sec4 open" key={post.id}>
                                         <div className="opeing_list">
@@ -219,7 +221,7 @@ const SchoolOpening = () => {
 
                             {loadPosts && state !== 'All' && city !== 'All' ? (
                                 posts
-                                .filter(post => post.state_code === state  && post.city === city)
+                                .filter(post => post.state === state  && post.city === city)
                                 .map(post => (
                                     <div className="blog_sec4 open" key={post.id}>
                                         <div className="opeing_list">
