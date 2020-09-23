@@ -35,6 +35,7 @@ const SchoolOpening = () => {
  
      const stateHandler = async (e) => {
         setState(e.target.value);
+        setCity('All');
 
         const selectedIndex = e.target.options.selectedIndex;
         const stateCode = e.target.options[selectedIndex].getAttribute('data-key');
