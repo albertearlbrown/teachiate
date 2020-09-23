@@ -165,9 +165,7 @@ function CreateSchoolOpeningUpdates() {
                                         <div className="register_field_col">
                                             <p>Add Image</p>
                                             <div className="field input">
-                                            <input id="atch_photo" type="text" name="new_file" className="register_input" onChange={imageHandler}  placeholder="Select file"/>
-                                            <input type="file" name="uploaded_file" onChange={imageHandler} className="file_input_with_replacement"/>
-                                            <label htmlFor="atch_photo" className="photo_attatch_btn">Select Image</label>
+                                            <input type="file" name="uploaded_file" onChange={imageHandler} className='register_input'/>
                                             </div>
                                         </div>
                                     </div>
