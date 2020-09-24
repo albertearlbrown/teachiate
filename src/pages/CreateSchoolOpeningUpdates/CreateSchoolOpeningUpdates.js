@@ -21,6 +21,7 @@ function CreateSchoolOpeningUpdates() {
     const [token, setToken] = useState('');
 
     useEffect(() => {
+       window.scrollTo(0, 0);    
        async function fetchStates() {
             const resp =  await axios.get('https://teachiate-backend.fnmotivations.com/states');
             setStates([...resp.data.data]);

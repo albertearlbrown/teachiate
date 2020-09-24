@@ -5,32 +5,28 @@ import Logo from '../Logo/Logo';
 import { useStoreState, useStoreActions } from 'easy-peasy';
 import { Link } from 'react-router-dom';
 import jwt_decode from "jwt-decode";
-import axios from 'axios';
 
-const Header = ({ userData }) => {    
+const Header = () => {    
 
     const auth = useStoreState(state => state.islogin);
-    const logoutAction = useStoreActions(actions => actions.userLogout); 
-    const [dropdown, setDropdown] = useState(false);
+    const userLogout = useStoreActions(actions => actions.userLogout); 
+    const [user, setUser] = useState({ fullname: null, avatar: null, role: null });
+    const [token, setToken] = useState(null);
 
     useEffect(() => {
+        if(localStorage.getItem('jwt_token')) {
+            const token = localStorage.getItem('jwt_token');            
+            setToken(token);
+            const { fullname, avatar, role } = jwt_decode(token).payload;        
+            setUser({ fullname, avatar: null, role });
+        }
     }, []);
 
     const logoutUser = (e) => {
         e.preventDefault();
-        logoutAction();
+        userLogout();
         localStorage.clear();   
-        window.location.replace("/");
     };    
-
-    const toggle = () => {
-        if(dropdown) {
-            setDropdown(false);
-        }
-        else {
-            setDropdown(true);
-        }
-    }
 
     return (
         <>
@@ -38,33 +34,42 @@ const Header = ({ userData }) => {
                 <div className="bottom-header">
                     <div className="container clearfix">
                         <Logo/>
-
-                        <div className={dropdown ? 'my_account active' : 'my_account'}  onClick={toggle}>
+                                                  
                             {auth ? (
-                                <>                                     
-                                    <img src={userData.avatar !== null ?  userData.avatar : "/assets/img/user-account.png"} alt={userData.fullname}/>
-                                    {userData.fullname}
+                                <>   
+                                    <div className='my_account' id='my_account'> 
+                                    
+                                        {token ? (
+                                            <>
+                                                <img src={user.avatar ?  user.avatar : "/assets/img/user-account.png"} alt={user.fullname} />  
+                                                {user.fullname ? user.fullname :  null}                                            
+                                            </>
+                                            ) : null
+                                        } 
 
-                                    <i className="icon-chevron-right"></i>
+                                        <i className="icon-chevron-right"></i> 
 
-                                    <div className="my_account_open">
-                                        <ul>                                         
-                                            {jwt_decode(localStorage.getItem('jwt_token')).payload.role === 'Admin' ? 
-                                                (<li><Link to="/create-covid-post">Create Covid Post</Link></li>)  : null
-                                            }
-                                            <li><Link to='/my-profile'>My Profile</Link></li>
-                                            <li><Link to="/" onClick={logoutUser}>Lagout</Link></li>                                            
-                                        </ul>
-                                    </div>                                        
-                                    </>
+                                        <div className="my_account_open">
+                                            <ul>                                         
+                                                {user.role === 'Admin' ? <li><Link to="/create-covid-post">Create Covid Post</Link></li>: null}
+                                                <li><Link to='/my-profile'>My Profile</Link></li>
+                                                <li><Link to="/" onClick={logoutUser}>Lagout</Link></li>                                            
+                                            </ul>
+                                        </div>                   
+                                    </div>                     
+                                </>
                             ) : 
                             (
                                 <>
-                                    <img src="/assets/img/user-account.png" alt="My Account Icon"/>
-                                    <Link to="/login">My Account</Link>
+                                    <div className='my_account'>
+                                        <Link to="/login">
+                                            <img src="/assets/img/user-account.png" alt="My Account Icon"/>
+                                        </Link>
+                                        <Link to="/login">My Account</Link>
+                                    </div>
                                 </> 
                             )}
-                        </div>
+
                         <div className="search-icon hidden-md-down"><i className="icon-search"></i></div>
                         <MainMenu/>
                     </div>

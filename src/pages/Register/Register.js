@@ -1,13 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import { useStoreActions, useStoreState } from 'easy-peasy';
-
-// Firebase App (the core Firebase SDK) is always required and
-// must be listed before other Firebase SDKs
-import * as firebase from "firebase/app";
-// // Add the Firebase services that you want to use
-import "firebase/auth";
-import "firebase/firestore";
+import Alert from '@material-ui/lab/Alert';
 import axios from 'axios';
 
 function Register() {
@@ -19,8 +13,10 @@ function Register() {
     const [role, SetRole] = useState('');
     const [acceptTermCond, setAcceptTermCond] = useState(false);
     const authStatus = useStoreState(state => state.islogin);
-    const loginAction = useStoreActions(actions => actions.userLogin);
-    
+    const userLogin = useStoreActions(actions => actions.userLogin);
+    const [errorMessage, setErrorMessage] = useState(null);
+    const [error, setError] = useState(false);
+
     useEffect(() => {
 
     }, []);
@@ -28,25 +24,24 @@ function Register() {
     const formHandler = async (e) => {
         e.preventDefault();
 
-        try {
+        const data = {
+            fullname: fullName,
+            email,
+            password,
+            role
+        };
 
-            const data = {
-                fullname: fullName,
-                email,
-                password,
-                role
-            };
+        const resp = await axios.post('http://localhost:3000/auth/join', data);
 
-            const resp = await axios.post('http://localhost:3000/auth/join', data);
-
-            if(resp.data.success === true) {
-                localStorage.setItem('jwt_token', resp.data.token);
-                loginAction();
-            }
-        }
-        catch(error) {
-            console.log(error);
-        }
+        if(resp.data.success === true) {
+            localStorage.setItem('jwt_token', resp.data.token);
+            setError(false);
+            userLogin();
+        }     
+        else {
+            setErrorMessage(resp.data.message);
+            setError(true);
+        }   
     }
 
     return (
@@ -56,6 +51,7 @@ function Register() {
                 <div className="container-fluid">
                     <div className="main_register_area">
                         <h2>Registration</h2>
+                        {error ? <Alert severity="error" style={{marginBottom: '20px'}}>{errorMessage}</Alert> : null}
                         <form onSubmit={formHandler}>
                             <div className="register_field">
                                 <div className="row">

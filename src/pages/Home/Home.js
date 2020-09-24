@@ -8,8 +8,9 @@ import { useStoreState } from 'easy-peasy';
 import InfiniteLoader from 'react-infinite-loader';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import jwt_decode from 'jwt-decode';
 
-function Home({userData}) {
+function Home() {
     const auth = useStoreState(state => state.islogin);
     const [postData, setPostData] = useState([]);
     const [newPost, setNewPost] = useState([]);
@@ -18,13 +19,23 @@ function Home({userData}) {
     const [selectedFile, setSelectedFile] = useState(null);
     const [selectFileUploadStart, setSelectFileUploadStart]  = useState(false);  
     const [selectFileUploadProgress, setSelectedFileUploadProgress]  = useState(0);
-    const [token, setToken] = useState('');
     const [startPost, setStartPost] = useState(0);
     const [LoadMoreFeedBtn, setLoadMoreFeedBtn] = useState(false);    
+    const [user, setUser] = useState({ fullname: null, avatar: null, role: null });
+    const [token, setToken] = useState(null);
+
 
     useEffect(() => {
-
         window.scrollTo(0, 0);
+
+        if(localStorage.getItem('jwt_token')) {
+            const token = localStorage.getItem('jwt_token');            
+            setToken(token);
+
+            const { fullname, avatar, role } = jwt_decode(token).payload;        
+            setUser({ fullname, avatar: null, role });
+        }
+
         async function fetchPosts() {
             const resp = await axios.get('https://teachiate-backend.fnmotivations.com/thoughts', {
                 params: {
@@ -44,9 +55,7 @@ function Home({userData}) {
         }
 
         fetchPosts();
-        if(localStorage.getItem('jwt_token')) {
-            setToken(localStorage.getItem('jwt_token'));
-        }
+       
     }, []);
 
     const fileHandler = (e) => {
@@ -97,8 +106,7 @@ function Home({userData}) {
             var x = resp.data.data.insertId;
             const createPost = await axios.get(`https://teachiate-backend.fnmotivations.com/thoughts/${x}`);
             if(createPost.data.success) {
-                const data =  newPost.concat([...createPost.data.data]);
-                setNewPost([...data]);
+                setNewPost(newPost => [...newPost, createPost.data.data]);
             }
         }   
     }
@@ -177,7 +185,7 @@ function Home({userData}) {
                         <h2>Share your thoughts</h2>
                         <div className="post_share_area">
                             <div className="posted_avtar">
-                                <img src={userData.avatar == null ? "/assets/img/account.png" : userData.avatar} alt={userData.fullname}/>
+                                <img src={user.avatar ?  user.avatar : "/assets/img/user-account.png"} alt={user.fullname} /> 
                             </div>
                             <form method="POST" encType="multipart/form-data" onSubmit={formHandler}>
                                 <div className="post_share_field">
@@ -266,7 +274,7 @@ function Home({userData}) {
                             <div className="blog_sec1" key={post.id}>
                                 <div className="blog_title">
                                     <div className="title_img">
-                                        <img src={post.avatar == null ? '/assets/img/account.png' : post.avatar } alt=""/>
+                                        <img src={post.avatar == null ? '/assets/img/user-account.png' : post.avatar } alt=""/>
                                     </div>
                                     <div className="user_des">
                                         <h4>{post.fullname} <span>{post.role}</span></h4>

@@ -16,7 +16,7 @@ const SchoolOpening = () => {
     const [city, setCity] = useState('All');
 
     useEffect(() => {
-
+        window.scrollTo(0, 0);
         async function fetchUpdates() {
             const resp =  await axios.get('https://teachiate-backend.fnmotivations.com/posts/covid');
             setPosts([...resp.data.data]);

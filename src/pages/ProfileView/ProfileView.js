@@ -8,7 +8,7 @@ import InfiniteLoader from 'react-infinite-loader';
 import jwt_decode from 'jwt-decode';
 import { Link } from 'react-router-dom';
 
-const ProfileView = ({userData}) => {
+const ProfileView = () => {
     const [postData, setPostData] = useState([]);
     const [newPost, setNewPost] = useState([]);
     const [description, setDescription] = useState('');
@@ -16,14 +16,22 @@ const ProfileView = ({userData}) => {
     const [selectedFile, setSelectedFile] = useState(null);
     const [selectFileUploadStart, setSelectFileUploadStart]  = useState(false);  
     const [selectFileUploadProgress, setSelectedFileUploadProgress]  = useState(0); 
-    const [token, setToken] = useState('');
+    const [user, setUser] = useState({ fullname: null, avatar: null, role: null });
+    const [token, setToken] = useState(null);
     const [startPost, setStartPost] = useState(0);
     const [LoadMoreFeedBtn, setLoadMoreFeedBtn] = useState(false);    
 
     useEffect(() => {
         window.scrollTo(0, 0);
-        async function fetchPosts() {
 
+        if(localStorage.getItem('jwt_token')) {
+            const token = localStorage.getItem('jwt_token');            
+            setToken(token);
+            const { fullname, avatar, role } = jwt_decode(token).payload;        
+            setUser({ fullname, avatar: null, role });
+        }
+
+        async function fetchPosts() {
             const user_id = jwt_decode(localStorage.getItem('jwt_token')).payload.user_id;
 
             const resp = await axios.get(`https://teachiate-backend.fnmotivations.com/thoughts/users/${user_id}`, {
@@ -44,10 +52,6 @@ const ProfileView = ({userData}) => {
         }
 
         fetchPosts();
-
-        if(localStorage.getItem('jwt_token')) {
-            setToken(localStorage.getItem('jwt_token'));
-        }        
     }, []);
 
     const fileHandler = async (e) => {
@@ -95,8 +99,7 @@ const ProfileView = ({userData}) => {
             var x = resp.data.data.insertId;
             const createPost = await axios.get(`https://teachiate-backend.fnmotivations.com/thoughts/${x}`);
             if(createPost.data.success) {
-                const data =  newPost.concat([...createPost.data.data]);
-                setNewPost([...data]);
+                setNewPost(newPost => [...newPost, createPost.data.data]);
             }                  
         }   
     }
@@ -177,8 +180,8 @@ const ProfileView = ({userData}) => {
                             <label htmlFor="imageUpload2"><i className="fa fa-pencil-square-o" aria-hidden="true"></i> Change Cover Image</label>
                         </div>
                         <div className="avatar-preview">
-                            <div id="imagePreview2" style={{backgroundImage: `url('/assets/img/profile_banner.jpg')`}}>
-                            </div>
+                            {/* <div id="imagePreview2" style={{backgroundImage: `url('/assets/img/profile_banner.jpg')`}}>
+                            </div> */}
                         </div>
                     </div>
                 </div>
@@ -191,17 +194,17 @@ const ProfileView = ({userData}) => {
                             <label htmlFor="imageUpload"></label>
                         </div>
                         <div className="avatar-preview">
-                            <div id="imagePreview" style={userData.avatar === null ?  {backgroundImage: `url('/assets/img/placeholder/user.png')`} : {backgroundImage: `url('${userData.avatar}')`}}>
+                            <div id="imagePreview" style={user.avatar === null ?  {backgroundImage: `url('/assets/img/placeholder/user.png')`} : {backgroundImage: `url('${user.avatar}')`}}>
                             </div>
                         </div>
                     </div>
                     <div className="avatar-info">
                         <div className="avatar-name">
-                            <h3><a href="#">{userData.fullname} </a> </h3>
+                            <h3><a href="#">{user.fullname} </a> </h3>
                             <div className="clear"></div>
                         </div>
                         <div className="avatar-status">
-                            <h3>{userData.role}</h3>
+                            <h3>{user.role}</h3>
                             <div className="clear"></div>
                         </div>
                     </div>
@@ -291,7 +294,7 @@ const ProfileView = ({userData}) => {
                         <h2>Share your thoughts</h2>
                         <div className="post_share_area">
                             <div className="posted_avtar">
-                                <img src={userData.avatar == null ? "assets/img/user-account.png" : userData.avatar} alt="Sarah Jones"/>
+                                <img src={user.avatar == null ? "assets/img/user-account.png" : user.avatar} alt="Sarah Jones"/>
                             </div>
                             <form method="POST" encType="multipart/form-data" onSubmit={formHandler}>
                                 <div className="post_share_field">
@@ -341,7 +344,7 @@ const ProfileView = ({userData}) => {
                             <div className="blog_sec1" key={post.id}>
                             <div className="blog_title">
                                 <div className="title_img">
-                                    <img src={post.avatar == null ? "assets/img/user-account.png" : userData.avatar} alt="Sarah Jones"/>
+                                    <img src={post.avatar == null ? "assets/img/user-account.png" : user.avatar} alt="Sarah Jones"/>
                                 </div>
                                 <div className="user_des">
                                     <h4>{post.fullname} <span>{post.role}</span></h4>
@@ -359,32 +362,6 @@ const ProfileView = ({userData}) => {
                             <div className="blog_des">
                                 <p>{post.description}</p>
                             </div>
-                            <div className="blog_feedback clearfox">
-                                <a href="/">
-                                    <div className="flower"><img src="assets/img/flower.svg" alt=""/><span>0</span></div>
-                                </a>
-                                <a href="/">
-                                    <div className="love"><img src="assets/img/love.svg" alt=""/><span>0</span></div>
-                                </a>
-                            </div>
-
-                            <div className="comm_se">
-                                <ul>
-                                    <li><a href="#"> <span>like <i className="fa fa-thumbs-o-up" aria-hidden="true"></i></span></a></li>
-                                    <li> <a href="#"> <span>Comment <i className="fa fa-comment-o" aria-hidden="true"></i></span></a></li>
-                                    <li id='share-btn'><span>Share <i className="fa fa-share" aria-hidden="true"> 
-                                        </i></span>
-                                        <div className="share_post_via">
-                                            <ul>
-                                                <li><a href="https://www.facebook.com/sharer.php?u="><span><i className="fa fa-facebook-square"></i></span>Facebook</a></li>
-                                                <li><a href="http://twitter.com/share?text=&url="><span><i className="fa fa-twitter"></i></span>Twitter</a></li>
-                                                <li><a href="https://www.instagram.com/?url="><span><i className="fa fa-instagram"></i></span>Instagram</a></li>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                    <li> <a href="#"> <span>Report <i className="fa fa-exclamation-triangle" aria-hidden="true"></i></span></a></li>
-                                </ul>
-                            </div>
 
                             <div className="direct_cmnt_area">
                                 <textarea placeholder="write a comment"></textarea>
@@ -399,7 +376,7 @@ const ProfileView = ({userData}) => {
                             <div className="blog_sec1" key={post.id}>
                                 <div className="blog_title">
                                     <div className="title_img">                                
-                                        <img src={post.avatar == null ? "assets/img/user-account.png" : userData.avatar} alt="Sarah Jones"/>
+                                        <img src={post.avatar == null ? "assets/img/user-account.png" : user.avatar} alt="Sarah Jones"/>
                                     </div>
                                     <div className="user_des">
                                         <h4>{post.fullname} <span>{post.role}</span></h4>
@@ -417,38 +394,7 @@ const ProfileView = ({userData}) => {
 
                                 <div className="blog_des">
                                     <p>{post.description}</p>
-                                </div>
-                                <div className="blog_feedback clearfox">
-                                    <a href="/">
-                                        <div className="flower"><img src="assets/img/flower.svg" alt=""/><span>0</span></div>
-                                    </a>
-                                    <a href="/">
-                                        <div className="love"><img src="assets/img/love.svg" alt=""/><span>0</span></div>
-                                    </a>
-                                </div>
-
-                                <div className="comm_se">
-                                    <ul>
-                                        <li><a href="#"> <span>like <i className="fa fa-thumbs-o-up" aria-hidden="true"></i></span></a></li>
-                                        <li> <a href="#"> <span>Comment <i className="fa fa-comment-o" aria-hidden="true"></i></span></a></li>
-                                        <li id='share-btn'><span>Share <i className="fa fa-share" aria-hidden="true"> 
-                                            </i></span>
-                                            <div className="share_post_via">
-                                                <ul>
-                                                    <li><a href="https://www.facebook.com/sharer.php?u="><span><i className="fa fa-facebook-square"></i></span>Facebook</a></li>
-                                                    <li><a href="http://twitter.com/share?text=&url="><span><i className="fa fa-twitter"></i></span>Twitter</a></li>
-                                                    <li><a href="https://www.instagram.com/?url="><span><i className="fa fa-instagram"></i></span>Instagram</a></li>
-                                                </ul>
-                                            </div>
-                                        </li>
-                                        <li> <a href="#"> <span>Report <i className="fa fa-exclamation-triangle" aria-hidden="true"></i></span></a></li>
-                                    </ul>
-                                </div>
-
-                                <div className="direct_cmnt_area">
-                                    <textarea placeholder="write a comment"></textarea>
-                                    <input type="submit" value="Post" name=""/>
-                                </div>                                    
+                                </div>                            
                                 
                             </div>
 
