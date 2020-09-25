@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import PageTitle from '../../components/PageTitle';
 import Moment from 'react-moment';
 import { Link } from 'react-router-dom';
+import { Placeholder } from 'semantic-ui-react';
 
 const Forum = () => {
     const [posts, setPosts] = useState([]);
@@ -16,7 +17,6 @@ const Forum = () => {
            if(resp.data.success) {
             setPosts([...resp.data.data]);
             setLoad(true);        
-            console.log(posts);
            }
         }
 
@@ -42,8 +42,9 @@ const Forum = () => {
                     <div className="forum clearfix">
                         <div className="forum_left">
                             <div className="left_title">
-                                <h2>General Community Chat</h2>
+                                {categorySelected === null ? <h2>All</h2> : <h2>{categorySelected}</h2>}
                             </div>
+
                             <ul className="left_listing">
 
                                 {load ? (
@@ -65,7 +66,7 @@ const Forum = () => {
                                                                 <div className="des_p">
                                                                     <p>{post.description}</p>
                                                                 </div>
-                                                                <div className="read_more_btn"><Link to="/">Read More</Link></div>
+                                                                <div className="read_more_btn"><Link to={'forum/' + post.forum_post_id}>Read More</Link></div>
                                                                 <div className="month">
                                                                     <p><Moment fromNow>{post.created_at}</Moment></p>
                                                                 </div>
@@ -93,7 +94,7 @@ const Forum = () => {
                                                             <div className="des_p">
                                                                 <p>{post.description}</p>
                                                             </div>
-                                                            <div className="read_more_btn"><Link to="/">Read More</Link></div>
+                                                            <div className="read_more_btn"><Link to={'forum/'+post.forum_post_id}>Read More</Link></div>
                                                             <div className="month">
                                                                 <p><Moment fromNow>{post.created_at}</Moment></p>
                                                             </div>
@@ -106,17 +107,19 @@ const Forum = () => {
                                     </div>                                    
                                 ): <p>Loading...</p>} 
 
+                               
+
                             </ul>
                         </div>
                         <div className="forum_right">
                             <div className="list_chat">
                                 <ul>
-                                    <li className={categorySelected === null ? 'active' : null}><Link to="#" onClick={(e) => setSelectCategory(null)}>All</Link></li>                                    
-                                    <li className={categorySelected === 'General Community Chat' ? 'active' : null}><Link to="#" onClick={(e) => setSelectCategory(e.target.text)}>General Community Chat</Link></li>
-                                    <li className={categorySelected === 'Higher Education Chat' ? 'active' : null}><Link to="#" onClick={(e) => setSelectCategory(e.target.text)}>Higher Education Chat</Link></li>
-                                    <li className={categorySelected === 'Parental Connection' ? 'active' : null}><Link to="#" onClick={(e) => setSelectCategory(e.target.text)}>Parental Connection</Link></li>
-                                    <li className={categorySelected === 'Parents and Teachers Lounge' ? 'active' : null}><Link to="#" onClick={(e) => setSelectCategory(e.target.text)}>Parents and Teachers Lounge</Link></li>
-                                    <li className={categorySelected === 'Teachers Lounge' ? 'active' : null}><Link to="#" onClick={(e) => setSelectCategory(e.target.text)}>Teachers Lounge</Link></li>
+                                    <li className={categorySelected === null ? 'active' : null} onClick={(e) => setSelectCategory(null)}><Link to="#">All</Link></li>                                    
+                                    <li className={categorySelected === 'General Community Chat' ? 'active' : null} onClick={(e) => setSelectCategory(e.target.text)}><Link to="#">General Community Chat</Link></li>
+                                    <li className={categorySelected === 'Higher Education Chat' ? 'active' : null} onClick={(e) => setSelectCategory(e.target.text)}><Link to="#">Higher Education Chat</Link></li>
+                                    <li className={categorySelected === 'Parental Connection' ? 'active' : null} onClick={(e) => setSelectCategory(e.target.text)}><Link to="#">Parental Connection</Link></li>
+                                    <li className={categorySelected === 'Parents and Teachers Lounge' ? 'active' : null} onClick={(e) => setSelectCategory(e.target.text)}><Link to="#">Parents and Teachers Lounge</Link></li>
+                                    <li className={categorySelected === 'Teachers Lounge' ? 'active' : null} onClick={(e) => setSelectCategory(e.target.text)}><Link to="#">Teachers Lounge</Link></li>
                                 </ul>
                             </div>
                         </div>
