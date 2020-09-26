@@ -39,19 +39,15 @@ const Header = () => {
                                 <>   
                                     <div className='my_account' id='my_account'> 
                                     
-                                        {token ? (
-                                            <>
-                                                <img src={user.avatar ?  user.avatar : "/assets/img/user-account.png"} alt={user.fullname} />  
-                                                {user.fullname ? user.fullname :  null}                                            
-                                            </>
-                                            ) : null
-                                        } 
+                                        <img src={user.avatar ?  user.avatar : "/assets/img/user-account.png"} alt={user.fullname} />  
+                                        {user.fullname ? user.fullname :  null}                                            
+
 
                                         <i className="icon-chevron-right"></i> 
 
                                         <div className="my_account_open">
                                             <ul>                                         
-                                                {user.role === 'Admin' ? <li><Link to="/create-covid-post">Create Covid Post</Link></li>: null}
+                                                <li><Link to="/create-covid-post">Create Covid Post</Link></li>
                                                 <li><Link to='/my-profile'>My Profile</Link></li>
                                                 <li><Link to="/" onClick={logoutUser}>Lagout</Link></li>                                            
                                             </ul>

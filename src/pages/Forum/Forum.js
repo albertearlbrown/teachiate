@@ -3,11 +3,11 @@ import React, { useEffect, useState } from 'react'
 import PageTitle from '../../components/PageTitle';
 import Moment from 'react-moment';
 import { Link } from 'react-router-dom';
-import { Placeholder } from 'semantic-ui-react';
 
-const Forum = () => {
+function Forum() {
     const [posts, setPosts] = useState([]);
     const [load, setLoad] = useState(false);
+    const [keyword, setKeyword] = useState(null);
     const [categorySelected, setSelectCategory] = useState(null);
 
     useEffect(() => {
@@ -23,6 +23,12 @@ const Forum = () => {
         fetchPosts();
     },[]);
 
+
+    const searchHandler = (e) => {
+        e.preventDefault();
+        alert('Search...');
+    }
+
     return (
         <>
            <PageTitle title='Forum'/>
@@ -31,11 +37,13 @@ const Forum = () => {
                 <div className="container">
 
                     <div className="row">
-                        <div className="col-md-12">
-                            <div className="search_flex text-center mt_30">
-                                {/* <input type="search" placeholder="Search" className="form-control"/>
-                                <button className="search_btn" type="submit"><img src="assets/img/search-icon.png" alt=""/></button> */}
-                            </div>
+                        <div className="col-md-12">                        
+                            <form onSubmit={searchHandler}>    
+                                <div className="search_flex text-center mt_30">
+                                    <input type="search" placeholder="Search" value={keyword} onChange={(e) => setKeyword(e.target.value)} className="form-control"/>
+                                    <button className="search_btn" type="submit"><img src="assets/img/search-icon.png" alt=""/></button>
+                                </div>
+                             </form>
                         </div>
                     </div>
 
