@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import Moment from 'react-moment';
 import axios from 'axios';
 
 const SchoolOpening = () => {
@@ -18,8 +19,11 @@ const SchoolOpening = () => {
     useEffect(() => {
         window.scrollTo(0, 0);
         async function fetchUpdates() {
-            const resp =  await axios.get('https://teachiate-backend.fnmotivations.com/posts/covid');
-            setPosts([...resp.data.data]);
+            const resp =  await axios.get('https://teachiate-backend.fnmotivations.com/covid_feed');
+            const featured_posts = resp.data.data.featured_posts; 
+            const posts = resp.data.data.posts;
+            const all = featured_posts.concat(posts);
+            setPosts([...all]);
             setLoadPosts(true);   
         }
 
@@ -128,13 +132,13 @@ const SchoolOpening = () => {
                                             <div className="blog_title">
                                                 <div className="title_img"><img src="assets/img/admin-img.png" alt=""/></div>
                                                 <div className="user_des">
-                                                    <h4>Admin</h4>
+                                                   <h4>{post.fullname} ({post.role})</h4>
                                                     <p>{post.state} | USA </p>
                                                 </div>
-                                                <div className="star_icon">
+                                                {/* <div className="star_icon">
                                                     <i className="fa fa-star-o" aria-hidden="true"></i>
-                                                </div>
-                                                {/* <div className="time"> 2 Days ago</div> */}
+                                                </div> */}
+                                                <div className="time"> <Moment fromNow>{post.created_at}</Moment></div>
                                             </div>
                                             
                                             {post.filepath !== null ? (
@@ -184,7 +188,7 @@ const SchoolOpening = () => {
                                                 </div>
                                                 <div className="star_icon"><i className="fa fa-star-o" aria-hidden="true"></i>
                                                 </div>
-                                                {/* <div className="time"> 2 Days ago</div> */}
+                                                <div className="time"> <Moment fromNow>{post.created_at}</Moment></div>
                                             </div>
                                             
                                             {post.filepath !== null ? (
@@ -234,7 +238,7 @@ const SchoolOpening = () => {
                                                 </div>
                                                 <div className="star_icon"><i className="fa fa-star-o" aria-hidden="true"></i>
                                                 </div>
-                                                {/* <div className="time"> 2 Days ago</div> */}
+                                                <div className="time"> <Moment fromNow>{post.created_at}</Moment></div>
                                             </div>
                                             
                                             {post.filepath !== null ? (
