@@ -1,31 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useContext } from 'react';
 import MainMenu from '../MainMenu';
 import SearchBox from '../SearchBox/SearchBox';
 import Logo from '../Logo/Logo';
-import { useStoreState, useStoreActions } from 'easy-peasy';
 import { Link } from 'react-router-dom';
-import jwt_decode from "jwt-decode";
+import { AuthStoreContext } from '../../Store/AuthStore';
 
-const Header = () => {    
+function Header() {    
+    
+    const {isAuthenicate, userData } = useContext(AuthStoreContext);
 
-    const auth = useStoreState(state => state.islogin);
-    const userLogout = useStoreActions(actions => actions.userLogout); 
-    const [user, setUser] = useState({ fullname: null, avatar: null, role: null });
-    const [token, setToken] = useState(null);
+    useEffect(() => {     
 
-    useEffect(() => {
-        if(localStorage.getItem('jwt_token')) {
-            const token = localStorage.getItem('jwt_token');            
-            setToken(token);
-            const { fullname, avatar, role } = jwt_decode(token).payload;        
-            setUser({ fullname, avatar: null, role });
-        }
     }, []);
 
     const logoutUser = (e) => {
         e.preventDefault();
-        userLogout();
         localStorage.clear();   
+        window.location.replace('/');
     };    
 
     return (
@@ -35,13 +26,13 @@ const Header = () => {
                     <div className="container clearfix">
                         <Logo/>
                                                   
-                            {auth ? (
+                            {isAuthenicate ? (
                                 <>   
                                     <div className='my_account' id='my_account'> 
-                                    
-                                        <img src={user.avatar ?  user.avatar : "/assets/img/user-account.png"} alt={user.fullname} />  
-                                        {user.fullname ? user.fullname :  null}                                            
 
+                                        <img src={userData.avatar === null ?  "/assets/img/user-account.png" : userData.avatar} alt={userData.fullname} />  
+
+                                        {userData.fullname}
 
                                         <i className="icon-chevron-right"></i> 
 

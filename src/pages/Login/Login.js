@@ -1,18 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { Redirect } from 'react-router-dom';
-import { useStoreActions, useStoreState } from 'easy-peasy';
 import Alert from '@material-ui/lab/Alert';
+import { observer } from 'mobx-react';
+import { AuthStoreContext } from '../../Store/AuthStore';
 import axios from 'axios';
 
-function Login() {
+function Login({authState}) {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const authStatus = useStoreState(state => state.islogin);
-    const userLogin = useStoreActions(actions => actions.userLogin);
     const [errorMessage, setErrorMessage] = useState(null);
     const [error, setError] = useState(false);
+    const {isAuthenicate, setIsAuthenicate, setUserData } = useContext(AuthStoreContext);
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -29,7 +29,21 @@ function Login() {
         if(resp.data.success === true) {
             localStorage.setItem('jwt_token', resp.data.token);
             setError(false);
-            userLogin();            
+
+            const config = {
+                headers: {
+                    Authorization: 'Bearer ' + localStorage.getItem('jwt_token')
+                }
+            };
+            
+            axios.get('https://teachiate-backend.fnmotivations.com/users/me', config)
+            .then((res) => {
+                if(res.data.success === true) {
+                    setUserData(res.data.data);
+                    setIsAuthenicate(true);
+                }
+            }); 
+
         }
 
         else {
@@ -40,7 +54,7 @@ function Login() {
 
     return (
         <>
-            {authStatus ? <Redirect to='/'/> : null}
+            {isAuthenicate ? <Redirect to="/"/> : null}
             <section className="main_register">
                 <div className="container">
                     <div className="main_signin_area">
@@ -82,4 +96,4 @@ function Login() {
     );
 }
 
-export default Login;
+export default observer(Login);

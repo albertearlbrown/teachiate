@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
 import Moment from 'react-moment';
 import LinearProgress from '@material-ui/core/LinearProgress';
@@ -7,8 +7,10 @@ import Typography from '@material-ui/core/Typography';
 import InfiniteLoader from 'react-infinite-loader';
 import jwt_decode from 'jwt-decode';
 import { Link } from 'react-router-dom';
+import { AuthStoreContext } from '../../Store/AuthStore';
 
 const ProfileView = () => {
+    const { userData } = useContext(AuthStoreContext);
     const [postData, setPostData] = useState([]);
     const [newPost, setNewPost] = useState([]);
     const [description, setDescription] = useState('');
@@ -16,20 +18,12 @@ const ProfileView = () => {
     const [selectedFile, setSelectedFile] = useState(null);
     const [selectFileUploadStart, setSelectFileUploadStart]  = useState(false);  
     const [selectFileUploadProgress, setSelectedFileUploadProgress]  = useState(0); 
-    const [user, setUser] = useState({ fullname: null, avatar: null, role: null });
     const [token, setToken] = useState(null);
     const [startPost, setStartPost] = useState(0);
     const [LoadMoreFeedBtn, setLoadMoreFeedBtn] = useState(false);    
 
     useEffect(() => {
         window.scrollTo(0, 0);
-
-        if(localStorage.getItem('jwt_token')) {
-            const token = localStorage.getItem('jwt_token');            
-            setToken(token);
-            const { fullname, avatar, role } = jwt_decode(token).payload;        
-            setUser({ fullname, avatar: null, role });
-        }
 
         async function fetchPosts() {
             const user_id = jwt_decode(localStorage.getItem('jwt_token')).payload.user_id;
@@ -194,17 +188,17 @@ const ProfileView = () => {
                             <label htmlFor="imageUpload"></label>
                         </div>
                         <div className="avatar-preview">
-                            <div id="imagePreview" style={user.avatar === null ?  {backgroundImage: `url('/assets/img/placeholder/user.png')`} : {backgroundImage: `url('${user.avatar}')`}}>
+                            <div id="imagePreview" style={userData.avatar === null ?  {backgroundImage: `url('/assets/img/placeholder/user.png')`} : {backgroundImage: `url('${userData.avatar}')`}}>
                             </div>
                         </div>
                     </div>
                     <div className="avatar-info">
                         <div className="avatar-name">
-                            <h3><a href="#">{user.fullname} </a> </h3>
+                            <h3><a href="#">{userData.fullname} </a> </h3>
                             <div className="clear"></div>
                         </div>
                         <div className="avatar-status">
-                            <h3>{user.role}</h3>
+                            <h3>{userData.role}</h3>
                             <div className="clear"></div>
                         </div>
                     </div>
@@ -294,7 +288,7 @@ const ProfileView = () => {
                         <h2>Share your thoughts</h2>
                         <div className="post_share_area">
                             <div className="posted_avtar">
-                                <img src={user.avatar == null ? "assets/img/user-account.png" : user.avatar} alt="Sarah Jones"/>
+                                <img src={userData.avatar == null ? "assets/img/user-account.png" : userData.avatar} alt={userData.fullname}/>
                             </div>
                             <form method="POST" encType="multipart/form-data" onSubmit={formHandler}>
                                 <div className="post_share_field">
@@ -344,7 +338,7 @@ const ProfileView = () => {
                             <div className="blog_sec1" key={post.id}>
                             <div className="blog_title">
                                 <div className="title_img">
-                                    <img src={post.avatar == null ? "assets/img/user-account.png" : user.avatar} alt="Sarah Jones"/>
+                                    <img src={post.avatar == null ? "assets/img/user-account.png" : post.avatar} alt="Sarah Jones"/>
                                 </div>
                                 <div className="user_des">
                                     <h4>{post.fullname} <span>{post.role}</span></h4>
@@ -376,7 +370,7 @@ const ProfileView = () => {
                             <div className="blog_sec1" key={post.id}>
                                 <div className="blog_title">
                                     <div className="title_img">                                
-                                        <img src={post.avatar == null ? "assets/img/user-account.png" : user.avatar} alt="Sarah Jones"/>
+                                        <img src={post.avatar === null ? "assets/img/user-account.png" : post.avatar} alt="Sarah Jones"/>
                                     </div>
                                     <div className="user_des">
                                         <h4>{post.fullname} <span>{post.role}</span></h4>

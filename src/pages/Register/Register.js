@@ -1,10 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { AuthStoreContext } from '../../Store/AuthStore';
 import { Redirect } from 'react-router-dom';
-import { useStoreActions, useStoreState } from 'easy-peasy';
 import Alert from '@material-ui/lab/Alert';
+
 import axios from 'axios';
 
 function Register() {
+
+    const { isAuthenicate, setIsAuthenicate, setUserData } =  useContext(AuthStoreContext);
 
     const [fullName, setFullName] = useState('');
     const [email, setEmail] = useState('');
@@ -12,8 +15,6 @@ function Register() {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [role, SetRole] = useState('');
     const [acceptTermCond, setAcceptTermCond] = useState(false);
-    const authStatus = useStoreState(state => state.islogin);
-    const userLogin = useStoreActions(actions => actions.userLogin);
     const [errorMessage, setErrorMessage] = useState(null);
     const [error, setError] = useState(false);
 
@@ -31,12 +32,26 @@ function Register() {
             role
         };
 
-        const resp = await axios.post('http://localhost:3000/auth/join', data);
+        const resp = await axios.post('https://teachiate-backend.fnmotivations.com/auth/join', data);
 
         if(resp.data.success === true) {
             localStorage.setItem('jwt_token', resp.data.token);
             setError(false);
-            userLogin();
+            
+            const config = {
+                headers: {
+                    Authorization: 'Bearer ' + resp.data.token
+                }
+            };
+            
+            axios.get('https://teachiate-backend.fnmotivations.com/users/me', config)
+            .then((res) => {
+                if(res.data.success === true) {
+                    setUserData(res.data.data);
+                    setIsAuthenicate(true);
+                }
+            }); 
+
         }     
         else {
             setErrorMessage(resp.data.message);
@@ -46,7 +61,7 @@ function Register() {
 
     return (
         <>
-            {authStatus ? <Redirect to='/'/> : null}
+            {isAuthenicate ? <Redirect to='/'/> : null}
             <section className="main_register">
                 <div className="container-fluid">
                     <div className="main_register_area">

@@ -11,6 +11,7 @@ function MainMenu() {
                         <li className="menu-item-has-children"><Link to="/">Home</Link></li>
                         <li className="menu-item-has-children"><Link to="/opening-school-in-covid-siutation">School Opening</Link></li>                        
                         <li className="menu-item-has-children"><Link to="/groups">Groups</Link></li>
+                        <li className="menu-item-has-children"><Link to="/people">People</Link></li>
                         <li className="menu-item-has-children"><Link to="/forum">Forum</Link></li>
                     </ul>
                 </nav>

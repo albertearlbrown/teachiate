@@ -1,24 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { StoreProvider, createStore, action } from 'easy-peasy';
+import AuthStoreProvider from './Store/AuthStore';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
-const store = createStore({
-  islogin: false,
-  userLogin: action((state) => {
-    state.islogin = true;
-  }),
-  userLogout: action((state) => {
-    state.islogin = false;
-  })
-});
-
 ReactDOM.render(
-  <StoreProvider store={store}>
-      <App />
-  </StoreProvider>,
-
+  <AuthStoreProvider>
+    <App />
+  </AuthStoreProvider>, 
   document.getElementById('root')
 );
 

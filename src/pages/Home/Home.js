@@ -1,17 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
+import { Link } from 'react-router-dom';
 import Banner from '../../components/HomeBanner';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import Moment from 'react-moment';
-import { useStoreState } from 'easy-peasy';
 import InfiniteLoader from 'react-infinite-loader';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
-import jwt_decode from 'jwt-decode';
+import { AuthStoreContext } from '../../Store/AuthStore';
 
-function Home() {
-    const auth = useStoreState(state => state.islogin);
+const Home = () => {
+    const {isAuthenicate, userData} = useContext(AuthStoreContext);    
     const [postData, setPostData] = useState([]);
     const [newPost, setNewPost] = useState([]);
     const [description, setDescription] = useState('');
@@ -21,20 +20,9 @@ function Home() {
     const [selectFileUploadProgress, setSelectedFileUploadProgress]  = useState(0);
     const [startPost, setStartPost] = useState(0);
     const [LoadMoreFeedBtn, setLoadMoreFeedBtn] = useState(false);    
-    const [user, setUser] = useState({ fullname: null, avatar: null, role: null });
-    const [token, setToken] = useState(null);
-
 
     useEffect(() => {
         window.scrollTo(0, 0);
-
-        if(localStorage.getItem('jwt_token')) {
-            const token = localStorage.getItem('jwt_token');            
-            setToken(token);
-
-            const { fullname, avatar, role } = jwt_decode(token).payload;        
-            setUser({ fullname, avatar: null, role });
-        }
 
         async function fetchPosts() {
             const resp = await axios.get('https://teachiate-backend.fnmotivations.com/thoughts', {
@@ -93,6 +81,8 @@ function Home() {
             description,
             filepath
         }
+
+        const token = localStorage.getItem('jwt_token');
 
         const resp = await axios.post('https://teachiate-backend.fnmotivations.com/thoughts', data, {
             headers: {
@@ -176,16 +166,16 @@ function Home() {
 
     return (
         <>
-        {auth ? <div style={{marginTop: '100px'}}></div> : <Banner/> }        
+        {isAuthenicate ? <div style={{marginTop: '100px'}}></div> : <Banner/> }        
         <section className="blog clearfix">
             <div className="container">
                 <div className="blog_left">
-                    {auth ? (
+                    {isAuthenicate ? (
                         <div className="post_share">
                         <h2>Share your thoughts</h2>
                         <div className="post_share_area">
                             <div className="posted_avtar">
-                                <img src={user.avatar ?  user.avatar : "/assets/img/user-account.png"} alt={user.fullname} /> 
+                                <img src={userData.avatar ?  userData.avatar : "/assets/img/user-account.png"} alt={userData.fullname} /> 
                             </div>
                             <form method="POST" encType="multipart/form-data" onSubmit={formHandler}>
                                 <div className="post_share_field">
@@ -256,7 +246,7 @@ function Home() {
                                 <p>{post.description}</p>
                             </div>
 
-                            {auth ? (
+                            {isAuthenicate ? (
                                 <>
                                     <div className="direct_cmnt_area">
                                         <textarea placeholder="write a comment"></textarea>
@@ -292,7 +282,7 @@ function Home() {
                                     <p>{post.description}</p>
                                 </div>
 
-                                {auth ? (
+                                {isAuthenicate ? (
                                     <>
                                         <div className="direct_cmnt_area">
                                             <textarea placeholder="write a comment"></textarea>
