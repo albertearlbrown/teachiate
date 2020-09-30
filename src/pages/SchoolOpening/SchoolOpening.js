@@ -168,7 +168,17 @@ const SchoolOpening = () => {
                                                 <div className="bbc_news">
                                                     <p><a href={post.source_url}>Source</a></p>
                                                 </div>
-                                            </div>                                                                     
+                                            </div>  
+
+                                            <div class="blog_feedback clearfox">
+                                                <a href="#">
+                                                    <div class="flower"><img src="assets/img/flower.svg" alt=""/><span>{post.total_comments}</span></div>
+                                                </a>
+                                                <a href="#">
+                                                    <div class="love"><img src="assets/img/love.svg" alt=""/><span>{post.total_likes}</span></div>
+                                                </a>
+                                            </div>  
+
                                         </div>
                                     </div>
                                 ))
@@ -218,6 +228,16 @@ const SchoolOpening = () => {
                                                     <p><a href={post.source_url}>Source</a></p>
                                                 </div>
                                             </div>                                                                      
+
+                                            <div class="blog_feedback clearfox">
+                                                <a href="#">
+                                                    <div class="flower"><img src="assets/img/flower.svg" alt=""/><span>{post.total_comments}</span></div>
+                                                </a>
+                                                <a href="#">
+                                                    <div class="love"><img src="assets/img/love.svg" alt=""/><span>{post.total_likes}</span></div>
+                                                </a>
+                                            </div>                                            
+
                                         </div>
                                     </div>
                                 ))
@@ -231,9 +251,11 @@ const SchoolOpening = () => {
                                     <div className="blog_sec4 open" key={post.id}>
                                         <div className="opeing_list">
                                             <div className="blog_title">
-                                                <div className="title_img"><img src="assets/img/admin-img.png" alt=""/></div>
+                                                <div className="title_img">
+                                                    <img src="assets/img/admin-img.png" alt=""/>
+                                                </div>
                                                 <div className="user_des">
-                                                    <h4>Admin</h4>
+                                                    <h4>{post.fullname}</h4>
                                                     <p>{post.state} | USA </p>
                                                 </div>
                                                 <div className="star_icon"><i className="fa fa-star-o" aria-hidden="true"></i>
@@ -269,7 +291,16 @@ const SchoolOpening = () => {
                                                     <p><a href={post.source_url}>Source</a></p>
                                                 </div>
                                             </div>   
-                                                                                                                                                              
+
+                                            <div class="blog_feedback clearfox">
+                                                <a href="#">
+                                                    <div class="flower"><img src="assets/img/flower.svg" alt=""/><span>{post.total_comments}</span></div>
+                                                </a>
+                                                <a href="#">
+                                                    <div class="love"><img src="assets/img/love.svg" alt=""/><span>{post.total_likes}</span></div>
+                                                </a>
+                                            </div>
+
                                         </div>
                                     </div>
                                 ))

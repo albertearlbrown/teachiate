@@ -282,6 +282,15 @@ const Home = () => {
                                     <p>{post.description}</p>
                                 </div>
 
+                                <div class="blog_feedback clearfox">
+                                    <a href="#">
+                                        <div class="flower"><img src="assets/img/flower.svg" alt=""/><span>{post.total_comments}</span></div>
+                                    </a>
+                                    <a href="#">
+                                        <div class="love"><img src="assets/img/love.svg" alt=""/><span>{post.total_likes}</span></div>
+                                    </a>
+                                </div>                                
+
                                 {isAuthenicate ? (
                                     <>
                                         <div className="direct_cmnt_area">
