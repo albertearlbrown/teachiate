@@ -2,11 +2,10 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { Redirect } from 'react-router-dom';
 import Alert from '@material-ui/lab/Alert';
-import { observer } from 'mobx-react';
 import { AuthStoreContext } from '../../Store/AuthStore';
 import axios from 'axios';
 
-function Login({authState}) {
+function Login() {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -32,7 +31,7 @@ function Login({authState}) {
 
             const config = {
                 headers: {
-                    Authorization: 'Bearer ' + localStorage.getItem('jwt_token')
+                    Authorization: 'Bearer '+localStorage.getItem('jwt_token')
                 }
             };
             
@@ -96,4 +95,4 @@ function Login({authState}) {
     );
 }
 
-export default observer(Login);
+export default Login;

@@ -140,29 +140,48 @@ const Home = () => {
     const fileExtension = (fileName) => {        
         var extension = fileName.split('.').pop();
         return extension;
-     }
+    }
  
-     const postMedia = (filepath) => {
- 
-         if(filepath) {
-             const extension = fileExtension(filepath);
-         
-             if(extension === 'mp4') {
-                 return (
-                     <video width="100%" height="100%" controls>
-                         <source src={filepath} type="video/mp4"/>
-                     </video>                
-                 );
-             }
-     
-             else if(extension === 'jpg' || extension === 'png' || extension === 'jpeg') {
-                 return (
-                     <div className="blog_img_holder1"><img src={filepath} alt=""/></div>
-                 );
-             }
-         }
- 
-     }    
+    const postMedia = (filepath) => {
+
+        if(filepath) {
+            const extension = fileExtension(filepath);
+        
+            if(extension === 'mp4') {
+                return (
+                    <video width="100%" height="100%" controls>
+                        <source src={filepath} type="video/mp4"/>
+                    </video>                
+                );
+            }
+    
+            else if(extension === 'jpg' || extension === 'png' || extension === 'jpeg') {
+                return (
+                    <div className="blog_img_holder1"><img src={filepath} alt=""/></div>
+                );
+            }
+        }
+    }    
+
+    const postComment = async (e) => {
+        e.preventDefault();
+        const though_id = e.target[0].value;
+        const textarea = e.target[1].value;
+        const token = localStorage.getItem('jwt_token');
+        const config = {
+            headers: {
+                'authorization': `Bearer ${token}`
+            }
+        };
+        const data = {
+            post_id: though_id,
+            comment_content: textarea,
+            post_type: 'thought'
+        };        
+        const resp = await axios.post('http://localhost:4000/comments', data, config);
+        console.log(resp.data);
+        e.reset();
+    }
 
     return (
         <>
@@ -249,8 +268,11 @@ const Home = () => {
                             {isAuthenicate ? (
                                 <>
                                     <div className="direct_cmnt_area">
-                                        <textarea placeholder="write a comment"></textarea>
-                                        <input type="submit" value="Post" name=""/>
+                                        <form onSubmit={postComment}>
+                                            <input type='hidden' name='though_id' value={post.id}/>
+                                            <textarea placeholder="write a comment" name='textarea'></textarea>
+                                            <input type="submit" value="Post"/>
+                                        </form>
                                     </div>                                    
                                     </>
                             ) : null}                                            
@@ -282,20 +304,23 @@ const Home = () => {
                                     <p>{post.description}</p>
                                 </div>
 
-                                <div class="blog_feedback clearfox">
+                                <div className="blog_feedback clearfox">
                                     <a href="#">
-                                        <div class="flower"><img src="assets/img/flower.svg" alt=""/><span>{post.total_comments}</span></div>
+                                        <div className="flower"><img src="assets/img/flower.svg" alt=""/><span>{post.total_comments}</span></div>
                                     </a>
                                     <a href="#">
-                                        <div class="love"><img src="assets/img/love.svg" alt=""/><span>{post.total_likes}</span></div>
+                                        <div className="love"><img src="assets/img/love.svg" alt=""/><span>{post.total_likes}</span></div>
                                     </a>
                                 </div>                                
 
                                 {isAuthenicate ? (
                                     <>
                                         <div className="direct_cmnt_area">
-                                            <textarea placeholder="write a comment"></textarea>
-                                            <input type="submit" value="Post" name=""/>
+                                            <form onSubmit={postComment}>
+                                                <input type='hidden' name='though_id' value={post.id}/>
+                                                <textarea placeholder="write a comment" ></textarea>
+                                                <input type="submit" value="Post" name=""/>
+                                            </form>
                                         </div>                                    
                                         </>
                                 ) : null}                                            

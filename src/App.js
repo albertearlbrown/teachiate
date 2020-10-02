@@ -35,7 +35,7 @@ function App () {
     async function fetchUser() {
       const config = {
         headers: {
-          Authorization: 'Bearer ' + localStorage.getItem('jwt_token')
+          Authorization: 'Bearer '+localStorage.getItem('jwt_token')
         }
       };
       
@@ -57,7 +57,6 @@ function App () {
 
   return (
       <Router>    
-          {isAuthenicate ? console.log(userData) : null}
           <Header/>  
           <div id="main">
             <Switch>

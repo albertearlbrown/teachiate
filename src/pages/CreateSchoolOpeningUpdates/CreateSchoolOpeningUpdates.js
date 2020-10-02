@@ -101,7 +101,7 @@ function CreateSchoolOpeningUpdates() {
             stateCode,
             cityID                
         }            
-        const finalResp = await axios.post('https://teachiate-backend.fnmotivations.com/posts/covid', postData, {
+        const finalResp = await axios.post('https://teachiate-backend.fnmotivations.com/covid_feed', postData, {
             headers: {
             'authorization': `Bearer ${token}`
             }
