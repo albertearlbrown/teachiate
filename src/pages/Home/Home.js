@@ -329,7 +329,67 @@ const Home = () => {
                     )) : null}                    
                     
                     {LoadMoreFeedBtn ? <InfiniteLoader onVisited={() => loadMoreArticles()}/>: null }
+                </div>
 
+                <div class="blog_right">
+                    <div class="articles_title">
+                        <h2>Blog Articles</h2>
+                    </div>
+                    <div class="articles clearfix">
+                        <ul class="d-flex">
+                            <li>
+                                <div class="art_left_img"><img src="assets/img/article1.jpg" width="92px;" alt=""/></div>
+                                <div class="art_des">
+                                    <p>My struggle with homeschooling my youngins</p>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="art_left_img"><img src="assets/img/article2.jpg" alt=""/></div>
+                                <div class="art_des">
+                                    <p>COVID19 has led to parents appreciating teachers more</p>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="art_left_img"><img src="assets/img/article3.jpg" alt=""/></div>
+                                <div class="art_des">
+                                    <p>Teachers, like myself, getting used to virtual teaching</p>
+                                </div>
+                            </li>
+                        </ul>
+                        <a href="#" class="view_more">View More Articles</a>
+                    </div>
+
+                    <div class="Recent_topics">
+                        <div class="articles_title">
+                            <h2>Recent Forum Topics</h2>
+                        </div>
+                        <div class="articles clearfix">
+                            <ul class="tag">
+                                <li><a href="#">covid education</a></li>
+                                <li><a href="#">What homeschooling activity do you enjoy?</a></li>
+                                <li><a href="#">Home school meet ups</a></li>
+                                <li><a href="#">Virtual classroom to replace classroom lecturing in future</a></li>
+                                <li><a href="#">Evaluating the effectiveness of distance learning</a></li>
+                            </ul>
+                            <a href="#" class="view_more">View More Articles</a>
+
+                        </div>
+                    </div>
+                    <div class="Recent_topics_form">
+                        <div class="articles_title">
+                            <h2>Recent Forums</h2>
+                        </div>
+                        <div class="articles clearfix">
+                            <ul class="tag">
+                                <li><a href="#">General Community Chat </a></li>
+                                <li><a href="#">Higher Education Chat </a></li>
+                                <li><a href="#">Parental Connection </a></li>
+                                <li><a href="#">Parents and Teachers Lounge </a></li>
+                                <li><a href="#">Teachers Lounge</a></li>
+                            </ul>
+                            <a href="#" class="view_more">View More Articles</a>
+                        </div>                        
+                    </div>
                 </div>
             </div>
         </section>
