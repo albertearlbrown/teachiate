@@ -17,6 +17,7 @@ import PasswordForgot from './pages/PasswordForgot';
 import Forum from './pages/Forum';
 import ForumCreatePost from './pages/CreateForumPost';
 import SingleForumPost from './pages/SingleForumPost';
+import ContributeInformation from './pages/ContributeInformation';
 import People from './pages/People';
 
 // Components
@@ -64,6 +65,7 @@ function App () {
                 <Home />
               </Route>
               <PrivateRoute path='/my-profile' component={Profile}/>
+              <PrivateRoute path='/contribute-information' component={ContributeInformation}/>
               <Route path="/about">
                 <About />
               </Route> 

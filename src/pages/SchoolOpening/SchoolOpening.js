@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import Moment from 'react-moment';
 import axios from 'axios';
 
@@ -121,18 +122,20 @@ const SchoolOpening = () => {
                                     <li>State: <span>{state === 'All' ? 'All' : state}</span></li>
                                     <li>City: <span>{city === 'All' ? 'All' : city}</span></li>
                                 </ul>
-                            </div>                        
-
+                            </div>                       
+                        
 
                             {loadPosts && state === 'All' & city === 'All' ? (
-                                posts
-                                .map(post => (
-                                    <div className="blog_sec4 open" key={post.id}>
-                                        <div className="opeing_list">
-                                            <div className="blog_title">
+                                <div className="blog_sec4 open">
+                                    <div className="opeing_list">                                        
+                                    {posts
+                                    .filter(post => post.role === 'Admin')
+                                    .map(post => (
+                                        <>
+                                            <div className="blog_title"  key={post.id}>
                                                 <div className="title_img"><img src="assets/img/admin-img.png" alt=""/></div>
                                                 <div className="user_des">
-                                                   <h4>{post.fullname} ({post.role})</h4>
+                                                    <h4>{post.fullname} ({post.role})</h4>
                                                     <p>{post.state} | USA </p>
                                                 </div>
                                                 {/* <div className="star_icon">
@@ -162,7 +165,7 @@ const SchoolOpening = () => {
                                                 <div className="locaton">
                                                     <p>
                                                         <i className="fa fa-map-marker" aria-hidden="true"></i> 
-                                                         State: <span>{post.state}</span> </p>
+                                                            State: <span>{post.state}</span> </p>
                                                         <p>City: <span>{post.city}</span></p>
                                                 </div>
                                                 <div className="bbc_news">
@@ -177,30 +180,32 @@ const SchoolOpening = () => {
                                                 <a href="#">
                                                     <div class="love"><img src="assets/img/love.svg" alt=""/><span>{post.total_likes}</span></div>
                                                 </a>
-                                            </div>  
-
-                                        </div>
+                                            </div>                                          
+                                        </>
+                                    ))}                                        
                                     </div>
-                                ))
+                                </div>                                                                                        
                             ): null }
 
-                            {loadPosts && state !== 'All' && city === 'All' ? (
-                                posts
-                                .filter(post => post.state === state)
-                                .map(post => (
-                                    <div className="blog_sec4 open" key={post.id}>
-                                        <div className="opeing_list">
-                                            <div className="blog_title">
+                            {loadPosts && state !== 'All' && city === 'All' ? ( 
+                                <div className="blog_sec4 open">
+                                    <div className="opeing_list">
+                                    {posts
+                                    .filter(post => post => post.role === 'Admin' && post.state === state)
+                                    .map(post => (
+                                        <>
+                                            <div className="blog_title" key={post.id}>
                                                 <div className="title_img"><img src="assets/img/admin-img.png" alt=""/></div>
                                                 <div className="user_des">
                                                     <h4>Admin</h4>
                                                     <p>{post.state} | USA </p>
                                                 </div>
-                                                <div className="star_icon"><i className="fa fa-star-o" aria-hidden="true"></i>
+                                                <div className="star_icon">
+                                                    <i className="fa fa-star-o" aria-hidden="true"></i>
                                                 </div>
                                                 <div className="time"> <Moment fromNow>{post.created_at}</Moment></div>
                                             </div>
-                                            
+                                        
                                             {post.filepath !== null ? (
                                                 <div className="blog_img_holder1"><img src={post.filepath} alt=""/></div>
                                             )  : null}
@@ -216,7 +221,6 @@ const SchoolOpening = () => {
                                                 </div>
                                                 <p>{post.description}</p>
                                             </div>
-
 
                                             <div className="opening_flex">
                                                 <div className="locaton">
@@ -237,16 +241,16 @@ const SchoolOpening = () => {
                                                     <div class="love"><img src="assets/img/love.svg" alt=""/><span>{post.total_likes}</span></div>
                                                 </a>
                                             </div>                                            
-
-                                        </div>
+                                        </>
+                                        ))}
                                     </div>
-                                ))
-                            ): null }                                                                   
+                                </div>                                
+                            ) : null}
 
 
                             {loadPosts && state !== 'All' && city !== 'All' ? (
                                 posts
-                                .filter(post => post.state === state  && post.city === city)
+                                .filter(post => post => post.role === 'Admin' && post.state === state  && post.city === city)
                                 .map(post => (
                                     <div className="blog_sec4 open" key={post.id}>
                                         <div className="opeing_list">
@@ -292,12 +296,12 @@ const SchoolOpening = () => {
                                                 </div>
                                             </div>   
 
-                                            <div class="blog_feedback clearfox">
+                                            <div className="blog_feedback clearfox">
                                                 <a href="#">
-                                                    <div class="flower"><img src="assets/img/flower.svg" alt=""/><span>{post.total_comments}</span></div>
+                                                    <div className="flower"><img src="assets/img/flower.svg" alt=""/><span>{post.total_comments}</span></div>
                                                 </a>
                                                 <a href="#">
-                                                    <div class="love"><img src="assets/img/love.svg" alt=""/><span>{post.total_likes}</span></div>
+                                                    <div className="love"><img src="assets/img/love.svg" alt=""/><span>{post.total_likes}</span></div>
                                                 </a>
                                             </div>
 
@@ -306,7 +310,196 @@ const SchoolOpening = () => {
                                 ))
                             ): null }                                                                   
 
-                        </div>
+                            <div className="post_sec">
+                                <div class="contribute"><Link to="/contribute-information">Contribute Information</Link></div>
+                            </div>
+
+                            {/* Users Feed */}
+                            {loadPosts && state === 'All' & city === 'All' ? (
+                                <div className="blog_sec4 open">
+                                    <div className="opeing_list">                                        
+                                    {posts
+                                    .filter(post => post.role !== 'Admin')
+                                    .map(post => (
+                                        <>
+                                            <div className="blog_title"  key={post.id}>
+                                                <div className="title_img"><img src="assets/img/admin-img.png" alt=""/></div>
+                                                <div className="user_des">
+                                                    <h4>{post.fullname} ({post.role})</h4>
+                                                    <p>{post.state} | USA </p>
+                                                </div>
+                                                {/* <div className="star_icon">
+                                                    <i className="fa fa-star-o" aria-hidden="true"></i>
+                                                </div> */}
+                                                <div className="time"> <Moment fromNow>{post.created_at}</Moment></div>
+                                            </div>
+                                            
+                                            {post.filepath !== null ? (
+                                                <div className="blog_img_holder1"><img src={post.filepath} alt=""/></div>
+                                            )  : null}
+
+                                            <div className="blog_des">
+                                                <div className="admin_details">
+                                                    <div className="haeding">
+                                                        <h4>{post.title}</h4>
+                                                    </div>
+                                                    <div className="reoping_date">
+                                                        {/* <h6><i className="fa fa-clock-o" aria-hidden="true"></i>Re-Opening Date: <span>28th September, 2020</span></h6> */}
+                                                    </div>
+                                                </div>
+                                                <p>{post.description}</p>
+                                            </div>
+
+
+                                            <div className="opening_flex">
+                                                <div className="locaton">
+                                                    <p>
+                                                        <i className="fa fa-map-marker" aria-hidden="true"></i> 
+                                                            State: <span>{post.state}</span> </p>
+                                                        <p>City: <span>{post.city}</span></p>
+                                                </div>
+                                                <div className="bbc_news">
+                                                    <p><a href={post.source_url}>Source</a></p>
+                                                </div>
+                                            </div>  
+
+                                            <div class="blog_feedback clearfox">
+                                                <a href="#">
+                                                    <div class="flower"><img src="assets/img/flower.svg" alt=""/><span>{post.total_comments}</span></div>
+                                                </a>
+                                                <a href="#">
+                                                    <div class="love"><img src="assets/img/love.svg" alt=""/><span>{post.total_likes}</span></div>
+                                                </a>
+                                            </div>                                          
+                                        </>
+                                    ))}                                        
+                                    </div>
+                                </div>                                                                                        
+                            ): null }
+
+                            {loadPosts && state !== 'All' && city === 'All' ? ( 
+                                <div className="blog_sec4 open">
+                                    <div className="opeing_list">
+                                    {posts
+                                    .filter(post => post => post.role !== 'Admin' && post.state === state)
+                                    .map(post => (
+                                        <>
+                                            <div className="blog_title" key={post.id}>
+                                                <div className="title_img"><img src="assets/img/admin-img.png" alt=""/></div>
+                                                <div className="user_des">
+                                                    <h4>Admin</h4>
+                                                    <p>{post.state} | USA </p>
+                                                </div>
+                                                <div className="star_icon">
+                                                    <i className="fa fa-star-o" aria-hidden="true"></i>
+                                                </div>
+                                                <div className="time"> <Moment fromNow>{post.created_at}</Moment></div>
+                                            </div>
+                                        
+                                            {post.filepath !== null ? (
+                                                <div className="blog_img_holder1"><img src={post.filepath} alt=""/></div>
+                                            )  : null}
+
+                                            <div className="blog_des">
+                                                <div className="admin_details">
+                                                    <div className="haeding">
+                                                        <h4>{post.title}</h4>
+                                                    </div>
+                                                    <div className="reoping_date">
+                                                        {/* <h6><i className="fa fa-clock-o" aria-hidden="true"></i>Re-Opening Date: <span>28th September, 2020</span></h6> */}
+                                                    </div>
+                                                </div>
+                                                <p>{post.description}</p>
+                                            </div>
+
+                                            <div className="opening_flex">
+                                                <div className="locaton">
+                                                    <p><i className="fa fa-map-marker" aria-hidden="true"></i>
+                                                        State: <span>{post.state}</span> </p>
+                                                        <p>City: <span>{post.city}</span></p>
+                                                </div>
+                                                <div className="bbc_news">
+                                                    <p><a href={post.source_url}>Source</a></p>
+                                                </div>
+                                            </div>                                                                      
+
+                                            <div class="blog_feedback clearfox">
+                                                <a href="#">
+                                                    <div class="flower"><img src="assets/img/flower.svg" alt=""/><span>{post.total_comments}</span></div>
+                                                </a>
+                                                <a href="#">
+                                                    <div class="love"><img src="assets/img/love.svg" alt=""/><span>{post.total_likes}</span></div>
+                                                </a>
+                                            </div>                                            
+                                        </>
+                                        ))}
+                                    </div>
+                                </div>                                
+                            ) : null}
+
+
+                            {loadPosts && state !== 'All' && city !== 'All' ? (
+                                posts
+                                .filter(post => post => post.role !== 'Admin' && post.state === state  && post.city === city)
+                                .map(post => (
+                                    <div className="blog_sec4 open" key={post.id}>
+                                        <div className="opeing_list">
+                                            <div className="blog_title">
+                                                <div className="title_img">
+                                                    <img src="assets/img/admin-img.png" alt=""/>
+                                                </div>
+                                                <div className="user_des">
+                                                    <h4>{post.fullname}</h4>
+                                                    <p>{post.state} | USA </p>
+                                                </div>
+                                                <div className="star_icon"><i className="fa fa-star-o" aria-hidden="true"></i>
+                                                </div>
+                                                <div className="time"> <Moment fromNow>{post.created_at}</Moment></div>
+                                            </div>
+                                            
+                                            {post.filepath !== null ? (
+                                                <div className="blog_img_holder1"><img src={post.filepath} alt=""/></div>
+                                            )  : null}
+
+                                            <div className="blog_des">
+                                                <div className="admin_details">
+                                                    <div className="haeding">
+                                                        <h4>{post.title}</h4>
+                                                    </div>
+                                                    <div className="reoping_date">
+                                                        {/* <h6><i className="fa fa-clock-o" aria-hidden="true"></i>Re-Opening Date: <span>28th September, 2020</span></h6> */}
+                                                    </div>
+                                                </div>
+                                                <p>{post.description}</p>
+                                            </div>
+
+
+                                            <div className="opening_flex">
+                                                <div className="locaton">
+                                                    <p>
+                                                        <i className="fa fa-map-marker" aria-hidden="true"></i> 
+                                                        State: <span>{post.state}</span> </p>
+                                                        <p>City: <span>{post.city}</span></p>
+                                                </div>
+                                                <div className="bbc_news">
+                                                    <p><a href={post.source_url}>Source</a></p>
+                                                </div>
+                                            </div>   
+
+                                            <div className="blog_feedback clearfox">
+                                                <a href="#">
+                                                    <div className="flower"><img src="assets/img/flower.svg" alt=""/><span>{post.total_comments}</span></div>
+                                                </a>
+                                                <a href="#">
+                                                    <div className="love"><img src="assets/img/love.svg" alt=""/><span>{post.total_likes}</span></div>
+                                                </a>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                ))
+                            ): null }                                                                                                       
+                        </div>{/* end listing  */}
                     </div>
                 </section>
             </div>
