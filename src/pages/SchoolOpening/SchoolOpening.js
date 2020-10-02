@@ -181,6 +181,28 @@ const SchoolOpening = () => {
                                                     <div class="love"><img src="assets/img/love.svg" alt=""/><span>{post.total_likes}</span></div>
                                                 </a>
                                             </div>                                          
+
+                                            <div class="comm_se">
+                                                <ul>
+                                                    <li><a href="#"> <span>like <i class="fa fa-thumbs-o-up" aria-hidden="true"></i></span></a></li>
+                                                    <li> <a href="#"> <span>Comment <i class="fa fa-comment-o" aria-hidden="true"></i></span></a></li>
+                                                    <li> <a href="#"> <span>Share <i class="fa fa-share" aria-hidden="true"></i>
+                                                            </span></a></li>
+                                                    <li> <a href="#"> <span>Report <i class="fa fa-exclamation-triangle" aria-hidden="true"></i></span></a></li>
+                                                </ul>
+                                            </div>
+
+                                            <div class="blog_title margin_btm">
+                                                <div class="title_img"><img src="assets/img/katei-re.png" alt=""/></div>
+                                                <div class="user_des">
+                                                    <h4>Katie Knapp <span>(Parent)</span></h4>
+                                                    <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution. </p>
+                                                    <div class="replaied">
+                                                        <div class="hour">12 Hours ago</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
                                         </>
                                     ))}                                        
                                     </div>
@@ -240,6 +262,27 @@ const SchoolOpening = () => {
                                                 <a href="#">
                                                     <div class="love"><img src="assets/img/love.svg" alt=""/><span>{post.total_likes}</span></div>
                                                 </a>
+                                            </div>                                            
+
+                                            <div class="comm_se">
+                                                <ul>
+                                                    <li><a href="#"> <span>like <i class="fa fa-thumbs-o-up" aria-hidden="true"></i></span></a></li>
+                                                    <li> <a href="#"> <span>Comment <i class="fa fa-comment-o" aria-hidden="true"></i></span></a></li>
+                                                    <li> <a href="#"> <span>Share <i class="fa fa-share" aria-hidden="true"></i>
+                                                            </span></a></li>
+                                                    <li> <a href="#"> <span>Report <i class="fa fa-exclamation-triangle" aria-hidden="true"></i></span></a></li>
+                                                </ul>
+                                            </div>                                            
+
+                                            <div class="blog_title margin_btm">
+                                                <div class="title_img"><img src="assets/img/katei-re.png" alt=""/></div>
+                                                <div class="user_des">
+                                                    <h4>Katie Knapp <span>(Parent)</span></h4>
+                                                    <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution. </p>
+                                                    <div class="replaied">
+                                                        <div class="hour">12 Hours ago</div>
+                                                    </div>
+                                                </div>
                                             </div>                                            
                                         </>
                                         ))}
@@ -304,6 +347,27 @@ const SchoolOpening = () => {
                                                     <div className="love"><img src="assets/img/love.svg" alt=""/><span>{post.total_likes}</span></div>
                                                 </a>
                                             </div>
+
+                                            <div class="comm_se">
+                                                <ul>
+                                                    <li><a href="#"> <span>like <i class="fa fa-thumbs-o-up" aria-hidden="true"></i></span></a></li>
+                                                    <li> <a href="#"> <span>Comment <i class="fa fa-comment-o" aria-hidden="true"></i></span></a></li>
+                                                    <li> <a href="#"> <span>Share <i class="fa fa-share" aria-hidden="true"></i>
+                                                            </span></a></li>
+                                                    <li> <a href="#"> <span>Report <i class="fa fa-exclamation-triangle" aria-hidden="true"></i></span></a></li>
+                                                </ul>
+                                            </div> 
+
+                                            <div class="blog_title margin_btm">
+                                                <div class="title_img"><img src="assets/img/katei-re.png" alt=""/></div>
+                                                <div class="user_des">
+                                                    <h4>Katie Knapp <span>(Parent)</span></h4>
+                                                    <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution. </p>
+                                                    <div class="replaied">
+                                                        <div class="hour">12 Hours ago</div>
+                                                    </div>
+                                                </div>
+                                            </div>                                                                                       
 
                                         </div>
                                     </div>
@@ -371,6 +435,27 @@ const SchoolOpening = () => {
                                                     <div class="love"><img src="assets/img/love.svg" alt=""/><span>{post.total_likes}</span></div>
                                                 </a>
                                             </div>                                          
+
+                                            <div class="comm_se">
+                                                <ul>
+                                                    <li><a href="#"> <span>like <i class="fa fa-thumbs-o-up" aria-hidden="true"></i></span></a></li>
+                                                    <li> <a href="#"> <span>Comment <i class="fa fa-comment-o" aria-hidden="true"></i></span></a></li>
+                                                    <li> <a href="#"> <span>Share <i class="fa fa-share" aria-hidden="true"></i>
+                                                            </span></a></li>
+                                                    <li> <a href="#"> <span>Report <i class="fa fa-exclamation-triangle" aria-hidden="true"></i></span></a></li>
+                                                </ul>
+                                            </div>
+
+                                            <div class="blog_title margin_btm">
+                                                <div class="title_img"><img src="assets/img/katei-re.png" alt=""/></div>
+                                                <div class="user_des">
+                                                    <h4>Katie Knapp <span>(Parent)</span></h4>
+                                                    <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution. </p>
+                                                    <div class="replaied">
+                                                        <div class="hour">12 Hours ago</div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </>
                                     ))}                                        
                                     </div>
@@ -430,7 +515,28 @@ const SchoolOpening = () => {
                                                 <a href="#">
                                                     <div class="love"><img src="assets/img/love.svg" alt=""/><span>{post.total_likes}</span></div>
                                                 </a>
-                                            </div>                                            
+                                            </div>              
+
+                                            <div class="comm_se">
+                                                <ul>
+                                                    <li><a href="#"> <span>like <i class="fa fa-thumbs-o-up" aria-hidden="true"></i></span></a></li>
+                                                    <li> <a href="#"> <span>Comment <i class="fa fa-comment-o" aria-hidden="true"></i></span></a></li>
+                                                    <li> <a href="#"> <span>Share <i class="fa fa-share" aria-hidden="true"></i>
+                                                            </span></a></li>
+                                                    <li> <a href="#"> <span>Report <i class="fa fa-exclamation-triangle" aria-hidden="true"></i></span></a></li>
+                                                </ul>
+                                            </div>
+
+                                            <div class="blog_title margin_btm">
+                                                <div class="title_img"><img src="assets/img/katei-re.png" alt=""/></div>
+                                                <div class="user_des">
+                                                    <h4>Katie Knapp <span>(Parent)</span></h4>
+                                                    <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution. </p>
+                                                    <div class="replaied">
+                                                        <div class="hour">12 Hours ago</div>
+                                                    </div>
+                                                </div>
+                                            </div>                                                                                                                                                                 
                                         </>
                                         ))}
                                     </div>
@@ -495,12 +601,99 @@ const SchoolOpening = () => {
                                                 </a>
                                             </div>
 
+                                            <div class="comm_se">
+                                                <ul>
+                                                    <li><a href="#"> <span>like <i class="fa fa-thumbs-o-up" aria-hidden="true"></i></span></a></li>
+                                                    <li> <a href="#"> <span>Comment <i class="fa fa-comment-o" aria-hidden="true"></i></span></a></li>
+                                                    <li> <a href="#"> <span>Share <i class="fa fa-share" aria-hidden="true"></i>
+                                                            </span></a></li>
+                                                    <li> <a href="#"> <span>Report <i class="fa fa-exclamation-triangle" aria-hidden="true"></i></span></a></li>
+                                                </ul>
+                                            </div>  
+
+                                            <div class="blog_title margin_btm">
+                                                <div class="title_img"><img src="assets/img/katei-re.png" alt=""/></div>
+                                                <div class="user_des">
+                                                    <h4>Katie Knapp <span>(Parent)</span></h4>
+                                                    <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution. </p>
+                                                    <div class="replaied">
+                                                        <div class="hour">12 Hours ago</div>
+                                                    </div>
+                                                </div>
+                                            </div>                                                                                      
+
                                         </div>
                                     </div>
                                 ))
                             ): null }                                                                                                       
                         </div>{/* end listing  */}
-                    </div>
+
+                        <div class="blog_right">
+                            <div class="articles_title">
+                                <h2>Blog Articles</h2>
+                            </div>
+                            <div class="articles clearfix">
+                                <ul class="d-flex">
+                                    <li>
+                                        <div class="art_left_img"><img src="assets/img/article1.jpg" alt="" width="92px;"/></div>
+                                        <div class="art_des">
+                                            <p>My struggle with homeschooling my youngins</p>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="art_left_img"><img src="assets/img/article2.jpg" alt=""/></div>
+                                        <div class="art_des">
+                                            <p>COVID19 has led to parents appreciating teachers more</p>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="art_left_img"><img src="assets/img/article3.jpg" alt=""/></div>
+                                        <div class="art_des">
+                                            <p>Teachers, like myself, getting used to virtual teaching</p>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <a href="#" class="view_more">View More Articles</a>
+                            </div>
+                            <div class="letest_sec">
+                                <div class="articles_title">
+                                    <h2>Latest News</h2>
+                                </div>
+                                <div class="articles clearfix">
+                                    <ul class="d-flex">
+                                        <li>
+                                            <div class="art_left_img"><img src="assets/img/article1.jpg" alt=""/></div>
+                                            <div class="art_des">
+                                                <p>‘Let’s get those kids back in school!’ Parents rally for…
+                                                </p>
+                                                <div class="wtrk d_flex1">
+                                                    <h5>WTKR News 3 </h5>
+                                                    <h5> -July 07, 2020</h5>
+                                                </div>
+                                            </div>
+                                        </li>
+
+                                    </ul>
+                                    <a href="#" class="view_more">View More Articles</a>
+                                </div>
+                            </div>
+                            <div class="Recent_topics">
+                                <div class="articles_title">
+                                    <h2>Recent Forum Topics</h2>
+                                </div>
+                                <div class="articles clearfix">
+                                    <ul class="tag">
+                                        <li><a href="#">covid education</a></li>
+                                        <li><a href="#">What homeschooling activity do you enjoy?</a></li>
+                                        <li><a href="#">Home school meet ups</a></li>
+                                        <li><a href="#">Virtual classroom to replace classroom lecturing in future</a></li>
+                                        <li><a href="#">Evaluating the effectiveness of distance learning</a></li>
+                                    </ul>
+                                    <a href="#" class="view_more">View More Topics</a>
+                                </div>
+                            </div>
+                        </div>    
+                    </div>                
                 </section>
             </div>
         </>
