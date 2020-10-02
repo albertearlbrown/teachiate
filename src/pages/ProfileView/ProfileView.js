@@ -10,7 +10,9 @@ import { Link } from 'react-router-dom';
 import { AuthStoreContext } from '../../Store/AuthStore';
 
 const ProfileView = () => {
+
     const { userData } = useContext(AuthStoreContext);
+    const [newAvatarFile, setNewAvatarFile] = useState(null);
     const [postData, setPostData] = useState([]);
     const [newPost, setNewPost] = useState([]);
     const [description, setDescription] = useState('');
@@ -161,6 +163,28 @@ const ProfileView = () => {
 
     }
     
+    const uploadAvatar = async (e) => {
+        e.preventDefault();
+        const file = e.target.files[0];
+        const data = new FormData();    
+        data.append('file', file);        
+        const resp = await axios.post('https://teachiate-backend.fnmotivations.com/upload', data);
+        if(resp.data.success === true) {
+            const token = localStorage.getItem('jwt_token');
+            const data = {
+                filePath: resp.data.filePath
+            }
+            const config = {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            }            
+            const fn = await axios.post('https://teachiate-backend.fnmotivations.com/users/change-profile', data, config);
+            if(fn.data.success === true) {
+                setNewAvatarFile(resp.data.filePath);
+            }
+        }
+    }
 
     return (
         <>              
@@ -184,12 +208,15 @@ const ProfileView = () => {
                 <div className="avatar-upload-section clearfix">
                     <div className="avatar-upload">
                         <div className="avatar-edit">
-                            <input type='file' id="imageUpload" accept=".png, .jpg, .jpeg" />
-                            <label htmlFor="imageUpload"></label>
+                            <form>
+                                <input type='file' id="imageUpload" onChange={(e) => uploadAvatar(e)} accept=".png, .jpg, .jpeg" />
+                                <label htmlFor="imageUpload"></label>                        
+                            </form>                            
                         </div>
                         <div className="avatar-preview">
-                            <div id="imagePreview" style={userData.avatar === null ?  {backgroundImage: `url('/assets/img/placeholder/user.png')`} : {backgroundImage: `url('${userData.avatar}')`}}>
-                            </div>
+                            {newAvatarFile === null ? (
+                                <div id="imagePreview" style={userData.avatar === null ?  {backgroundImage: `url('/assets/img/placeholder/user.png')`} : {backgroundImage: `url('${userData.avatar}')`}}></div>                              
+                            ): <div id="imagePreview" style={{backgroundImage: `url('${newAvatarFile}')`}}></div>}
                         </div>
                     </div>
                     <div className="avatar-info">
