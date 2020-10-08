@@ -1,9 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
+import LinearProgress from '@material-ui/core/LinearProgress';
+import Box from '@material-ui/core/Box';
+import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
 import Moment from 'react-moment';
 import axios from 'axios';
+import DisplayPost from './DisplayPost';
+import { AuthStoreContext } from '../../Store/AuthStore';
 
 const SchoolOpening = () => {
+    const {isAuthenicate, userData} = useContext(AuthStoreContext);    
+    const [selectFileUploadProgress, setSelectedFileUploadProgress]  = useState(0);
+    const [selectFileUploadStart, setSelectFileUploadStart]  = useState(false);  
+    const [selectedFile, setSelectedFile] = useState(null);
+    const [postData, setPostData] = useState([]);
+    const [newPost, setNewPost] = useState([]);
+    const [description, setDescription] = useState('');    
 
     const [states, setStates] = useState([]);
     const [loadStates, setLoadStates] = useState(false);
@@ -11,11 +23,17 @@ const SchoolOpening = () => {
     const [cities, setCities] = useState([]);
     const [loadCities, setLoadCities] = useState(false);
     
+    const [state, setState] = useState('All');
+    const [city, setCity] = useState('All');
+
     const [posts, setPosts] = useState([]);
     const [loadPosts, setLoadPosts] = useState(false);    
 
-    const [state, setState] = useState('All');
-    const [city, setCity] = useState('All');
+    const [communityPosts, setCommunityPosts] = useState([]);
+    const [loadCommunityPosts, setLoadCommunityPostss] = useState(false);
+    
+    const [selectedStateCode, setSelectedStateCode] = useState(null);
+    const [selectedCityId, setSelectedCityId] = useState(null); 
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -33,17 +51,36 @@ const SchoolOpening = () => {
              setStates([...resp.data.data]);
              setLoadStates(true);           
         }
-        
+
+        async function fetchCommunityPosts() {
+            const resp = await axios.get('http://localhost:4000/community_posts', {
+                params: {
+                    from: 0,
+                    to: 2
+                }
+            });
+            if(resp.data.success === true) {
+                setCommunityPosts([...resp.data.data]);
+                setLoadCommunityPostss(true);
+                console.log('Community Post Loaded');
+            }
+        }
+
         fetchStates();
         fetchUpdates();
+        fetchCommunityPosts();
      }, []);
- 
+
+     
+     
      const stateHandler = async (e) => {
         setState(e.target.value);
         setCity('All');
 
         const selectedIndex = e.target.options.selectedIndex;
         const stateCode = e.target.options[selectedIndex].getAttribute('data-key');
+
+        setSelectedStateCode(stateCode);
         
          if(e.target.value !== 'All') {
              const resp = await axios.get(`https://teachiate-backend.fnmotivations.com/cities/${stateCode}`);
@@ -58,6 +95,9 @@ const SchoolOpening = () => {
 
      const cityHandler = (e) => {
         setCity(e.target.value);
+        const selectedIndex = e.target.options.selectedIndex;
+        const city_id = e.target.options[selectedIndex].getAttribute('data-key');        
+        setSelectedCityId(city_id);
      }     
 
      const displayStates = () => {    
@@ -66,7 +106,7 @@ const SchoolOpening = () => {
                 <div className='select'>
                     <select id="slct" onChange={stateHandler}>
                         <option value='All'>All States</option>
-                        {states.map(i =>  <option value={i.state} data-key={i.state_code} key={i.state_code}>{i.state}</option>)}
+                        {states.map(i =>  <option value={i.state} key={i.state_code} data-key={i.state_code}>{i.state}</option>)}
                     </select>
                 </div>
             </>
@@ -79,12 +119,84 @@ const SchoolOpening = () => {
                 <div className='select'>
                     <select id="slct" onChange={cityHandler}>
                         <option value='All'>Select a City</option>
-                        {cities.map(i =>  <option value={i.city} key={i.id}>{i.city}</option>)}
+                        {cities.map(i =>  <option value={i.city} key={i.id} data-key={i.id}>{i.city}</option>)}
                     </select>
                 </div>
             </>
         );        
     }
+
+    const fileHandler = (e) => {
+        setSelectedFile(e.target.files[0]);
+    };
+
+    const formHandler = async (e) => {
+        setDescription('');
+        setSelectedFile(null);
+
+        e.preventDefault();
+
+        var filepath = null;
+
+        if(selectedFile !== null) {
+            const data = new FormData()
+            data.append('file', selectedFile);
+
+            const options = {
+                onUploadProgress : (progressEvent) => {
+                    const {loaded, total}  =  progressEvent;
+                    const percentage = Math.floor(loaded * 100 / total);
+                    setSelectFileUploadStart(true);
+                    setSelectedFileUploadProgress(percentage);
+                }
+            }
+
+            const resp =  await axios.post("https://teachiate-backend.fnmotivations.com/upload", data, options); 
+            if(resp.data.success === true) { 
+                filepath = resp.data.filePath;
+            }
+        }               
+
+        const data = {
+            description,
+            filepath,
+            state_code: selectedStateCode,
+            city_id: selectedCityId
+        }
+
+        const token = localStorage.getItem('jwt_token');
+
+        const resp = await axios.post('https://teachiate-backend.fnmotivations.com/community_posts', data, {
+            headers: {
+                'authorization': `Bearer ${token}`
+            }
+        });
+
+        if(resp.data.success === true) {
+            setDescription('');
+            setSelectedFile(null);
+            var x = resp.data.data.insertId;
+            const createPost = await axios.get(`https://teachiate-backend.fnmotivations.com/community_posts/${x}`);
+            if(createPost.data.success) {
+                setNewPost(newPost => [...newPost, createPost.data.data]);
+            }
+        }   
+    }    
+
+    const LinearProgressWithLabel = (props) => {
+        return (
+          <Box display="flex" alignItems="center">
+            <Box width="100%" mr={1}>
+              <LinearProgress variant="determinate" {...props} />
+            </Box>
+            <Box minWidth={35}>
+              <Typography variant="body2" color="textSecondary">{`${Math.round(
+                props.value,
+              )}%`}</Typography>
+            </Box>
+          </Box>
+        );
+    }    
 
     return (
         <>
@@ -122,422 +234,42 @@ const SchoolOpening = () => {
                                     <li>State: <span>{state === 'All' ? 'All' : state}</span></li>
                                     <li>City: <span>{city === 'All' ? 'All' : city}</span></li>
                                 </ul>
-                            </div>                       
-                        
-
-                            {loadPosts && state === 'All' & city === 'All' ? (
-                                <div className="blog_sec4 open">
-                                    <div className="opeing_list">                                        
-                                    {posts
-                                    .filter(post => post.role === 'Admin')
-                                    .map(post => (
-                                        <>
-                                            <div className="blog_title"  key={post.id}>
-                                                <div className="title_img"><img src="assets/img/admin-img.png" alt=""/></div>
-                                                <div className="user_des">
-                                                    <h4>{post.fullname} ({post.role})</h4>
-                                                    <p>{post.state} | USA </p>
-                                                </div>
-                                                {/* <div className="star_icon">
-                                                    <i className="fa fa-star-o" aria-hidden="true"></i>
-                                                </div> */}
-                                                <div className="time"> <Moment fromNow>{post.created_at}</Moment></div>
-                                            </div>
-                                            
-                                            {post.filepath !== null ? (
-                                                <div className="blog_img_holder1"><img src={post.filepath} alt=""/></div>
-                                            )  : null}
-
-                                            <div className="blog_des">
-                                                <div className="admin_details">
-                                                    <div className="haeding">
-                                                        <h4>{post.title}</h4>
-                                                    </div>
-                                                    <div className="reoping_date">
-                                                        {/* <h6><i className="fa fa-clock-o" aria-hidden="true"></i>Re-Opening Date: <span>28th September, 2020</span></h6> */}
-                                                    </div>
-                                                </div>
-                                                <p>{post.description}</p>
-                                            </div>
-
-
-                                            <div className="opening_flex">
-                                                <div className="locaton">
-                                                    <p>
-                                                        <i className="fa fa-map-marker" aria-hidden="true"></i> 
-                                                            State: <span>{post.state}</span> </p>
-                                                        <p>City: <span>{post.city}</span></p>
-                                                </div>
-                                                <div className="bbc_news">
-                                                    <p><a href={post.source_url}>Source</a></p>
-                                                </div>
-                                            </div>  
-
-                                            <div class="blog_feedback clearfox">
-                                                <a href="#">
-                                                    <div class="flower"><img src="assets/img/flower.svg" alt=""/><span>{post.total_comments}</span></div>
-                                                </a>
-                                                <a href="#">
-                                                    <div class="love"><img src="assets/img/love.svg" alt=""/><span>{post.total_likes}</span></div>
-                                                </a>
-                                            </div>                                          
-
-                                            <div class="comm_se">
-                                                <ul>
-                                                    <li><a href="#"> <span>like <i class="fa fa-thumbs-o-up" aria-hidden="true"></i></span></a></li>
-                                                    <li> <a href="#"> <span>Comment <i class="fa fa-comment-o" aria-hidden="true"></i></span></a></li>
-                                                    <li> <a href="#"> <span>Share <i class="fa fa-share" aria-hidden="true"></i>
-                                                            </span></a></li>
-                                                    <li> <a href="#"> <span>Report <i class="fa fa-exclamation-triangle" aria-hidden="true"></i></span></a></li>
-                                                </ul>
-                                            </div>
-
-                                            <div class="blog_title margin_btm">
-                                                <div class="title_img"><img src="assets/img/katei-re.png" alt=""/></div>
-                                                <div class="user_des">
-                                                    <h4>Katie Knapp <span>(Parent)</span></h4>
-                                                    <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution. </p>
-                                                    <div class="replaied">
-                                                        <div class="hour">12 Hours ago</div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                        </>
-                                    ))}                                        
-                                    </div>
-                                </div>                                                                                        
-                            ): null }
-
-                            {loadPosts && state !== 'All' && city === 'All' ? ( 
-                                <div className="blog_sec4 open">
-                                    <div className="opeing_list">
-                                    {posts
-                                    .filter(post => post => post.role === 'Admin' && post.state === state)
-                                    .map(post => (
-                                        <>
-                                            <div className="blog_title" key={post.id}>
-                                                <div className="title_img"><img src="assets/img/admin-img.png" alt=""/></div>
-                                                <div className="user_des">
-                                                    <h4>Admin</h4>
-                                                    <p>{post.state} | USA </p>
-                                                </div>
-                                                <div className="star_icon">
-                                                    <i className="fa fa-star-o" aria-hidden="true"></i>
-                                                </div>
-                                                <div className="time"> <Moment fromNow>{post.created_at}</Moment></div>
-                                            </div>
-                                        
-                                            {post.filepath !== null ? (
-                                                <div className="blog_img_holder1"><img src={post.filepath} alt=""/></div>
-                                            )  : null}
-
-                                            <div className="blog_des">
-                                                <div className="admin_details">
-                                                    <div className="haeding">
-                                                        <h4>{post.title}</h4>
-                                                    </div>
-                                                    <div className="reoping_date">
-                                                        {/* <h6><i className="fa fa-clock-o" aria-hidden="true"></i>Re-Opening Date: <span>28th September, 2020</span></h6> */}
-                                                    </div>
-                                                </div>
-                                                <p>{post.description}</p>
-                                            </div>
-
-                                            <div className="opening_flex">
-                                                <div className="locaton">
-                                                    <p><i className="fa fa-map-marker" aria-hidden="true"></i>
-                                                        State: <span>{post.state}</span> </p>
-                                                        <p>City: <span>{post.city}</span></p>
-                                                </div>
-                                                <div className="bbc_news">
-                                                    <p><a href={post.source_url}>Source</a></p>
-                                                </div>
-                                            </div>                                                                      
-
-                                            <div class="blog_feedback clearfox">
-                                                <a href="#">
-                                                    <div class="flower"><img src="assets/img/flower.svg" alt=""/><span>{post.total_comments}</span></div>
-                                                </a>
-                                                <a href="#">
-                                                    <div class="love"><img src="assets/img/love.svg" alt=""/><span>{post.total_likes}</span></div>
-                                                </a>
-                                            </div>                                            
-
-                                            <div class="comm_se">
-                                                <ul>
-                                                    <li><a href="#"> <span>like <i class="fa fa-thumbs-o-up" aria-hidden="true"></i></span></a></li>
-                                                    <li> <a href="#"> <span>Comment <i class="fa fa-comment-o" aria-hidden="true"></i></span></a></li>
-                                                    <li> <a href="#"> <span>Share <i class="fa fa-share" aria-hidden="true"></i>
-                                                            </span></a></li>
-                                                    <li> <a href="#"> <span>Report <i class="fa fa-exclamation-triangle" aria-hidden="true"></i></span></a></li>
-                                                </ul>
-                                            </div>                                            
-
-                                            <div class="blog_title margin_btm">
-                                                <div class="title_img"><img src="assets/img/katei-re.png" alt=""/></div>
-                                                <div class="user_des">
-                                                    <h4>Katie Knapp <span>(Parent)</span></h4>
-                                                    <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution. </p>
-                                                    <div class="replaied">
-                                                        <div class="hour">12 Hours ago</div>
-                                                    </div>
-                                                </div>
-                                            </div>                                            
-                                        </>
-                                        ))}
-                                    </div>
-                                </div>                                
-                            ) : null}
-
-
-                            {loadPosts && state !== 'All' && city !== 'All' ? (
-                                posts
-                                .filter(post => post => post.role === 'Admin' && post.state === state  && post.city === city)
-                                .map(post => (
-                                    <div className="blog_sec4 open" key={post.id}>
-                                        <div className="opeing_list">
-                                            <div className="blog_title">
-                                                <div className="title_img">
-                                                    <img src="assets/img/admin-img.png" alt=""/>
-                                                </div>
-                                                <div className="user_des">
-                                                    <h4>{post.fullname}</h4>
-                                                    <p>{post.state} | USA </p>
-                                                </div>
-                                                <div className="star_icon"><i className="fa fa-star-o" aria-hidden="true"></i>
-                                                </div>
-                                                <div className="time"> <Moment fromNow>{post.created_at}</Moment></div>
-                                            </div>
-                                            
-                                            {post.filepath !== null ? (
-                                                <div className="blog_img_holder1"><img src={post.filepath} alt=""/></div>
-                                            )  : null}
-
-                                            <div className="blog_des">
-                                                <div className="admin_details">
-                                                    <div className="haeding">
-                                                        <h4>{post.title}</h4>
-                                                    </div>
-                                                    <div className="reoping_date">
-                                                        {/* <h6><i className="fa fa-clock-o" aria-hidden="true"></i>Re-Opening Date: <span>28th September, 2020</span></h6> */}
-                                                    </div>
-                                                </div>
-                                                <p>{post.description}</p>
-                                            </div>
-
-
-                                            <div className="opening_flex">
-                                                <div className="locaton">
-                                                    <p>
-                                                        <i className="fa fa-map-marker" aria-hidden="true"></i> 
-                                                         State: <span>{post.state}</span> </p>
-                                                        <p>City: <span>{post.city}</span></p>
-                                                </div>
-                                                <div className="bbc_news">
-                                                    <p><a href={post.source_url}>Source</a></p>
-                                                </div>
-                                            </div>   
-
-                                            <div className="blog_feedback clearfox">
-                                                <a href="#">
-                                                    <div className="flower"><img src="assets/img/flower.svg" alt=""/><span>{post.total_comments}</span></div>
-                                                </a>
-                                                <a href="#">
-                                                    <div className="love"><img src="assets/img/love.svg" alt=""/><span>{post.total_likes}</span></div>
-                                                </a>
-                                            </div>
-
-                                            <div class="comm_se">
-                                                <ul>
-                                                    <li><a href="#"> <span>like <i class="fa fa-thumbs-o-up" aria-hidden="true"></i></span></a></li>
-                                                    <li> <a href="#"> <span>Comment <i class="fa fa-comment-o" aria-hidden="true"></i></span></a></li>
-                                                    <li> <a href="#"> <span>Share <i class="fa fa-share" aria-hidden="true"></i>
-                                                            </span></a></li>
-                                                    <li> <a href="#"> <span>Report <i class="fa fa-exclamation-triangle" aria-hidden="true"></i></span></a></li>
-                                                </ul>
-                                            </div> 
-
-                                            <div class="blog_title margin_btm">
-                                                <div class="title_img"><img src="assets/img/katei-re.png" alt=""/></div>
-                                                <div class="user_des">
-                                                    <h4>Katie Knapp <span>(Parent)</span></h4>
-                                                    <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution. </p>
-                                                    <div class="replaied">
-                                                        <div class="hour">12 Hours ago</div>
-                                                    </div>
-                                                </div>
-                                            </div>                                                                                       
-
-                                        </div>
-                                    </div>
-                                ))
-                            ): null }                                                                   
+                            </div>
 
                             <div className="post_sec">
-                                <div class="contribute"><Link to="/contribute-information">Contribute Information</Link></div>
-                            </div>
+                                <div className="contribute"><Link to="/contribute-information">Contribute Information</Link></div>
+                            </div>                        
 
-                            {/* Users Feed */}
+                            <div className="contribute_sec">
+                                <div className="conversetion">
+                                    <h3>Verified Info & Updates</h3>
+                                </div>
+                                <div className="black_box"></div>
+                            </div>    
+
                             {loadPosts && state === 'All' & city === 'All' ? (
-                                <div className="blog_sec4 open">
+                                <div className="blog_sec4" style={{height: '300px', overflow: 'scroll'}}>
                                     <div className="opeing_list">                                        
-                                    {posts
-                                    .filter(post => post.role !== 'Admin')
-                                    .map(post => (
-                                        <>
-                                            <div className="blog_title"  key={post.id}>
-                                                <div className="title_img"><img src="assets/img/admin-img.png" alt=""/></div>
-                                                <div className="user_des">
-                                                    <h4>{post.fullname} ({post.role})</h4>
-                                                    <p>{post.state} | USA </p>
-                                                </div>
-                                                {/* <div className="star_icon">
-                                                    <i className="fa fa-star-o" aria-hidden="true"></i>
-                                                </div> */}
-                                                <div className="time"> <Moment fromNow>{post.created_at}</Moment></div>
+                                        {posts
+                                        .filter(post => post.role === 'Admin')
+                                        .map(post => (
+                                            <div key={post.id}>
+                                                <DisplayPost data={post}/>     
                                             </div>
-                                            
-                                            {post.filepath !== null ? (
-                                                <div className="blog_img_holder1"><img src={post.filepath} alt=""/></div>
-                                            )  : null}
-
-                                            <div className="blog_des">
-                                                <div className="admin_details">
-                                                    <div className="haeding">
-                                                        <h4>{post.title}</h4>
-                                                    </div>
-                                                    <div className="reoping_date">
-                                                        {/* <h6><i className="fa fa-clock-o" aria-hidden="true"></i>Re-Opening Date: <span>28th September, 2020</span></h6> */}
-                                                    </div>
-                                                </div>
-                                                <p>{post.description}</p>
-                                            </div>
-
-
-                                            <div className="opening_flex">
-                                                <div className="locaton">
-                                                    <p>
-                                                        <i className="fa fa-map-marker" aria-hidden="true"></i> 
-                                                            State: <span>{post.state}</span> </p>
-                                                        <p>City: <span>{post.city}</span></p>
-                                                </div>
-                                                <div className="bbc_news">
-                                                    <p><a href={post.source_url}>Source</a></p>
-                                                </div>
-                                            </div>  
-
-                                            <div class="blog_feedback clearfox">
-                                                <a href="#">
-                                                    <div class="flower"><img src="assets/img/flower.svg" alt=""/><span>{post.total_comments}</span></div>
-                                                </a>
-                                                <a href="#">
-                                                    <div class="love"><img src="assets/img/love.svg" alt=""/><span>{post.total_likes}</span></div>
-                                                </a>
-                                            </div>                                          
-
-                                            <div class="comm_se">
-                                                <ul>
-                                                    <li><a href="#"> <span>like <i class="fa fa-thumbs-o-up" aria-hidden="true"></i></span></a></li>
-                                                    <li> <a href="#"> <span>Comment <i class="fa fa-comment-o" aria-hidden="true"></i></span></a></li>
-                                                    <li> <a href="#"> <span>Share <i class="fa fa-share" aria-hidden="true"></i>
-                                                            </span></a></li>
-                                                    <li> <a href="#"> <span>Report <i class="fa fa-exclamation-triangle" aria-hidden="true"></i></span></a></li>
-                                                </ul>
-                                            </div>
-
-                                            <div class="blog_title margin_btm">
-                                                <div class="title_img"><img src="assets/img/katei-re.png" alt=""/></div>
-                                                <div class="user_des">
-                                                    <h4>Katie Knapp <span>(Parent)</span></h4>
-                                                    <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution. </p>
-                                                    <div class="replaied">
-                                                        <div class="hour">12 Hours ago</div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </>
-                                    ))}                                        
+                                        ))}                                        
                                     </div>
                                 </div>                                                                                        
                             ): null }
 
                             {loadPosts && state !== 'All' && city === 'All' ? ( 
-                                <div className="blog_sec4 open">
+                                <div className="blog_sec4" style={{height: '300px', overflow: 'scroll'}}>
                                     <div className="opeing_list">
-                                    {posts
-                                    .filter(post => post => post.role !== 'Admin' && post.state === state)
-                                    .map(post => (
-                                        <>
-                                            <div className="blog_title" key={post.id}>
-                                                <div className="title_img"><img src="assets/img/admin-img.png" alt=""/></div>
-                                                <div className="user_des">
-                                                    <h4>Admin</h4>
-                                                    <p>{post.state} | USA </p>
-                                                </div>
-                                                <div className="star_icon">
-                                                    <i className="fa fa-star-o" aria-hidden="true"></i>
-                                                </div>
-                                                <div className="time"> <Moment fromNow>{post.created_at}</Moment></div>
+                                        {posts
+                                        .filter(post => post => post.role === 'Admin' && post.state === state)
+                                        .map(post => (
+                                            <div key={post.id}>
+                                                <DisplayPost data={post}/> 
                                             </div>
-                                        
-                                            {post.filepath !== null ? (
-                                                <div className="blog_img_holder1"><img src={post.filepath} alt=""/></div>
-                                            )  : null}
-
-                                            <div className="blog_des">
-                                                <div className="admin_details">
-                                                    <div className="haeding">
-                                                        <h4>{post.title}</h4>
-                                                    </div>
-                                                    <div className="reoping_date">
-                                                        {/* <h6><i className="fa fa-clock-o" aria-hidden="true"></i>Re-Opening Date: <span>28th September, 2020</span></h6> */}
-                                                    </div>
-                                                </div>
-                                                <p>{post.description}</p>
-                                            </div>
-
-                                            <div className="opening_flex">
-                                                <div className="locaton">
-                                                    <p><i className="fa fa-map-marker" aria-hidden="true"></i>
-                                                        State: <span>{post.state}</span> </p>
-                                                        <p>City: <span>{post.city}</span></p>
-                                                </div>
-                                                <div className="bbc_news">
-                                                    <p><a href={post.source_url}>Source</a></p>
-                                                </div>
-                                            </div>                                                                      
-
-                                            <div class="blog_feedback clearfox">
-                                                <a href="#">
-                                                    <div class="flower"><img src="assets/img/flower.svg" alt=""/><span>{post.total_comments}</span></div>
-                                                </a>
-                                                <a href="#">
-                                                    <div class="love"><img src="assets/img/love.svg" alt=""/><span>{post.total_likes}</span></div>
-                                                </a>
-                                            </div>              
-
-                                            <div class="comm_se">
-                                                <ul>
-                                                    <li><a href="#"> <span>like <i class="fa fa-thumbs-o-up" aria-hidden="true"></i></span></a></li>
-                                                    <li> <a href="#"> <span>Comment <i class="fa fa-comment-o" aria-hidden="true"></i></span></a></li>
-                                                    <li> <a href="#"> <span>Share <i class="fa fa-share" aria-hidden="true"></i>
-                                                            </span></a></li>
-                                                    <li> <a href="#"> <span>Report <i class="fa fa-exclamation-triangle" aria-hidden="true"></i></span></a></li>
-                                                </ul>
-                                            </div>
-
-                                            <div class="blog_title margin_btm">
-                                                <div class="title_img"><img src="assets/img/katei-re.png" alt=""/></div>
-                                                <div class="user_des">
-                                                    <h4>Katie Knapp <span>(Parent)</span></h4>
-                                                    <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution. </p>
-                                                    <div class="replaied">
-                                                        <div class="hour">12 Hours ago</div>
-                                                    </div>
-                                                </div>
-                                            </div>                                                                                                                                                                 
-                                        </>
                                         ))}
                                     </div>
                                 </div>                                
@@ -545,128 +277,144 @@ const SchoolOpening = () => {
 
 
                             {loadPosts && state !== 'All' && city !== 'All' ? (
-                                posts
-                                .filter(post => post => post.role !== 'Admin' && post.state === state  && post.city === city)
-                                .map(post => (
-                                    <div className="blog_sec4 open" key={post.id}>
-                                        <div className="opeing_list">
-                                            <div className="blog_title">
-                                                <div className="title_img">
-                                                    <img src="assets/img/admin-img.png" alt=""/>
-                                                </div>
-                                                <div className="user_des">
-                                                    <h4>{post.fullname}</h4>
-                                                    <p>{post.state} | USA </p>
-                                                </div>
-                                                <div className="star_icon"><i className="fa fa-star-o" aria-hidden="true"></i>
-                                                </div>
-                                                <div className="time"> <Moment fromNow>{post.created_at}</Moment></div>
+                                <div className="blog_sec4" style={{height: '300px', overflow: 'scroll'}}>
+                                    <div className="opeing_list">
+                                        {posts
+                                        .filter(post => post => post.role === 'Admin' && post.state === state  && post.city === city)
+                                        .map(post => (
+                                            <div key={post.id}>
+                                                <DisplayPost data={post}/> 
                                             </div>
-                                            
-                                            {post.filepath !== null ? (
-                                                <div className="blog_img_holder1"><img src={post.filepath} alt=""/></div>
-                                            )  : null}
-
-                                            <div className="blog_des">
-                                                <div className="admin_details">
-                                                    <div className="haeding">
-                                                        <h4>{post.title}</h4>
-                                                    </div>
-                                                    <div className="reoping_date">
-                                                        {/* <h6><i className="fa fa-clock-o" aria-hidden="true"></i>Re-Opening Date: <span>28th September, 2020</span></h6> */}
-                                                    </div>
-                                                </div>
-                                                <p>{post.description}</p>
-                                            </div>
-
-
-                                            <div className="opening_flex">
-                                                <div className="locaton">
-                                                    <p>
-                                                        <i className="fa fa-map-marker" aria-hidden="true"></i> 
-                                                        State: <span>{post.state}</span> </p>
-                                                        <p>City: <span>{post.city}</span></p>
-                                                </div>
-                                                <div className="bbc_news">
-                                                    <p><a href={post.source_url}>Source</a></p>
-                                                </div>
-                                            </div>   
-
-                                            <div className="blog_feedback clearfox">
-                                                <a href="#">
-                                                    <div className="flower"><img src="assets/img/flower.svg" alt=""/><span>{post.total_comments}</span></div>
-                                                </a>
-                                                <a href="#">
-                                                    <div className="love"><img src="assets/img/love.svg" alt=""/><span>{post.total_likes}</span></div>
-                                                </a>
-                                            </div>
-
-                                            <div class="comm_se">
-                                                <ul>
-                                                    <li><a href="#"> <span>like <i class="fa fa-thumbs-o-up" aria-hidden="true"></i></span></a></li>
-                                                    <li> <a href="#"> <span>Comment <i class="fa fa-comment-o" aria-hidden="true"></i></span></a></li>
-                                                    <li> <a href="#"> <span>Share <i class="fa fa-share" aria-hidden="true"></i>
-                                                            </span></a></li>
-                                                    <li> <a href="#"> <span>Report <i class="fa fa-exclamation-triangle" aria-hidden="true"></i></span></a></li>
-                                                </ul>
-                                            </div>  
-
-                                            <div class="blog_title margin_btm">
-                                                <div class="title_img"><img src="assets/img/katei-re.png" alt=""/></div>
-                                                <div class="user_des">
-                                                    <h4>Katie Knapp <span>(Parent)</span></h4>
-                                                    <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution. </p>
-                                                    <div class="replaied">
-                                                        <div class="hour">12 Hours ago</div>
-                                                    </div>
-                                                </div>
-                                            </div>                                                                                      
-
-                                        </div>
+                                        ))}
                                     </div>
-                                ))
-                            ): null }                                                                                                       
+                                </div>
+                            ): null }                                                                   
+
+
+                            <div className="contribute_sec">
+                                <div className="conversetion">
+                                    <h3>Community Conversation</h3>
+                                </div>
+                                <div className="black_box"></div>
+                            </div>                          
+                            
+                            {/* Users Feed */}
+                            
+                            {isAuthenicate && state !== 'All' && city !== 'All'  ? (
+                                <div className="post_share">
+                                    <div className="post_share_area">
+                                        <div className="posted_avtar">
+                                            <img src={userData.avatar ?  userData.avatar : "/assets/img/user-account.png"} alt={userData.fullname} /> 
+                                        </div>
+                                        <form method="POST" encType="multipart/form-data" onSubmit={formHandler}>
+                                            <div className="post_share_field">
+                                                <textarea placeholder="What’s are your mind?" value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
+                                                <div className="adv_post_opt clearfix">
+                                                    <div className="share_type">
+                                                        <ul>
+                                                            <li>
+                                                                <div className="share_type_col">
+                                                                    <input type='file' name="file" id="imageUpload3" accept=".png, .jpg, .jpeg"  onChange={fileHandler}/>
+                                                                    <label htmlFor="imageUpload3"><span><img src="assets/img/upload_photo_icon.png" alt=""/></span>Photos</label>
+                                                                </div>
+                                                            </li>
+                                                            <li>
+                                                                <div className="share_type_col">
+                                                                    <input type='file'  name="file"  id="imageUpload5" accept=".mp4, .flv" onChange={(e) => setSelectedFile(e.target.files[0])}/>
+                                                                    <label htmlFor="imageUpload5"><span><img src="assets/img/upload_video_icon.png" alt=""/>
+                                                                    </span>Video</label>
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <div className="share_option_right">
+                                                    {/* <h4>Post In:</h4> */}
+                                                    <input type="submit" value="Post" name=""/>                                                                                   
+                                                </div>
+                                            </div>                                
+                                        </form>                            
+                                    </div>     
+
+
+                                    {selectFileUploadStart && selectFileUploadProgress !== 100  ? (
+                                        <LinearProgressWithLabel value={selectFileUploadProgress} />
+                                    ) : null}       
+
+
+            
+                                    {selectedFile !== null && selectFileUploadStart === false ? (
+                                        <div>
+                                            <p>You have selected file. <button onClick={() => setSelectedFile(null)}>Remove</button></p>
+                                        </div>
+                                    ) : null}
+
+                                </div>                    
+                            ) : null}                            
+
+                            {loadCommunityPosts && communityPosts.length > 0 ? (                                                            
+
+                                <div className="blog_sec4 open">
+                                    <div className="opeing_list">                                        
+
+                                       {newPost.map(post => (
+                                           <div key={post.id}>
+                                                <DisplayPost data={post}/>
+                                           </div>
+                                       ))}
+                                    
+                                        {communityPosts
+                                        .map(post => (
+                                            <div key={post.id}>
+                                                <DisplayPost data={post}/>     
+                                            </div>
+                                        ))}     
+
+                                    </div>
+                                </div>                                                                                        
+                            ): null }
+
                         </div>{/* end listing  */}
 
-                        <div class="blog_right">
-                            <div class="articles_title">
+                        <div className="blog_right">
+                            <div className="articles_title">
                                 <h2>Blog Articles</h2>
                             </div>
-                            <div class="articles clearfix">
-                                <ul class="d-flex">
+                            <div className="articles clearfix">
+                                <ul className="d-flex">
                                     <li>
-                                        <div class="art_left_img"><img src="assets/img/article1.jpg" alt="" width="92px;"/></div>
-                                        <div class="art_des">
+                                        <div className="art_left_img"><img src="assets/img/article1.jpg" alt="" width="92px;"/></div>
+                                        <div className="art_des">
                                             <p>My struggle with homeschooling my youngins</p>
                                         </div>
                                     </li>
                                     <li>
-                                        <div class="art_left_img"><img src="assets/img/article2.jpg" alt=""/></div>
-                                        <div class="art_des">
+                                        <div className="art_left_img"><img src="assets/img/article2.jpg" alt=""/></div>
+                                        <div className="art_des">
                                             <p>COVID19 has led to parents appreciating teachers more</p>
                                         </div>
                                     </li>
                                     <li>
-                                        <div class="art_left_img"><img src="assets/img/article3.jpg" alt=""/></div>
-                                        <div class="art_des">
+                                        <div className="art_left_img"><img src="assets/img/article3.jpg" alt=""/></div>
+                                        <div className="art_des">
                                             <p>Teachers, like myself, getting used to virtual teaching</p>
                                         </div>
                                     </li>
                                 </ul>
-                                <a href="#" class="view_more">View More Articles</a>
+                                <a href="#" className="view_more">View More Articles</a>
                             </div>
-                            <div class="letest_sec">
-                                <div class="articles_title">
+                            <div className="letest_sec">
+                                <div className="articles_title">
                                     <h2>Latest News</h2>
                                 </div>
-                                <div class="articles clearfix">
-                                    <ul class="d-flex">
+                                <div className="articles clearfix">
+                                    <ul className="d-flex">
                                         <li>
-                                            <div class="art_left_img"><img src="assets/img/article1.jpg" alt=""/></div>
-                                            <div class="art_des">
+                                            <div className="art_left_img"><img src="assets/img/article1.jpg" alt=""/></div>
+                                            <div className="art_des">
                                                 <p>‘Let’s get those kids back in school!’ Parents rally for…
                                                 </p>
-                                                <div class="wtrk d_flex1">
+                                                <div className="wtrk d_flex1">
                                                     <h5>WTKR News 3 </h5>
                                                     <h5> -July 07, 2020</h5>
                                                 </div>
@@ -674,22 +422,22 @@ const SchoolOpening = () => {
                                         </li>
 
                                     </ul>
-                                    <a href="#" class="view_more">View More Articles</a>
+                                    <a href="#" className="view_more">View More Articles</a>
                                 </div>
                             </div>
-                            <div class="Recent_topics">
-                                <div class="articles_title">
+                            <div className="Recent_topics">
+                                <div className="articles_title">
                                     <h2>Recent Forum Topics</h2>
                                 </div>
-                                <div class="articles clearfix">
-                                    <ul class="tag">
+                                <div className="articles clearfix">
+                                    <ul className="tag">
                                         <li><a href="#">covid education</a></li>
                                         <li><a href="#">What homeschooling activity do you enjoy?</a></li>
                                         <li><a href="#">Home school meet ups</a></li>
                                         <li><a href="#">Virtual classroom to replace classroom lecturing in future</a></li>
                                         <li><a href="#">Evaluating the effectiveness of distance learning</a></li>
                                     </ul>
-                                    <a href="#" class="view_more">View More Topics</a>
+                                    <a href="#" className="view_more">View More Topics</a>
                                 </div>
                             </div>
                         </div>    
