@@ -53,7 +53,7 @@ const SchoolOpening = () => {
         }
 
         async function fetchCommunityPosts() {
-            const resp = await axios.get('http://localhost:4000/community_posts', {
+            const resp = await axios.get('https://teachiate-backend.fnmotivations.com/community_posts', {
                 params: {
                     from: 0,
                     to: 2
