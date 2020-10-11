@@ -51,7 +51,7 @@ const Home = () => {
 
     useEffect(() => {
         async function fetchComments() {
-            const resp  = await axios.get('http://localhost:4000/comments');
+            const resp  = await axios.get('https://teachiate-backend.fnmotivations.com/comments');
             if(resp.data.success === true) {
                 setComments([...resp.data.data]);
                 setLoadComments(true);
