@@ -10,6 +10,7 @@ import axios from 'axios';
 import { AuthStoreContext } from '../../Store/AuthStore';
 
 const Home = () => {
+
     const {isAuthenicate, userData} = useContext(AuthStoreContext);    
     const [postData, setPostData] = useState([]);
     const [newPost, setNewPost] = useState([]);
@@ -20,6 +21,9 @@ const Home = () => {
     const [selectFileUploadProgress, setSelectedFileUploadProgress]  = useState(0);
     const [startPost, setStartPost] = useState(0);
     const [LoadMoreFeedBtn, setLoadMoreFeedBtn] = useState(false);    
+    
+    const [comments, setComments] = useState([]);
+    const [loadComments, setLoadComments] = useState(false);
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -42,9 +46,20 @@ const Home = () => {
             }
         }
 
-        fetchPosts();
-       
+        fetchPosts();       
     }, []);
+
+    useEffect(() => {
+        async function fetchComments() {
+            const resp  = await axios.get('http://localhost:4000/comments');
+            if(resp.data.success === true) {
+                setComments([...resp.data.data]);
+                setLoadComments(true);
+            }
+        }
+
+        fetchComments();
+    },[]);
 
     const fileHandler = (e) => {
         setSelectedFile(e.target.files[0]);
@@ -178,9 +193,31 @@ const Home = () => {
             comment_content: textarea,
             post_type: 'thought'
         };        
-        const resp = await axios.post('http://localhost:4000/comments', data, config);
+        const resp = await axios.post('https://teachiate-backend.fnmotivations.com/comments', data, config);
         console.log(resp.data);
         e.reset();
+    }
+
+
+    const commentsListing = (id) => {
+        return (
+            comments
+            .filter(post => post.post_id === id)
+            .map(comment => (                          
+                <div className="blog_title margin_btm">
+                    <div className="title_img">
+                        <img style={{borderRadius: '50%'}} src={comment.avatar === null ? '/assets/img/user-account.png'  : comment.avatar } alt=""/>
+                    </div>
+                    <div className="user_des">
+                        <h4>{comment.fullname} <span>({comment.role})</span></h4>
+                        <p>{comment.comment_content} </p>
+                        <div className="replaied">
+                            <div className="hour"><Moment fromNow>{comment.created_at}</Moment></div>
+                        </div>
+                    </div>
+                </div>                  
+            ))
+        );
     }
 
     return (
@@ -312,6 +349,8 @@ const Home = () => {
                                         <div className="love"><img src="assets/img/love.svg" alt=""/><span>{post.total_likes}</span></div>
                                     </a>
                                 </div>                                
+
+                                {loadComments ? commentsListing(post.id) : null}
 
                                 {isAuthenicate ? (
                                     <>

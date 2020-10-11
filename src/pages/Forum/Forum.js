@@ -39,19 +39,33 @@ function Forum() {
                     <div className="row">
                         <div className="col-md-12">                        
                             <form onSubmit={searchHandler}>    
-                                <div className="search_flex text-center mt_30">
+                                <div className="search_flex text-center">
                                     <input type="search" placeholder="Search" value={keyword} onChange={(e) => setKeyword(e.target.value)} className="form-control"/>
                                     <button className="search_btn" type="submit"><img src="assets/img/search-icon.png" alt=""/></button>
                                 </div>
                              </form>
                         </div>
                     </div>
+                    
+                    <div class="btn btn-primary create_blog_btn create_forum_btn"><span>Post Your Forum Topic</span></div>
+                    <div class="trend_topics">
+                    <h2>Trending Topics</h2>
+                        <ul>
+                            <li><a href="#">#Youth Process</a></li>
+                            <li><a href="#">#Motivation for Kids</a></li>
+                            <li><a href="#">#Teacher Appreciation</a></li>
+                            <li><a href="#">#Teachers</a></li>
+                            <li><a href="#">#Parents</a></li>
+                            <li><a href="#">#Options for College and Beyond</a></li>
+                            <li><a href="#">#Teachers</a></li>
+                        </ul>
+                    </div>
 
                     <div className="forum clearfix">
                         <div className="forum_left">
-                            <div className="left_title">
+                            {/* <div className="left_title">
                                 {categorySelected === null ? <h2>All</h2> : <h2>{categorySelected}</h2>}
-                            </div>
+                            </div> */}
 
                             <ul className="left_listing">
 
@@ -62,22 +76,45 @@ function Forum() {
                                                 {
                                                     posts.length > 0 ? (
                                                         posts.map(post => (
-                                                            <li key={post.forum_post_id}>
-                                                                <div className="catagory_forum"><a href="#">{post.subcategory}</a></div>
-                                                                <div className="img_holder">
-                                                                    <img src={post.avatar === null ? '/assets/img/user-account.png' : post.avatar} alt="" height='65'/>
+                                                            <li className='forum_col' key={post.forum_post_id}>
+                                                                <div class="forum_user_info">
+                                                                    <div className="forum_col_avatar">
+                                                                        <img src={post.avatar === null ? '/assets/img/user-account.png' : post.avatar} alt="" height='65'/>
+                                                                    </div>
+                                                                    <div className='forum_avtar_info'>
+                                                                        <h2>{post.fullname}</h2>     
+                                                                        <h3>{post.category} » {post.subcategory}</h3>                                                                                                                                           
+                                                                    </div>
+                                                                </div>                                                              
+                                                                
+                                                                <div className='forum_col_content'>
+                                                                    <p className='more'>{post.description}</p>
+                                                                    <a href="#">#Youth Progress</a>
+                                                                    <div class="comment_num">2 Comments</div>
+                                                                    <div class="post_time"><Moment fromNow>{post.created_at}</Moment></div>                                                                    
                                                                 </div>
-                                                                <div className="img_des">
-                                                                    <h4>{post.fullname}<span>{post.category}</span></h4>
+                                                                
+
+                                                                <div class="comm_se">
+                                                                    <ul>
+                                                                        <li><a href="#"> <span>like <i class="fa fa-thumbs-o-up" aria-hidden="true"></i></span></a></li>
+                                                                        <li id="commentpost">
+                                                                            <span>Comment <i class="fa fa-comment-o" aria-hidden="true"></i></span>
+                                                                        </li>
+                                                                        <li><span>Share <i class="fa fa-share" aria-hidden="true"> 
+                                                                            </i></span>
+                                                                            <div class="share_post_via">
+                                                                                <ul>
+                                                                                    <li><a href="#"><span><i class="fa fa-facebook-square"></i></span>Facebook</a></li>
+                                                                                    <li><a href="#"><span><i class="fa fa-twitter"></i></span>Twitter</a></li>
+                                                                                    <li><a href="#"><span><i class="fa fa-instagram"></i></span>Instagram</a></li>
+                                                                                </ul>
+                                                                            </div>
+                                                                        </li>
+                                                                        
+                                                                    </ul>
                                                                 </div>
-                                                                <div className="clearfix"></div>
-                                                                <div className="des_p">
-                                                                    <p>{post.description}</p>
-                                                                </div>
-                                                                <div className="read_more_btn"><Link to={'forum/' + post.forum_post_id}>Read More</Link></div>
-                                                                <div className="month">
-                                                                    <p><Moment fromNow>{post.created_at}</Moment></p>
-                                                                </div>
+                                                                
                                                             </li>                                    
                                                         ))                                                       
                                                     ) : <p>There are no posts</p>                                                 
