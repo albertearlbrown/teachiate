@@ -58,16 +58,7 @@ function DisplayPost({data}) {
                 </ul>
             </div>
 
-            <div className="blog_title margin_btm">
-                <div className="title_img"><img src="assets/img/katei-re.png" alt=""/></div>
-                <div className="user_des">
-                    <h4>Katie Knapp <span>(Parent)</span></h4>
-                    <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution. </p>
-                    <div className="replaied">
-                        <div className="hour">12 Hours ago</div>
-                    </div>
-                </div>
-            </div>            
+         
         </>
     )
 }

@@ -1,9 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { useStoreActions, useStoreState } from 'easy-peasy'; 
 import PrivateRoute from './components/PrivateRoute';
 import axios from 'axios';
-import { StoreProvider, createStore, action } from 'easy-peasy';
 
 // Pages
 import Home from './pages/Home';
@@ -17,8 +15,9 @@ import PasswordForgot from './pages/PasswordForgot';
 import Forum from './pages/Forum';
 import ForumCreatePost from './pages/CreateForumPost';
 import SingleForumPost from './pages/SingleForumPost';
-import ContributeInformation from './pages/ContributeInformation';
 import People from './pages/People';
+import GroupStep1 from './pages/Group/Step1';
+import GroupStep2 from './pages/Group/Step2';
 
 // Components
 import Header from './components/Header';
@@ -26,6 +25,7 @@ import Footer from './components/Footer';
 import SchoolOpening from './pages/SchoolOpening/SchoolOpening';
 
 import { AuthStoreContext } from './Store/AuthStore';
+import Search from './pages/Search/Search';
 
 function App () {
 
@@ -65,7 +65,6 @@ function App () {
                 <Home />
               </Route>
               <PrivateRoute path='/my-profile' component={Profile}/>
-              <PrivateRoute path='/contribute-information' component={ContributeInformation}/>
               <Route path="/about">
                 <About />
               </Route> 
@@ -91,10 +90,19 @@ function App () {
               <Route exact path="/forum">
                   <Forum/>
               </Route>
+              <Route path="/search-result">
+                <Search/>
+              </Route>
+              <Route path="/create-group-step-1">
+                <GroupStep1/>
+              </Route>              
+              <Route path="/create-group-step-2">
+                <GroupStep2/>
+              </Route>
               <Route path="/forum/:id">
                 <SingleForumPost/>
               </Route>
-              <PrivateRoute path='/create-covid-post' component={CreateSchoolOpeningUpdates}/>              
+              <PrivateRoute path='/create-school-updates' component={CreateSchoolOpeningUpdates}/>              
             </Switch>
           </div>
           <Footer/>

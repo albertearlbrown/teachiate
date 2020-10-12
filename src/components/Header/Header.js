@@ -38,7 +38,7 @@ function Header() {
 
                                         <div className="my_account_open">
                                             <ul>                                         
-                                                <li><Link to="/create-covid-post">Create Covid Post</Link></li>
+                                                <li><Link to="/create-group-step-1">Create Group</Link></li>
                                                 <li><Link to='/my-profile'>My Profile</Link></li>
                                                 <li><Link to="/" onClick={logoutUser}>Lagout</Link></li>                                            
                                             </ul>

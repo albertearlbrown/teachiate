@@ -35,6 +35,10 @@ const SchoolOpening = () => {
     const [selectedStateCode, setSelectedStateCode] = useState(null);
     const [selectedCityId, setSelectedCityId] = useState(null); 
 
+
+    const [comments, setComments] = useState([]);
+    const [loadComments, setLoadComments] = useState(false);
+
     useEffect(() => {
         window.scrollTo(0, 0);
         async function fetchUpdates() {
@@ -65,14 +69,42 @@ const SchoolOpening = () => {
                 console.log('Community Post Loaded');
             }
         }
+       
+        async function fetchComments() {
+            const resp  = await axios.get('https://teachiate-backend.fnmotivations.com/comments');
+            if(resp.data.success === true) {
+                setComments([...resp.data.data]);
+                setLoadComments(true);
+            }
+        }        
 
         fetchStates();
         fetchUpdates();
         fetchCommunityPosts();
+        fetchComments();
      }, []);
+     
+     const commentsListing = (id, type) => {
+        return (
+            comments
+            .filter(post => post.post_id === id && post.post_type === type)
+            .map(comment => (                          
+                <div className="blog_title margin_btm">
+                    <div className="title_img">
+                        <img style={{borderRadius: '50%'}} src={comment.avatar === null ? '/assets/img/user-account.png'  : comment.avatar } alt=""/>
+                    </div>
+                    <div className="user_des">
+                        <h4>{comment.fullname} <span>({comment.role})</span></h4>
+                        <p>{comment.comment_content} </p>
+                        <div className="replaied">
+                            <div className="hour"><Moment fromNow>{comment.created_at}</Moment></div>
+                        </div>
+                    </div>
+                </div>                  
+            ))
+        );
+    }
 
-     
-     
      const stateHandler = async (e) => {
         setState(e.target.value);
         setCity('All');
@@ -236,8 +268,10 @@ const SchoolOpening = () => {
                                 </ul>
                             </div>
 
-                            <div className="post_sec">
-                                <div className="contribute"><Link to="/contribute-information">Contribute Information</Link></div>
+                            <div className="post_sec">                                
+                                <div className="contribute">                                    
+                                    <Link to="/create-school-updates">{isAuthenicate && userData.role === 'admin' ? 'Create School Update' : 'Contribute Information'}</Link>
+                                </div>
                             </div>                        
 
                             <div className="contribute_sec">
@@ -254,7 +288,8 @@ const SchoolOpening = () => {
                                         .filter(post => post.role === 'Admin')
                                         .map(post => (
                                             <div key={post.id}>
-                                                <DisplayPost data={post}/>     
+                                                <DisplayPost data={post}/>
+                                                {loadComments ? commentsListing(post.id, 'covid_feed') : null}     
                                             </div>
                                         ))}                                        
                                     </div>
@@ -269,6 +304,7 @@ const SchoolOpening = () => {
                                         .map(post => (
                                             <div key={post.id}>
                                                 <DisplayPost data={post}/> 
+                                                {loadComments ? commentsListing(post.id, 'covid_feed') : null}
                                             </div>
                                         ))}
                                     </div>
@@ -284,6 +320,7 @@ const SchoolOpening = () => {
                                         .map(post => (
                                             <div key={post.id}>
                                                 <DisplayPost data={post}/> 
+                                                {loadComments ? commentsListing(post.id, 'covid_feed') : null}
                                             </div>
                                         ))}
                                     </div>

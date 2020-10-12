@@ -202,7 +202,7 @@ const Home = () => {
     const commentsListing = (id) => {
         return (
             comments
-            .filter(post => post.post_id === id)
+            .filter(post => post.post_id === id && post.post_type === "thought")
             .map(comment => (                          
                 <div className="blog_title margin_btm">
                     <div className="title_img">

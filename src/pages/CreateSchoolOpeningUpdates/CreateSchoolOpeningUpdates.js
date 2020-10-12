@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { Redirect  } from 'react-router-dom';
 import axios from 'axios';
+import { AuthStoreContext } from '../../Store/AuthStore';
 
 function CreateSchoolOpeningUpdates() {
-
+    const {isAuthenicate, userData} = useContext(AuthStoreContext);  
     const [states, setStates] = useState([]);
     const [loadStates, setLoadStates] = useState(false);
     const [cities, setCities] = useState([]);
@@ -130,7 +131,10 @@ function CreateSchoolOpeningUpdates() {
             <section className="teachiate_create_forum_post">
                 <div className="container">
                     <div className="teachiate_create_forum_post_area main_register">
-                        <h2><span className="back_to_btn"><a href="#"></a></span>Create Post Update</h2>
+                        <h2>
+                            <span className="back_to_btn"><a href="#"></a></span>
+                            {isAuthenicate && userData.role === 'admin' ? 'Create School Update' : 'Contribute Information'}
+                        </h2>
                         <form onSubmit={formHandler} encType='multipart/form-data'>
                             <div className="register_field">
                                 <div className="row">
