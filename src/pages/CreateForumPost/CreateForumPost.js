@@ -20,9 +20,9 @@ function CreateForumPost() {
             category,
             subcategory
         }
-       const resp = await axios.post('http://localhost:4000/forums/create-post', data, {
+       const resp = await axios.post('https://teachiate-backend.fnmotivations.com/forums', data, {
             headers: {
-            'authorization': `Bearer ${token}`
+                'authorization': `Bearer ${token}`
             }
        });
        if(resp.data.success !== false) {

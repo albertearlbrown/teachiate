@@ -47,7 +47,11 @@ function Forum() {
                         </div>
                     </div>
                     
-                    <div class="btn btn-primary create_blog_btn create_forum_btn"><span>Post Your Forum Topic</span></div>
+
+                    <Link to="/forum-create-post" className='btn btn-primary create_blog_btn create_forum_btn'>
+                        <span>Post Your Forum Topic</span>
+                    </Link>
+
                     <div class="trend_topics">
                     <h2>Trending Topics</h2>
                         <ul>
