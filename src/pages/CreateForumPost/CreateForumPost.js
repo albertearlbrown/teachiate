@@ -131,7 +131,7 @@ function CreateForumPost() {
                                         </li>
                                     ))}
 
-                                    <input type='text' className='register_input' placeholder='Add topic tags here' value={tagInput} onChange={(e) => setTagInput(e.target.value)} onKeyPress={addTags} />
+                                    <input type='text' className='register_input' placeholder='Add topic tage here' value={tagInput} onChange={(e) => setTagInput(e.target.value)} onKeyPress={addTags} />
                                 </div>
                                 <input type="submit" className="register_submit" value="SUBMIT" name=""/>
                             </div>
