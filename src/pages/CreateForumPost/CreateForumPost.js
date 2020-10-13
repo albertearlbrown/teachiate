@@ -1,16 +1,38 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import Chip from '@material-ui/core/Chip';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+      display: 'flex',
+      flexWrap: 'wrap',
+      listStyle: 'none',
+      padding: theme.spacing(0.5),
+      margin: 0,
+    },
+    tage: {
+      margin: theme.spacing(0.5),
+    },
+}));
 
 function CreateForumPost() {
+    const classes = useStyles();
     const [category, setCategory] = useState(0);
     const [subcategory, setSubcategory] = useState(0);
     const [title, setTitle] = useState(null);
     const [description, setDescription] = useState(null);
     const [token, setToken] = useState(null);
+    const [tags, setTags] = useState([]);
+    const [tagInput, setTagInput] = useState(null);
 
     useEffect(() => {
         setToken(localStorage.getItem('jwt_token'));
     }, []);
+
+    const handleTageDelete = (tagToDelete) => () => {
+        setTags((tags) => tags.filter((tags) => tags.key !== tagToDelete.key));
+    };
 
     const formHandler = async (e) => {
         e.preventDefault();
@@ -30,6 +52,20 @@ function CreateForumPost() {
            window.location.replace(`forums/${resp.data.post_id}`);
        }       
     };    
+
+    const addTags = (e) => {
+
+        if(e.key === 'Enter') {
+            const label =  e.target.value;   
+            const key = Math.random();          
+            const tage = {
+                label,
+                key
+            }
+            setTags([...tags, tage]);
+            setTagInput('');
+        }        
+    }
 
     return (
         <>
@@ -83,6 +119,19 @@ function CreateForumPost() {
                                             <textarea onChange={(e) => setDescription(e.target.value)} value={description}  className="register_textarea" placeholder="Enter description"></textarea>
                                         </div>
                                     </div>
+                                </div>
+                                <div className={classes.root}>
+                                    {tags.map(tag => (
+                                        <li key={tag.key} style={{marginBottom: '10px'}}>
+                                            <Chip 
+                                                label={tag.label}
+                                                onDelete={handleTageDelete(tag)}
+                                                className={classes.tage}
+                                            /> 
+                                        </li>
+                                    ))}
+
+                                    <input type='text' className='register_input' placeholder='Enter the tags' value={tagInput} onChange={(e) => setTagInput(e.target.value)} onKeyPress={addTags} />
                                 </div>
                                 <input type="submit" className="register_submit" value="SUBMIT" name=""/>
                             </div>
