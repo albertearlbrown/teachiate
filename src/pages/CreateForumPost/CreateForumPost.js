@@ -18,8 +18,8 @@ const useStyles = makeStyles((theme) => ({
 
 function CreateForumPost() {
     const classes = useStyles();
-    const [category, setCategory] = useState(0);
-    const [subcategory, setSubcategory] = useState(0);
+    const [category, setCategory] = useState('General Community Chat');
+    const [subcategory, setSubcategory] = useState('Parent');
     const [title, setTitle] = useState(null);
     const [description, setDescription] = useState(null);
     const [token, setToken] = useState(null);
@@ -40,16 +40,17 @@ function CreateForumPost() {
             title,
             description,
             category,
-            subcategory
+            subcategory,
+            tags
         }
-       const resp = await axios.post('https://teachiate-backend.fnmotivations.com/forums', data, {
+       const resp = await axios.post('https://teachiate-backend.fnmotivations.com/forum', data, {
             headers: {
                 'authorization': `Bearer ${token}`
             }
        });
        if(resp.data.success !== false) {
            alert('Thank You For Creating Post');
-           window.location.replace(`forums/${resp.data.post_id}`);
+           window.location.replace(`forum/${resp.data.post_id}`);
        }       
     };    
 
@@ -80,12 +81,12 @@ function CreateForumPost() {
                                         <div className="only_field register_field_col">
                                             <p>Select Category</p>
                                             <div className='select'>
-                                                <select name="slct" id="slct" onChange={(e) => setCategory(e.target.value)}>
-                                                    <option value="1">General Community Chat</option>
-                                                    <option value="2">Higher Education Chat</option>
-                                                    <option value="3">Parental Connection</option>
-                                                    <option value="3">Parents and Teachers Lounge</option>
-                                                    <option value="3">Teachers Lounge</option>
+                                                <select name="slct" id="slct" onChange={(e) => setCategory(e.target.text)}>
+                                                    <option>General Community Chat</option>
+                                                    <option>Higher Education Chat</option>
+                                                    <option>Parental Connection</option>
+                                                    <option>Parents and Teachers Lounge</option>
+                                                    <option>Teachers Lounge</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -94,11 +95,11 @@ function CreateForumPost() {
                                         <div className="only_field register_field_col">                                                                                    
                                             <p>Select Sub Category</p>
                                             <div className='select'>
-                                                <select name="slct" id="slct" onChange={(e) => setSubcategory(e.target.value)}>
-                                                    <option value="1">Parent</option>
-                                                    <option value="2">Student</option>
-                                                    <option value="3">Teacher</option>
-                                                    <option value="3">General Educator</option>
+                                                <select name="slct" id="slct" onChange={(e) => setSubcategory(e.target.text)}>
+                                                    <option>Parent</option>
+                                                    <option>Student</option>
+                                                    <option>Teacher</option>
+                                                    <option>General Educator</option>
                                                 </select>
                                             </div>
                                         </div>

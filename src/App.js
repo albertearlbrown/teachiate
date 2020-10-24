@@ -93,14 +93,14 @@ function App () {
               <Route path="/search-result">
                 <Search/>
               </Route>
+              <Route path="/forum/:id">
+                <SingleForumPost/>
+              </Route>              
               <Route path="/create-group-step-1">
                 <GroupStep1/>
               </Route>              
               <Route path="/create-group-step-2">
                 <GroupStep2/>
-              </Route>
-              <Route path="/forum/:id">
-                <SingleForumPost/>
               </Route>
               <PrivateRoute path='/create-school-updates' component={CreateSchoolOpeningUpdates}/>              
             </Switch>

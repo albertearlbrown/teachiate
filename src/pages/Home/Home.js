@@ -8,6 +8,7 @@ import Moment from 'react-moment';
 import InfiniteLoader from 'react-infinite-loader';
 import axios from 'axios';
 import { AuthStoreContext } from '../../Store/AuthStore';
+import jwt_decode from "jwt-decode";
 
 const Home = () => {
 
@@ -179,10 +180,14 @@ const Home = () => {
     }    
 
     const postComment = async (e) => {
-        e.preventDefault();
+        e.preventDefault();        
         const though_id = e.target[0].value;
         const textarea = e.target[1].value;
         const token = localStorage.getItem('jwt_token');
+
+        const fullname = jwt_decode(token).payload.fullname;
+        const role = jwt_decode(token).payload.role;
+
         const config = {
             headers: {
                 'authorization': `Bearer ${token}`
@@ -191,11 +196,16 @@ const Home = () => {
         const data = {
             post_id: though_id,
             comment_content: textarea,
-            post_type: 'thought'
+            post_type: 'thought',
+            fullname,
+            role
         };        
-        const resp = await axios.post('https://teachiate-backend.fnmotivations.com/comments', data, config);
-        console.log(resp.data);
-        e.reset();
+
+        const resp = await axios.post('http://localhost:4000/comments', data, config);
+        if(resp.data.success) {
+            setComments([...comments], data);
+            console.log(comments);
+        }
     }
 
 

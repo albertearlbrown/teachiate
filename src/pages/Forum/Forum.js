@@ -67,10 +67,6 @@ function Forum() {
 
                     <div className="forum clearfix">
                         <div className="forum_left">
-                            {/* <div className="left_title">
-                                {categorySelected === null ? <h2>All</h2> : <h2>{categorySelected}</h2>}
-                            </div> */}
-
                             <ul className="left_listing">
 
                                 {load ? (
@@ -93,8 +89,8 @@ function Forum() {
                                                                 
                                                                 <div className='forum_col_content'>
                                                                     <p className='more'>{post.description}</p>
-                                                                    <a href="#">#Youth Progress</a>
-                                                                    <div class="comment_num">2 Comments</div>
+                                                                    {/* <a href="#">#Youth Progress</a> */}
+                                                                    {/* <div class="comment_num">2 Comments</div> */}
                                                                     <div class="post_time"><Moment fromNow>{post.created_at}</Moment></div>                                                                    
                                                                 </div>
                                                                 
