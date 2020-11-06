@@ -9,13 +9,14 @@ import InfiniteLoader from 'react-infinite-loader';
 import axios from 'axios';
 import { AuthStoreContext } from '../../Store/AuthStore';
 import jwt_decode from "jwt-decode";
+import Swal from 'sweetalert2';
 
 const Home = () => {
 
     const {isAuthenicate, userData} = useContext(AuthStoreContext);    
     const [postData, setPostData] = useState([]);
     const [newPost, setNewPost] = useState([]);
-    const [description, setDescription] = useState('');
+    const [content, setContent] = useState('');
     const [load, setLoad] = useState(false);
     const [selectedFile, setSelectedFile] = useState(null);
     const [selectFileUploadStart, setSelectFileUploadStart]  = useState(false);  
@@ -24,13 +25,13 @@ const Home = () => {
     const [LoadMoreFeedBtn, setLoadMoreFeedBtn] = useState(false);    
     
     const [comments, setComments] = useState([]);
-    const [loadComments, setLoadComments] = useState(false);
+    const [commentTextarea, setCommentTextara] = useState('');
 
     useEffect(() => {
         window.scrollTo(0, 0);
 
         async function fetchPosts() {
-            const resp = await axios.get('https://teachiate-backend.fnmotivations.com/thoughts', {
+            const resp = await axios.get('/thoughts', {
                 params: {
                     from: startPost,
                     to: 2
@@ -50,29 +51,14 @@ const Home = () => {
         fetchPosts();       
     }, []);
 
-    useEffect(() => {
-        async function fetchComments() {
-            const resp  = await axios.get('https://teachiate-backend.fnmotivations.com/comments');
-            if(resp.data.success === true) {
-                setComments([...resp.data.data]);
-                setLoadComments(true);
-            }
-        }
-
-        fetchComments();
-    },[]);
 
     const fileHandler = (e) => {
         setSelectedFile(e.target.files[0]);
     };
 
     const formHandler = async (e) => {
-        setDescription('');
-        setSelectedFile(null);
-
         e.preventDefault();
-
-        var filepath = null;
+        var image = null;
 
         if(selectedFile !== null) {
             const data = new FormData()
@@ -87,33 +73,36 @@ const Home = () => {
                 }
             }
 
-            const resp =  await axios.post("https://teachiate-backend.fnmotivations.com/upload", data, options); 
+            const resp =  await axios.post("/upload", data, options); 
             if(resp.data.success === true) { 
-                filepath = resp.data.filePath;
+                image = resp.data.filePath;
             }
         }               
 
         const data = {
-            description,
-            filepath
+            content,
+            image
         }
 
         const token = localStorage.getItem('jwt_token');
 
-        const resp = await axios.post('https://teachiate-backend.fnmotivations.com/thoughts', data, {
+        const resp = await axios.post('/thoughts', data, {
             headers: {
                 'authorization': `Bearer ${token}`
             }
         });
 
         if(resp.data.success === true) {
-            setDescription('');
+            setContent('');
             setSelectedFile(null);
-            var x = resp.data.data.insertId;
-            const createPost = await axios.get(`https://teachiate-backend.fnmotivations.com/thoughts/${x}`);
-            if(createPost.data.success) {
-                setNewPost(newPost => [...newPost, createPost.data.data]);
-            }
+            setNewPost(newPost => [...newPost, resp.data.data]);
+
+            Swal.fire({
+                title: 'Good job!',
+                text: 'Your thought successfully posted',
+                icon : 'success'
+            });  
+
         }   
     }
 
@@ -122,7 +111,7 @@ const Home = () => {
         setStartPost(startPost + 2);        
         const from = startPost + 2;
 
-        const resp = await axios.get('https://teachiate-backend.fnmotivations.com/thoughts', {
+        const resp = await axios.get('/thoughts', {
             params: {
                 from: from,
                 to: 2
@@ -180,13 +169,12 @@ const Home = () => {
     }    
 
     const postComment = async (e) => {
-        e.preventDefault();        
-        const though_id = e.target[0].value;
-        const textarea = e.target[1].value;
-        const token = localStorage.getItem('jwt_token');
+        e.preventDefault(); 
+        setCommentTextara('');
 
-        const fullname = jwt_decode(token).payload.fullname;
-        const role = jwt_decode(token).payload.role;
+        const id = e.target[0].value;
+        const content = e.target[1].value;
+        const token = localStorage.getItem('jwt_token');
 
         const config = {
             headers: {
@@ -194,45 +182,26 @@ const Home = () => {
             }
         };
         const data = {
-            post_id: though_id,
-            comment_content: textarea,
-            post_type: 'thought',
-            fullname,
-            role
+            content: content
         };        
 
-        const resp = await axios.post('http://localhost:4000/comments', data, config);
+        const resp = await axios.post(`http://localhost:4000/thoughts/${id}/comments`, data, config); 
+
         if(resp.data.success) {
-            setComments([...comments], data);
-            console.log(comments);
-        }
+            Swal.fire({
+                title: 'Good job!',
+                text: 'Your comment successfully posted',
+                icon : 'success'
+            });            
+            const result  = comments.concat(resp.data.data);
+            setComments([...result]);        
+        }       
     }
 
-
-    const commentsListing = (id) => {
-        return (
-            comments
-            .filter(post => post.post_id === id && post.post_type === "thought")
-            .map(comment => (                          
-                <div className="blog_title margin_btm">
-                    <div className="title_img">
-                        <img style={{borderRadius: '50%'}} src={comment.avatar === null ? '/assets/img/user-account.png'  : comment.avatar } alt=""/>
-                    </div>
-                    <div className="user_des">
-                        <h4>{comment.fullname} <span>({comment.role})</span></h4>
-                        <p>{comment.comment_content} </p>
-                        <div className="replaied">
-                            <div className="hour"><Moment fromNow>{comment.created_at}</Moment></div>
-                        </div>
-                    </div>
-                </div>                  
-            ))
-        );
-    }
 
     return (
         <>
-        {isAuthenicate ? <div style={{marginTop: '100px'}}></div> : <Banner/> }        
+        {isAuthenicate ? <div className='mt-lg-5'></div> : <Banner/> }        
         <section className="blog clearfix">
             <div className="container">
                 <div className="blog_left">
@@ -245,7 +214,7 @@ const Home = () => {
                             </div>
                             <form method="POST" encType="multipart/form-data" onSubmit={formHandler}>
                                 <div className="post_share_field">
-                                    <textarea placeholder="What’s are your mind?" value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
+                                    <textarea placeholder="What’s are your mind?" value={content} onChange={(e) => setContent(e.target.value)}></textarea>
                                     <div className="adv_post_opt clearfix">
                                         <div className="share_type">
                                             <ul>
@@ -255,13 +224,13 @@ const Home = () => {
                                                         <label htmlFor="imageUpload3"><span><img src="assets/img/upload_photo_icon.png" alt=""/></span>Photos</label>
                                                     </div>
                                                 </li>
-                                                <li>
+                                                {/* <li>
                                                     <div className="share_type_col">
                                                         <input type='file'  name="file"  id="imageUpload5" accept=".mp4, .flv" onChange={(e) => setSelectedFile(e.target.files[0])}/>
                                                         <label htmlFor="imageUpload5"><span><img src="assets/img/upload_video_icon.png" alt=""/>
                                                         </span>Video</label>
                                                     </div>
-                                                </li>
+                                                </li> */}
                                             </ul>
                                         </div>
                                     </div>
@@ -277,8 +246,6 @@ const Home = () => {
                         {selectFileUploadStart && selectFileUploadProgress !== 100  ? (
                             <LinearProgressWithLabel value={selectFileUploadProgress} />
                         ) : null}       
-
-
  
                         {selectedFile !== null && selectFileUploadStart === false ? (
                             <div>
@@ -289,39 +256,67 @@ const Home = () => {
                     </div>                    
                     ) : null}
                     
-                    {newPost.map(post => (
+                    {newPost
+                    .reverse()
+                    .map(post => (
                             <div className="blog_sec1" key={post.id}>
                             <div className="blog_title">
                                 <div className="title_img">
-                                    <img src={post.avatar == null ? '/assets/img/user-account.png' : post.avatar } alt=""/>
+                                    <img src={post.user.avatar === null ? '/assets/img/user-account.png' : post.user.avatar } alt=""/>
                                 </div>
                                 <div className="user_des">
-                                    <h4>{post.fullname} <span>{post.role}</span></h4>
+                                    <h4>{post.user.fullName} <span>{post.user.role}</span></h4>
                                     <p>posted in the (<strong>profile</strong>)</p>
                                 </div>
                                 <div className="time">
                                     <Moment fromNow>
-                                        {post.created_at}
+                                        {post.date}
                                     </Moment>
                                 </div>
                             </div>
 
-                            {postMedia(post.filepath)}
+                            {post.image !== null ? <img src={post.image} /> : null}
 
                             <div className="blog_des">
-                                <p>{post.description}</p>
+                                <p>{post.content}</p>
                             </div>
 
+                            <div className="blog_feedback clearfox">
+                                
+                                <div className="flower"><img src="assets/img/flower.svg" alt=""/><span>
+                                    {comments.filter(comment => comment.post === post._id).length + post.comments.length}</span>
+                                </div>
+                                
+                                {/* <a href="/">
+                                    <div className="love"><img src="assets/img/love.svg" alt=""/><span>{post.likes.length}</span></div>
+                                </a> */}
+                            </div>      
+                            
+                            {comments
+                            .filter(comment => comment.post === post._id)
+                            .map(comment => (
+                                <div className="blog_title margin_btm">
+                                    <div className="title_img">
+                                        <img style={{borderRadius: '50%'}} src={comment.user.avatar === null ? '/assets/img/user-account.png'  : comment.user.avatar } alt=""/>
+                                    </div>
+                                    <div className="user_des">
+                                        <h4>{comment.user.fullName} <span>({comment.user.role})</span></h4>
+                                        <p>{comment.content} </p>
+                                        <div className="replaied">
+                                            <div className="hour"><Moment fromNow>{comment.date}</Moment></div>
+                                        </div>
+                                    </div>
+                                </div> 
+                            ))}                                                      
+
                             {isAuthenicate ? (
-                                <>
-                                    <div className="direct_cmnt_area">
-                                        <form onSubmit={postComment}>
-                                            <input type='hidden' name='though_id' value={post.id}/>
-                                            <textarea placeholder="write a comment" name='textarea'></textarea>
-                                            <input type="submit" value="Post"/>
-                                        </form>
-                                    </div>                                    
-                                    </>
+                                <div className="direct_cmnt_area">
+                                    <form onSubmit={postComment}>
+                                        <input type='hidden' name='though_id' value={post._id}/>
+                                        <textarea placeholder="write a comment" value={commentTextarea} onChange={ (e) => setCommentTextara(e.target.value)} name='textarea'></textarea>
+                                        <input type="submit" value="Post"/>
+                                    </form>
+                                </div>                                    
                             ) : null}                                            
                             
                         </div>     
@@ -333,46 +328,81 @@ const Home = () => {
                             <div className="blog_sec1" key={post.id}>
                                 <div className="blog_title">
                                     <div className="title_img">
-                                        <img src={post.avatar == null ? '/assets/img/user-account.png' : post.avatar } alt=""/>
+                                        <img src={post.avatar == null ? '/assets/img/user-account.png' : post.user.avatar } alt=""/>
                                     </div>
                                     <div className="user_des">
-                                        <h4>{post.fullname} <span>{post.role}</span></h4>
+                                        <h4>{post.user.fullName} <span>{post.user.role}</span></h4>
                                         <p>posted in the (<strong>profile</strong>)</p>
                                     </div>
                                     <div className="time">
                                         <Moment fromNow>
-                                            {post.created_at}
+                                            {post.date}
                                         </Moment>
                                     </div>
                                 </div>
-                                {postMedia(post.filepath)}
+
+                                {post.image !== null ? <img src={post.image} /> : null}
 
                                 <div className="blog_des">
-                                    <p>{post.description}</p>
+                                    <p>{post.content}</p>
                                 </div>
 
                                 <div className="blog_feedback clearfox">
-                                    <a href="#">
-                                        <div className="flower"><img src="assets/img/flower.svg" alt=""/><span>{post.total_comments}</span></div>
-                                    </a>
-                                    <a href="#">
-                                        <div className="love"><img src="assets/img/love.svg" alt=""/><span>{post.total_likes}</span></div>
-                                    </a>
-                                </div>                                
+                                    
+                                    <div className="flower"><img src="assets/img/flower.svg" alt=""/><span>
+                                        {comments.filter(comment => comment.post === post._id).length + post.comments.length}</span>
+                                    </div>
+                                   
+                                    {/* <a href="/">
+                                        <div className="love"><img src="assets/img/love.svg" alt=""/><span>{post.likes.length}</span></div>
+                                    </a> */}
+                                </div>       
 
-                                {loadComments ? commentsListing(post.id) : null}
+                                {post
+                                .comments
+                                .map(comment => (
+                                    <div className="blog_title margin_btm">
+                                        <div className="title_img">
+                                            <img style={{borderRadius: '50%'}} src={comment.user.avatar === null ? '/assets/img/user-account.png'  : comment.user.avatar } alt=""/>
+                                        </div>
+                                        <div className="user_des">
+                                            <h4>{comment.user.fullName} <span>({comment.user.role})</span></h4>
+                                            <p>{comment.content} </p>
+                                            <div className="replaied">
+                                                <div className="hour"><Moment fromNow>{comment.date}</Moment></div>
+                                            </div>
+                                        </div>
+                                    </div>  
+                                ))} 
+
+                                {comments
+                                .filter(comment => comment.post === post._id)
+                                .map(comment => (
+                                    <div className="blog_title margin_btm">
+                                        <div className="title_img">
+                                            <img style={{borderRadius: '50%'}} src={comment.user.avatar === null ? '/assets/img/user-account.png'  : comment.user.avatar } alt=""/>
+                                        </div>
+                                        <div className="user_des">
+                                            <h4>{comment.user.fullName} <span>({comment.user.role})</span></h4>
+                                            <p>{comment.content} </p>
+                                            <div className="replaied">
+                                                <div className="hour"><Moment fromNow>{comment.date}</Moment></div>
+                                            </div>
+                                        </div>
+                                    </div> 
+                                ))}    
 
                                 {isAuthenicate ? (
                                     <>
-                                        <div className="direct_cmnt_area">
-                                            <form onSubmit={postComment}>
-                                                <input type='hidden' name='though_id' value={post.id}/>
-                                                <textarea placeholder="write a comment" ></textarea>
-                                                <input type="submit" value="Post" name=""/>
-                                            </form>
-                                        </div>                                    
-                                        </>
-                                ) : null}                                            
+                                    <div className="direct_cmnt_area">
+                                        <form onSubmit={postComment}>
+                                            <input type='hidden' name='though_id' value={post._id}/>
+                                            <textarea placeholder="write a comment" value={commentTextarea} onChange={ (e) => setCommentTextara(e.target.value)} name='textarea'></textarea>
+                                            <input type="submit" value="Post"/>
+                                        </form>
+                                    </div>                                     
+                                    </>
+                                ) : null} 
                                 
                             </div>
                     )) : null}                    
@@ -380,63 +410,63 @@ const Home = () => {
                     {LoadMoreFeedBtn ? <InfiniteLoader onVisited={() => loadMoreArticles()}/>: null }
                 </div>
 
-                <div class="blog_right">
-                    <div class="articles_title">
+                <div className="blog_right">
+                    <div className="articles_title">
                         <h2>Blog Articles</h2>
                     </div>
-                    <div class="articles clearfix">
-                        <ul class="d-flex">
+                    <div className="articles clearfix">
+                        <ul className="d-flex">
                             <li>
-                                <div class="art_left_img"><img src="assets/img/article1.jpg" width="92px;" alt=""/></div>
-                                <div class="art_des">
+                                <div className="art_left_img"><img src="assets/img/article1.jpg" width="92px;" alt=""/></div>
+                                <div className="art_des">
                                     <p>My struggle with homeschooling my youngins</p>
                                 </div>
                             </li>
                             <li>
-                                <div class="art_left_img"><img src="assets/img/article2.jpg" alt=""/></div>
-                                <div class="art_des">
+                                <div className="art_left_img"><img src="assets/img/article2.jpg" alt=""/></div>
+                                <div className="art_des">
                                     <p>COVID19 has led to parents appreciating teachers more</p>
                                 </div>
                             </li>
                             <li>
-                                <div class="art_left_img"><img src="assets/img/article3.jpg" alt=""/></div>
-                                <div class="art_des">
+                                <div className="art_left_img"><img src="assets/img/article3.jpg" alt=""/></div>
+                                <div className="art_des">
                                     <p>Teachers, like myself, getting used to virtual teaching</p>
                                 </div>
                             </li>
                         </ul>
-                        <a href="#" class="view_more">View More Articles</a>
+                        <a href="/" className="view_more">View More Articles</a>
                     </div>
 
-                    <div class="Recent_topics">
-                        <div class="articles_title">
+                    <div className="Recent_topics">
+                        <div className="articles_title">
                             <h2>Recent Forum Topics</h2>
                         </div>
-                        <div class="articles clearfix">
-                            <ul class="tag">
-                                <li><a href="#">covid education</a></li>
-                                <li><a href="#">What homeschooling activity do you enjoy?</a></li>
-                                <li><a href="#">Home school meet ups</a></li>
-                                <li><a href="#">Virtual classroom to replace classroom lecturing in future</a></li>
-                                <li><a href="#">Evaluating the effectiveness of distance learning</a></li>
+                        <div className="articles clearfix">
+                            <ul className="tag">
+                                <li><a href="/">covid education</a></li>
+                                <li><a href="/">What homeschooling activity do you enjoy?</a></li>
+                                <li><a href="/">Home school meet ups</a></li>
+                                <li><a href="/">Virtual classroom to replace classroom lecturing in future</a></li>
+                                <li><a href="/">Evaluating the effectiveness of distance learning</a></li>
                             </ul>
-                            <a href="#" class="view_more">View More Articles</a>
+                            <a href="/" className="view_more">View More Articles</a>
 
                         </div>
                     </div>
-                    <div class="Recent_topics_form">
-                        <div class="articles_title">
+                    <div className="Recent_topics_form">
+                        <div className="articles_title">
                             <h2>Recent Forums</h2>
                         </div>
-                        <div class="articles clearfix">
-                            <ul class="tag">
-                                <li><a href="#">General Community Chat </a></li>
-                                <li><a href="#">Higher Education Chat </a></li>
-                                <li><a href="#">Parental Connection </a></li>
-                                <li><a href="#">Parents and Teachers Lounge </a></li>
-                                <li><a href="#">Teachers Lounge</a></li>
+                        <div className="articles clearfix">
+                            <ul className="tag">
+                                <li><a href="/">General Community Chat </a></li>
+                                <li><a href="/">Higher Education Chat </a></li>
+                                <li><a href="/">Parental Connection </a></li>
+                                <li><a href="/">Parents and Teachers Lounge </a></li>
+                                <li><a href="/">Teachers Lounge</a></li>
                             </ul>
-                            <a href="#" class="view_more">View More Articles</a>
+                            <a href="/" className="view_more">View More Articles</a>
                         </div>                        
                     </div>
                 </div>

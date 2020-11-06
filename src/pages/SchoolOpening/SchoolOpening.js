@@ -28,9 +28,6 @@ const SchoolOpening = () => {
 
     const [posts, setPosts] = useState([]);
     const [loadPosts, setLoadPosts] = useState(false);    
-
-    const [communityPosts, setCommunityPosts] = useState([]);
-    const [loadCommunityPosts, setLoadCommunityPostss] = useState(false);
     
     const [selectedStateCode, setSelectedStateCode] = useState(null);
     const [selectedCityId, setSelectedCityId] = useState(null); 
@@ -42,103 +39,53 @@ const SchoolOpening = () => {
     useEffect(() => {
         window.scrollTo(0, 0);
         async function fetchUpdates() {
-            const resp =  await axios.get('https://teachiate-backend.fnmotivations.com/covid_feed');
-            const featured_posts = resp.data.data.featured_posts; 
-            const posts = resp.data.data.posts;
-            const all = featured_posts.concat(posts);
-            setPosts([...all]);
+            const resp =  await axios.get('/school-opening-updates');
+            const feed = resp.data.data;
+            setPosts([...feed]);
             setLoadPosts(true);   
         }
 
         async function fetchStates() {
-             const resp =  await axios.get('https://teachiate-backend.fnmotivations.com/states');
-             setStates([...resp.data.data]);
-             setLoadStates(true);           
-        }
-
-        async function fetchCommunityPosts() {
-            const resp = await axios.get('https://teachiate-backend.fnmotivations.com/community_posts', {
-                params: {
-                    from: 0,
-                    to: 2
-                }
-            });
-            if(resp.data.success === true) {
-                setCommunityPosts([...resp.data.data]);
-                setLoadCommunityPostss(true);
-                console.log('Community Post Loaded');
-            }
-        }
-       
-        async function fetchComments() {
-            const resp  = await axios.get('https://teachiate-backend.fnmotivations.com/comments');
-            if(resp.data.success === true) {
-                setComments([...resp.data.data]);
-                setLoadComments(true);
-            }
-        }        
+            const resp =  await axios.get('/states');
+            setStates([...resp.data.data]);
+            setLoadStates(true);           
+        }   
 
         fetchStates();
         fetchUpdates();
-        fetchCommunityPosts();
-        fetchComments();
      }, []);
      
-     const commentsListing = (id, type) => {
-        return (
-            comments
-            .filter(post => post.post_id === id && post.post_type === type)
-            .map(comment => (                          
-                <div className="blog_title margin_btm">
-                    <div className="title_img">
-                        <img style={{borderRadius: '50%'}} src={comment.avatar === null ? '/assets/img/user-account.png'  : comment.avatar } alt=""/>
-                    </div>
-                    <div className="user_des">
-                        <h4>{comment.fullname} <span>({comment.role})</span></h4>
-                        <p>{comment.comment_content} </p>
-                        <div className="replaied">
-                            <div className="hour"><Moment fromNow>{comment.created_at}</Moment></div>
-                        </div>
-                    </div>
-                </div>                  
-            ))
-        );
-    }
 
      const stateHandler = async (e) => {
         setState(e.target.value);
         setCity('All');
 
-        const selectedIndex = e.target.options.selectedIndex;
-        const stateCode = e.target.options[selectedIndex].getAttribute('data-key');
+        // const selectedIndex = e.target.options.selectedIndex;
+        // const stateCode = e.target.options[selectedIndex].getAttribute('data-key');
+        // setSelectedStateCode(stateCode);
 
-        setSelectedStateCode(stateCode);
-        
-         if(e.target.value !== 'All') {
-             const resp = await axios.get(`https://teachiate-backend.fnmotivations.com/cities/${stateCode}`);
-             setCities([...resp.data.data]);
-             setLoadCities(true);
-         }
-         else {
-             setCities([]);
-             setLoadCities(false);
-         }
+        if(e.target.value !== 'All') {
+            setLoadCities(true);
+        }
+        else {
+            setLoadCities(false);
+        }
      }
 
-     const cityHandler = (e) => {
+    const cityHandler = (e) => {
         setCity(e.target.value);
         const selectedIndex = e.target.options.selectedIndex;
         const city_id = e.target.options[selectedIndex].getAttribute('data-key');        
         setSelectedCityId(city_id);
-     }     
+    }     
 
-     const displayStates = () => {    
+    const displayStates = () => {    
         return (
             <>
                 <div className='select'>
                     <select id="slct" onChange={stateHandler}>
                         <option value='All'>All States</option>
-                        {states.map(i =>  <option value={i.state} key={i.state_code} data-key={i.state_code}>{i.state}</option>)}
+                        {states.map(state =>  <option value={state.name} key={state.code} data-key={state.code}>{state.name}</option>)}
                     </select>
                 </div>
             </>
@@ -150,8 +97,16 @@ const SchoolOpening = () => {
             <>
                 <div className='select'>
                     <select id="slct" onChange={cityHandler}>
-                        <option value='All'>Select a City</option>
-                        {cities.map(i =>  <option value={i.city} key={i.id} data-key={i.id}>{i.city}</option>)}
+                        <option value='All'>Select a City</option>          
+                        {states.filter(s => s.name === state).map(state => (
+                            <>
+                                {state.cities.map(city => (
+                                    <>
+                                        <option value={city.name}>{city.name}</option>
+                                    </>
+                                ))}
+                            </>
+                        ))}             
                     </select>
                 </div>
             </>
@@ -274,6 +229,7 @@ const SchoolOpening = () => {
                                 </div>
                             </div>                        
 
+
                             <div className="contribute_sec">
                                 <div className="conversetion">
                                     <h3>Verified Info & Updates</h3>
@@ -285,11 +241,10 @@ const SchoolOpening = () => {
                                 <div className="blog_sec4" style={{height: '300px', overflow: 'scroll'}}>
                                     <div className="opeing_list">                                        
                                         {posts
-                                        .filter(post => post.role === 'Admin')
+                                        .filter(post => post.user.role === 'Admin')
                                         .map(post => (
-                                            <div key={post.id}>
-                                                <DisplayPost data={post}/>
-                                                {loadComments ? commentsListing(post.id, 'covid_feed') : null}     
+                                            <div key={post._id}>
+                                                <DisplayPost posts={post}/>
                                             </div>
                                         ))}                                        
                                     </div>
@@ -298,31 +253,29 @@ const SchoolOpening = () => {
 
                             {loadPosts && state !== 'All' && city === 'All' ? ( 
                                 <div className="blog_sec4" style={{height: '300px', overflow: 'scroll'}}>
-                                    <div className="opeing_list">
+                                    <div className="opeing_list">                                        
                                         {posts
-                                        .filter(post => post => post.role === 'Admin' && post.state === state)
+                                        .filter(post => post.user.role === 'Admin')
                                         .map(post => (
-                                            <div key={post.id}>
-                                                <DisplayPost data={post}/> 
-                                                {loadComments ? commentsListing(post.id, 'covid_feed') : null}
+                                            <div key={post._id}>
+                                                <DisplayPost posts={post}/>
                                             </div>
-                                        ))}
+                                        ))}                                        
                                     </div>
                                 </div>                                
                             ) : null}
 
 
-                            {loadPosts && state !== 'All' && city !== 'All' ? (
+                            {loadPosts && state !== 'All' && city !== 'All'  ? (
                                 <div className="blog_sec4" style={{height: '300px', overflow: 'scroll'}}>
-                                    <div className="opeing_list">
+                                    <div className="opeing_list">                                        
                                         {posts
-                                        .filter(post => post => post.role === 'Admin' && post.state === state  && post.city === city)
+                                        .filter(post => post.user.role === 'Admin')
                                         .map(post => (
-                                            <div key={post.id}>
-                                                <DisplayPost data={post}/> 
-                                                {loadComments ? commentsListing(post.id, 'covid_feed') : null}
+                                            <div key={post._id}>
+                                                <DisplayPost posts={post}/>
                                             </div>
-                                        ))}
+                                        ))}                                        
                                     </div>
                                 </div>
                             ): null }                                                                   
@@ -389,24 +342,22 @@ const SchoolOpening = () => {
                                 </div>                    
                             ) : null}                            
 
-                            {loadCommunityPosts && communityPosts.length > 0 ? (                                                            
-
+                            {loadPosts && state === 'All' & city === 'All'  ? (          
                                 <div className="blog_sec4 open">
                                     <div className="opeing_list">                                        
-
-                                       {newPost.map(post => (
+                                       {/* {newPost.map(post => (
                                            <div key={post.id}>
                                                 <DisplayPost data={post}/>
                                            </div>
-                                       ))}
+                                       ))} */}
                                     
-                                        {communityPosts
+                                        {posts
+                                        .filter(post => post.user.role !== 'Admin')
                                         .map(post => (
                                             <div key={post.id}>
-                                                <DisplayPost data={post}/>     
+                                                <DisplayPost posts={post}/>     
                                             </div>
                                         ))}     
-
                                     </div>
                                 </div>                                                                                        
                             ): null }

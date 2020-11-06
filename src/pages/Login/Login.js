@@ -20,7 +20,7 @@ function Login() {
     const formHandler = async (e) => {
         e.preventDefault();
 
-        const resp = await axios.post('https://teachiate-backend.fnmotivations.com/auth/login', {
+        const resp = await axios.post('http://localhost:4000/auth/login', {
             email: email,
             password: password            
         });
@@ -35,7 +35,7 @@ function Login() {
                 }
             };
             
-            axios.get('https://teachiate-backend.fnmotivations.com/users/me', config)
+            axios.get('http://localhost:4000/users/me', config)
             .then((res) => {
                 if(res.data.success === true) {
                     setUserData(res.data.data);

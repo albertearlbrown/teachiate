@@ -26,13 +26,13 @@ function Register() {
         e.preventDefault();
 
         const data = {
-            fullname: fullName,
+            fullName: fullName,
             email,
             password,
             role
         };
 
-        const resp = await axios.post('https://teachiate-backend.fnmotivations.com/auth/join', data);
+        const resp = await axios.post('http://localhost:4000/auth/signup', data);
 
         if(resp.data.success === true) {
             localStorage.setItem('jwt_token', resp.data.token);
@@ -44,7 +44,7 @@ function Register() {
                 }
             };
             
-            axios.get('https://teachiate-backend.fnmotivations.com/users/me', config)
+            axios.get('http://localhost:4000/users/me', config)
             .then((res) => {
                 if(res.data.success === true) {
                     setUserData(res.data.data);

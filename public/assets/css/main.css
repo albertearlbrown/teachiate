@@ -15433,4 +15433,9 @@ h2.sec_title {
 }
 }
 
+@media only screen and (min-width: 768px) {
+    .mt-lg-5 {
+        margin-top: 80px;;
+    }
+}
 /*ritam

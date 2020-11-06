@@ -20,15 +20,20 @@ function CreateForumPost() {
     const classes = useStyles();
     const [category, setCategory] = useState('General Community Chat');
     const [subcategory, setSubcategory] = useState('Parent');
-    const [title, setTitle] = useState(null);
-    const [description, setDescription] = useState(null);
-    const [token, setToken] = useState(null);
+    const [title, setTitle] = useState('');
+    const [description, setDescription] = useState('');
+    const [token, setToken] = useState('');
     const [tags, setTags] = useState([]);
     const [tagInput, setTagInput] = useState(null);
+    const [selectedFile, setSelectedFile] = useState(null);
 
     useEffect(() => {
         setToken(localStorage.getItem('jwt_token'));
-    }, []);
+     }, []);
+
+    useEffect(() => {
+    window.scrollTo(0, 0);
+    }, [])
 
     const handleTageDelete = (tagToDelete) => () => {
         setTags((tags) => tags.filter((tags) => tags.key !== tagToDelete.key));
@@ -36,21 +41,36 @@ function CreateForumPost() {
 
     const formHandler = async (e) => {
         e.preventDefault();
+
+        var image = null;
+
+        if(selectedFile !== null) {
+            const data = new FormData()
+            data.append('file', selectedFile);
+            const resp =  await axios.post("https://teachiate-backend.fnmotivations.com/upload", data); 
+            if(resp.data.success === true) { 
+                image = resp.data.filePath;
+            }
+        }
+
         const data = {
             title,
             description,
+            image,
             category,
             subcategory,
             tags
         }
-       const resp = await axios.post('https://teachiate-backend.fnmotivations.com/forum', data, {
+
+       const resp = await axios.post('http://localhost:4000/forum', data, {
             headers: {
                 'authorization': `Bearer ${token}`
             }
-       });
+        });
+
        if(resp.data.success !== false) {
            alert('Thank You For Creating Post');
-           window.location.replace(`forum/${resp.data.post_id}`);
+           window.location.replace(`/forum`);
        }       
     };    
 
@@ -68,25 +88,29 @@ function CreateForumPost() {
         }        
     }
 
+    const imageHandler = (e) => {
+        setSelectedFile(e.target.files[0]);
+    }
+
     return (
         <>
             <section className="teachiate_create_forum_post">
                 <div className="container">
                     <div className="teachiate_create_forum_post_area main_register">
                         <h2><span className="back_to_btn"><a href="#"></a></span> Create A Forum</h2>
-                        <form method='POST' onSubmit={formHandler}>
+                        <form method='POST'>
                             <div className="register_field">
                                 <div className="row">
                                     <div className="col-md-6">
                                         <div className="only_field register_field_col">
                                             <p>Select Category</p>
                                             <div className='select'>
-                                                <select name="slct" id="slct" onChange={(e) => setCategory(e.target.text)}>
-                                                    <option>General Community Chat</option>
-                                                    <option>Higher Education Chat</option>
-                                                    <option>Parental Connection</option>
-                                                    <option>Parents and Teachers Lounge</option>
-                                                    <option>Teachers Lounge</option>
+                                                <select name="slct" id="slct" onChange={(e) => setCategory(e.target.value)}>
+                                                    <option value="General Community Chat">General Community Chat</option>
+                                                    <option value="Higher Education Chat">Higher Education Chat</option>
+                                                    <option value="Parental Connection">Parental Connection</option>
+                                                    <option value="Parents and Teachers Lounge">Parents and Teachers Lounge</option>
+                                                    <option value="Teachers Lounge">Teachers Lounge</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -95,11 +119,11 @@ function CreateForumPost() {
                                         <div className="only_field register_field_col">                                                                                    
                                             <p>Select Sub Category</p>
                                             <div className='select'>
-                                                <select name="slct" id="slct" onChange={(e) => setSubcategory(e.target.text)}>
-                                                    <option>Parent</option>
-                                                    <option>Student</option>
-                                                    <option>Teacher</option>
-                                                    <option>General Educator</option>
+                                                <select name="slct" id="slct" onChange={(e) => setSubcategory(e.target.value)}>
+                                                    <option value="Parent">Parent</option>
+                                                    <option value="Student">Student</option>
+                                                    <option value="Teacher">Teacher</option>
+                                                    <option value="General Educator">General Educator</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -121,6 +145,15 @@ function CreateForumPost() {
                                         </div>
                                     </div>
                                 </div>
+
+                                <div className="register_field_col">
+                                    <p>Add Image</p>
+                                    <div className="field input">
+                                        <input type="file" name="uploaded_file" onChange={imageHandler} className='register_input'/>
+                                    </div>
+                                </div>
+                                        
+
                                 <div className={classes.root}>
                                     {tags.map(tag => (
                                         <li key={tag.key} style={{marginBottom: '10px'}}>
@@ -134,7 +167,7 @@ function CreateForumPost() {
 
                                     <input type='text' className='register_input' placeholder='Add topic tage here' value={tagInput} onChange={(e) => setTagInput(e.target.value)} onKeyPress={addTags} />
                                 </div>
-                                <input type="submit" className="register_submit" value="SUBMIT" name=""/>
+                                <input type="button" onClick={formHandler} className="register_submit" value="SUBMIT" name=""/>
                             </div>
                         </form>
                     </div>

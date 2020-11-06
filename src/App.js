@@ -27,7 +27,9 @@ import SchoolOpening from './pages/SchoolOpening/SchoolOpening';
 import { AuthStoreContext } from './Store/AuthStore';
 import Search from './pages/Search/Search';
 
-function App () {
+axios.defaults.baseURL = 'https://teachiate-backend.fnmotivations.com';
+
+function App () {  
 
   const { isAuthenicate, setIsAuthenicate, userData, setUserData } = useContext(AuthStoreContext);
 
@@ -40,7 +42,7 @@ function App () {
         }
       };
       
-      axios.get('https://teachiate-backend.fnmotivations.com/users/me', config)
+      axios.get('http://localhost:4000/users/me', config)
       .then((res) => {
         if(res.data.success === true) {
           setUserData(res.data.data);

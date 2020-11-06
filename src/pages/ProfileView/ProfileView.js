@@ -8,34 +8,35 @@ import InfiniteLoader from 'react-infinite-loader';
 import jwt_decode from 'jwt-decode';
 import { Link } from 'react-router-dom';
 import { AuthStoreContext } from '../../Store/AuthStore';
+import Swal from 'sweetalert2';
 
 const ProfileView = () => {
+    const {isAuthenicate, userData} = useContext(AuthStoreContext); 
+    const [commentTextarea, setCommentTextara] = useState('');
 
-    const { userData } = useContext(AuthStoreContext);
     const [newAvatarFile, setNewAvatarFile] = useState(null);
+    const [newProfileCover, setnewProfileCover] = useState(null);
+
     const [postData, setPostData] = useState([]);
     const [newPost, setNewPost] = useState([]);
-    const [description, setDescription] = useState('');
+    const [content, setContent] = useState('');
     const [load, setLoad] = useState(false);
     const [selectedFile, setSelectedFile] = useState(null);
     const [selectFileUploadStart, setSelectFileUploadStart]  = useState(false);  
     const [selectFileUploadProgress, setSelectedFileUploadProgress]  = useState(0); 
     const [token, setToken] = useState(null);
-    const [startPost, setStartPost] = useState(0);
+    const [startPost, setStartPost] = useState(0);    
+    const [comments, setComments] = useState([]);
     const [LoadMoreFeedBtn, setLoadMoreFeedBtn] = useState(false);    
 
     useEffect(() => {
         window.scrollTo(0, 0);
 
         async function fetchPosts() {
-            const user_id = jwt_decode(localStorage.getItem('jwt_token')).payload.user_id;
+            const id = jwt_decode(localStorage.getItem('jwt_token')).user._id;
 
-            const resp = await axios.get(`https://teachiate-backend.fnmotivations.com/thoughts/users/${user_id}`, {
-                params: {
-                    from: startPost,
-                    to: 2
-                }
-            });
+            const resp = await axios.get(`/thoughts/users/${id}?from=${startPost}&to=2`);
+            
             if(resp.data.success === true) {
                 setStartPost(2);
                 setPostData([...resp.data.data]);        
@@ -57,7 +58,7 @@ const ProfileView = () => {
     const formHandler = async (e) => {
         e.preventDefault();           
 
-        var filepath = null;
+        var image = null;
 
         if(selectedFile !== null) {
             const data = new FormData()
@@ -74,16 +75,18 @@ const ProfileView = () => {
 
             const resp =  await axios.post("https://teachiate-backend.fnmotivations.com/upload", data, options); 
             if(resp.data.success === true) { 
-                var filepath = resp.data.filePath;
+                var image = resp.data.filePath;
             }
         }   
 
         const data = {
-            description,
-            filepath
+            content,
+            image
         }
 
-        const resp = await axios.post('https://teachiate-backend.fnmotivations.com/thoughts', data, {
+        const token = localStorage.getItem('jwt_token');
+
+        const resp = await axios.post('/thoughts', data, {
             headers: {
                 'authorization': `Bearer ${token}`
             }
@@ -91,21 +94,23 @@ const ProfileView = () => {
 
         if(resp.data.success === true) {          
             setSelectedFile(null);
-            setDescription('');      
-            var x = resp.data.data.insertId;
-            const createPost = await axios.get(`https://teachiate-backend.fnmotivations.com/thoughts/${x}`);
-            if(createPost.data.success) {
-                setNewPost(newPost => [...newPost, createPost.data.data]);
-            }                  
+            setContent('');      
+            setNewPost(newPost => [...newPost, resp.data.data]);
+
+            Swal.fire({
+                title: 'Good job!',
+                text: 'Your post has been posted',
+                icon : 'success'
+            });  
         }   
     }
 
     const loadMoreArticles = async () => {
-        const user_id = jwt_decode(localStorage.getItem('jwt_token')).payload.user_id;
         setStartPost(startPost + 2);        
         const from = startPost + 2;
 
-        const resp = await axios.get(`https://teachiate-backend.fnmotivations.com/thoughts/users/${user_id}`, {
+        const id = jwt_decode(localStorage.getItem('jwt_token')).user._id;
+        const resp = await axios.get(`/thoughts/users/${id}`, {
             params: {
                 from: from,
                 to: 2
@@ -162,7 +167,62 @@ const ProfileView = () => {
         }
 
     }
-    
+
+    const postComment = async (e) => {
+        e.preventDefault(); 
+        setCommentTextara('');
+
+        const id = e.target[0].value;
+        const content = e.target[1].value;
+        const token = localStorage.getItem('jwt_token');
+
+        const config = {
+            headers: {
+                'authorization': `Bearer ${token}`
+            }
+        };
+        const data = {
+            content: content
+        };        
+
+        const resp = await axios.post(`/thoughts/${id}/comments`, data, config); 
+
+        if(resp.data.success) {
+            Swal.fire({
+                title: 'Good job!',
+                text: 'Your comment successfully posted',
+                icon : 'success'
+            });            
+            const result  = comments.concat(resp.data.data);
+            setComments([...result]);        
+        }       
+    }
+
+    const changeProfileCover = async (e) => {
+        e.preventDefault();
+        const file = e.target.files[0];
+        const data = new FormData();    
+        data.append('file', file);        
+        const resp = await axios.post('https://teachiate-backend.fnmotivations.com/upload', data);
+        if(resp.data.success === true) {
+            const token = localStorage.getItem('jwt_token');
+
+            const data = {
+                cover: resp.data.filePath
+            }
+            const config = {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            }    
+            
+            const fn = await axios.post('/users/change-profile-cover', data, config);
+            if(fn.data.success === true) {
+                setnewProfileCover(data.cover);
+            }
+        }        
+    }
+
     const uploadAvatar = async (e) => {
         e.preventDefault();
         const file = e.target.files[0];
@@ -171,20 +231,24 @@ const ProfileView = () => {
         const resp = await axios.post('https://teachiate-backend.fnmotivations.com/upload', data);
         if(resp.data.success === true) {
             const token = localStorage.getItem('jwt_token');
+
             const data = {
-                filePath: resp.data.filePath
+                avatar: resp.data.filePath
             }
             const config = {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
-            }            
-            const fn = await axios.post('https://teachiate-backend.fnmotivations.com/users/change-profile', data, config);
+            }    
+            
+            const fn = await axios.post('/users/change-profile-avatar', data, config);
             if(fn.data.success === true) {
-                setNewAvatarFile(resp.data.filePath);
+                setNewAvatarFile(data.avatar);
             }
         }
     }
+
+
 
     return (
         <>              
@@ -194,12 +258,13 @@ const ProfileView = () => {
                 <div className="profile-banner">
                     <div className="avatar-upload">
                         <div className="avatar-edit">
-                            <input type='file' id="imageUpload2" accept=".png, .jpg, .jpeg" />
+                            <input type='file' id="imageUpload2" accept=".png, .jpg, .jpeg" onChange={(e) => changeProfileCover(e)}/>
                             <label htmlFor="imageUpload2"><i className="fa fa-pencil-square-o" aria-hidden="true"></i> Change Cover Image</label>
                         </div>
                         <div className="avatar-preview">
-                            {/* <div id="imagePreview2" style={{backgroundImage: `url('/assets/img/profile_banner.jpg')`}}>
-                            </div> */}
+                            {newProfileCover === null ? (
+                               userData.cover !== null ? <div id="imagePreview" style={{backgroundImage: `url('${userData.cover}')`}}></div> : null
+                            ) : <div id="imagePreview2" style={{backgroundImage: `url('${newProfileCover}')`}}></div>} 
                         </div>
                     </div>
                 </div>
@@ -221,7 +286,7 @@ const ProfileView = () => {
                     </div>
                     <div className="avatar-info">
                         <div className="avatar-name">
-                            <h3><a href="#">{userData.fullname} </a> </h3>
+                            <h3><a href="#">{userData.fullName} </a> </h3>
                             <div className="clear"></div>
                         </div>
                         <div className="avatar-status">
@@ -241,7 +306,7 @@ const ProfileView = () => {
                 {/* <!-- profile-left --> */}
                 <div className="profile-left">
                     <div className="profile-wrapper">
-                        <div className="profile-nav">
+                        {/* <div className="profile-nav">
                             <ul className="clearfix">
                                 <li className="active"><a href="#">
                                     <div className="profile-nav-icon">
@@ -309,7 +374,7 @@ const ProfileView = () => {
                                     </a>
                                 </li>
                             </ul>
-                        </div>
+                        </div> */}
 
                         <div className="post_share">
                         <h2>Share your thoughts</h2>
@@ -319,7 +384,7 @@ const ProfileView = () => {
                             </div>
                             <form method="POST" encType="multipart/form-data" onSubmit={formHandler}>
                                 <div className="post_share_field">
-                                    <textarea placeholder="What’s are your mind?" value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
+                                    <textarea placeholder="What’s are your mind?" value={content} onChange={(e) => setContent(e.target.value)}></textarea>
                                     <div className="adv_post_opt clearfix">
                                         <div className="share_type">
                                             <ul>
@@ -327,13 +392,6 @@ const ProfileView = () => {
                                                     <div className="share_type_col">
                                                         <input type='file' name="file" id="imageUpload3" accept=".png, .jpg, .jpeg"  onChange={fileHandler}/>
                                                         <label htmlFor="imageUpload3"><span><img src="assets/img/upload_photo_icon.png" alt=""/></span>Photos</label>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div className="share_type_col">
-                                                        <input type='file'  name="file"  id="imageUpload5" accept=".mp4, .flv"  onChange={fileHandler}/>
-                                                        <label htmlFor="imageUpload5"><span><img src="assets/img/upload_video_icon.png" alt=""/>
-                                                        </span>Video</label>
                                                     </div>
                                                 </li>
                                             </ul>
@@ -361,15 +419,18 @@ const ProfileView = () => {
 
                     </div>    
 
-                    {newPost.map(post => (
+                    {newPost.
+                    reverse()
+                    .map(post => (
                             <div className="blog_sec1" key={post.id}>
                             <div className="blog_title">
                                 <div className="title_img">
-                                    <img src={post.avatar == null ? "assets/img/user-account.png" : post.avatar} alt="Sarah Jones"/>
+                                    <img src={post.user.avatar == null ? "assets/img/user-account.png" : post.user.avatar} alt="Sarah Jones"/>
                                 </div>
                                 <div className="user_des">
-                                    <h4>{post.fullname} <span>{post.role}</span></h4>
+                                    <h4>{post.fullName} <span>{post.user.role}</span></h4>
                                     <p>posted in the (<strong>profile</strong>)</p>
+
                                 </div>
                                 <div className="time">
                                     <Moment fromNow>
@@ -378,10 +439,10 @@ const ProfileView = () => {
                                 </div>
                             </div>
 
-                            {postMedia(post.filepath)}
+                            {postMedia(post.image)}
 
                             <div className="blog_des">
-                                <p>{post.description}</p>
+                                <p>{post.content}</p>
                             </div>
 
                             <div className="direct_cmnt_area">
@@ -397,28 +458,65 @@ const ProfileView = () => {
                             <div className="blog_sec1" key={post.id}>
                                 <div className="blog_title">
                                     <div className="title_img">                                
-                                        <img src={post.avatar === null ? "assets/img/user-account.png" : post.avatar} alt="Sarah Jones"/>
+                                        <img src={post.user.avatar === null ? "assets/img/user-account.png" : post.user.avatar} alt={post.user.fullName}/>
                                     </div>
                                     <div className="user_des">
-                                        <h4>{post.fullname} <span>{post.role}</span></h4>
+                                        <h4>{post.user.fullName} <span>{post.user.role}</span></h4>
                                         <p>posted in the (<strong>profile</strong>)</p>
                                     </div>
                                     <div className="time">
                                         <Moment fromNow>
-                                            {post.created_at}
+                                            {post.date}
                                         </Moment>
                                     </div>
                                 </div>
                                 
 
-                                {postMedia(post.filepath)}
+                                {postMedia(post.image)}
 
                                 <div className="blog_des">
-                                    <p>{post.description}</p>
-                                </div>                            
+                                    <p>{post.content}</p>
+                                </div>    
+
+                                <div className="blog_feedback clearfox">
+                                    
+                                    <div className="flower"><img src="assets/img/flower.svg" alt=""/><span>
+                                        {comments.filter(comment => comment.post === post._id).length + post.comments.length}</span>
+                                    </div>
+                                    
+                                    {/* <a href="/">
+                                        <div className="love"><img src="assets/img/love.svg" alt=""/><span>{post.likes.length}</span></div>
+                                    </a> */}
+                                </div>      
+                                
+                                {comments
+                                .filter(comment => comment.post === post._id)
+                                .map(comment => (
+                                    <div className="blog_title margin_btm">
+                                        <div className="title_img">
+                                            <img style={{borderRadius: '50%'}} src={comment.user.avatar === null ? '/assets/img/user-account.png'  : comment.user.avatar } alt=""/>
+                                        </div>
+                                        <div className="user_des">
+                                            <h4>{comment.user.fullName} <span>({comment.user.role})</span></h4>
+                                            <p>{comment.content} </p>
+                                            <div className="replaied">
+                                                <div className="hour"><Moment fromNow>{comment.date}</Moment></div>
+                                            </div>
+                                        </div>
+                                    </div> 
+                                ))}                                                      
+
+                                {isAuthenicate ? (
+                                    <div className="direct_cmnt_area">
+                                        <form onSubmit={postComment}>
+                                            <input type='hidden' name='though_id' value={post._id}/>
+                                            <textarea placeholder="write a comment" value={commentTextarea} onChange={ (e) => setCommentTextara(e.target.value)} name='textarea'></textarea>
+                                            <input type="submit" value="Post"/>
+                                        </form>
+                                    </div>                                    
+                                ) : null}                                                        
                                 
                             </div>
-
                     )) : null}                    
                     
                     {LoadMoreFeedBtn ? <InfiniteLoader onVisited={() => loadMoreArticles()}/>: null }

@@ -3,17 +3,20 @@ import React, { useEffect, useState } from 'react'
 import PageTitle from '../../components/PageTitle';
 import Moment from 'react-moment';
 import { Link } from 'react-router-dom';
+import Post from './Post';
 
 function Forum() {
     const [posts, setPosts] = useState([]);
     const [load, setLoad] = useState(false);
-    const [keyword, setKeyword] = useState(null);
+    const [trendingTopic, setTrendingTopic] = useState(null);
+    const [keyword, setKeyword] = useState('');
     const [categorySelected, setSelectCategory] = useState(null);
 
     useEffect(() => {
         window.scrollTo(0, 0);
         async function fetchPosts() {
-           const resp = await axios.get('https://teachiate-backend.fnmotivations.com/forum');
+           const resp = await axios.get('http://localhost:4000/forum');
+           
            if(resp.data.success) {
             setPosts([...resp.data.data]);
             setLoad(true);        
@@ -52,110 +55,60 @@ function Forum() {
                         <span>Post Your Forum Topic</span>
                     </Link>
 
-                    <div class="trend_topics">
+                    <div className="trend_topics">
                     <h2>Trending Topics</h2>
                         <ul>
-                            <li><a href="#">#Youth Process</a></li>
-                            <li><a href="#">#Motivation for Kids</a></li>
-                            <li><a href="#">#Teacher Appreciation</a></li>
-                            <li><a href="#">#Teachers</a></li>
-                            <li><a href="#">#Parents</a></li>
-                            <li><a href="#">#Options for College and Beyond</a></li>
-                            <li><a href="#">#Teachers</a></li>
+                            <li><a href="#">#<span  onClick={(e) => setTrendingTopic(e.target.textContent.toLowerCase())}>Youth Process</span></a></li>
+                            <li><a href="#">#<span onClick={(e) => setTrendingTopic(e.target.textContent.toLowerCase())}>Motivation for Kids</span></a></li>
+                            <li><a href="#">#<span onClick={(e) => setTrendingTopic(e.target.textContent.toLowerCase())}>Teacher Appreciation</span></a></li>
+                            <li><a href="#">#<span onClick={(e) => setTrendingTopic(e.target.textContent.toLowerCase())}>Teachers</span></a></li>
+                            <li><a href="#">#<span  onClick={(e) => setTrendingTopic(e.target.textContent.toLowerCase())}>Parents</span></a></li>
+                            <li><a href="#">#<span onClick={(e) => setTrendingTopic(e.target.textContent.toLowerCase())}>Options for College and Beyond</span></a></li>
+                            <li><a href="#">#<span onClick={(e) => setTrendingTopic(e.target.textContent.toLowerCase())}>Teachers</span></a></li>
                         </ul>
                     </div>
 
                     <div className="forum clearfix">
                         <div className="forum_left">
                             <ul className="left_listing">
-
                                 {load ? (
                                     <div>
-                                        {categorySelected === null ? (
-                                            <div>
-                                                {
-                                                    posts.length > 0 ? (
-                                                        posts.map(post => (
-                                                            <li className='forum_col' key={post.forum_post_id}>
-                                                                <div class="forum_user_info">
-                                                                    <div className="forum_col_avatar">
-                                                                        <img src={post.avatar === null ? '/assets/img/user-account.png' : post.avatar} alt="" height='65'/>
-                                                                    </div>
-                                                                    <div className='forum_avtar_info'>
-                                                                        <h2>{post.fullname}</h2>     
-                                                                        <h3>{post.category} » {post.subcategory}</h3>                                                                                                                                           
-                                                                    </div>
-                                                                </div>                                                              
-                                                                
-                                                                <div className='forum_col_content'>
-                                                                    <p className='more'>{post.description}</p>
-                                                                    {/* <a href="#">#Youth Progress</a> */}
-                                                                    {/* <div class="comment_num">2 Comments</div> */}
-                                                                    <div class="post_time"><Moment fromNow>{post.created_at}</Moment></div>                                                                    
-                                                                </div>
-                                                                
-
-                                                                <div class="comm_se">
-                                                                    <ul>
-                                                                        <li><a href="#"> <span>like <i class="fa fa-thumbs-o-up" aria-hidden="true"></i></span></a></li>
-                                                                        <li id="commentpost">
-                                                                            <span>Comment <i class="fa fa-comment-o" aria-hidden="true"></i></span>
-                                                                        </li>
-                                                                        <li><span>Share <i class="fa fa-share" aria-hidden="true"> 
-                                                                            </i></span>
-                                                                            <div class="share_post_via">
-                                                                                <ul>
-                                                                                    <li><a href="#"><span><i class="fa fa-facebook-square"></i></span>Facebook</a></li>
-                                                                                    <li><a href="#"><span><i class="fa fa-twitter"></i></span>Twitter</a></li>
-                                                                                    <li><a href="#"><span><i class="fa fa-instagram"></i></span>Instagram</a></li>
-                                                                                </ul>
-                                                                            </div>
-                                                                        </li>
-                                                                        
-                                                                    </ul>
-                                                                </div>
-                                                                
-                                                            </li>                                    
-                                                        ))                                                       
-                                                    ) : <p>There are no posts</p>                                                 
-                                                }                                                
-                                            </div>
+                                        {categorySelected === null && trendingTopic === null  ? (
+                                            <>
+                                                {posts.length > 0 ? posts.map(post => <Post post={post} key={post._id}/>) : <p>There are no posts</p>}                                                
+                                            </>
                                         ) : null}
 
-
-                                        {categorySelected !== null ? (
-                                            <div>
-                                                { posts.filter(post => post.category === categorySelected).length > 0 ? (
-                                                    posts.filter(post => post.category === categorySelected).map(post => (
-                                                        <li key={post.forum_post_id}>
-                                                            <div className="catagory_forum"><a href="#">{post.subcategory}</a></div>
-                                                            <div className="img_holder">
-                                                                <img src={post.avatar === null ? '/assets/img/user-account.png' : post.avatar} alt="" height='65'/>
-                                                            </div>
-                                                            <div className="img_des">
-                                                                <h4>{post.fullname}<span>{post.category}</span></h4>
-                                                            </div>
-                                                            <div className="clearfix"></div>
-                                                            <div className="des_p">
-                                                                <p>{post.description}</p>
-                                                            </div>
-                                                            <div className="read_more_btn"><Link to={'forum/'+post.forum_post_id}>Read More</Link></div>
-                                                            <div className="month">
-                                                                <p><Moment fromNow>{post.created_at}</Moment></p>
-                                                            </div>
-                                                        </li>                                    
-                                                    ))                                                                                                                                                                                                                                    
+                                        {categorySelected !== null && trendingTopic === null ? (
+                                            <>
+                                                {posts.filter(post => post.category === categorySelected).length > 0 ? (
+                                                    posts
+                                                    .filter(post => post.category === categorySelected)
+                                                    .map(post => <Post post={post} key={post._id}/>)
                                                 )  : <p>There are no posts</p>}
-                                            </div>     
-                                        ) : null}   
+                                            </>     
+                                        ) : null}
 
+                                        {categorySelected === null &&  trendingTopic !== null ? (
+                                            <>
+                                                {posts                                                
+                                                .map(post => (
+                                                    <>
+                                                        {post.tags.filter(tage => tage.label === trendingTopic)
+                                                        .map(tage => (
+                                                            <>
+                                                                <Post post={post} key={post._id}/>
+                                                            </>
+                                                        ))} 
+                                                    </>     
+                                                ))}
+                                            </>     
+                                        ) : null}
                                     </div>                                    
-                                ): <p>Loading...</p>} 
-
-                               
-
+                                ):  null}     
                             </ul>
                         </div>
+
                         <div className="forum_right">
                             <div className="list_chat">
                                 <ul>
@@ -168,6 +121,7 @@ function Forum() {
                                 </ul>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </section>

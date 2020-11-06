@@ -32,7 +32,7 @@ function Header() {
 
                                         <img src={userData.avatar === null ?  "/assets/img/user-account.png" : userData.avatar} alt={userData.fullname} />  
 
-                                        {userData.fullname}
+                                        {userData.fullName}
 
                                         <i className="icon-chevron-right"></i> 
 
