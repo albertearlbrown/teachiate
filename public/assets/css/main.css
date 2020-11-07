@@ -3274,7 +3274,7 @@ label {
     background-color: #043c6c;
     border-radius: 4px;
     border-bottom: none;
-    
+
 }
 .opening_search_form select {
     color: #fff;
@@ -8457,7 +8457,7 @@ blockquote {
         margin-top: 10px;
     }
 
-   
+
 
 }
 
@@ -8685,7 +8685,7 @@ blockquote {
     border-radius: 100%;
     border: 5px solid #00aeef;
     box-shadow: none;
-   
+
 }
 
 .avatar-upload-section .avatar-upload .avatar-edit input + label {
@@ -8877,7 +8877,7 @@ blockquote {
     padding: 0;
     margin: 0 auto;
   }
-  
+
   .profile-forum-details .tabs2 ul {
     margin: 0;
     padding: 0 0 0 0;
@@ -8899,11 +8899,11 @@ blockquote {
   .profile-forum-details .tabs2 ul li a:hover, .profile-forum-details .tabs2 ul li a.active {
     color: #151617;
   }
-  
+
   .profile-forum-details .item2 {
     margin-bottom: 0;
   }
-  
+
   .profile-forum-details .item2.active .item-content2 {
     padding: 20px 0;
     -webkit-transition: opacity 0.3s ease-in-out;
@@ -8930,24 +8930,24 @@ blockquote {
   .profile-forum-details .item2.active .item-content2 {
     padding-top: 0;
   }
-  
+
   .profile-forum-details .tabs-side .tabs2 li {
     margin-bottom: 2px;
   }
-  
+
   .profile-forum-details .tabbed-content2 .item2 .item-content2 {
     display: none;
     visibility: hidden;
-   
+
   }
-  
+
   .profile-forum-details .tabbed-content2 .item2.active .item-content2 {
     visibility: visible;
     display: block;
   }
 
 
-  
+
   @media all and (max-width: 767px) {
     .profile-forum-details .tabbed-content2 .item2::before {
       content: attr(data-title);
@@ -8972,7 +8972,7 @@ blockquote {
     .profile-forum-details .item2 {
       margin-bottom: 10px;
     }
-  
+
     .profile-forum-details .tabbed-content2 .item2 {
       min-height: 2em;
     }
@@ -9309,11 +9309,11 @@ blockquote {
     .group-info-details h4 {
         font-size: 14px;
     }
-    
+
     .group-info-details ul li {
         font-size: 14px;
     }
-      
+
 }
 @media(max-width: 1299px) {
     .avatar-info {
@@ -9726,7 +9726,7 @@ blockquote {
     background: lightgray;
     border-radius: 100px;
   }
-  
+
   .switch {
     position: relative;
     display: block;
@@ -9755,7 +9755,7 @@ blockquote {
     border: 1px solid #00aeef;
     cursor: pointer;
   }
-  
+
   .slider {
     position: absolute;
     cursor: pointer;
@@ -9785,7 +9785,7 @@ blockquote {
     transition: all 300ms ease-in-out;
     cursor: pointer;
   }
-  
+
 .social_media h3 {
     padding: 0 0 0;
     margin: 0 0 30px 0;
@@ -10257,7 +10257,7 @@ blockquote {
     .Groups ul.tabs li {
         padding: 25px 20px;
         font-size: 18px;
-    } 
+    }
 }
 
 
@@ -10717,7 +10717,7 @@ blockquote {
 .notofication_col .form-group label:before {
     background-color: #dce3e8;
     border: 1px solid #9fa8ae;
-    box-shadow: none; 
+    box-shadow: none;
 }
 .post_share {
     width: 100%;
@@ -10902,7 +10902,7 @@ blockquote {
     box-shadow: 11px 0px 20px rgba(161,173,182,0.14);
 }
 .single_post_comment .post_share_area {
-     box-shadow: none; 
+     box-shadow: none;
 }
 .cmnt_nmbr {
     width: 100%;
@@ -11206,7 +11206,7 @@ ul.made_accnt li a:hover{
     font-size: 18px;
     font-weight: 400;
     border-radius: 4px;
-    line-height: 53px; 
+    line-height: 53px;
     text-align: center;
 }
 .other_login ul li:first-child a{
@@ -11643,7 +11643,7 @@ h2.sec_title{
 
 
 .gorup_members_view .post_share.single_post_comment {
-    top: 0px; 
+    top: 0px;
 }
 .gorup_members_view .blog_sec1{
     background-color: #fff;
@@ -11740,7 +11740,7 @@ h2.sec_title{
     font-family: 'Poppins', sans-serif;
 }
 .teachiate_create_forum_post .only_field {
-     margin-top: 0; 
+     margin-top: 0;
 }
 
 .teachiate_create_forum_post .register_field_col .selectric .label {
@@ -11752,7 +11752,7 @@ h2.sec_title{
     right: 20px;
     width: 18px;
     height: 14px;
-     line-height: unset; 
+     line-height: unset;
     background: transparent url(../img/forum_choose_select.png) center center no-repeat;
     background-size: 18px;
     top: 17px;
@@ -12190,7 +12190,7 @@ select {
     background-color: #043c6c;
     border-radius: 4px;
     border-bottom: none;
-    
+
 }
 .register_field_col select {
     color: #fff;
@@ -12506,7 +12506,7 @@ select {
 
 
 .forum_right .aaa {
-    padding: 0; 
+    padding: 0;
 }
 .forum_right .accordion2 h3 {
     font-size: 18px;
@@ -12569,8 +12569,8 @@ select {
     font-weight: 600;
     color: #043c6c;
     font-size: 18px;
-    margin-bottom: 2px; 
-    margin-top: 5px; 
+    margin-bottom: 2px;
+    margin-top: 5px;
 }
 .forum_avtar_info h2 span {
     margin-left: 5px;
@@ -12665,7 +12665,7 @@ select {
 }
 
 .left_listing .post_share.single_post_comment {
-    top: unset; 
+    top: unset;
 }
 .left_listing .post_share {
     margin-bottom: 0;
@@ -13048,7 +13048,7 @@ select {
 }
 .create_group .group-touch_area {
     margin-top: 10px;
-    padding-top: 0; 
+    padding-top: 0;
 }
 .create_group .share_group {
     width: unset;
@@ -13099,7 +13099,7 @@ select {
     height: 100vh;
     display: none;
     z-index: 999;
-    background-color: rgba(0,0,0,0.70); 
+    background-color: rgba(0,0,0,0.70);
 }
 .add_member_open.active {
     display: block;
@@ -13111,7 +13111,7 @@ select {
     background-color: #fff;
     box-shadow: 16px 0 65px rgba(27,29,30,0.20);
     position: relative;
-    padding: 30px; 
+    padding: 30px;
 }
 .add_member_open_box h3{
     width: 100%;
@@ -13253,7 +13253,7 @@ select {
     font-size: 16px;
     font-weight: 400;
     color: #242628;
-    margin-bottom: 5px; 
+    margin-bottom: 5px;
 }
 .search_result_details h3{
     width: 100%;
@@ -13261,7 +13261,7 @@ select {
     font-size: 20px;
     font-weight: 600;
     color: #08406f;
-    margin-bottom: 5px; 
+    margin-bottom: 5px;
 }
 .search_result_details{
     width: 50%;
@@ -13327,18 +13327,18 @@ select {
 ul.search_col {
     width: 100%;
     display: inline-block;
-} 
+}
 ul.search_col li{
     float: left;
     width: 25%;
     padding-right: 30px;
-} 
+}
 ul.search_col li:nth-child(4){
     padding-right: 0;
-} 
+}
 ul.search_col li:last-child{
     padding-right: 0;
-} 
+}
 .search_result_col_area .group_des{
     border: 1px solid #b1bdc7;
 }
@@ -13381,7 +13381,7 @@ ul.search_col li:last-child{
 ul.forum_search_col {
     width: 100%;
     display: inline-block;
-} 
+}
 ul.forum_search_col li {
     float: left;
     width: 50%;
@@ -13390,15 +13390,15 @@ ul.forum_search_col li {
 }
 ul.forum_search_col li:nth-child(2){
     padding-right: 0;
-} 
+}
 ul.forum_search_col li:last-child{
     padding-right: 0;
-} 
+}
 .forum_search_item{
     width: 100%;
     display: inline-block;
     padding: 30px 30px 0 30px;
-    border: 1px solid #b0bac1; 
+    border: 1px solid #b0bac1;
 }
 .forum_title{
     display: inline-block !important;
@@ -13425,12 +13425,12 @@ ul.forum_search_col li:last-child{
 ul.blog_search_col {
     width: 100%;
     display: inline-block;
-} 
+}
 ul.blog_search_col li{
     float: left;
     width: 550px;
     padding-right: 20px;
-} 
+}
 
 .blog_search_item{
     width: 100%;
@@ -13776,7 +13776,7 @@ h2.sec_title {
     margin-top: 20px;
 }
 .news_brdcum {
-    top: 0; 
+    top: 0;
     margin-top: 5px;
 }
 .news_details .subcs_area {
@@ -13933,7 +13933,7 @@ h2.sec_title {
 }
 .group_avatar_info h4 {
     font-size: 14px;
-    float: none; 
+    float: none;
     line-height: 28px;
     margin: 10px auto 0;
     display: table;
@@ -13948,7 +13948,7 @@ h2.sec_title {
     display: table;
 }
 .group_status {
-     width: unset; 
+     width: unset;
     display: table;
     margin: 0 auto;
 }
@@ -14474,7 +14474,7 @@ ul.search_col li {
 }
 ul.blog_search_col li {
     width: 100%;
-    padding-right: 0; 
+    padding-right: 0;
 }
 /*.blog_search_col.slick-initialized .slick-slide {
     margin: 0;
@@ -15412,19 +15412,19 @@ h2.sec_title {
 
 /* Track */
 .search_select::-webkit-scrollbar-track {
-  background-color: transparent; 
+  background-color: transparent;
   border-radius: 0;
 }
- 
+
 /* Handle */
 .search_select::-webkit-scrollbar-thumb {
-  background: transparent; 
+  background: transparent;
   border-radius: 0;
 }
 
 /* Handle on hover */
 .search_select::-webkit-scrollbar-thumb:hover {
-  background: transparent; 
+  background: transparent;
 }
 
 .blog_search_item .blog_des_p p {
@@ -15438,4 +15438,35 @@ h2.sec_title {
         margin-top: 80px;;
     }
 }
-/*ritam
+/*ritam*/
+.google-login-button{
+  font-size: 20px;
+  font-weight: 500;
+  color: #fff;
+  background-color: #da557a;
+  border: none;
+  border-radius: 4px;
+  /* line-height: 64px; */
+  cursor: pointer;
+  transition: all ease-in-out 0.3s;
+  margin-top: 10px;
+  height: 53px;
+  width: 220px;
+  float: right;
+}
+
+.google-register-button{
+  font-size: 20px;
+  font-weight: 500;
+  color: #fff;
+  background-color: #da557a;
+  border: none;
+  border-radius: 4px;
+  /* line-height: 64px; */
+  cursor: pointer;
+  transition: all ease-in-out 0.3s;
+  margin-top: 10px;
+  height: 53px;
+  width: 220px;
+  float: right;
+}

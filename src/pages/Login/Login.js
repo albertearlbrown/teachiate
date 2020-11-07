@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { Redirect } from 'react-router-dom';
+import { GoogleLogin } from 'react-google-login';
 import Alert from '@material-ui/lab/Alert';
 import { AuthStoreContext } from '../../Store/AuthStore';
 import axios from 'axios';
@@ -19,36 +20,66 @@ function Login() {
 
     const formHandler = async (e) => {
         e.preventDefault();
-
         const resp = await axios.post('http://localhost:4000/auth/login', {
             email: email,
-            password: password            
+            password: password
         });
 
         if(resp.data.success === true) {
             localStorage.setItem('jwt_token', resp.data.token);
             setError(false);
-
             const config = {
                 headers: {
                     Authorization: 'Bearer '+localStorage.getItem('jwt_token')
                 }
             };
-            
             axios.get('http://localhost:4000/users/me', config)
             .then((res) => {
                 if(res.data.success === true) {
                     setUserData(res.data.data);
                     setIsAuthenicate(true);
                 }
-            }); 
-
+            });
         }
 
         else {
             setErrorMessage(resp.data.message);
             setError(true);
         }
+    };
+
+    const googleResponse = async (resp) => {
+      debugger
+      await axios({
+        method: "post",
+        url:"http://localhost:4000/auth/google",
+        data: {
+          code: resp.code
+        }
+      }).then(response=>{
+        const jwt_token = response.data.token
+        localStorage.setItem('jwt_token', jwt_token);
+        const config = {
+            headers: {
+                Authorization: 'Bearer '+jwt_token
+            }
+        };
+        axios.get('http://localhost:4000/users/me', config)
+        .then((res) => {
+            if(res.data.success === true) {
+                setUserData(res.data.data);
+                setIsAuthenicate(true);
+            }
+        });
+      })
+    }
+
+    const facebookResponse = (response) => {
+        console.log(response);
+    };
+
+    const onFailure = (error) => {
+        alert(error);
     };
 
     return (
@@ -79,14 +110,33 @@ function Login() {
                                 </div>
                                 <div className="row">
                                     <div className="col-md-12">
-                                        <input type="submit" className="register_submit" value="Sign In"/>                                        
+                                        <input type="submit" className="register_submit" value="Sign In"/>
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <div className="col-md-12">
+                                    <GoogleLogin
+                                        clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+                                        buttonText="Login"
+                                        responseType="code"
+                                        onSuccess={(e)=>googleResponse(e)}
+                                        onFailure={(e)=>onFailure(e)}
+                                        render={renderProps => (
+                                            <button
+                                              className="google-login-button"
+                                              onClick={renderProps.onClick}
+                                              disabled={renderProps.disabled}>
+                                              Login with Google
+                                              </button>
+                                          )}
+                                    />
                                     </div>
                                 </div>
                                 <ul className="made_accnt">
                                     <li><Link to="/register">Create New Account?</Link></li>
                                     <li><Link to="/forgot-password">Forget Password?</Link></li>
                                 </ul>
-                            </div>                            
+                            </div>
                         </form>
                     </div>
                 </div>

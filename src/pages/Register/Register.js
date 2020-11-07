@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { AuthStoreContext } from '../../Store/AuthStore';
 import { Redirect } from 'react-router-dom';
+import { GoogleLogin } from 'react-google-login';
 import Alert from '@material-ui/lab/Alert';
 
 import axios from 'axios';
@@ -37,27 +38,56 @@ function Register() {
         if(resp.data.success === true) {
             localStorage.setItem('jwt_token', resp.data.token);
             setError(false);
-            
+
             const config = {
                 headers: {
                     Authorization: 'Bearer ' + resp.data.token
                 }
             };
-            
+
             axios.get('http://localhost:4000/users/me', config)
             .then((res) => {
                 if(res.data.success === true) {
                     setUserData(res.data.data);
                     setIsAuthenicate(true);
                 }
-            }); 
+            });
 
-        }     
+        }
         else {
             setErrorMessage(resp.data.message);
             setError(true);
-        }   
+        }
     }
+
+    const googleResponse = async (resp) => {
+      await axios({
+        method: "post",
+        url:"http://localhost:4000/auth/google",
+        data: {
+          code: resp.code
+        }
+      }).then(response=>{
+        const jwt_token = response.data.token
+        localStorage.setItem('jwt_token', jwt_token);
+        const config = {
+            headers: {
+                Authorization: 'Bearer '+jwt_token
+            }
+        };
+        axios.get('http://localhost:4000/users/me', config)
+        .then((res) => {
+            if(res.data.success === true) {
+                setUserData(res.data.data);
+                setIsAuthenicate(true);
+            }
+        });
+      })
+    }
+
+    const onFailure = (error) => {
+        alert(error);
+    };
 
     return (
         <>
@@ -122,22 +152,44 @@ function Register() {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="register_terms_area">
-                                    <div className="new">
-                                    <div>
-                                        <div className="form-group">
-                                            <input type="checkbox" id="html" value={acceptTermCond} onChange={(e) => setAcceptTermCond(true)}/>
-                                            <label htmlFor="html">I accept the <a href="/">Terms And Conditions</a></label>
-                                        </div>
-                                    </div>
-                                    </div>
+                                <div className="row">
+                                  <div className="register_terms_area">
+                                      <div className="new">
+                                      <div>
+                                          <div className="form-group">
+                                              <input type="checkbox" id="html" value={acceptTermCond} onChange={(e) => setAcceptTermCond(true)}/>
+                                              <label htmlFor="html">I accept the <a href="/">Terms And Conditions</a></label>
+                                          </div>
+                                      </div>
+                                      </div>
+                                  </div>
+                                  <input type="submit" className="register_submit" value="Submit" name=""/>
                                 </div>
-                                <input type="submit" className="register_submit" value="Submit" name=""/>
+                                <div className="row">
+                                  <div className="col-md-6"/>
+                                  <div className="col-md-6" style={{right: -20}}>
+                                    <GoogleLogin
+                                        clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+                                        responseType="code"
+                                        onSuccess={(e)=>googleResponse(e)}
+                                        onFailure={(e)=>onFailure(e)}
+                                        render={renderProps => (
+                                            <button
+                                              className="google-login-button"
+                                              onClick={renderProps.onClick}
+                                              disabled={renderProps.disabled}>
+                                              Register with Google
+                                              </button>
+                                          )}
+                                    />
+                                  </div>
+                                </div>
                             </div>
                         </form>
+
                     </div>
                 </div>
-            </section>            
+            </section>
         </>
     )
 };
