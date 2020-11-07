@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { AuthStoreContext } from '../../Store/AuthStore';
 import { Redirect } from 'react-router-dom';
 import { GoogleLogin } from 'react-google-login';
+import FacebookLogin from 'react-facebook-login';
 import Alert from '@material-ui/lab/Alert';
 
 import axios from 'axios';
@@ -88,6 +89,31 @@ function Register() {
     const onFailure = (error) => {
         alert(error);
     };
+
+    const responseFacebook = async resp=>{
+      await axios({
+        method: "post",
+        url:"http://localhost:4000/auth/facebook",
+        data: {
+          ...resp
+        }
+      }).then(response=>{
+        const jwt_token = response.data.token
+        localStorage.setItem('jwt_token', jwt_token);
+        const config = {
+            headers: {
+                Authorization: 'Bearer '+jwt_token
+            }
+        };
+        axios.get('http://localhost:4000/users/me', config)
+        .then((res) => {
+            if(res.data.success === true) {
+                setUserData(res.data.data);
+                setIsAuthenicate(true);
+            }
+        });
+      })
+    }
 
     return (
         <>
@@ -181,6 +207,14 @@ function Register() {
                                               Register with Google
                                               </button>
                                           )}
+                                    />
+                                    <FacebookLogin
+                                      appId="1640321232815333"
+                                      autoLoad={true}
+                                      fields="name,email,picture"
+                                      callback={(resp)=>responseFacebook(resp)}
+                                      cssClass="my-facebook-button-class"
+                                      icon="fa-facebook"
                                     />
                                   </div>
                                 </div>
