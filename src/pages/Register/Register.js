@@ -90,7 +90,8 @@ function Register() {
         alert(error);
     };
 
-    const responseFacebook = async resp=>{
+    const responseFacebook = async resp => {
+      debugger
       await axios({
         method: "post",
         url:"http://localhost:4000/auth/facebook",
@@ -210,10 +211,9 @@ function Register() {
                                     />
                                     <FacebookLogin
                                       appId="1640321232815333"
-                                      autoLoad={true}
                                       fields="name,email,picture"
-                                      callback={(resp)=>responseFacebook(resp)}
-                                      cssClass="my-facebook-button-class"
+                                      callback={(e)=>responseFacebook(e)}
+                                      cssClass="facebook-register-button"
                                       icon="fa-facebook"
                                     />
                                   </div>

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { Redirect } from 'react-router-dom';
 import { GoogleLogin } from 'react-google-login';
+import FacebookLogin from 'react-facebook-login';
 import Alert from '@material-ui/lab/Alert';
 import { AuthStoreContext } from '../../Store/AuthStore';
 import axios from 'axios';
@@ -74,9 +75,31 @@ function Login() {
       })
     }
 
-    const facebookResponse = (response) => {
-        console.log(response);
-    };
+    const responseFacebook = async resp => {
+      debugger
+      await axios({
+        method: "post",
+        url:"http://localhost:4000/auth/facebook",
+        data: {
+          ...resp
+        }
+      }).then(response=>{
+        const jwt_token = response.data.token
+        localStorage.setItem('jwt_token', jwt_token);
+        const config = {
+            headers: {
+                Authorization: 'Bearer '+jwt_token
+            }
+        };
+        axios.get('http://localhost:4000/users/me', config)
+        .then((res) => {
+            if(res.data.success === true) {
+                setUserData(res.data.data);
+                setIsAuthenicate(true);
+            }
+        });
+      })
+    }
 
     const onFailure = (error) => {
         alert(error);
@@ -129,6 +152,13 @@ function Login() {
                                               Login with Google
                                               </button>
                                           )}
+                                    />
+                                    <FacebookLogin
+                                      appId="1640321232815333"
+                                      fields="name,email,picture"
+                                      callback={(e)=>responseFacebook(e)}
+                                      cssClass="facebook-login-button"
+                                      icon="fa-facebook"
                                     />
                                     </div>
                                 </div>
