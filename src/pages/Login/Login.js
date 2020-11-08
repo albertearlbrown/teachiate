@@ -102,7 +102,7 @@ function Login() {
     }
 
     const onFailure = (error) => {
-        alert(error);
+        console.log(error);
     };
 
     return (
@@ -139,7 +139,7 @@ function Login() {
                                 <div className="row">
                                     <div className="col-md-12">
                                     <GoogleLogin
-                                        clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+                                        clientId={"758342226447-5aarvl2j88nq0o2hu56k4om6fofev935.apps.googleusercontent.com"}
                                         buttonText="Login"
                                         responseType="code"
                                         onSuccess={(e)=>googleResponse(e)}
