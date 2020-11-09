@@ -7,6 +7,8 @@ import Alert from '@material-ui/lab/Alert';
 import { AuthStoreContext } from '../../Store/AuthStore';
 import axios from 'axios';
 
+const baseUrl = process.env.NODE_ENV === 'development'?"http://localhost:4000":"https://teachiate-backend.fnmotivations.com/"
+
 function Login() {
 
     const [email, setEmail] = useState('');
@@ -53,7 +55,7 @@ function Login() {
       debugger
       await axios({
         method: "post",
-        url:"http://localhost:4000/auth/google",
+        url:baseUrl+"/auth/google",
         data: {
           code: resp.code
         }
@@ -65,7 +67,7 @@ function Login() {
                 Authorization: 'Bearer '+jwt_token
             }
         };
-        axios.get('http://localhost:4000/users/me', config)
+        axios.get(baseUrl+'/users/me', config)
         .then((res) => {
             if(res.data.success === true) {
                 setUserData(res.data.data);
@@ -79,7 +81,7 @@ function Login() {
       debugger
       await axios({
         method: "post",
-        url:"http://localhost:4000/auth/facebook",
+        url:baseUrl+"/auth/facebook",
         data: {
           ...resp
         }
@@ -91,7 +93,7 @@ function Login() {
                 Authorization: 'Bearer '+jwt_token
             }
         };
-        axios.get('http://localhost:4000/users/me', config)
+        axios.get(baseUrl+'/users/me', config)
         .then((res) => {
             if(res.data.success === true) {
                 setUserData(res.data.data);

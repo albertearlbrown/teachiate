@@ -7,6 +7,8 @@ import Alert from '@material-ui/lab/Alert';
 
 import axios from 'axios';
 
+const baseUrl = process.env.NODE_ENV === 'development'?"http://localhost:4000":"https://teachiate-backend.fnmotivations.com/"
+
 function Register() {
 
     const { isAuthenicate, setIsAuthenicate, setUserData } =  useContext(AuthStoreContext);
@@ -64,7 +66,7 @@ function Register() {
     const googleResponse = async (resp) => {
       await axios({
         method: "post",
-        url:"http://localhost:4000/auth/google",
+        url:baseUrl+"/auth/google",
         data: {
           code: resp.code
         }
@@ -76,7 +78,7 @@ function Register() {
                 Authorization: 'Bearer '+jwt_token
             }
         };
-        axios.get('http://localhost:4000/users/me', config)
+        axios.get(baseUrl+'/users/me', config)
         .then((res) => {
             if(res.data.success === true) {
                 setUserData(res.data.data);
@@ -94,7 +96,7 @@ function Register() {
       debugger
       await axios({
         method: "post",
-        url:"http://localhost:4000/auth/facebook",
+        url:baseUrl+"/auth/facebook",
         data: {
           ...resp
         }
@@ -106,7 +108,7 @@ function Register() {
                 Authorization: 'Bearer '+jwt_token
             }
         };
-        axios.get('http://localhost:4000/users/me', config)
+        axios.get(baseUrl+'/users/me', config)
         .then((res) => {
             if(res.data.success === true) {
                 setUserData(res.data.data);
