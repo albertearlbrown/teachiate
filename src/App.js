@@ -30,6 +30,7 @@ import { AuthStoreContext } from './Store/AuthStore';
 import Search from './pages/Search/Search';
 
 axios.defaults.baseURL = 'https://teachiate-backend.fnmotivations.com';
+const baseUrl = process.env.NODE_ENV === 'development'?"http://localhost:4000":"https://teachiate-backend.fnmotivations.com/"
 
 function App () {
 
@@ -45,7 +46,7 @@ function App () {
         }
       };
 
-      axios.get('http://localhost:4000/users/me', config)
+      axios.get(baseUrl+'/users/me', config)
       .then((res) => {
         if(res.data.success === true) {
           setUserData(res.data.data);
