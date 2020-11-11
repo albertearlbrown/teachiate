@@ -8565,6 +8565,16 @@ blockquote {
     background-position: center;
 }
 
+.avatar-upload .cover-preview {
+    width: 100%;
+    height: 100%;
+}
+
+.avatar-upload .cover-preview > img {
+    width: 100%;
+    height: 100%;
+}
+
 .profile-banner .avatar-upload {
     position: relative;
     max-width: 100%;

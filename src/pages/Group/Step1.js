@@ -6,6 +6,14 @@ import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios';
 
 const baseUrl = process.env.NODE_ENV === 'development'?"http://localhost:4000":"https://teachiate-backend.fnmotivations.com/"
+
+const toBase64 = file => new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = error => reject(error);
+});
+
 const useStyles = makeStyles((theme) => ({
   backdrop: {
     zIndex: theme.zIndex.drawer + 1,
@@ -28,6 +36,7 @@ function Step2() {
   const [description, setDescription] = useState(null)
   const [open, setOpen] = useState(false)
   const [cover, setCover] = useState(null)
+  const [coverImage, setCoverImage] = useState(null)
   const [avatar, setAvatar] = useState(null)
 
   const onSubmit = async (e) => {
@@ -76,6 +85,19 @@ function Step2() {
     }
   }
 
+  const showImagesAsBase64 = async (type, file) => {
+    if (type === 'cover') {
+      setCover(file)
+      const ci = await toBase64(file);
+      console.log(ci);
+      setCoverImage(ci)
+    }else if (type === 'avatar') {
+      setAvatar(file)
+      const ai = await toBase64(file);
+      setCoverImage(ai)
+    }
+  }
+
   if(groupCreated){
     return <Redirect to="/groups"/>
   }
@@ -95,19 +117,18 @@ function Step2() {
                           <div className="profile-banner">
                               <div className="avatar-upload">
                                   <div className="avatar-edit">
-                                      <input  onChange={e=> setCover(e.target.files[0])} type='file' id="imageUpload2" accept=".png, .jpg, .jpeg" />
-                                      <label for="imageUpload2"></label>
+                                      <input  onChange={e=> showImagesAsBase64('cover', e.target.files[0])} type='file' id="imageUpload2" accept=".png, .jpg, .jpeg" />
+                                      <label htmlFor="imageUpload2"></label>
                                   </div>
-                                  <div className="avatar-preview">
-                                      <div id="imagePreview2" style={{backgroundImage: `url(assets/img/create_group_dflt_cover.jpg )`}}>
-                                      </div>
+                                  <div className="cover-preview">
+                                      <img id="imagePreview2" src={coverImage?coverImage: `assets/img/create_group_dflt_cover.jpg`} alt='' />
                                   </div>
                               </div>
                           </div>
                           <div className="avatar-upload group_profile_image">
                               <div className="avatar-edit">
                                   <input onChange={e=>setAvatar(e.target.files[0])} type='file' id="imageUpload" accept=".png, .jpg, .jpeg" />
-                                  <label for="imageUpload"></label>
+                                  <label htmlFor="imageUpload"></label>
                               </div>
                               <div className="avatar-preview">
                                   <div id="imagePreview" style={{backgroundImage: `url(assets/img/create_group_dflt_profile.png ;`}}>
