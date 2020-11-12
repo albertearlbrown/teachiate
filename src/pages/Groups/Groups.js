@@ -30,17 +30,18 @@ const Groups = () => {
   const [groups, setGroups] = useState([])
   const [totalPages, setTotalPages] = useState(0)
   const [open, setOpen] = useState(false)
+  const [searchValue, setSearchValue] = useState(null)
 
     useEffect(() => {
         window.scrollTo(0, 0);
         getGroups(1);
-    }, []);
+    },[]);
     const getGroups = async (page) => {
       setOpen(true)
       axios({
         url: `${baseUrl}/group/list`,
         method: 'get',
-        params:{page}
+        params:{ page, name: searchValue}
       }).then((response)=>{
         const { data } = response.data
         setGroups(data.groups)
@@ -48,6 +49,7 @@ const Groups = () => {
         setTotalPages(tt)
         setOpen(false)
       }).catch((e)=>{
+        setOpen(false)
         console.log(e);
       })
     }
@@ -74,14 +76,13 @@ const Groups = () => {
                             <h3 className="main_sec_title">All Groups</h3>
                         </div>
                         <div className="col-md-3 col-sm-4">
-
                         </div>
                     </div>
                     <div className="row">
                         <div className="col-md-12">
                             <div className="search_flex text-center">
-                                <input type="search" placeholder="Search" className="form-control"/>
-                                <button className="search_btn" type="button"><img src="assets/img/search-icon.png" alt=""/></button>
+                                <input onChange={e=>setSearchValue(e.target.value)} type="search" placeholder="Search" className="form-control"/>
+                                <button onClick={()=>getGroups(1, searchValue)} className="search_btn" type="button"><img src="assets/img/search-icon.png" alt=""/></button>
                             </div>
                         </div>
                     </div>
