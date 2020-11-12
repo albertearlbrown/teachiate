@@ -93,7 +93,6 @@ function Register() {
     };
 
     const responseFacebook = async resp => {
-      debugger
       await axios({
         method: "post",
         url:baseUrl+"/auth/facebook",

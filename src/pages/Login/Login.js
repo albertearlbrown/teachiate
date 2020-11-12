@@ -52,7 +52,6 @@ function Login() {
     };
 
     const googleResponse = async (resp) => {
-      debugger
       await axios({
         method: "post",
         url:baseUrl+"/auth/google",
@@ -78,7 +77,6 @@ function Login() {
     }
 
     const responseFacebook = async resp => {
-      debugger
       await axios({
         method: "post",
         url:baseUrl+"/auth/facebook",

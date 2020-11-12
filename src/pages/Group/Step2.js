@@ -1,4 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react'
+import { Redirect } from 'react-router-dom'
 import { AuthStoreContext } from '../../Store/AuthStore';
 import SendInvationComponent from "./sendInvitation"
 
@@ -21,6 +22,10 @@ function Step2() {
     }
     diffInMonths(newGroup.creationDate)
   },[])
+
+  if (newGroup.groupName) {
+    return <Redirect to="/groups" />
+  }
 
     return (
         <>

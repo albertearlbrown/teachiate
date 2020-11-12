@@ -52,7 +52,6 @@ function Step2() {
       if (avatar) {
         av = await uploadImages(avatar)
       }
-      debugger
       const headers = {
         Authorization: 'Bearer '+localStorage.getItem('jwt_token')
       }
@@ -64,8 +63,7 @@ function Step2() {
         },
         headers
       }).then(response => {
-        console.log(JSON.stringify(response));
-        setNewGroup(response)
+        setNewGroup(response.data.data)
         setOpen(false)
         setGroupCreated(true)
       }).catch((error)=>{
@@ -82,7 +80,6 @@ function Step2() {
       Authorization: 'Bearer '+localStorage.getItem('jwt_token')
     }
     const resp = await axios.post(baseUrl+"/upload", data, headers);
-    debugger
     if (resp.data.success) {
       return resp.data.filePath;
     }
