@@ -28,32 +28,36 @@ const useStyles = makeStyles((theme) => ({
 const Groups = () => {
   const classes = useStyles();
   const [groups, setGroups] = useState([])
-  const [currentPage, setCurrentPage] = useState([])
-  const [limit, setLimit] = useState([])
-  const [totalElement, setTotalElement] = useState([])
-  const [totalPages, setTotalPages] = useState([])
+  const [totalPages, setTotalPages] = useState(0)
   const [open, setOpen] = useState(false)
+
     useEffect(() => {
         window.scrollTo(0, 0);
-        getGroups(currentPage, limit);
-    }, [currentPage, limit]);
-    const getGroups = async (page, limit) => {
+        getGroups(1);
+    }, []);
+    const getGroups = async (page) => {
       setOpen(true)
       axios({
         url: `${baseUrl}/group/list`,
-        method: 'get'
+        method: 'get',
+        params:{page}
       }).then((response)=>{
-        debugger
         const { data } = response.data
         setGroups(data.groups)
-        setCurrentPage(data.page)
-        setLimit(limit)
-        setTotalElement(data.totalElement)
-        setTotalPages(Math.ceil(data.totalElement/limit))
+        const tt = Math.ceil(data.totalElement / data.limit)
+        setTotalPages(tt)
         setOpen(false)
       }).catch((e)=>{
         console.log(e);
       })
+    }
+
+    const getPagination = () => {
+      const list = [];
+      for (let i = 1; i <= totalPages; i++) {
+        list.push(<li><span onClick={()=>getGroups(i)}>{i}</span></li>)
+      }
+      return list;
     }
 
     return (
@@ -95,7 +99,7 @@ const Groups = () => {
                     })}
                     </div>
                     <ul className="pagination clearfix">
-                        <li><a href="/">1</a></li>
+                      {getPagination()}
                     </ul>
                 </div>
             </section>
