@@ -2605,6 +2605,11 @@ input.wpcf7-not-valid,
     text-align: center;
 }
 
+.pagination .selected {
+  background: black;
+  color: white;
+}
+
 .pagination li a {
     color: #000;
     text-align: center;
