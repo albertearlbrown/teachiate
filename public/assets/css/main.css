@@ -10431,6 +10431,40 @@ blockquote {
     padding-left: 0;
 }
 
+.friend-info-details div{
+    font-size: 18px;
+    font-weight: 500;
+    color: #1d2022;
+}
+.friend-info-details div span{
+    font-size: 14px;
+    font-weight: 500;
+    color: #326087;
+}
+
+.friend-info-details h4{
+    font-size: 14px;
+    font-weight: 400;
+    color: #297018;
+    position: relative;
+    padding-left: 12px;
+    margin-top: 6px;
+}
+.friend-info-details h4.active_status:after {
+    position: absolute;
+    content: "";
+    width: 5px;
+    height: 5px;
+    background-color: #297018;
+    top: 7px;
+    left: 0;
+    border-radius: 50px;
+}
+.friend-info-details h4.deactive_status{
+    color: #838587;
+    padding-left: 0;
+}
+
 
 
 

@@ -1,6 +1,27 @@
-import React from 'react'
+import React, { useContext, useState, useEffect } from 'react'
+import { AuthStoreContext } from '../../Store/AuthStore';
+import SendInvationComponent from "./sendInvitation"
 
 function Step2() {
+  const {newGroup, userData} = useContext(AuthStoreContext)
+  debugger
+  const [months, setMonths] = useState(0)
+  const [days, setDays] = useState(0)
+  useEffect(()=>{
+    const diffInMonths = (created) => {
+      const d = new Date(created)
+       var timeDiff = Math.abs(new Date().getTime() - d.getTime());
+       let months = Math.round(timeDiff / (2e3 * 3600 * 365.25));
+       let days = null;
+       if (months === 0 ) {
+         days = Math.round(timeDiff / (1e3 * 3600 * 365.25))
+       }
+       setDays(days)
+       setMonths(months)
+    }
+    diffInMonths(newGroup.creationDate)
+  },[])
+
     return (
         <>
           <section className="profile-banner-section profile_view">
@@ -12,7 +33,7 @@ function Step2() {
                     <div
                       id="imagePreview2"
                       style={{
-                        backgroundImage: "url(assets/img/profile_banner.jpg )",
+                        backgroundImage: `url(${newGroup.cover})`,
                       }}
                     ></div>
                   </div>
@@ -27,38 +48,28 @@ function Step2() {
                   <div className="avatar-preview">
                     <div
                       id="imagePreview"
-                      style={{ backgroundImage: "url(assets/img/avatar.jpg )" }}
+                      style={{ backgroundImage: `url(${newGroup.avatar})` }}
                     ></div>
                   </div>
                 </div>
                 <div className="avatar-info">
                   <div className="avatar-name">
                     <h3>
-                      <a href="#">Homeschooling Gifted Children</a>{" "}
+                      <a href="#">{newGroup.groupName}</a>{" "}
                     </h3>
                     <div className="clear" />
                   </div>
                   <div className="avatar-status">
-                    <h3>Public</h3>
-                    <h5>94 Members</h5>
-                    <h6>Created 5 Months Ago</h6>
+                    <h3>{newGroup.privacy}</h3>
+                    <h5>{newGroup.members?.length} Members</h5>
+                    <h6>{months>0?`Created ${months} Months Ago`:`Created ${days} Months Ago`}</h6>
                     <div className="group-touch_area">
                       <p>Group Admins:</p>
                       <div className="admins_view">
                         <ul>
                           <li>
                             <a href="#">
-                              <img src="assets/img/group_admin_1.png" alt />
-                            </a>
-                          </li>
-                          <li>
-                            <a href="#">
-                              <img src="assets/img/katei-knapp.png" alt />
-                            </a>
-                          </li>
-                          <li>
-                            <a href="#">
-                              <img src="assets/img/katei-girl.png" alt />
+                              <img src={userData.avatar} alt />
                             </a>
                           </li>
                         </ul>
@@ -111,10 +122,7 @@ function Step2() {
               <div className="group_short_info">
                 <h2>Description:</h2>
                 <p>
-                  Lorem Ipsum is simply dummy text of the printing and typesetting
-                  industry. Lorem Ipsum has been the industry's standard dummy text
-                  ever since the 1500s, when an unknown printer took a galley of
-                  type and scrambled it to make a type.
+                  {newGroup.description}
                 </p>
               </div>
               {/* avatar-upload */}
@@ -160,145 +168,7 @@ function Step2() {
                   </ul>
                 </div>
                 {/* profile-forum-details */}
-                <div className="profile-forum-details group_invite">
-                  <h2 className="sec_title">Members List</h2>
-                  <div className="profile-forum-search forums_inner_page">
-                    <div className="short profile_short">
-                      <label>Sort by:</label>
-                      <div className="select">
-                        <select name="slct" id="slct">
-                          <option value={1}>Last Active</option>
-                          <option value={2}>Last Active</option>
-                        </select>
-                      </div>
-                    </div>
-                    <div className="search_flex">
-                      <input
-                        type="search"
-                        placeholder="Search"
-                        className="form-control"
-                      />
-                      <button className="search_btn" type="submit">
-                        <img src="assets/img/search-icon.png" alt />
-                      </button>
-                    </div>
-                    <div className="choose_invitation">
-                      <ul>
-                        <li>John Smith</li>
-                        <li>Nargess Demarco</li>
-                      </ul>
-                      <input
-                        type="submit"
-                        defaultValue="Send Invitations"
-                        className="invitation_send_btn"
-                        name
-                      />
-                    </div>
-                    <div className="friends_inner_details clearfix">
-                      {/* friends_inner_details_col */}
-                      <div className="friends_inner_details_col clearfix">
-                        <div className="friend-info">
-                          <div className="friend-pro-image">
-                            <img
-                              src="assets/img/friend_request_Avtar_image_1.png"
-                              alt
-                            />
-                          </div>
-                          <div className="friend-info-details">
-                            <a href="#">Jon Smith</a>
-                            <div className="group_member_info">
-                              <h5>General Educator</h5>
-                              <h6>12 hours ago</h6>
-                            </div>
-                          </div>
-                          <div className="clear" />
-                        </div>
-                        <div className="friend-links">
-                          <a href="#" className="btn btn-secondary">
-                            Cancel Invitation
-                          </a>
-                        </div>
-                      </div>
-                      {/* friends_inner_details_col */}
-                      {/* friends_inner_details_col */}
-                      <div className="friends_inner_details_col clearfix">
-                        <div className="friend-info">
-                          <div className="friend-pro-image">
-                            <img
-                              src="assets/img/friend_request_Avtar_image_2.png"
-                              alt
-                            />
-                          </div>
-                          <div className="friend-info-details">
-                            <a href="#">Nargess Demarco</a>
-                            <div className="group_member_info">
-                              <h5>Teacher</h5>
-                              <h6>12 hours ago</h6>
-                            </div>
-                          </div>
-                          <div className="clear" />
-                        </div>
-                        <div className="friend-links">
-                          <a href="#" className="btn btn-secondary">
-                            Cancel Invitation
-                          </a>
-                        </div>
-                      </div>
-                      {/* friends_inner_details_col */}
-                      {/* friends_inner_details_col */}
-                      <div className="friends_inner_details_col clearfix">
-                        <div className="friend-info">
-                          <div className="friend-pro-image">
-                            <img
-                              src="assets/img/friend_request_Avtar_image_3.png"
-                              alt
-                            />
-                          </div>
-                          <div className="friend-info-details">
-                            <a href="#">Kelley Anne Marking</a>
-                            <div className="group_member_info">
-                              <h5>Student</h5>
-                              <h6>12 hours ago</h6>
-                            </div>
-                          </div>
-                          <div className="clear" />
-                        </div>
-                        <div className="friend-links">
-                          <a href="#" className="btn btn-primary">
-                            Add To Invite
-                          </a>
-                        </div>
-                      </div>
-                      {/* friends_inner_details_col */}
-                      {/* friends_inner_details_col */}
-                      <div className="friends_inner_details_col clearfix">
-                        <div className="friend-info">
-                          <div className="friend-pro-image">
-                            <img
-                              src="assets/img/friend_request_Avtar_image_4.png"
-                              alt
-                            />
-                          </div>
-                          <div className="friend-info-details">
-                            <a href="#">Katie Knapp</a>
-                            <div className="group_member_info">
-                              <h5>Parent</h5>
-                              <h6>12 hours ago</h6>
-                            </div>
-                          </div>
-                          <div className="clear" />
-                        </div>
-                        <div className="friend-links">
-                          <a href="#" className="btn btn-primary">
-                            Add To Invite
-                          </a>
-                        </div>
-                      </div>
-                      {/* friends_inner_details_col */}
-                    </div>
-                    <div className="pager">Viewing 1 - 4 of 4</div>
-                  </div>
-                </div>
+                <SendInvationComponent />
                 {/* profile-forum-details */}
               </div>
             </div>

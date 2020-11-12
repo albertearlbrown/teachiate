@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { Redirect } from 'react-router-dom';
 import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios';
+import { AuthStoreContext } from '../../Store/AuthStore';
 
 const baseUrl = process.env.NODE_ENV === 'development'?"http://localhost:4000":"https://teachiate-backend.fnmotivations.com/"
 
@@ -38,6 +39,7 @@ function Step2() {
   const [cover, setCover] = useState(null)
   const [coverImage, setCoverImage] = useState(null)
   const [avatar, setAvatar] = useState(null)
+  const { setNewGroup } = useContext(AuthStoreContext)
 
   const onSubmit = async (e) => {
     e.preventDefault()
@@ -62,7 +64,8 @@ function Step2() {
         },
         headers
       }).then(response => {
-        console.log(response);
+        console.log(JSON.stringify(response));
+        setNewGroup(response)
         setOpen(false)
         setGroupCreated(true)
       }).catch((error)=>{
@@ -99,7 +102,7 @@ function Step2() {
   }
 
   if(groupCreated){
-    return <Redirect to="/groups"/>
+    return <Redirect to="/create-group-step-2"/>
   }
 
   return (
