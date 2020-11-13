@@ -4,27 +4,65 @@ import PageTitle from '../../components/PageTitle';
 import Moment from 'react-moment';
 import { Link } from 'react-router-dom';
 import Post from './Post';
+import Backdrop from '@material-ui/core/Backdrop';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import { makeStyles } from '@material-ui/core/styles';
+
+const baseUrl = process.env.NODE_ENV === 'development'?"http://localhost:4000":"https://teachiate-backend.fnmotivations.com/"
+
+
+const useStyles = makeStyles((theme) => ({
+  backdrop: {
+    zIndex: theme.zIndex.drawer + 1,
+    color: '#fff',
+  },
+  text: {
+    top: "50px",
+    position: "relative",
+    left: "-50px"
+  },
+  cover:{
+    width: 73,
+    height: 73,
+    borderRadius: '50%'
+  }
+}));
+
+
 
 function Forum() {
+  const classes = useStyles();
     const [posts, setPosts] = useState([]);
     const [load, setLoad] = useState(false);
     const [trendingTopic, setTrendingTopic] = useState(null);
     const [keyword, setKeyword] = useState('');
+    const [open, setOpen] = useState(false)
     const [categorySelected, setSelectCategory] = useState(null);
+    const [selectedCat, setSelectedCat] = useState(null)
+    const [selectedSubCat, setSelectedSubCat] = useState(null)
 
     useEffect(() => {
-        window.scrollTo(0, 0);
-        async function fetchPosts() {
-           const resp = await axios.get('http://localhost:4000/forum');
-           
-           if(resp.data.success) {
-            setPosts([...resp.data.data]);
-            setLoad(true);        
-           }
-        }
-
         fetchPosts();
-    },[]);
+    },[selectedCat, selectedSubCat]);
+
+    async function fetchPosts() {
+       setOpen(true)
+       setPosts([])
+       axios({
+         type: 'get',
+         url: `${baseUrl}/forum`,
+         params: {
+           category: selectedCat,subcategory: selectedSubCat
+         }
+       }).then((response)=>{
+         const { data } = response.data;
+         setPosts(data.posts)
+         setOpen(false)
+       }).catch(err=>{
+         setOpen(false)
+         console.log(err)
+       })
+    }
 
 
     const searchHandler = (e) => {
@@ -32,16 +70,23 @@ function Forum() {
         alert('Search...');
     }
 
+    const setSelectCat = (cat) =>{
+      setSelectedCat(cat)
+      setSelectedSubCat(null)
+    }
+
     return (
         <>
            <PageTitle title='Forum'/>
-
+           <Backdrop className={classes.backdrop} open={open} >
+             <CircularProgress color="inherit" />
+             <div className={classes.text}>Loading</div>
+           </Backdrop>
             <section className="inner_content forums_inner_page">
                 <div className="container">
-
                     <div className="row">
-                        <div className="col-md-12">                        
-                            <form onSubmit={searchHandler}>    
+                        <div className="col-md-12">
+                            <form onSubmit={searchHandler}>
                                 <div className="search_flex text-center">
                                     <input type="search" placeholder="Search" value={keyword} onChange={(e) => setKeyword(e.target.value)} className="form-control"/>
                                     <button className="search_btn" type="submit"><img src="assets/img/search-icon.png" alt=""/></button>
@@ -49,7 +94,7 @@ function Forum() {
                              </form>
                         </div>
                     </div>
-                    
+
 
                     <Link to="/forum-create-post" className='btn btn-primary create_blog_btn create_forum_btn'>
                         <span>Post Your Forum Topic</span>
@@ -71,54 +116,66 @@ function Forum() {
                     <div className="forum clearfix">
                         <div className="forum_left">
                             <ul className="left_listing">
-                                {load ? (
-                                    <div>
-                                        {categorySelected === null && trendingTopic === null  ? (
-                                            <>
-                                                {posts.length > 0 ? posts.map(post => <Post post={post} key={post._id}/>) : <p>There are no posts</p>}                                                
-                                            </>
-                                        ) : null}
-
-                                        {categorySelected !== null && trendingTopic === null ? (
-                                            <>
-                                                {posts.filter(post => post.category === categorySelected).length > 0 ? (
-                                                    posts
-                                                    .filter(post => post.category === categorySelected)
-                                                    .map(post => <Post post={post} key={post._id}/>)
-                                                )  : <p>There are no posts</p>}
-                                            </>     
-                                        ) : null}
-
-                                        {categorySelected === null &&  trendingTopic !== null ? (
-                                            <>
-                                                {posts                                                
-                                                .map(post => (
-                                                    <>
-                                                        {post.tags.filter(tage => tage.label === trendingTopic)
-                                                        .map(tage => (
-                                                            <>
-                                                                <Post post={post} key={post._id}/>
-                                                            </>
-                                                        ))} 
-                                                    </>     
-                                                ))}
-                                            </>     
-                                        ) : null}
-                                    </div>                                    
-                                ):  null}     
+                                {
+                                  posts.map((post, i)=>{
+                                    return(
+                                      <Post post={post} key={post._id}/>
+                                    )
+                                  })
+                                }
                             </ul>
                         </div>
 
                         <div className="forum_right">
                             <div className="list_chat">
-                                <ul>
-                                    <li className={categorySelected === null ? 'active' : null} onClick={(e) => setSelectCategory(null)}><Link to="#">All</Link></li>                                    
-                                    <li className={categorySelected === 'General Community Chat' ? 'active' : null} onClick={(e) => setSelectCategory(e.target.text)}><Link to="#">General Community Chat</Link></li>
-                                    <li className={categorySelected === 'Higher Education Chat' ? 'active' : null} onClick={(e) => setSelectCategory(e.target.text)}><Link to="#">Higher Education Chat</Link></li>
-                                    <li className={categorySelected === 'Parental Connection' ? 'active' : null} onClick={(e) => setSelectCategory(e.target.text)}><Link to="#">Parental Connection</Link></li>
-                                    <li className={categorySelected === 'Parents and Teachers Lounge' ? 'active' : null} onClick={(e) => setSelectCategory(e.target.text)}><Link to="#">Parents and Teachers Lounge</Link></li>
-                                    <li className={categorySelected === 'Teachers Lounge' ? 'active' : null} onClick={(e) => setSelectCategory(e.target.text)}><Link to="#">Teachers Lounge</Link></li>
-                                </ul>
+                              <div className="accordion2">
+                                <h3 className={`${!selectedCat ?'active':''} `}
+                                 onClick={()=>{setSelectCat(null); setSelectedSubCat(null)}}>All</h3>
+                                  <h3 className={`${selectedCat === 'General Community Chat' ?'active':''} `}
+                                   onClick={()=>setSelectCat('General Community Chat')}>General Community Chat</h3>
+                                  <div className="aaa" style={{display: selectedCat === 'General Community Chat'?'block': 'none'}}>
+                                      <ul>
+                                          <li className="subcategorie" onClick={()=>setSelectedSubCat("Parent")}>Parents</li>
+                                          <li className="subcategorie" onClick={()=>setSelectedSubCat("Student")}>Students</li>
+                                          <li className="subcategorie" onClick={()=>setSelectedSubCat("Teacher")}>Teachers</li>
+                                      </ul>
+                                  </div>
+                                  <h3 className={`${selectedCat === 'Higher Education Chat' ?'active':''} `}
+                                    onClick={()=>setSelectCat('Higher Education Chat')}>Higher Education Chat</h3>
+                                  <div className="aaa" style={{display: selectedCat === 'Higher Education Chat'?'block': 'none'}}>
+                                      <ul>
+                                          <li className="subcategorie" onClick={()=>setSelectedSubCat("Youth Progress")}>Youth Progress</li>
+                                          <li className="subcategorie" onClick={()=>setSelectedSubCat("Motivation for Kids")}>Motivation for Kids</li>
+                                          <li className="subcategorie" onClick={()=>setSelectedSubCat("Options for College and Beyond")}>Options for College and Beyond</li>
+                                      </ul>
+                                  </div>
+                                  <h3 className={`${selectedCat === 'Parental Connection' ?'active':''} `}
+                                   onClick={()=>setSelectCat('Parental Connection')}>Parental Connection</h3>
+                                  <div className="aaa" style={{display: selectedCat === 'Parental Connection'?'block': 'none'}}>
+                                      <ul>
+                                          <li className="subcategorie" onClick={()=>setSelectedSubCat("Home-schooling ideas for parents")}>Home-schooling ideas for parents</li>
+                                          <li className="subcategorie" onClick={()=>setSelectedSubCat("Teacher Appreciation")}>Teacher Appreciation</li>
+                                      </ul>
+                                  </div>
+                                  <h3 className={`${selectedCat === 'Parents and Teachers Lounge' ?'active':''} `}
+                                   onClick={()=>setSelectCat('Parents and Teachers Lounge')}>Parents and Teachers Lounge</h3>
+                                  <div className="aaa"  style={{display: selectedCat === 'Parents and Teachers Lounge'?'block': 'none'}}>
+                                      <ul>
+                                          <li className="subcategorie" onClick={()=>setSelectedSubCat("Social and Racial Injustice Forum")}>Social and Racial Injustice Forum</li>
+                                          <li className="subcategorie" onClick={()=>setSelectedSubCat("Issues Caused During COVID-19")}>Issues Caused During COVID-19</li>
+                                          <li className="subcategorie" onClick={()=>setSelectedSubCat("Relaxation and Meditation")}>Relaxation and Meditation</li>
+                                      </ul>
+                                  </div>
+                                  <h3 className={`${selectedCat === 'Teachers' ?'active':''} `}
+                                   onClick={()=>setSelectCat('Teachers')}>Teachers</h3>
+                                  <div className="aaa" style={{display: selectedCat === 'Teachers'?'block': 'none'}}>
+                                      <ul>
+                                          <li className="subcategorie" onClick={()=>setSelectedSubCat("Distant Teaching")}>Distant Teaching</li>
+                                          <li className="subcategorie" onClick={()=>setSelectedSubCat("Supplies for Teaching")}>Supplies for Teaching</li>
+                                          <li className="subcategorie" onClick={()=>setSelectedSubCat("Teacher Venting Forum")}>Teacher Venting Forum</li>
+                                      </ul>
+                                  </div>
+                              </div>
                             </div>
                         </div>
 

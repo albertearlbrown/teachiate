@@ -15603,3 +15603,8 @@ h2.sec_title {
     -webkit-transform: scale(1);
     transform: scale(1);
 }
+
+.subcategorie{
+  color: white;
+  cursor: pointer;
+}
