@@ -140,10 +140,6 @@ const People = () => {
                           <input type="checkbox" id="test5" checked={role === 'Admin'} name="radio-group" value="Admin" onChange={(e) => setRole(e.target.value)}/>
                           <label htmlFor="test4">Admin</label>
                       </p>
-                      <p>
-                          <input type="checkbox" id="test6" checked={role === 'reset'} name="radio-group" value="reset" onChange={(e) => setRole(e.target.value)}/>
-                          <label htmlFor="test4">Reset</label>
-                      </p>
                       </div>
                   </div>
                 </div>
