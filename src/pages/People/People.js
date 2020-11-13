@@ -32,17 +32,23 @@ const People = () => {
   const [open, setOpen] = useState(false)
   const [searchValue, setSearchValue] = useState(null)
   const [currentPage, setCurrentPage] = useState(0)
+  const [sort, setSort] = useState('date')
+  const [role, setNewRole] = useState('');
 
   useEffect(()=>{
     getUsers(1)
   },[])
+
+  useEffect(()=>{
+    getUsers(1)
+  },[sort, role])
 
   const getUsers = async (page) => {
     setOpen(true)
     axios({
       url: `${baseUrl}/users/all`,
       method: 'get',
-      params:{ page, name: searchValue}
+      params:{ page, sort,role, name: searchValue}
     }).then((response)=>{
       const { data } = response.data
       setUsers(data.users)
@@ -64,6 +70,14 @@ const People = () => {
     return list;
   }
 
+  const setRole = e => {
+    if (e === role) {
+      setNewRole(null)
+    }else{
+      setNewRole(e)
+    }
+  }
+
   return (
       <>
         <Backdrop className={classes.backdrop} open={open} >
@@ -78,7 +92,19 @@ const People = () => {
                         <h3 className="main_sec_title">All Members</h3>
                     </div>
                     <div className="col-md-3 col-sm-4">
+                    <div className="short profile_short">
+                      <label>Sort by:</label>
+                      <div className="select">
+                        <select name="slct" id="slct" value={sort} onChange={e=>setSort(e.target.value)}>
+                          <option value={"date"}>Date</option>
+                          <option value={"fullName"}>Name</option>
+                          <option value={"location"}>Location</option>
+                          <option value={"organisation"}>Organisation</option>
+                          <option value={"role"}>User Type</option>
+                        </select>
+                      </div>
                     </div>
+                  </div>
                 </div>
                 <div className="row">
                     <div className="col-md-12">
@@ -91,13 +117,44 @@ const People = () => {
                     </div>
                 </div>
                 <div className="row">
+                  <div className="register_field_col">
+                      <p>Type of User</p>
+                      <div  className="choose_field">
+                      <p>
+                          <input type="checkbox" id="test1" checked={role === 'Parent'} name="radio-group" value="Parent" onChange={(e) => setRole(e.target.value)}/>
+                          <label htmlFor="test1">Parent</label>
+                      </p>
+                      <p>
+                          <input type="checkbox" id="test2" checked={role === 'Teacher'} name="radio-group" value="Teacher" onChange={(e) => setRole(e.target.value)}/>
+                          <label htmlFor="test2">Teacher</label>
+                      </p>
+                      <p>
+                          <input type="checkbox" id="test3" checked={role === 'Student'} name="radio-group" value="Student" onChange={(e) => setRole(e.target.value)}/>
+                          <label htmlFor="test3">Student</label>
+                      </p>
+                      <p>
+                          <input type="checkbox" id="test4" checked={role === 'General Education'} name="radio-group" value="General Education" onChange={(e) => setRole(e.target.value)}/>
+                          <label htmlFor="test4">General Educator</label>
+                      </p>
+                      <p>
+                          <input type="checkbox" id="test5" checked={role === 'Admin'} name="radio-group" value="Admin" onChange={(e) => setRole(e.target.value)}/>
+                          <label htmlFor="test4">Admin</label>
+                      </p>
+                      <p>
+                          <input type="checkbox" id="test6" checked={role === 'reset'} name="radio-group" value="reset" onChange={(e) => setRole(e.target.value)}/>
+                          <label htmlFor="test4">Reset</label>
+                      </p>
+                      </div>
+                  </div>
+                </div>
+                <div className="row">
                   {users.map((user, index) => {
                     return (
                       <div key={index} className="col-md-3 col-sm-6 col-xs-12">
                           <div className="add_frnd text-center">
                               <img src={user.avatar || "assets/img/m1.png"} alt=""/>
                               <h4>{user.fullName}</h4>
-                              <div className="catagory">{user.category}</div>
+                              <div className="catagory">{user.role}</div>
                               <a href="#">Add Friend</a>
                           </div>
                       </div>
