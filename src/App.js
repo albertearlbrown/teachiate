@@ -39,17 +39,13 @@ axios.interceptors.request.use(addAuthorizationHeader, e => Promise.reject(e));
 
 function App () {
 
-  const { isAuthenicate, setIsAuthenicate, userData, setUserData } = useContext(AuthStoreContext);
+  const { setIsAuthenicate, setUserData } = useContext(AuthStoreContext);
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     async function fetchUser() {
-      const config = {
-        headers: {
-          Authorization: 'Bearer '+localStorage.getItem('jwt_token')
-        }
-      };
-      axios.get(baseUrl+'/users/me', config)
+      setLoading(true)
+      axios.get('/users/me')
       .then((res) => {
         if(res.data.success === true) {
           setUserData(res.data.data);
@@ -60,12 +56,7 @@ function App () {
         setLoading(false)
       })
     }
-
-    if(localStorage.getItem('jwt_token')) {
-      fetchUser();
-    }else{
-      setLoading(false)
-    }
+    fetchUser();
   }, []);
 
 

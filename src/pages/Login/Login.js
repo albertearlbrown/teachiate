@@ -6,6 +6,7 @@ import FacebookLogin from 'react-facebook-login';
 import Alert from '@material-ui/lab/Alert';
 import { AuthStoreContext } from '../../Store/AuthStore';
 import axios from 'axios';
+import { Auth } from 'aws-amplify'
 
 const baseUrl = process.env.NODE_ENV === 'development'?"http://localhost:4000":"https://teachiate-backend.fnmotivations.com/"
 
@@ -23,32 +24,14 @@ function Login() {
 
     const formHandler = async (e) => {
         e.preventDefault();
-        const resp = await axios.post('http://localhost:4000/auth/login', {
-            email: email,
-            password: password
-        });
-
-        if(resp.data.success === true) {
-            localStorage.setItem('jwt_token', resp.data.token);
-            setError(false);
-            const config = {
-                headers: {
-                    Authorization: 'Bearer '+localStorage.getItem('jwt_token')
-                }
-            };
-            axios.get('http://localhost:4000/users/me', config)
-            .then((res) => {
-                if(res.data.success === true) {
-                    setUserData(res.data.data);
-                    setIsAuthenicate(true);
-                }
-            });
-        }
-
-        else {
-            setErrorMessage(resp.data.message);
-            setError(true);
-        }
+        Auth.signIn(email, password)
+          .then(user => {
+            window.location.reload()
+            return true
+          })
+          .catch(() => {
+            return false
+          })
     };
 
     const googleResponse = async (resp) => {

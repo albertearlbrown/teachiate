@@ -4,6 +4,7 @@ import { Redirect } from 'react-router-dom';
 import { GoogleLogin } from 'react-google-login';
 import FacebookLogin from 'react-facebook-login';
 import Alert from '@material-ui/lab/Alert';
+import { Auth } from 'aws-amplify'
 
 import axios from 'axios';
 
@@ -39,23 +40,14 @@ function Register() {
         const resp = await axios.post('http://localhost:4000/auth/signup', data);
 
         if(resp.data.success === true) {
-            localStorage.setItem('jwt_token', resp.data.token);
-            setError(false);
-
-            const config = {
-                headers: {
-                    Authorization: 'Bearer ' + resp.data.token
-                }
-            };
-
-            axios.get('http://localhost:4000/users/me', config)
-            .then((res) => {
-                if(res.data.success === true) {
-                    setUserData(res.data.data);
-                    setIsAuthenicate(true);
-                }
-            });
-
+          return Auth.signIn(email, password)
+            .then(user => {
+              window.location.reload()
+              return user
+            })
+            .catch(() => {
+              return false
+            })
         }
         else {
             setErrorMessage(resp.data.message);
