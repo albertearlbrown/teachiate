@@ -3,11 +3,14 @@ import ReactDOM from 'react-dom';
 import AuthStoreProvider from './Store/AuthStore';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import awsconfig from './aws-exports.js'
+import Amplify from 'aws-amplify';
+Amplify.configure(awsconfig)
 
 ReactDOM.render(
   <AuthStoreProvider>
     <App />
-  </AuthStoreProvider>, 
+  </AuthStoreProvider>,
   document.getElementById('root')
 );
 

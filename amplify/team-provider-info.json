@@ -1,0 +1,22 @@
+{
+    "dev": {
+        "awscloudformation": {
+            "AuthRoleName": "amplify-teachiate-dev-162032-authRole",
+            "UnauthRoleArn": "arn:aws:iam::032076060455:role/amplify-teachiate-dev-162032-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::032076060455:role/amplify-teachiate-dev-162032-authRole",
+            "Region": "us-east-1",
+            "DeploymentBucketName": "amplify-teachiate-dev-162032-deployment",
+            "UnauthRoleName": "amplify-teachiate-dev-162032-unauthRole",
+            "StackName": "amplify-teachiate-dev-162032",
+            "StackId": "arn:aws:cloudformation:us-east-1:032076060455:stack/amplify-teachiate-dev-162032/fa560370-268c-11eb-9faa-0a1540e225b5",
+            "AmplifyAppId": "d355wsb2dh7fs"
+        },
+        "categories": {
+            "auth": {
+                "teachiateb36e0584": {
+                    "hostedUIProviderCreds": "[{\"ProviderName\":\"Facebook\",\"client_id\":\"1640321232815333\",\"client_secret\":\"bc2fe193ab7ae42f458dbda59c7dbb7d\"},{\"ProviderName\":\"Google\",\"client_id\":\"758342226447-5aarvl2j88nq0o2hu56k4om6fofev935.apps.googleusercontent.com\",\"client_secret\":\"X6a3lQbHustmMdc1zk0CvWfM\"}]"
+                }
+            }
+        }
+    }
+}
