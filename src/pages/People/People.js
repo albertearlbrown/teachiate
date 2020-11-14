@@ -138,7 +138,7 @@ const People = () => {
                       </p>
                       <p>
                           <input type="checkbox" id="test5" checked={role === 'Admin'} name="radio-group" value="Admin" onChange={(e) => setRole(e.target.value)}/>
-                          <label htmlFor="test4">Admin</label>
+                          <label htmlFor="test5">Admin</label>
                       </p>
                       </div>
                   </div>
