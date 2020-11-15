@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import { Auth } from 'aws-amplify'
 import { Redirect } from "react-router-dom";
+import Alert from '@material-ui/lab/Alert';
 
 function PasswordForgot() {
   const [step, setStep] = useState(0)
@@ -9,6 +10,7 @@ function PasswordForgot() {
   const [code, setCode] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [redirect, setRedirect] = useState(false)
+  const [error, setError] = useState(false)
   const onRequestResetPassword = e => {
     e.preventDefault()
     setEmail(email)
@@ -23,6 +25,10 @@ function PasswordForgot() {
 
   const onResetPassword = e=>{
     e.preventDefault()
+    if (password !== confirmPassword) {
+      setError(true)
+      return
+    }
     Auth.forgotPasswordSubmit(email, code, password)
       .then(() => {
         Auth.signIn(email, password).then(()=>{
@@ -61,6 +67,7 @@ function PasswordForgot() {
                   { step === 1 &&
                     <div class="teachiate_create_forum_post_area main_register">
                         <h2><span class="back_to_btn"><a href="#"></a></span>Enter your confirmation code!</h2>
+                        {error ? <Alert severity="error" style={{marginBottom: '20px'}}>Password and confrim password are not the same</Alert> : null}
                         <div class="register_field">
                             <div class="row">
                                 <div class="col-md-12">
