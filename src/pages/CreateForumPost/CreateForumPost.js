@@ -3,6 +3,9 @@ import axios from 'axios';
 import Chip from '@material-ui/core/Chip';
 import { makeStyles } from '@material-ui/core/styles';
 
+const categories = ["General Community Chat","Higher Education Chat","Parental Connection","Parents and Teachers Lounge", "Teachers"]
+const subcategories = {"General Community Chat":["Parent","Student","Teacher"],"Higher Education Chat":["Youth Progress","Motivation for Kids","Options for College and Beyond"],"Parental Connection":["Home-schooling ideas for parents","Teacher Appreciation"],"Parents and Teachers Lounge":["Social and Racial Injustice Forum","Issues Caused During COVID-19","Relaxation and Meditation"],"Teachers":["Distant Teaching","Supplies for Teaching","Teacher Venting Forum"]}
+
 const useStyles = makeStyles((theme) => ({
     root: {
       display: 'flex',
@@ -47,8 +50,8 @@ function CreateForumPost() {
         if(selectedFile !== null) {
             const data = new FormData()
             data.append('file', selectedFile);
-            const resp =  await axios.post("https://teachiate-backend.fnmotivations.com/upload", data); 
-            if(resp.data.success === true) { 
+            const resp =  await axios.post("https://teachiate-backend.fnmotivations.com/upload", data);
+            if(resp.data.success === true) {
                 image = resp.data.filePath;
             }
         }
@@ -71,21 +74,21 @@ function CreateForumPost() {
        if(resp.data.success !== false) {
            alert('Thank You For Creating Post');
            window.location.replace(`/forum`);
-       }       
-    };    
+       }
+    };
 
     const addTags = (e) => {
 
         if(e.key === 'Enter') {
-            const label =  e.target.value;   
-            const key = Math.random();          
+            const label =  e.target.value;
+            const key = Math.random();
             const tage = {
                 label,
                 key
             }
             setTags([...tags, tage]);
             setTagInput('');
-        }        
+        }
     }
 
     const imageHandler = (e) => {
@@ -105,25 +108,21 @@ function CreateForumPost() {
                                         <div className="only_field register_field_col">
                                             <p>Select Category</p>
                                             <div className='select'>
-                                                <select name="slct" id="slct" onChange={(e) => setCategory(e.target.value)}>
-                                                    <option value="General Community Chat">General Community Chat</option>
-                                                    <option value="Higher Education Chat">Higher Education Chat</option>
-                                                    <option value="Parental Connection">Parental Connection</option>
-                                                    <option value="Parents and Teachers Lounge">Parents and Teachers Lounge</option>
-                                                    <option value="Teachers Lounge">Teachers Lounge</option>
+                                                <select name="slct" id="slct" onChange={(e) => {
+                                                  setCategory(e.target.value)
+                                                  setSubcategory(subcategories[e.target.value][0])
+                                                }}>
+                                                    {categories.map((cat, i)=><option key={i} value={cat}>{cat}</option>)}
                                                 </select>
                                             </div>
                                         </div>
                                     </div>
                                     <div className="col-md-6">
-                                        <div className="only_field register_field_col">                                                                                    
+                                        <div className="only_field register_field_col">
                                             <p>Select Sub Category</p>
                                             <div className='select'>
                                                 <select name="slct" id="slct" onChange={(e) => setSubcategory(e.target.value)}>
-                                                    <option value="Parent">Parent</option>
-                                                    <option value="Student">Student</option>
-                                                    <option value="Teacher">Teacher</option>
-                                                    <option value="General Educator">General Educator</option>
+                                                    {subcategories[category].map((cat, i)=><option key={i} value={cat}>{cat}</option>)}
                                                 </select>
                                             </div>
                                         </div>
@@ -152,16 +151,16 @@ function CreateForumPost() {
                                         <input type="file" name="uploaded_file" onChange={imageHandler} className='register_input'/>
                                     </div>
                                 </div>
-                                        
+
 
                                 <div className={classes.root}>
                                     {tags.map(tag => (
                                         <li key={tag.key} style={{marginBottom: '10px'}}>
-                                            <Chip 
+                                            <Chip
                                                 label={tag.label}
                                                 onDelete={handleTageDelete(tag)}
                                                 className={classes.tage}
-                                            /> 
+                                            />
                                         </li>
                                     ))}
 
