@@ -36,7 +36,7 @@ import { Auth, Hub } from 'aws-amplify';
 
 // axios configs
 const baseUrl = 'https://teachiate-backend.fnmotivations.com';
-axios.defaults.baseURL = process.env.NODE_ENV === 'development'?"http://localhost:4000":"https://teachiate-backend.fnmotivations.com/"
+axios.defaults.baseURL = process.env.NODE_ENV === 'development'?"http://localhost:4000":"https://api.teachiate.com"
 axios.interceptors.request.use(addAuthorizationHeader, e => Promise.reject(e));
 
 function App () {
