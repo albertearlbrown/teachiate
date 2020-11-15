@@ -77,22 +77,27 @@ function App () {
   }
 
   useEffect(() => {
-
     fetchUser();
   }, []);
 
   async function fetchUser() {
     setLoading(true)
-    axios.get('/users/me')
-    .then((res) => {
-      if(res.data.success === true) {
-        setUserData(res.data.data);
-        setIsAuthenicate(true);
-      }
-      setLoading(false)
-    }).catch(()=>{
-      setLoading(false)
-    })
+    Auth.currentAuthenticatedUser()
+      .then(userData => {
+        axios.get('/users/me')
+        .then((res) => {
+          if(res.data.data) {
+            setUserData(res.data.data);
+            setIsAuthenicate(true);
+          }
+          setLoading(false)
+        }).catch(()=>{
+          setLoading(false)
+        })
+      })
+      .catch(() => {
+        setLoading(false)
+        console.log('Not signed in')});
   }
 
 

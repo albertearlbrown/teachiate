@@ -121,21 +121,12 @@ function Login() {
                                 </div>
                                 <div className="row">
                                     <div className="col-md-12">
-                                    <GoogleLogin
-                                        clientId={"758342226447-5aarvl2j88nq0o2hu56k4om6fofev935.apps.googleusercontent.com"}
-                                        buttonText="Login"
-                                        responseType="code"
-                                        onSuccess={(e)=>googleResponse(e)}
-                                        onFailure={(e)=>onFailure(e)}
-                                        render={renderProps => (
-                                            <button
-                                              className="google-login-button"
-                                              onClick={renderProps.onClick}
-                                              disabled={renderProps.disabled}>
-                                              Login with Google
-                                              </button>
-                                          )}
-                                    />
+                                      <button
+                                        className="google-login-button"
+                                        onClick={() => Auth.federatedSignIn({provider: 'Google'})}
+                                        >
+                                        <i className="fa fa-facebook" /> Login with Google
+                                      </button>
                                     <div
                                       onClick={() => Auth.federatedSignIn({provider: 'Facebook'})}
                                       className="facebook-login-button"

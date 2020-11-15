@@ -188,27 +188,19 @@ function Register() {
                                 <div className="row">
                                   <div className="col-md-6"/>
                                   <div className="col-md-6" style={{right: -20}}>
-                                    <GoogleLogin
-                                        clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
-                                        responseType="code"
-                                        onSuccess={(e)=>googleResponse(e)}
-                                        onFailure={(e)=>onFailure(e)}
-                                        render={renderProps => (
-                                            <button
-                                              className="google-login-button"
-                                              onClick={renderProps.onClick}
-                                              disabled={renderProps.disabled}>
-                                              Register with Google
-                                              </button>
-                                          )}
-                                    />
-                                    <FacebookLogin
-                                      appId="1640321232815333"
-                                      fields="name,email,picture"
-                                      callback={(e)=>responseFacebook(e)}
-                                      cssClass="facebook-register-button"
+                                    <button
+                                      className="google-login-button"
+                                      onClick={() => Auth.federatedSignIn({provider: 'Google'})}
+                                      >
+                                      <i className="fa fa-google" /> Login with Google
+                                    </button>
+                                    <div
+                                      onClick={() => Auth.federatedSignIn({provider: 'Facebook'})}
+                                      className="facebook-login-button"
                                       icon="fa-facebook"
-                                    />
+                                    >
+                                      <i className="fa fa-facebook" /> Log in with Facebook
+                                    </div>
                                   </div>
                                 </div>
                             </div>
