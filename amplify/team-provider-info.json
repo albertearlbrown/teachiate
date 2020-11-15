@@ -1,19 +1,19 @@
 {
     "dev": {
         "awscloudformation": {
-            "AuthRoleName": "amplify-teachiate-dev-162032-authRole",
-            "UnauthRoleArn": "arn:aws:iam::032076060455:role/amplify-teachiate-dev-162032-unauthRole",
-            "AuthRoleArn": "arn:aws:iam::032076060455:role/amplify-teachiate-dev-162032-authRole",
+            "AuthRoleName": "amplify-teachiate1-dev-161541-authRole",
+            "UnauthRoleArn": "arn:aws:iam::032076060455:role/amplify-teachiate1-dev-161541-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::032076060455:role/amplify-teachiate1-dev-161541-authRole",
             "Region": "us-east-1",
-            "DeploymentBucketName": "amplify-teachiate-dev-162032-deployment",
-            "UnauthRoleName": "amplify-teachiate-dev-162032-unauthRole",
-            "StackName": "amplify-teachiate-dev-162032",
-            "StackId": "arn:aws:cloudformation:us-east-1:032076060455:stack/amplify-teachiate-dev-162032/fa560370-268c-11eb-9faa-0a1540e225b5",
-            "AmplifyAppId": "d355wsb2dh7fs"
+            "DeploymentBucketName": "amplify-teachiate1-dev-161541-deployment",
+            "UnauthRoleName": "amplify-teachiate1-dev-161541-unauthRole",
+            "StackName": "amplify-teachiate1-dev-161541",
+            "StackId": "arn:aws:cloudformation:us-east-1:032076060455:stack/amplify-teachiate1-dev-161541/71ee05e0-2755-11eb-b463-0eb21ddd4aff",
+            "AmplifyAppId": "dowsyxbeuudy1"
         },
         "categories": {
             "auth": {
-                "teachiateb36e0584": {
+                "teachiate12e7f7ef0": {
                     "hostedUIProviderCreds": "[{\"ProviderName\":\"Facebook\",\"client_id\":\"1640321232815333\",\"client_secret\":\"bc2fe193ab7ae42f458dbda59c7dbb7d\"},{\"ProviderName\":\"Google\",\"client_id\":\"758342226447-5aarvl2j88nq0o2hu56k4om6fofev935.apps.googleusercontent.com\",\"client_secret\":\"X6a3lQbHustmMdc1zk0CvWfM\"}]"
                 }
             }

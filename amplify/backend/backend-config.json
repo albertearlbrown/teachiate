@@ -1,6 +1,6 @@
 {
 	"auth": {
-		"teachiateb36e0584": {
+		"teachiate12e7f7ef0": {
 			"service": "Cognito",
 			"providerPlugin": "awscloudformation",
 			"dependsOn": [],

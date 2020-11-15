@@ -1,8 +1,8 @@
 {
-    "identityPoolName": "teachiateb36e0584_identitypool_b36e0584",
+    "identityPoolName": "teachiate12e7f7ef0_identitypool_2e7f7ef0",
     "allowUnauthenticatedIdentities": false,
-    "resourceNameTruncated": "teachib36e0584",
-    "userPoolName": "teachiateb36e0584_userpool_b36e0584",
+    "resourceNameTruncated": "teachi2e7f7ef0",
+    "userPoolName": "teachiate12e7f7ef0_userpool_2e7f7ef0",
     "autoVerifiedAttributes": [
         "email"
     ],
@@ -28,10 +28,10 @@
     "userpoolClientReadAttributes": [
         "email"
     ],
-    "userpoolClientLambdaRole": "teachib36e0584_userpoolclient_lambda_role",
+    "userpoolClientLambdaRole": "teachi2e7f7ef0_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": false,
-    "sharedId": "b36e0584",
-    "resourceName": "teachiateb36e0584",
+    "sharedId": "2e7f7ef0",
+    "resourceName": "teachiate12e7f7ef0",
     "authSelections": "identityPoolAndUserPool",
     "authRoleArn": {
         "Fn::GetAtt": [
@@ -50,13 +50,13 @@
     "usernameAttributes": [
         "email"
     ],
-    "hostedUIDomainName": "teachiate",
+    "hostedUIDomainName": "teachiate1",
     "authProvidersUserPool": [
         "Facebook",
         "Google"
     ],
     "hostedUIProviderMeta": "[{\"ProviderName\":\"Facebook\",\"authorize_scopes\":\"email,public_profile\",\"AttributeMapping\":{\"email\":\"email\",\"username\":\"id\"}},{\"ProviderName\":\"Google\",\"authorize_scopes\":\"openid email profile\",\"AttributeMapping\":{\"email\":\"email\",\"username\":\"sub\"}}]",
-    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"https://teachiate.com/\",\"https://teachiate.com/\"],\"LogoutURLs\":[\"https://teachiate.com/\"]}",
+    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"http://localhost:3002/\"],\"LogoutURLs\":[\"http://localhost:3002/\"]}",
     "userPoolGroupList": [],
     "dependsOn": []
 }
