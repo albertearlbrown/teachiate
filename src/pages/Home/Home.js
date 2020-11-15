@@ -13,17 +13,17 @@ import Swal from 'sweetalert2';
 
 const Home = () => {
 
-    const {isAuthenicate, userData} = useContext(AuthStoreContext);    
+    const {isAuthenicate, userData} = useContext(AuthStoreContext);
     const [postData, setPostData] = useState([]);
     const [newPost, setNewPost] = useState([]);
     const [content, setContent] = useState('');
     const [load, setLoad] = useState(false);
     const [selectedFile, setSelectedFile] = useState(null);
-    const [selectFileUploadStart, setSelectFileUploadStart]  = useState(false);  
+    const [selectFileUploadStart, setSelectFileUploadStart]  = useState(false);
     const [selectFileUploadProgress, setSelectedFileUploadProgress]  = useState(0);
     const [startPost, setStartPost] = useState(0);
-    const [LoadMoreFeedBtn, setLoadMoreFeedBtn] = useState(false);    
-    
+    const [LoadMoreFeedBtn, setLoadMoreFeedBtn] = useState(false);
+
     const [comments, setComments] = useState([]);
     const [commentTextarea, setCommentTextara] = useState('');
 
@@ -39,16 +39,16 @@ const Home = () => {
             });
             if(resp.data.success === true) {
                 setStartPost(2);
-                setPostData([...resp.data.data]);        
+                setPostData([...resp.data.data]);
                 setLoad(true);
                 setLoadMoreFeedBtn(true);
             }
             else {
-                setLoadMoreFeedBtn(false);                
+                setLoadMoreFeedBtn(false);
             }
         }
 
-        fetchPosts();       
+        fetchPosts();
     }, []);
 
 
@@ -73,24 +73,18 @@ const Home = () => {
                 }
             }
 
-            const resp =  await axios.post("/upload", data, options); 
-            if(resp.data.success === true) { 
+            const resp =  await axios.post("/upload", data, options);
+            if(resp.data.success === true) {
                 image = resp.data.filePath;
             }
-        }               
+        }
 
         const data = {
             content,
             image
         }
 
-        const token = localStorage.getItem('jwt_token');
-
-        const resp = await axios.post('/thoughts', data, {
-            headers: {
-                'authorization': `Bearer ${token}`
-            }
-        });
+        const resp = await axios.post('/thoughts', data);
 
         if(resp.data.success === true) {
             setContent('');
@@ -101,14 +95,14 @@ const Home = () => {
                 title: 'Good job!',
                 text: 'Your thought successfully posted',
                 icon : 'success'
-            });  
+            });
 
-        }   
+        }
     }
 
     const loadMoreArticles = async () => {
 
-        setStartPost(startPost + 2);        
+        setStartPost(startPost + 2);
         const from = startPost + 2;
 
         const resp = await axios.get('/thoughts', {
@@ -119,9 +113,9 @@ const Home = () => {
         });
         if(resp.data.success === true) {
             const data =  postData.concat([...resp.data.data]);
-            setPostData([...data]);        
-        }    
-                
+            setPostData([...data]);
+        }
+
         else {
             setLoadMoreFeedBtn(false);
         }
@@ -142,34 +136,34 @@ const Home = () => {
         );
     }
 
-    const fileExtension = (fileName) => {        
+    const fileExtension = (fileName) => {
         var extension = fileName.split('.').pop();
         return extension;
     }
- 
+
     const postMedia = (filepath) => {
 
         if(filepath) {
             const extension = fileExtension(filepath);
-        
+
             if(extension === 'mp4') {
                 return (
                     <video width="100%" height="100%" controls>
                         <source src={filepath} type="video/mp4"/>
-                    </video>                
+                    </video>
                 );
             }
-    
+
             else if(extension === 'jpg' || extension === 'png' || extension === 'jpeg') {
                 return (
                     <div className="blog_img_holder1"><img src={filepath} alt=""/></div>
                 );
             }
         }
-    }    
+    }
 
     const postComment = async (e) => {
-        e.preventDefault(); 
+        e.preventDefault();
         setCommentTextara('');
 
         const id = e.target[0].value;
@@ -183,25 +177,25 @@ const Home = () => {
         };
         const data = {
             content: content
-        };        
+        };
 
-        const resp = await axios.post(`http://localhost:4000/thoughts/${id}/comments`, data, config); 
+        const resp = await axios.post(`http://localhost:4000/thoughts/${id}/comments`, data, config);
 
         if(resp.data.success) {
             Swal.fire({
                 title: 'Good job!',
                 text: 'Your comment successfully posted',
                 icon : 'success'
-            });            
+            });
             const result  = comments.concat(resp.data.data);
-            setComments([...result]);        
-        }       
+            setComments([...result]);
+        }
     }
 
 
     return (
         <>
-        {isAuthenicate ? <div className='mt-lg-5'></div> : <Banner/> }        
+        {isAuthenicate ? <div className='mt-lg-5'></div> : <Banner/> }
         <section className="blog clearfix">
             <div className="container">
                 <div className="blog_left">
@@ -210,7 +204,7 @@ const Home = () => {
                         <h2>Share your thoughts</h2>
                         <div className="post_share_area">
                             <div className="posted_avtar">
-                                <img src={userData.avatar ?  userData.avatar : "/assets/img/user-account.png"} alt={userData.fullname} /> 
+                                <img src={userData.avatar ?  userData.avatar : "/assets/img/user-account.png"} alt={userData.fullname} />
                             </div>
                             <form method="POST" encType="multipart/form-data" onSubmit={formHandler}>
                                 <div className="post_share_field">
@@ -236,26 +230,26 @@ const Home = () => {
                                     </div>
                                     <div className="share_option_right">
                                         {/* <h4>Post In:</h4> */}
-                                        <input type="submit" value="Post" name=""/>                                                                                   
+                                        <input type="submit" value="Post" name=""/>
                                     </div>
-                                </div>                                
-                            </form>                            
-                        </div>     
+                                </div>
+                            </form>
+                        </div>
 
 
                         {selectFileUploadStart && selectFileUploadProgress !== 100  ? (
                             <LinearProgressWithLabel value={selectFileUploadProgress} />
-                        ) : null}       
- 
+                        ) : null}
+
                         {selectedFile !== null && selectFileUploadStart === false ? (
                             <div>
                                 <p>You have selected file. <Link to="/" style={{cursor: 'pointer'}} onClick={() => setSelectedFile(null)}>Remove</Link></p>
                             </div>
-                        ) : null}             
-                                                                                         
-                    </div>                    
+                        ) : null}
+
+                    </div>
                     ) : null}
-                    
+
                     {newPost
                     .reverse()
                     .map(post => (
@@ -282,16 +276,16 @@ const Home = () => {
                             </div>
 
                             <div className="blog_feedback clearfox">
-                                
+
                                 <div className="flower"><img src="assets/img/flower.svg" alt=""/><span>
                                     {comments.filter(comment => comment.post === post._id).length + post.comments.length}</span>
                                 </div>
-                                
+
                                 {/* <a href="/">
                                     <div className="love"><img src="assets/img/love.svg" alt=""/><span>{post.likes.length}</span></div>
                                 </a> */}
-                            </div>      
-                            
+                            </div>
+
                             {comments
                             .filter(comment => comment.post === post._id)
                             .map(comment => (
@@ -306,8 +300,8 @@ const Home = () => {
                                             <div className="hour"><Moment fromNow>{comment.date}</Moment></div>
                                         </div>
                                     </div>
-                                </div> 
-                            ))}                                                      
+                                </div>
+                            ))}
 
                             {isAuthenicate ? (
                                 <div className="direct_cmnt_area">
@@ -316,13 +310,13 @@ const Home = () => {
                                         <textarea placeholder="write a comment" value={commentTextarea} onChange={ (e) => setCommentTextara(e.target.value)} name='textarea'></textarea>
                                         <input type="submit" value="Post"/>
                                     </form>
-                                </div>                                    
-                            ) : null}                                            
-                            
-                        </div>     
+                                </div>
+                            ) : null}
+
+                        </div>
                     ))}
 
-                    {load ? 
+                    {load ?
                         postData
                         .map(post => (
                             <div className="blog_sec1" key={post.id}>
@@ -348,15 +342,15 @@ const Home = () => {
                                 </div>
 
                                 <div className="blog_feedback clearfox">
-                                    
+
                                     <div className="flower"><img src="assets/img/flower.svg" alt=""/><span>
                                         {comments.filter(comment => comment.post === post._id).length + post.comments.length}</span>
                                     </div>
-                                   
+
                                     {/* <a href="/">
                                         <div className="love"><img src="assets/img/love.svg" alt=""/><span>{post.likes.length}</span></div>
                                     </a> */}
-                                </div>       
+                                </div>
 
                                 {post
                                 .comments
@@ -372,8 +366,8 @@ const Home = () => {
                                                 <div className="hour"><Moment fromNow>{comment.date}</Moment></div>
                                             </div>
                                         </div>
-                                    </div>  
-                                ))} 
+                                    </div>
+                                ))}
 
                                 {comments
                                 .filter(comment => comment.post === post._id)
@@ -389,8 +383,8 @@ const Home = () => {
                                                 <div className="hour"><Moment fromNow>{comment.date}</Moment></div>
                                             </div>
                                         </div>
-                                    </div> 
-                                ))}    
+                                    </div>
+                                ))}
 
                                 {isAuthenicate ? (
                                     <>
@@ -400,13 +394,13 @@ const Home = () => {
                                             <textarea placeholder="write a comment" value={commentTextarea} onChange={ (e) => setCommentTextara(e.target.value)} name='textarea'></textarea>
                                             <input type="submit" value="Post"/>
                                         </form>
-                                    </div>                                     
+                                    </div>
                                     </>
-                                ) : null} 
-                                
+                                ) : null}
+
                             </div>
-                    )) : null}                    
-                    
+                    )) : null}
+
                     {LoadMoreFeedBtn ? <InfiniteLoader onVisited={() => loadMoreArticles()}/>: null }
                 </div>
 
@@ -467,7 +461,7 @@ const Home = () => {
                                 <li><a href="/">Teachers Lounge</a></li>
                             </ul>
                             <a href="/" className="view_more">View More Articles</a>
-                        </div>                        
+                        </div>
                     </div>
                 </div>
             </div>
