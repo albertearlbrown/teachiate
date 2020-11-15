@@ -32,6 +32,8 @@ import addAuthorizationHeader from './utils/axiosInterceptor';
 import { AuthStoreContext } from './Store/AuthStore';
 import Search from './pages/Search/Search';
 
+import { Auth, Hub } from 'aws-amplify';
+
 // axios configs
 const baseUrl = 'https://teachiate-backend.fnmotivations.com';
 axios.defaults.baseURL = process.env.NODE_ENV === 'development'?"http://localhost:4000":"https://teachiate-backend.fnmotivations.com/"
@@ -41,6 +43,39 @@ function App () {
 
   const { setIsAuthenicate, setUserData } = useContext(AuthStoreContext);
   const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    Hub.listen('auth', ({ payload: { event, data } }) => {
+      debugger
+      switch (event) {
+        case 'signIn':
+        case 'cognitoHostedUI':
+          getUser()
+          break;
+        case 'signOut':
+          break;
+        case 'signIn_failure':
+        case 'cognitoHostedUI_failure':
+          console.log('Sign in failure', data);
+          break;
+      }
+    });
+  }, []);
+
+  function getUser() {
+    return Auth.currentAuthenticatedUser()
+      .then(userData => {
+        debugger
+        axios({
+          method: 'post',
+          url:'/auth/social',
+          data:{
+            ...userData.attributes
+          }
+        })
+      })
+      .catch(() => console.log('Not signed in'));
+  }
 
   useEffect(() => {
     async function fetchUser() {

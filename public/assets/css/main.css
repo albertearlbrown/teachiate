@@ -15518,6 +15518,8 @@ h2.sec_title {
   height: 53px;
   width: 100%;
   float: right;
+  text-align: center;
+  padding-top: 13px;
 }
 
 

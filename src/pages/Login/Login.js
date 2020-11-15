@@ -136,14 +136,14 @@ function Login() {
                                               </button>
                                           )}
                                     />
-                                    <FacebookLogin
-                                      appId="1640321232815333"
-                                      fields="name,email,picture"
-                                      callback={(e)=>responseFacebook(e)}
-                                      cssClass="facebook-login-button"
+                                    <div
+                                      onClick={() => Auth.federatedSignIn({provider: 'Facebook'})}
+                                      className="facebook-login-button"
                                       icon="fa-facebook"
-                                    />
+                                    >
+                                      <i className="fa fa-facebook" /> Log in with Facebook
                                     </div>
+                                  </div>
                                 </div>
                                 <ul className="made_accnt">
                                     <li><Link to="/register">Create New Account?</Link></li>
