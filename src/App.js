@@ -35,7 +35,6 @@ import Search from './pages/Search/Search';
 import { Auth, Hub } from 'aws-amplify';
 
 // axios configs
-const baseUrl = 'https://teachiate-backend.fnmotivations.com';
 axios.defaults.baseURL = process.env.NODE_ENV === 'development'?"http://localhost:4000":"https://api.teachiate.com"
 axios.interceptors.request.use(addAuthorizationHeader, e => Promise.reject(e));
 
@@ -46,7 +45,6 @@ function App () {
 
   useEffect(() => {
     Hub.listen('auth', ({ payload: { event, data } }) => {
-      debugger
       switch (event) {
         case 'signIn':
         case 'cognitoHostedUI':
@@ -65,34 +63,37 @@ function App () {
   function getUser() {
     return Auth.currentAuthenticatedUser()
       .then(userData => {
-        debugger
         axios({
           method: 'post',
           url:'/auth/social',
           data:{
             ...userData.attributes
           }
+        }).then(()=>{
+          fetchUser()
         })
       })
       .catch(() => console.log('Not signed in'));
   }
 
   useEffect(() => {
-    async function fetchUser() {
-      setLoading(true)
-      axios.get('/users/me')
-      .then((res) => {
-        if(res.data.success === true) {
-          setUserData(res.data.data);
-          setIsAuthenicate(true);
-        }
-        setLoading(false)
-      }).catch(()=>{
-        setLoading(false)
-      })
-    }
+
     fetchUser();
   }, []);
+
+  async function fetchUser() {
+    setLoading(true)
+    axios.get('/users/me')
+    .then((res) => {
+      if(res.data.success === true) {
+        setUserData(res.data.data);
+        setIsAuthenicate(true);
+      }
+      setLoading(false)
+    }).catch(()=>{
+      setLoading(false)
+    })
+  }
 
 
 
