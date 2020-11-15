@@ -125,7 +125,7 @@ function Login() {
                                         className="google-login-button"
                                         onClick={() => Auth.federatedSignIn({provider: 'Google'})}
                                         >
-                                        <i className="fa fa-facebook" /> Login with Google
+                                        <i className="fa fa-google" /> Login with Google
                                       </button>
                                     <div
                                       onClick={() => Auth.federatedSignIn({provider: 'Facebook'})}
