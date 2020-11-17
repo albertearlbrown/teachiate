@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import PageTitle from '../../components/PageTitle';
 import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { makeStyles } from '@material-ui/core/styles';
+import { AuthStoreContext } from '../../Store/AuthStore';
+import { configureSocket } from "../../utils/axiosInterceptor"
 import axios from 'axios';
 
 const baseUrl = process.env.NODE_ENV === 'development'?"http://localhost:4000":"https://teachiate-backend.fnmotivations.com/"
@@ -26,6 +28,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 const People = () => {
+  const { userData } = useContext(AuthStoreContext);
   const classes = useStyles();
   const [users, setUsers] = useState([])
   const [totalPages, setTotalPages] = useState(0)
@@ -75,6 +78,21 @@ const People = () => {
       setNewRole(null)
     }else{
       setNewRole(e)
+    }
+  }
+
+  const sendInviation = async (receiver)=>{
+    if (userData._id) {
+      let socket = await configureSocket(baseUrl);
+      debugger
+      if (socket) {
+        socket.emit('friend-request', {sender: userData, receiver}, ack => {
+          console.log(ack);
+        });
+        socket.on(userData._id, data =>{
+          console.log(data);
+        })
+      }
     }
   }
 
@@ -145,13 +163,16 @@ const People = () => {
                 </div>
                 <div className="row">
                   {users.map((user, index) => {
+                    if (userData._id === user._id) {
+                      return;
+                    }
                     return (
                       <div key={index} className="col-md-3 col-sm-6 col-xs-12">
                           <div className="add_frnd text-center">
                               <img src={user.avatar || "assets/img/m1.png"} alt=""/>
                               <h4>{user.fullName}</h4>
                               <div className="catagory">{user.role}</div>
-                              <a href="#">Add Friend</a>
+                              <a onClick={()=>sendInviation(user)}>Add Friend</a>
                           </div>
                       </div>
                     )

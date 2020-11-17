@@ -15610,3 +15610,17 @@ h2.sec_title {
   color: white;
   cursor: pointer;
 }
+
+.add_frnd button {
+    border-radius: 5px;
+    background: #08406f;
+    color: #fff;
+    padding: 9px 25px;
+    font-size: 15px;
+    display: table;
+    margin: 0px auto 0;
+}
+
+.add_frnd button:hover {
+    background: #00aeef;
+}
