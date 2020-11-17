@@ -121,7 +121,7 @@ function CreateForumPost() {
                                         <div className="only_field register_field_col">
                                             <p>Select Sub Category</p>
                                             <div className='select'>
-                                                <select name="slct" id="slct" onChange={(e) => setSubcategory(e.target.value)}>
+                                                <select name="slct" id="slct" value={subcategory} onChange={(e) => setSubcategory(e.target.value)}>
                                                     {subcategories[category].map((cat, i)=><option key={i} value={cat}>{cat}</option>)}
                                                 </select>
                                             </div>
