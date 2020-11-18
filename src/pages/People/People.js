@@ -37,6 +37,7 @@ const People = () => {
   const [currentPage, setCurrentPage] = useState(0)
   const [sort, setSort] = useState('date')
   const [role, setNewRole] = useState('');
+  const [socket, setSocket] = useState(null)
 
   useEffect(()=>{
     getUsers(1)
@@ -45,6 +46,18 @@ const People = () => {
   useEffect(()=>{
     getUsers(1)
   },[sort, role])
+
+  useEffect(()=>{
+    const confSock = async ()=>{
+      let soc = await configureSocket(baseUrl);
+      setSocket(soc)
+      debugger
+      soc.on("friend-request"+userData._id, data => {
+        console.log(data);
+      })
+    }
+    confSock()
+  },[])
 
   const getUsers = async (page) => {
     setOpen(true)
@@ -82,17 +95,11 @@ const People = () => {
   }
 
   const sendInviation = async (receiver)=>{
-    if (userData._id) {
-      let socket = await configureSocket(baseUrl);
-      debugger
-      if (socket) {
-        socket.emit('friend-request', {sender: userData, receiver}, ack => {
+    debugger
+    if (userData._id && socket) {
+      socket.emit('friend-request', {receiver}, ack => {
           console.log(ack);
         });
-        socket.on(userData._id, data =>{
-          console.log(data);
-        })
-      }
     }
   }
 
