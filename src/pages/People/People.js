@@ -51,7 +51,6 @@ const People = () => {
     const confSock = async ()=>{
       let soc = await configureSocket(baseUrl);
       setSocket(soc)
-      debugger
       soc.on("friend-request"+userData._id, data => {
         console.log(data);
       })

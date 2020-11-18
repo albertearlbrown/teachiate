@@ -1,7 +1,40 @@
-import React from 'react'
+import React, { useEffect, useContext, useState } from "react";
 import { Link } from 'react-router-dom';
+import Badge from '@material-ui/core/Badge';
+import NotificationsIcon from '@material-ui/icons/Notifications';
+import axios from "axios"
+import { configureSocket } from "../../utils/axiosInterceptor"
+import { AuthStoreContext } from "../../Store/AuthStore";
+
+const baseUrl = process.env.NODE_ENV === 'development'?"http://localhost:4000":"https://teachiate-backend.fnmotivations.com/"
 
 function MainMenu() {
+  const { isAuthenicate, userData } = useContext(AuthStoreContext);
+  const [nCount, setNCount] = useState(0)
+  useEffect(()=>{
+    const getNCount = () => {
+      axios({
+        url:'/notifications/count',
+        method: 'get'
+      }).then((resp)=>{
+        setNCount(resp.data.count)
+      })
+    }
+    getNCount()
+  },[])
+
+  // Add listner to the new notifications
+  useEffect(()=>{
+    const confSock = async ()=>{
+      if (userData?._id) {
+        let soc = await configureSocket(baseUrl);
+        soc.on("friend-request"+userData._id, data => {
+          setNCount(data.count)
+        })
+      }
+    }
+    confSock()
+  },[userData])
 
     return (
         <>
@@ -9,13 +42,23 @@ function MainMenu() {
                 <nav className="nav-primary">
                     <ul className="menu-main-navigation menu clearfix">
                         <li className="menu-item-has-children"><Link to="/">Home</Link></li>
-                        <li className="menu-item-has-children"><Link to="/opening-school-in-covid-siutation">School Opening</Link></li>                        
+                        <li className="menu-item-has-children"><Link to="/opening-school-in-covid-siutation">School Opening</Link></li>
                         <li className="menu-item-has-children"><Link to="/groups">Groups</Link></li>
                         <li className="menu-item-has-children"><Link to="/people">People</Link></li>
                         <li className="menu-item-has-children"><Link to="/forum">Forum</Link></li>
+                        {
+                          isAuthenicate &&
+                          <li className="menu-item-has-children">
+                            <Link to="/forum">
+                              <Badge badgeContent={nCount} color="error">
+                                <NotificationsIcon />
+                              </Badge>
+                            </Link>
+                          </li>
+                        }
                     </ul>
                 </nav>
-            </div>           
+            </div>
         </>
     )
 }
