@@ -3,7 +3,7 @@ import axios from 'axios';
 import { AuthStoreContext } from '../../Store/AuthStore';
 import ProfilNavBar from './NavBar'
 import ThoughtComponents from './ThoughtsComponents';
-import FriendsList from "./FriendsComponent"
+import FriendsComponent from "./friendsComponent/index"
 
 const ProfileView = () => {
     const {userData} = useContext(AuthStoreContext);
@@ -107,7 +107,7 @@ const ProfileView = () => {
                     <div className="profile-wrapper">
                         <ProfilNavBar setView={setView} />
                         {currentView === 'thoughts' &&<ThoughtComponents />}
-                        {currentView === 'friends' &&<FriendsList />}
+                        {currentView === 'friends' &&<FriendsComponent />}
                    </div>
                 </div>
             </div>

@@ -8911,7 +8911,20 @@ blockquote {
     color: #50565a;
     line-height: 24px;
   }
+  .profile-forum-details .tabs2 ul li p {
+    padding: 0;
+    margin: 0;
+    padding: 0 0 0 0;
+    font-size: 16px;
+    font-weight: 400;
+    color: #50565a;
+    line-height: 24px;
+  }
   .profile-forum-details .tabs2 ul li a:hover, .profile-forum-details .tabs2 ul li a.active {
+    color: #151617;
+  }
+
+  .profile-forum-details .tabs2 ul li a:hover, .profile-forum-details .tabs2 ul li p.active {
     color: #151617;
   }
 
@@ -8936,6 +8949,11 @@ blockquote {
   .profile-forum-details .tabbed-content2 .tabs2 li a {
     display: block;
   }
+
+  .profile-forum-details .tabbed-content2 .tabs2 li p {
+    display: block;
+  }
+
   .profile-forum-details .tabbed-content2 .item2 {
     min-height: 0;
   }

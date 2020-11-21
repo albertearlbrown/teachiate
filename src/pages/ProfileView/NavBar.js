@@ -5,13 +5,11 @@ const ProfilNavBar = ({setView})=>{
     <div className="profile-nav">
         <ul className="clearfix">
             <li onClick={()=>setView('thoughts')}>
-            <a href="#">
                 <div className="profile-nav-icon">
                     <img src="assets/img/file.png" alt="" />
 
                 </div>
                 <p>Activity</p>
-                </a>
             </li>
             <li><a href="#">
                 <div className="profile-nav-icon">
@@ -35,12 +33,10 @@ const ProfilNavBar = ({setView})=>{
                 </a>
             </li>
             <li className="active" onClick={()=>setView('friends')}>
-              <a href="#">
                 <div className="profile-nav-icon">
                     <img src="assets/img/icon5.png" alt=""/>
                 </div>
                 <p> Friends</p>
-                </a>
             </li>
             <li><a href="#">
                 <div className="profile-nav-icon">
