@@ -29,12 +29,13 @@ const FriendsList = () => {
     })
   }
 
-  const onAcceptFriendRequest = async (notifId, receiver) => {
+  const onAcceptFriendRequest = async (sender) => {
     if (userData?._id) {
       let soc = await configureSocket(baseUrl);
-      soc.emit("accept-friend-request", ({notifId, receiver}), ack => {
-        console.log(ack);
+      soc.emit("accept-friend-request", ({sender}), ack => {
+        return true
       })
+      getRequestList()
     }
   }
 

@@ -6,7 +6,7 @@ const FriendsList = () => {
   useEffect(()=>{
     getFriendList()
   }, [])
-  
+
   const getFriendList = ()=>{
     axios({
       method: 'get',
@@ -61,7 +61,7 @@ const FriendsList = () => {
               ))
             }
           </div>
-          <div className="pager">Viewing 1 - 4 of 4</div>
+          {/*<div className="pager">Viewing 1 - 4 of 4</div>*/}
         </div>
       </div>
   );
