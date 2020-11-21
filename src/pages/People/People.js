@@ -94,7 +94,6 @@ const People = () => {
   }
 
   const sendInviation = async (receiver)=>{
-    debugger
     if (userData._id && socket) {
       socket.emit('friend-request', {receiver}, ack => {
           console.log(ack);
