@@ -10,7 +10,6 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const baseUrl = process.env.NODE_ENV === 'development'?"http://localhost:4000":"https://teachiate-backend.fnmotivations.com/"
 
-
 const useStyles = makeStyles((theme) => ({
   backdrop: {
     zIndex: theme.zIndex.drawer + 1,
@@ -27,8 +26,6 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: '50%'
   }
 }));
-
-
 
 function Forum() {
   const classes = useStyles();

@@ -20,6 +20,7 @@ import SingleForumPost from './pages/SingleForumPost';
 import People from './pages/People';
 import GroupStep1 from './pages/Group/Step1';
 import GroupStep2 from './pages/Group/Step2';
+import Notifications from './pages/NotificationsList/Notifications'
 
 // Components
 import Header from './components/Header';
@@ -181,6 +182,7 @@ function App () {
                 <Route path="/create-group-step-2">
                   <GroupStep2/>
                 </Route>
+                <PrivateRoute path='/notifications' component={Notifications}/>
                 <PrivateRoute path='/create-school-updates' component={CreateSchoolOpeningUpdates}/>
               </Switch>
             </div>
