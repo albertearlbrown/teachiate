@@ -35,7 +35,9 @@ const FriendsList = () => {
       soc.emit("accept-friend-request", ({sender}), ack => {
         return true
       })
-      getRequestList()
+      setTimeout(()=>{
+        getRequestList()
+      }, 4000)
     }
   }
 
