@@ -7,15 +7,15 @@ import Moment from 'react-moment';
 import axios from 'axios';
 import DisplayPost from './DisplayPost';
 import { AuthStoreContext } from '../../Store/AuthStore';
+import CommunityFeed from './CommunityFeed';
 
 const SchoolOpening = () => {
     const {isAuthenicate, userData} = useContext(AuthStoreContext);    
     const [selectFileUploadProgress, setSelectedFileUploadProgress]  = useState(0);
     const [selectFileUploadStart, setSelectFileUploadStart]  = useState(false);  
     const [selectedFile, setSelectedFile] = useState(null);
-    const [postData, setPostData] = useState([]);
     const [newPost, setNewPost] = useState([]);
-    const [description, setDescription] = useState('');    
+    const [content, setContent] = useState('');    
 
     const [states, setStates] = useState([]);
     const [loadStates, setLoadStates] = useState(false);
@@ -32,9 +32,11 @@ const SchoolOpening = () => {
     const [selectedStateCode, setSelectedStateCode] = useState(null);
     const [selectedCityId, setSelectedCityId] = useState(null); 
 
-
     const [comments, setComments] = useState([]);
     const [loadComments, setLoadComments] = useState(false);
+
+    const [communitiesFeed, setCommunitiesFeed] = useState([]);
+    const [loadCommunitiesFeed, setLoadCommunitiesFeed] = useState(false);
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -51,18 +53,24 @@ const SchoolOpening = () => {
             setLoadStates(true);           
         }   
 
+        async function fetchCommunitiesFeed() {
+            const resp = await axios.get('/communities-feed');
+            if(resp.data.success) {
+                const feed = resp.data.data;
+                setCommunitiesFeed(feed);
+                setLoadCommunitiesFeed(true);
+            }
+        }
+
         fetchStates();
         fetchUpdates();
+        fetchCommunitiesFeed();
      }, []);
      
 
      const stateHandler = async (e) => {
         setState(e.target.value);
         setCity('All');
-
-        // const selectedIndex = e.target.options.selectedIndex;
-        // const stateCode = e.target.options[selectedIndex].getAttribute('data-key');
-        // setSelectedStateCode(stateCode);
 
         if(e.target.value !== 'All') {
             setLoadCities(true);
@@ -118,12 +126,12 @@ const SchoolOpening = () => {
     };
 
     const formHandler = async (e) => {
-        setDescription('');
+        setContent('');
         setSelectedFile(null);
 
         e.preventDefault();
 
-        var filepath = null;
+        var image = null;
 
         if(selectedFile !== null) {
             const data = new FormData()
@@ -138,35 +146,29 @@ const SchoolOpening = () => {
                 }
             }
 
-            const resp =  await axios.post("https://teachiate-backend.fnmotivations.com/upload", data, options); 
+            const resp =  await axios.post("/upload", data, options); 
             if(resp.data.success === true) { 
-                filepath = resp.data.filePath;
+                image = resp.data.filePath;
             }
         }               
 
         const data = {
-            description,
-            filepath,
-            state_code: selectedStateCode,
-            city_id: selectedCityId
+            content,
+            image
         }
 
         const token = localStorage.getItem('jwt_token');
 
-        const resp = await axios.post('https://teachiate-backend.fnmotivations.com/community_posts', data, {
+        const resp = await axios.post('/communities-feed', data, {
             headers: {
                 'authorization': `Bearer ${token}`
             }
         });
 
         if(resp.data.success === true) {
-            setDescription('');
+            setContent('');
             setSelectedFile(null);
-            var x = resp.data.data.insertId;
-            const createPost = await axios.get(`https://teachiate-backend.fnmotivations.com/community_posts/${x}`);
-            if(createPost.data.success) {
-                setNewPost(newPost => [...newPost, createPost.data.data]);
-            }
+            setNewPost(newPost => [...newPost, resp.data.data]);
         }   
     }    
 
@@ -238,10 +240,9 @@ const SchoolOpening = () => {
                             </div>    
 
                             {loadPosts && state === 'All' & city === 'All' ? (
-                                <div className="blog_sec4" style={{height: '300px', overflow: 'scroll'}}>
+                                <div className="blog_sec4" style={{height: '450px', overflow: 'scroll'}}>
                                     <div className="opeing_list">                                        
                                         {posts
-                                        .filter(post => post.user.role === 'Admin')
                                         .map(post => (
                                             <div key={post._id}>
                                                 <DisplayPost posts={post}/>
@@ -252,10 +253,10 @@ const SchoolOpening = () => {
                             ): null }
 
                             {loadPosts && state !== 'All' && city === 'All' ? ( 
-                                <div className="blog_sec4" style={{height: '300px', overflow: 'scroll'}}>
+                                <div className="blog_sec4" style={{height: '450px', overflow: 'scroll'}}>
                                     <div className="opeing_list">                                        
                                         {posts
-                                        .filter(post => post.user.role === 'Admin')
+                                        .filter(post => post.state === state)
                                         .map(post => (
                                             <div key={post._id}>
                                                 <DisplayPost posts={post}/>
@@ -267,10 +268,10 @@ const SchoolOpening = () => {
 
 
                             {loadPosts && state !== 'All' && city !== 'All'  ? (
-                                <div className="blog_sec4" style={{height: '300px', overflow: 'scroll'}}>
+                                <div className="blog_sec4" style={{height: '450px', overflow: 'scroll'}}>
                                     <div className="opeing_list">                                        
                                         {posts
-                                        .filter(post => post.user.role === 'Admin')
+                                        .filter(post => post.state === state && post.city === city)
                                         .map(post => (
                                             <div key={post._id}>
                                                 <DisplayPost posts={post}/>
@@ -290,7 +291,7 @@ const SchoolOpening = () => {
                             
                             {/* Users Feed */}
                             
-                            {isAuthenicate && state !== 'All' && city !== 'All'  ? (
+                            {isAuthenicate  ? (
                                 <div className="post_share">
                                     <div className="post_share_area">
                                         <div className="posted_avtar">
@@ -298,7 +299,7 @@ const SchoolOpening = () => {
                                         </div>
                                         <form method="POST" encType="multipart/form-data" onSubmit={formHandler}>
                                             <div className="post_share_field">
-                                                <textarea placeholder="What’s are your mind?" value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
+                                                <textarea placeholder="What’s are your mind?" value={content} onChange={(e) => setContent(e.target.value)}></textarea>
                                                 <div className="adv_post_opt clearfix">
                                                     <div className="share_type">
                                                         <ul>
@@ -342,20 +343,19 @@ const SchoolOpening = () => {
                                 </div>                    
                             ) : null}                            
 
-                            {loadPosts && state === 'All' & city === 'All'  ? (          
+                            {loadCommunitiesFeed ? (          
                                 <div className="blog_sec4 open">
                                     <div className="opeing_list">                                        
-                                       {/* {newPost.map(post => (
-                                           <div key={post.id}>
-                                                <DisplayPost data={post}/>
+                                       {newPost.map(post => (
+                                           <div key={post._id}>
+                                                <CommunityFeed posts={post}/>
                                            </div>
-                                       ))} */}
+                                       ))}
                                     
-                                        {posts
-                                        .filter(post => post.user.role !== 'Admin')
+                                        {communitiesFeed                                        
                                         .map(post => (
                                             <div key={post.id}>
-                                                <DisplayPost posts={post}/>     
+                                                <CommunityFeed  posts={post}/>     
                                             </div>
                                         ))}     
                                     </div>

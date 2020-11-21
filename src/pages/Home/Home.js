@@ -90,13 +90,6 @@ const Home = () => {
             setContent('');
             setSelectedFile(null);
             setNewPost(newPost => [...newPost, resp.data.data]);
-
-            Swal.fire({
-                title: 'Good job!',
-                text: 'Your thought successfully posted',
-                icon : 'success'
-            });
-
         }
     }
 
@@ -179,7 +172,7 @@ const Home = () => {
             content: content
         };
 
-        const resp = await axios.post(`http://localhost:4000/thoughts/${id}/comments`, data, config);
+        const resp = await axios.post(`/thoughts/${id}/comments`, data, config);
 
         if(resp.data.success) {
             Swal.fire({

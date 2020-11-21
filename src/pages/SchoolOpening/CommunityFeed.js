@@ -26,16 +26,9 @@ function DisplayPost({posts}) {
             content: content
         };          
 
-        const resp = await axios.post(`/school-opening-updates/${id}/comments`, data, config); 
+        const resp = await axios.post(`/communities-feed/${id}/comments`, data, config); 
 
-        if(resp.data.success) {
-            
-            Swal.fire({
-                title: 'Good job!',
-                text: 'Your comment successfully posted',
-                icon : 'success'
-            });
-
+        if(resp.data.success) {            
             const result  = comments.concat(resp.data.data);
             setComments([...result]);        
         }        
@@ -43,11 +36,10 @@ function DisplayPost({posts}) {
 
     return (
         <> 
-            <div className="blog_title"  key={posts.id}>
+            <div className="blog_title"  key={posts._id}>
                 <div className="title_img"><img src="assets/img/admin-img.png" alt=""/></div>
                 <div className="user_des">
                     <h4>{posts.user.fullName} ({posts.user.role})</h4>
-                    <p>{posts.state} | USA </p>
                 </div>
                 <div className="time"> <Moment fromNow>{posts.date}</Moment></div>
             </div>
@@ -66,21 +58,11 @@ function DisplayPost({posts}) {
             </div>
 
 
-            <div className="opening_flex">
-                <div className="locaton">
-                    <p>
-                        <i className="fa fa-map-marker" aria-hidden="true"></i> 
-                            State: <span>{posts.state}</span> </p>
-                        <p>City: <span>{posts.city}</span></p>
-                </div>
-                <div className="bbc_news">
-                    <p><a href={posts.source}>Source</a></p>
-                </div>
-            </div>  
-
             <div className="blog_feedback clearfox">
                 <a href="#">
-                    <div className="flower"><img src="assets/img/flower.svg" alt=""/><span>{posts.total_comments}</span></div>
+                    <div className="flower"><img src="assets/img/flower.svg" alt=""/>
+                        <span>{comments.filter(comment => comment.post === posts._id).length + posts.comments.length}</span>
+                    </div>                    
                 </a>
                 <a href="#">
                     <div className="love"><img src="assets/img/love.svg" alt=""/><span>{posts.total_likes}</span></div>
