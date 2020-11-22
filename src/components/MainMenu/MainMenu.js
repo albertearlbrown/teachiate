@@ -75,7 +75,7 @@ function MainMenu() {
           </Alert>
         </Snackbar>
            <div className="page-header_main-menu">
-           {redirect && <Redirect to="/my-profile" />}
+           {redirect && <Redirect to="/notifications" />}
                 <nav className="nav-primary">
                     <ul className="menu-main-navigation menu clearfix">
                         <li className="menu-item-has-children"><Link to="/">Home</Link></li>

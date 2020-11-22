@@ -5,6 +5,7 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Button from '@material-ui/core/Button';
+import axios from 'axios';
 import { configureSocket } from "../../utils/axiosInterceptor"
 import { AuthStoreContext } from "../../Store/AuthStore";
 
@@ -31,7 +32,11 @@ const useStyles = makeStyles((theme) => ({
   },
   buttonDec:{
     marginLeft: 10,
-  }
+  },
+  pos: {
+    marginBottom: 0,
+    paddingBottom: 0,
+  },
 }));
 const baseUrl = process.env.NODE_ENV === 'development'?"http://localhost:4000":"https://teachiate-backend.fnmotivations.com/"
 
@@ -39,6 +44,8 @@ export default function ComplexGrid({notification}) {
   const { isAuthenicate, userData } = useContext(AuthStoreContext);
   const classes = useStyles();
   const [title, setTitle ] = useState("")
+  const [action, showActions] = useState(false)
+  const [requestAccepted, setRequestAccepted] = useState(false)
   const {senderId} = notification
 
   useEffect(()=>{
@@ -47,9 +54,11 @@ export default function ComplexGrid({notification}) {
       switch (notification.type) {
         case 'FRIEND_REQUEST':
           setTitle(`${senderId.fullName} sent you a friend request`);
+          showActions(true)
           break;
         case 'FRIEND_REQUEST_ACCEPTED':
           setTitle(`${senderId.fullName} accepted your friend request`);
+          setRequestAccepted(true)
           break;
         case 'JOIN_GROUP':
           setTitle(`${senderId.fullName} sent request to join your group`);
@@ -67,13 +76,23 @@ export default function ComplexGrid({notification}) {
     getNotificationTitle()
   },[])
 
-  const onAcceptFriendRequest = async (notifId, receiver) => {
+  const onAcceptFriendRequest = async (sender) => {
     if (userData?._id) {
       let soc = await configureSocket(baseUrl);
-      soc.emit("accept-friend-request", ({notifId, receiver}), ack => {
+      soc.emit("accept-friend-request", ({sender}), ack => {
         console.log(ack);
       })
     }
+  }
+
+  const cancelRequest = request =>{
+    axios({
+      method: 'delete',
+      url: '/users/friends/cancel',
+      data: {request}
+    }).then(res=>{
+      console.log(res);
+    })
   }
 
   return (
@@ -91,15 +110,30 @@ export default function ComplexGrid({notification}) {
                 <Typography gutterBottom variant="subtitle1">
                   {title}
                 </Typography>
+                <Typography className={classes.pos} color="textSecondary">
+                  {senderId.role}
+                </Typography>
               </Grid>
-              <Grid item>
-                <Button variant="contained" color="primary" onClick={()=>onAcceptFriendRequest(notification._id, senderId)}>
-                  Accept
-                </Button>
-                <Button variant="contained" className={classes.buttonDec}>
-                  Decline
-                </Button>
-              </Grid>
+              {
+                action &&
+                <>
+                  {!requestAccepted ?
+                    <Grid item>
+                      <Button variant="contained" color="primary" onClick={()=>onAcceptFriendRequest(senderId)}>
+                        Accept
+                      </Button>
+                      <Button variant="contained" className={classes.buttonDec} onClick={()=>cancelRequest(senderId)}>
+                        Decline
+                      </Button>
+                    </Grid>:
+                    <Grid item>
+                      <Button variant="contained" color="primary">
+                        Accepted
+                      </Button>
+                    </Grid>
+                  }
+                </>
+              }
             </Grid>
           </Grid>
         </Grid>
