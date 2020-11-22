@@ -11,20 +11,19 @@ function CreateSchoolOpeningUpdates() {
     const [loadCities, setLoadCities] = useState(false);
     const [selectedFile, setSelectedFile] = useState(null);
 
+    const [state, setState] = useState('All');
+    const [city, setCity] = useState('All');
 
     const [title, setTitle] = useState('');
-    const [sourceName, setSourceName] = useState('');
-    const [sourceUrl, setSourceUrl] = useState('');
-    const [description, setDescription] = useState('');
-    const [stateCode, setStateCode] = useState('');
-    const [cityID, setCityID] = useState('');
+    const [source, setSource] = useState('');
+    const [content, setContent] = useState('');
     const [status, setStatus] = useState(false);
     const [token, setToken] = useState('');
 
     useEffect(() => {
        window.scrollTo(0, 0);    
-       async function fetchStates() {
-            const resp =  await axios.get('https://teachiate-backend.fnmotivations.com/states');
+       async function fetchStates() {             
+            const resp =  await axios.get('/states');
             setStates([...resp.data.data]);
             setLoadStates(true);           
        }
@@ -34,42 +33,50 @@ function CreateSchoolOpeningUpdates() {
     }, []);
 
     const stateHandler = async (e) => {
-        setStateCode(e.target.value);
+        setState(e.target.value);
+        setCity('All');
+
         if(e.target.value !== 'All') {
-            const resp = await axios.get(`https://teachiate-backend.fnmotivations.com/cities/${e.target.value}`);
-            setCities([...resp.data.data]);
             setLoadCities(true);
         }
         else {
-            setCities([]);
             setLoadCities(false);
         }
     }
 
     const cityHandler = (e) => {
-        setCityID(e.target.value);
+        setCity(e.target.value);
     }
 
     const displayStates = () => {    
         return (
             <>
                 <div className='select'>
-                    <select  onChange={stateHandler}  id="slct">
+                    <select id="slct" onChange={stateHandler}>
                         <option value='All'>All States</option>
-                        {states.map(i =>  <option value={i.state_code} key={i.state_code}>{i.state}</option>)}
+                        {states.map(state =>  <option value={state.name} key={state.code} data-key={state.code}>{state.name}</option>)}
                     </select>
                 </div>
             </>
         );
-    }
+    } 
 
+    
     const displayCities = () => {
         return (
             <>
                 <div className='select'>
-                    <select  onChange={cityHandler}  id="slct">
-                        <option value='All'>Select a City</option>
-                        {cities.map(i =>  <option value={i.id} key={i.id}>{i.city}</option>)}
+                    <select id="slct" onChange={cityHandler}>
+                        <option value='All'>Select a City</option>          
+                        {states.filter(s => s.name === state).map(state => (
+                            <>
+                                {state.cities.map(city => (
+                                    <>
+                                        <option value={city.name}>{city.name}</option>
+                                    </>
+                                ))}
+                            </>
+                        ))}             
                     </select>
                 </div>
             </>
@@ -83,26 +90,26 @@ function CreateSchoolOpeningUpdates() {
     const formHandler = async (e) => {
         e.preventDefault();       
 
-        var filePath = null;
+        var image = null;
 
         if(selectedFile !== null) {
             const data = new FormData()
             data.append('file', selectedFile);
-            const resp =  await axios.post("https://teachiate-backend.fnmotivations.com/upload", data); 
+            const resp =  await axios.post("/upload", data); 
             if(resp.data.success === true) { 
-                filePath = resp.data.filePath;
+                image = resp.data.filePath;
             }
         }
     
         const postData = {
             title,
-            description,
-            filePath,
-            sourceUrl,
-            stateCode,
-            cityID                
+            content,
+            source,
+            image,
+            state,
+            city                
         }            
-        const finalResp = await axios.post('https://teachiate-backend.fnmotivations.com/covid_feed', postData, {
+        const finalResp = await axios.post('/school-opening-updates', postData, {
             headers: {
             'authorization': `Bearer ${token}`
             }
@@ -110,18 +117,14 @@ function CreateSchoolOpeningUpdates() {
 
         if(finalResp.data.success === true) {
             setStatus(true);
-
-            // Make Empty
             setTitle('');
-            setDescription('');
-            setSourceName('');
-            setSourceUrl('');
-            setStateCode('')
-            setCityID('');
-            setStates([]);
+            setContent('');
+            setSource('');
+            setState('')
+            setCity('');
+            setState([]);
             setSelectedFile(null);
-        }
-        
+        }       
     }
 
     return (
@@ -179,7 +182,7 @@ function CreateSchoolOpeningUpdates() {
                                     <div className="col-md-12">
                                         <div className="register_field_col">
                                             <p>Description</p>
-                                            <textarea className="register_textarea" placeholder="Enter description" value={description} onChange={e => setDescription(e.target.value)}></textarea>
+                                            <textarea className="register_textarea" placeholder="Enter description" value={content} onChange={e => setContent(e.target.value)}></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -188,7 +191,7 @@ function CreateSchoolOpeningUpdates() {
                                     <div className="col-md-12">
                                         <div className="register_field_col">
                                             <p>Url Source</p>
-                                            <input type="text" className="register_input" value={sourceUrl} onChange={e => setSourceUrl(e.target.value)} placeholder="Enter url"/>
+                                            <input type="text" className="register_input" value={source} onChange={e => setSource(e.target.value)} placeholder="Enter url"/>
                                         </div>
                                     </div>
                                 </div>
