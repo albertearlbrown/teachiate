@@ -118,18 +118,18 @@ export default function ComplexGrid({notification}) {
               {
                 action &&
                 <>
-                  {!requestAccepted ?
+                  {requestAccepted || notification.status === 'ACCEPTED' ?
+                  <Grid item>
+                    <Button variant="contained" color="primary">
+                      Accepted
+                    </Button>
+                  </Grid>:
                     <Grid item>
                       <Button variant="contained" color="primary" onClick={()=>onAcceptFriendRequest(senderId)}>
                         Accept
                       </Button>
                       <Button variant="contained" className={classes.buttonDec} onClick={()=>cancelRequest(senderId)}>
                         Decline
-                      </Button>
-                    </Grid>:
-                    <Grid item>
-                      <Button variant="contained" color="primary">
-                        Accepted
                       </Button>
                     </Grid>
                   }

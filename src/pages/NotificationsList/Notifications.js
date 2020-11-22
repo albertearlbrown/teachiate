@@ -47,7 +47,7 @@ export default function Notifications() {
       })
         .then((resp) => {
           setLoading(false);
-          setNList(resp.data.notifications);
+          setNList(resp.data.notifications.sort((a,b)=>new Date(a.date).getTime() >= new Date(b).getTime() ? 1: -1));
         })
         .catch(() => {
           setLoading(false);
