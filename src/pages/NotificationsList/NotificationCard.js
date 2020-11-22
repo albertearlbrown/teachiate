@@ -82,14 +82,15 @@ export default function ComplexGrid({notification}) {
       soc.emit("accept-friend-request", ({sender}), ack => {
         console.log(ack);
       })
+      setRequestAccepted(true)
     }
   }
 
-  const cancelRequest = request =>{
+  const cancelRequest = senderId =>{
     axios({
       method: 'delete',
       url: '/users/friends/cancel',
-      data: {request}
+      data: {senderId}
     }).then(res=>{
       console.log(res);
     })

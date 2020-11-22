@@ -38,6 +38,7 @@ const People = () => {
   const [sort, setSort] = useState('date')
   const [role, setNewRole] = useState('');
   const [socket, setSocket] = useState(null)
+  const [friendReq, setFriendReq] = useState(userData.friendReq)
 
   useEffect(()=>{
     getUsers(1)
@@ -98,6 +99,8 @@ const People = () => {
       socket.emit('friend-request', {receiver}, ack => {
           console.log(ack);
         });
+        const friendReq1 = [...friendReq, {reqId: receiver._id}]
+        setFriendReq(friendReq1)
     }
   }
 
@@ -177,7 +180,16 @@ const People = () => {
                               <img src={user.avatar || "assets/img/m1.png"} alt=""/>
                               <h4>{user.fullName}</h4>
                               <div className="catagory">{user.role}</div>
-                              <a onClick={()=>sendInviation(user)}>Add Friend</a>
+                              {
+                                friendReq.find((a)=>a.reqId === user._id)
+                                 ?
+                                <a>Sent</a>:
+                                (
+                                  userData.friends?.find((a)=>a === user._id)?
+                                  <a>Friend</a>:
+                                  <a onClick={()=>sendInviation(user)}>Add Friend</a>
+                                )
+                              }
                           </div>
                       </div>
                     )

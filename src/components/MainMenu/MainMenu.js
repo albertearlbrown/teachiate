@@ -18,7 +18,6 @@ function MainMenu() {
   const { isAuthenicate, userData } = useContext(AuthStoreContext);
   const [nCount, setNCount] = useState(0)
   const [message, setMessage] = useState(null)
-  const [redirect, setRedirect] = useState(null)
   const [open, setOpen] = React.useState(false);
   useEffect(()=>{
     const getNCount = () => {
@@ -59,7 +58,6 @@ function MainMenu() {
 
     const setAllSeen = ()=>{
       setNCount(0)
-      setRedirect(true)
     }
 
     return (
@@ -75,7 +73,6 @@ function MainMenu() {
           </Alert>
         </Snackbar>
            <div className="page-header_main-menu">
-           {redirect && <Redirect to="/notifications" />}
                 <nav className="nav-primary">
                     <ul className="menu-main-navigation menu clearfix">
                         <li className="menu-item-has-children"><Link to="/">Home</Link></li>
@@ -86,9 +83,11 @@ function MainMenu() {
                         {
                           isAuthenicate &&
                           <li className="menu-item-has-children">
+                          <Link to="/notifications">
                             <Badge badgeContent={nCount} color="error" onClick={()=>setAllSeen()}>
                               <NotificationsIcon />
                             </Badge>
+                            </Link>
                           </li>
                         }
                     </ul>
