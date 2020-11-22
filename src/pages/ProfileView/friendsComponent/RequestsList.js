@@ -18,14 +18,13 @@ const FriendsList = () => {
       setList(resp.data.requests)
     })
   }
-  const cancelRequest = request =>{
+  const cancelRequest = senderId =>{
     axios({
       method: 'delete',
       url: '/users/friends/cancel',
-      data: {request}
+      data: {senderId}
     }).then(res=>{
       console.log(res);
-      getRequestList()
     })
   }
 
