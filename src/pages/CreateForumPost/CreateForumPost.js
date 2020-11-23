@@ -50,7 +50,7 @@ function CreateForumPost() {
         if(selectedFile !== null) {
             const data = new FormData()
             data.append('file', selectedFile);
-            const resp =  await axios.post("https://teachiate-backend.fnmotivations.com/upload", data);
+            const resp =  await axios.post("https://api.teachiate.com/upload", data);
             if(resp.data.success === true) {
                 image = resp.data.filePath;
             }

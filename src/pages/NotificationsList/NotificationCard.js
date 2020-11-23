@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: 0,
   },
 }));
-const baseUrl = process.env.NODE_ENV === 'development'?"http://localhost:4000":"https://teachiate-backend.fnmotivations.com/"
+const baseUrl = process.env.NODE_ENV === 'development'?"http://localhost:4000":"https://api.teachiate.com"
 
 export default function ComplexGrid({notification}) {
   const { isAuthenicate, userData } = useContext(AuthStoreContext);

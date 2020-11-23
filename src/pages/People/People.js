@@ -7,7 +7,7 @@ import { AuthStoreContext } from '../../Store/AuthStore';
 import { configureSocket } from "../../utils/axiosInterceptor"
 import axios from 'axios';
 
-const baseUrl = process.env.NODE_ENV === 'development'?"http://localhost:4000":"https://teachiate-backend.fnmotivations.com/"
+const baseUrl = process.env.NODE_ENV === 'development'?"http://localhost:4000":"https://api.teachiate.com"
 
 const useStyles = makeStyles((theme) => ({
   backdrop: {
@@ -62,7 +62,7 @@ const People = () => {
   const getUsers = async (page) => {
     setOpen(true)
     axios({
-      url: `${baseUrl}/users/all`,
+      url: `/users/all`,
       method: 'get',
       params:{ page, sort,role, name: searchValue}
     }).then((response)=>{

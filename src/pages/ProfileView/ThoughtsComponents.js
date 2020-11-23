@@ -67,7 +67,7 @@ const ThoughtComponents = () => {
       };
 
       const resp = await axios.post(
-        "https://teachiate-backend.fnmotivations.com/upload",
+        "https://api.teachiate.com/upload",
         data,
         options
       );

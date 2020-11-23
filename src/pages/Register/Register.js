@@ -8,7 +8,7 @@ import { Auth } from 'aws-amplify'
 
 import axios from 'axios';
 
-const baseUrl = process.env.NODE_ENV === 'development'?"http://localhost:4000":"https://teachiate-backend.fnmotivations.com/"
+const baseUrl = process.env.NODE_ENV === 'development'?"http://localhost:4000":"https://api.teachiate.com"
 
 function Register() {
 

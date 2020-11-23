@@ -8,7 +8,7 @@ import { AuthStoreContext } from '../../Store/AuthStore';
 import axios from 'axios';
 import { Auth } from 'aws-amplify'
 
-const baseUrl = process.env.NODE_ENV === 'development'?"http://localhost:4000":"https://teachiate-backend.fnmotivations.com/"
+const baseUrl = process.env.NODE_ENV === 'development'?"http://localhost:4000":"https://api.teachiate.com"
 
 function Login() {
 

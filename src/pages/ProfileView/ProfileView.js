@@ -17,7 +17,7 @@ const ProfileView = () => {
         const file = e.target.files[0];
         const data = new FormData();
         data.append('file', file);
-        const resp = await axios.post('https://teachiate-backend.fnmotivations.com/upload', data);
+        const resp = await axios.post('https://api.teachiate.com/upload', data);
         if(resp.data.success === true) {
             const data = {
                 cover: resp.data.filePath
@@ -35,7 +35,7 @@ const ProfileView = () => {
         const file = e.target.files[0];
         const data = new FormData();
         data.append('file', file);
-        const resp = await axios.post('https://teachiate-backend.fnmotivations.com/upload', data);
+        const resp = await axios.post('https://api.teachiate.com/upload', data);
         if(resp.data.success === true) {
             const data = {
                 avatar: resp.data.filePath

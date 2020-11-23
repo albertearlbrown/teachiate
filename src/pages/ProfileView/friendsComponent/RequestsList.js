@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import axios from 'axios';
 import { configureSocket } from "../../../utils/axiosInterceptor"
 import { AuthStoreContext } from "../../../Store/AuthStore";
-const baseUrl = process.env.NODE_ENV === 'development'?"http://localhost:4000":"https://teachiate-backend.fnmotivations.com/"
+const baseUrl = process.env.NODE_ENV === 'development'?"http://localhost:4000":"https://api.teachiate.com"
 
 const FriendsList = () => {
   const { isAuthenicate, userData } = useContext(AuthStoreContext);
