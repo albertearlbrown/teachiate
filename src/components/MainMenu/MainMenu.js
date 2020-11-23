@@ -42,7 +42,6 @@ function MainMenu() {
           setOpen(true)
         })
         soc.on("friend-request-accepted"+userData._id, data=>{
-          debugger;
           setNCount(data.count)
           setMessage(data.message)
           setOpen(true)
