@@ -6,7 +6,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios';
 import { AuthStoreContext } from '../../Store/AuthStore';
 
-const baseUrl = process.env.NODE_ENV === 'development'?"http://localhost:4000":"https://teachiate-backend.fnmotivations.com/"
+const baseUrl = process.env.NODE_ENV === 'development'?"http://localhost:4000":"https://api.teachiate.com"
 
 const toBase64 = file => new Promise((resolve, reject) => {
     const reader = new FileReader();

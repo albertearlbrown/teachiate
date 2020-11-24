@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import PageTitle from '../../components/PageTitle';
 import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { makeStyles } from '@material-ui/core/styles';
+import { AuthStoreContext } from '../../Store/AuthStore';
+import { configureSocket } from "../../utils/axiosInterceptor"
 import axios from 'axios';
 
-const baseUrl = process.env.NODE_ENV === 'development'?"http://localhost:4000":"https://teachiate-backend.fnmotivations.com/"
+const baseUrl = process.env.NODE_ENV === 'development'?"http://localhost:4000":"https://api.teachiate.com"
 
 const useStyles = makeStyles((theme) => ({
   backdrop: {
@@ -26,6 +28,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 const People = () => {
+  const { userData } = useContext(AuthStoreContext);
   const classes = useStyles();
   const [users, setUsers] = useState([])
   const [totalPages, setTotalPages] = useState(0)
@@ -34,6 +37,8 @@ const People = () => {
   const [currentPage, setCurrentPage] = useState(0)
   const [sort, setSort] = useState('date')
   const [role, setNewRole] = useState('');
+  const [socket, setSocket] = useState(null)
+  const [friendReq, setFriendReq] = useState(userData.friendReq)
 
   useEffect(()=>{
     getUsers(1)
@@ -43,10 +48,21 @@ const People = () => {
     getUsers(1)
   },[sort, role])
 
+  useEffect(()=>{
+    const confSock = async ()=>{
+      let soc = await configureSocket(baseUrl);
+      setSocket(soc)
+      soc.on("friend-request"+userData._id, data => {
+        console.log(data);
+      })
+    }
+    confSock()
+  },[])
+
   const getUsers = async (page) => {
     setOpen(true)
     axios({
-      url: `${baseUrl}/users/all`,
+      url: `/users/all`,
       method: 'get',
       params:{ page, sort,role, name: searchValue}
     }).then((response)=>{
@@ -75,6 +91,16 @@ const People = () => {
       setNewRole(null)
     }else{
       setNewRole(e)
+    }
+  }
+
+  const sendInviation = async (receiver)=>{
+    if (userData._id && socket) {
+      socket.emit('friend-request', {receiver}, ack => {
+          console.log(ack);
+        });
+        const friendReq1 = [...friendReq, {reqId: receiver._id}]
+        setFriendReq(friendReq1)
     }
   }
 
@@ -145,13 +171,25 @@ const People = () => {
                 </div>
                 <div className="row">
                   {users.map((user, index) => {
+                    if (userData._id === user._id) {
+                      return;
+                    }
                     return (
                       <div key={index} className="col-md-3 col-sm-6 col-xs-12">
                           <div className="add_frnd text-center">
                               <img src={user.avatar || "assets/img/m1.png"} alt=""/>
                               <h4>{user.fullName}</h4>
                               <div className="catagory">{user.role}</div>
-                              <a href="#">Add Friend</a>
+                              {
+                                friendReq.find((a)=>a.reqId === user._id)
+                                 ?
+                                <a>Sent</a>:
+                                (
+                                  userData.friends?.find((a)=>a === user._id)?
+                                  <a>Friend</a>:
+                                  <a onClick={()=>sendInviation(user)}>Add Friend</a>
+                                )
+                              }
                           </div>
                       </div>
                     )

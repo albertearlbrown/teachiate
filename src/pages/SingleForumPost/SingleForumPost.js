@@ -12,7 +12,7 @@ const SingleForumPost = () => {
 
     useEffect(() => {
         async function fetchPost() {
-            const resp = await axios.get(`https://teachiate-backend.fnmotivations.com/forum/${id}`);
+            const resp = await axios.get(`https://api.teachiate.com/forum/${id}`);
             if(resp.data.success) {
                 setPost(resp.data.data);
                 setLoad(true);

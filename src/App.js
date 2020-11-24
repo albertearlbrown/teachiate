@@ -20,6 +20,7 @@ import SingleForumPost from './pages/SingleForumPost';
 import People from './pages/People';
 import GroupStep1 from './pages/Group/Step1';
 import GroupStep2 from './pages/Group/Step2';
+import Notifications from './pages/NotificationsList/Notifications'
 
 // Components
 import Header from './components/Header';
@@ -27,7 +28,7 @@ import Footer from './components/Footer';
 import SchoolOpening from './pages/SchoolOpening/SchoolOpening';
 
 // utils
-import addAuthorizationHeader from './utils/axiosInterceptor';
+import {addAuthorizationHeader, configureSocket} from './utils/axiosInterceptor';
 
 import { AuthStoreContext } from './Store/AuthStore';
 import Search from './pages/Search/Search';
@@ -35,13 +36,37 @@ import Search from './pages/Search/Search';
 import { Auth, Hub } from 'aws-amplify';
 
 // axios configs
-axios.defaults.baseURL = process.env.NODE_ENV === 'development'?"http://localhost:4000":"https://api.teachiate.com"
+const baseURL = process.env.NODE_ENV === 'development'?"http://localhost:4000":"https://api.teachiate.com"
+axios.defaults.baseURL = baseURL
 axios.interceptors.request.use(addAuthorizationHeader, e => Promise.reject(e));
 
 function App () {
 
+
   const { setIsAuthenicate, setUserData } = useContext(AuthStoreContext);
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState({});
+
+  useEffect(()=>{
+    const sendSock = async ()=>{
+      if (user._id) {
+        let socket = await configureSocket(baseURL);
+        debugger
+        if (socket) {
+          socket.on('connection', () => {
+              console.log(`I'm connected with the back-end`);
+            });
+          socket.emit('say-hay', user, ack => {
+            console.log(ack);
+          });
+          socket.on(user._id, data =>{
+            console.log(data);
+          })
+        }
+      }
+    }
+    sendSock()
+  }, [user])
 
   useEffect(() => {
     Hub.listen('auth', ({ payload: { event, data } }) => {
@@ -88,6 +113,7 @@ function App () {
         .then((res) => {
           if(res.data.data) {
             setUserData(res.data.data);
+            setUser(res.data.data)
             setIsAuthenicate(true);
           }
           setLoading(false)
@@ -156,6 +182,7 @@ function App () {
                 <Route path="/create-group-step-2">
                   <GroupStep2/>
                 </Route>
+                <PrivateRoute path='/notifications' component={Notifications}/>
                 <PrivateRoute path='/create-school-updates' component={CreateSchoolOpeningUpdates}/>
               </Switch>
             </div>
