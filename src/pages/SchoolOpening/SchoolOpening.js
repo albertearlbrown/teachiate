@@ -240,7 +240,7 @@ const SchoolOpening = () => {
                             </div>    
 
                             {loadPosts && state === 'All' & city === 'All' ? (
-                                <div className="blog_sec4" style={{height: '450px', overflow: 'scroll'}}>
+                                <div className="blog_sec4" style={{height: '300px', overflow: 'scroll'}}>
                                     <div className="opeing_list">                                        
                                         {posts
                                         .map(post => (
@@ -253,7 +253,7 @@ const SchoolOpening = () => {
                             ): null }
 
                             {loadPosts && state !== 'All' && city === 'All' ? ( 
-                                <div className="blog_sec4" style={{height: '450px', overflow: 'scroll'}}>
+                                <div className="blog_sec4" style={{height: '300px', overflow: 'scroll'}}>
                                     <div className="opeing_list">                                        
                                         {posts
                                         .filter(post => post.state === state)
@@ -268,7 +268,7 @@ const SchoolOpening = () => {
 
 
                             {loadPosts && state !== 'All' && city !== 'All'  ? (
-                                <div className="blog_sec4" style={{height: '450px', overflow: 'scroll'}}>
+                                <div className="blog_sec4" style={{height: '300px', overflow: 'scroll'}}>
                                     <div className="opeing_list">                                        
                                         {posts
                                         .filter(post => post.state === state && post.city === city)
@@ -344,7 +344,7 @@ const SchoolOpening = () => {
                             ) : null}                            
 
                             {loadCommunitiesFeed ? (          
-                                <div className="blog_sec4 open">
+                                <div className="blog_sec4" style={{height: '300px', overflow: 'scroll'}}>
                                     <div className="opeing_list">                                        
                                        {newPost.map(post => (
                                            <div key={post._id}>
