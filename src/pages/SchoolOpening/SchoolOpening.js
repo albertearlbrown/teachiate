@@ -344,7 +344,7 @@ const SchoolOpening = () => {
                             ) : null}                            
 
                             {loadCommunitiesFeed ? (          
-                                <div className="blog_sec4" style={{height: '450px', overflow: 'scroll'}}>
+                                <div className="blog_sec4" style={{height: '650px', overflow: 'scroll'}}>
                                     <div className="opeing_list">                                        
                                        {newPost.map(post => (
                                            <div key={post._id}>

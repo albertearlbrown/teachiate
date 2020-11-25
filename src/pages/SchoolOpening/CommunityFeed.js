@@ -84,7 +84,7 @@ function DisplayPost({posts}) {
             {posts.comments.map(comment => (
                 <div className="blog_title" key={comment._id}>
                     <div className="title_img">
-                        <img src={comment.user.avatar === null ? '/assets/img/user-account.png' : comment.user.avatar } alt=""/>
+                        <img className='img-circle' src={comment.user.avatar === null ? '/assets/img/user-account.png' : comment.user.avatar } alt=""/>
                     </div>
                     <div className="user_des">
                         <h4>{comment.user.fullName} <span>({comment.user.role})</span></h4>
@@ -105,7 +105,7 @@ function DisplayPost({posts}) {
             .map(comment => (
                 <div className="blog_title" key={comment._id}>
                     <div className="title_img">
-                        <img style={{borderRadius: '50%'}} src={comment.user.avatar === null ? '/assets/img/user-account.png'  : comment.user.avatar } alt=""/>
+                        <img className='img-circle' src={comment.user.avatar === null ? '/assets/img/user-account.png'  : comment.user.avatar } alt=""/>
                     </div>
                     <div className="user_des">
                         <h4>{comment.user.fullName} <span>({comment.user.role})</span></h4>
@@ -119,7 +119,7 @@ function DisplayPost({posts}) {
 
             {isAuthenicate ? (
                 <>
-                <div className="direct_cmnt_area">
+                <div className="direct_cmnt_area" style={{marginBottom: '50px'}}>
                     <form onSubmit={postCommentHandler}>
                         <input type='hidden' name='though_id' value={posts._id}/>
                         <textarea placeholder="write a comment" value={commentTextarea} onChange={ (e) => setCommentTextarea(e.target.value)} name='textarea'></textarea>

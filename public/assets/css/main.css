@@ -3393,8 +3393,6 @@ label {
 .opeing_list {
     background: #fff;
     padding: 20px 15px;
-    margin-bottom: 30px;
-
 }
 
 .open {
@@ -12145,9 +12143,14 @@ h3.main_sec_title{
     background-color: #fff;
     box-shadow: 0 4px 20px rgb(0 0 0 / 8%);
     padding: 10px;
-    margin-top: 15px;
+    margin-top: 8px;
 }
-.direct_cmnt_area textarea{
+
+.img-circle {
+    border-radius: 50%;
+}
+
+.direct_cmnt_area textarea {
     width: calc(100% - 100px);
     float: left;
     height: 60px;
