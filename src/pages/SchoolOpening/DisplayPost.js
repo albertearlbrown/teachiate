@@ -50,6 +50,7 @@ function DisplayPost({posts}) {
                     <p>{posts.state} | USA </p>
                 </div>
                 <div className="time"> <Moment fromNow>{posts.date}</Moment></div>
+                <div class="star_icon"><i class="fa fa-star-o" aria-hidden="true"></i></div>
             </div>
             
             {posts.filepath !== null ? (

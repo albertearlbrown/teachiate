@@ -12157,6 +12157,7 @@ h3.main_sec_title{
     font-size: 16px;
     color: #2b2a2a;
     background-color: #dce3e8;
+    font-family: 'Poppins', sans-serif;
 }
 .direct_cmnt_area input[type=submit] {
     float: right;

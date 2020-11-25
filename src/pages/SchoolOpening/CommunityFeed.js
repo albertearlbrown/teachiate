@@ -39,8 +39,10 @@ function DisplayPost({posts}) {
             <div className="blog_title"  key={posts._id}>
                 <div className="title_img"><img src="assets/img/admin-img.png" alt=""/></div>
                 <div className="user_des">
-                    <h4>{posts.user.fullName} ({posts.user.role})</h4>
+                    <h4>{posts.user.fullName}</h4>
+                    <p>{posts.user.role}</p>
                 </div>
+                <div class="star_icon"><i class="fa fa-star-o" aria-hidden="true"></i></div>
                 <div className="time"> <Moment fromNow>{posts.date}</Moment></div>
             </div>
             
