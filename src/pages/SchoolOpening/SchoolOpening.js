@@ -240,8 +240,8 @@ const SchoolOpening = () => {
                             </div>    
 
                             {loadPosts && state === 'All' & city === 'All' ? (
-                                <div className="blog_sec4" style={{height: '300px', overflow: 'scroll'}}>
-                                    <div className="opeing_list">                                        
+                                <div style={{height: '300px', overflow: 'scroll'}}>
+                                    <div>                                        
                                         {posts
                                         .map(post => (
                                             <div key={post._id}>
@@ -253,8 +253,8 @@ const SchoolOpening = () => {
                             ): null }
 
                             {loadPosts && state !== 'All' && city === 'All' ? ( 
-                                <div className="blog_sec4" style={{height: '300px', overflow: 'scroll'}}>
-                                    <div className="opeing_list">                                        
+                                <div style={{height: '300px', overflow: 'scroll'}}>
+                                    <div>                                        
                                         {posts
                                         .filter(post => post.state === state)
                                         .map(post => (
@@ -268,8 +268,8 @@ const SchoolOpening = () => {
 
 
                             {loadPosts && state !== 'All' && city !== 'All'  ? (
-                                <div className="blog_sec4" style={{height: '300px', overflow: 'scroll'}}>
-                                    <div className="opeing_list">                                        
+                                <div style={{height: '300px', overflow: 'scroll'}}>
+                                    <div>                                        
                                         {posts
                                         .filter(post => post.state === state && post.city === city)
                                         .map(post => (
@@ -344,8 +344,8 @@ const SchoolOpening = () => {
                             ) : null}                            
 
                             {loadCommunitiesFeed ? (          
-                                <div className="blog_sec4" style={{height: '1000px', overflow: 'scroll'}}>
-                                    <div className="opeing_list">                                        
+                                <div style={{height: '1000px', overflow: 'scroll'}}>
+                                    <div>                                        
                                        {newPost.map(post => (
                                            <div key={post._id}>
                                                 <CommunityFeed posts={post}/>

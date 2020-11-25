@@ -312,7 +312,7 @@ const Home = () => {
                     {load ?
                         postData
                         .map(post => (
-                            <div className="blog_sec1" key={post.id}>
+                            <div className="" key={post.id}>
                                 <div className="blog_title">
                                     <div className="title_img">
                                         <img src={post.avatar == null ? '/assets/img/user-account.png' : post.user.avatar } alt=""/>
