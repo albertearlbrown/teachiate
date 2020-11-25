@@ -191,8 +191,7 @@ const SchoolOpening = () => {
         <>
             <div id="main">
                 <section className="blog profile_mt clearfix">
-                    <div className="container">
-                        
+                    <div className="container">                        
                         <div className="opening_sec">
                             <h2>COVID-19 School Update Page</h2>
                         </div>                        
