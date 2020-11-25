@@ -197,8 +197,7 @@ const SchoolOpening = () => {
                         </div>                        
                         
                         <div className="opening_search_form">
-                            <div className="row">
-                        
+                            <div className="row">                        
                                 <div className="col-md-6 col-xs-12">
                                     <label>State</label>
 
