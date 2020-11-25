@@ -48,7 +48,7 @@ function DisplayPost({posts}) {
             </div>
             
             {posts.filepath !== null ? (
-                <div className="blog_img_holder1"><img src={posts.image} alt=""/></div>
+                <div className="blog_img_holder1"><img src={posts.image} alt="" /></div>
             )  : null}
 
             <div className="blog_des">
