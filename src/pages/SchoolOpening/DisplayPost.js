@@ -43,6 +43,7 @@ function DisplayPost({posts}) {
 
     return (
         <> 
+            <div className='blog_sec1'>
             <div className="blog_title"  key={posts.id}>
                 <div className="title_img"><img src="assets/img/admin-img.png" alt=""/></div>
                 <div className="user_des">
@@ -145,6 +146,7 @@ function DisplayPost({posts}) {
                 </div>                                     
                 </>
             ) : null} 
+            </div>
         </>
     )
 }
