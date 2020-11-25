@@ -142,15 +142,20 @@ body {}
     color: #2f272A;
     font-weight: bold
 }
-
+.w-25 {
+    width: 25%;
+}
 .join_now-part .content-box p {
-    width: 500px;
+    width: 800px;
     margin: 0 auto;
     color: #666666;
     font-weight: 600;
     margin-bottom: 50px;
 }
-
+label {
+    display: inline-block;
+    margin-bottom: .5rem
+}
 .join_now-part .content-box .form-box {}
 
 .join_now-part .content-box .form-box form {

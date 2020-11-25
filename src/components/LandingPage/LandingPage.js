@@ -3,7 +3,7 @@ import React from 'react'
 // css files from/for the landing page
 import "./all.min.css"
 import "./main.css"
-import "./bootstrap.min.css"
+// import "./bootstrap.min.css"
 import "./normalize.css"
 
 const LandingPage = () => {
@@ -32,14 +32,14 @@ const LandingPage = () => {
             <div className="join_now-part join_now-part1">
                 <div className="container-fluid">
                     <div className="content-box">
-                        <h3>Join Now</h3>
-                        <p>Enter your name and email address to get an exclusive invitation to register to this social network platform</p>
+                        <h2>Join Now</h2>
+                        <p className='h5'>Enter your name and email address to get an exclusive invitation to register to this social network platform</p>
                         <div className="form-box">
                             <form>
-                                <div className="">
+                                <div className="w-25">
                                     <input type="text" name="name" placeholder="Full name" required />
                                 </div>
-                                <div className="">
+                                <div className="w-25">
                                     <input type="email" name="email" placeholder="Email address" required />
                                 </div>
                                 <div className="">
@@ -59,7 +59,7 @@ const LandingPage = () => {
                         <div className="row">
                             <div className="col-lg-7 col-md-6">
                                 <div className="box">
-                                    <p>Join the of-of-its-kind academic social platform and share ideas, discuss issues and learn about the latest developments around the world in a friendly, informal setting.</p>
+                                    <p>Join the one-of-its-kind academic social platform and share ideas, discuss issues and learn about the latest developments around the world in a friendly, informal setting.</p>
                                     <p>Education has been evolving exponentially over the past few years and this change is not going to stop. Technology, increasing diversity and the current pandemic has transformed the landscape of education. The needs and expectations of today's children have changed dramatically.</p>
                                 </div>
 
@@ -107,14 +107,14 @@ const LandingPage = () => {
             <div className="join_now-part join_now-part2">
                 <div className="container-fluid">
                     <div className="content-box">
-                        <h3>Join Now</h3>
-                        <p>Enter your name and email address to get an exclusive invitation to register to this social network platform</p>
+                        <h2>Join Now</h2>
+                        <p className='h5'>Enter your name and email address to get an exclusive invitation to register to this social network platform</p>
                         <div className="form-box">
                             <form>
-                                <div className="">
+                                <div className="w-25">
                                     <input type="text" name="name" placeholder="Full name" required />
                                 </div>
-                                <div className="">
+                                <div className="w-25">
                                     <input type="email" name="email" placeholder="Email address" required />
                                 </div>
                                 <div className="">
