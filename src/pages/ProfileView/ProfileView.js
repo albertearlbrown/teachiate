@@ -90,6 +90,7 @@ const ProfileView = () => {
                         </div>
                         <div className="avatar-status">
                             <h3>{userData.role}</h3>
+                            {userData.online && <h4><span className="active"></span> Active </h4>}
                             <div className="clear"></div>
                         </div>
                     </div>

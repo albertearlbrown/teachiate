@@ -38,7 +38,7 @@ const People = () => {
   const [sort, setSort] = useState('date')
   const [role, setNewRole] = useState('');
   const [socket, setSocket] = useState(null)
-  const [friendReq, setFriendReq] = useState(userData.friendReq)
+  const [friendReq, setFriendReq] = useState(userData?.friendReq)
 
   useEffect(()=>{
     getUsers(1)
@@ -52,9 +52,12 @@ const People = () => {
     const confSock = async ()=>{
       let soc = await configureSocket(baseUrl);
       setSocket(soc)
-      soc.on("friend-request"+userData._id, data => {
-        console.log(data);
-      })
+      debugger
+      if (soc) {
+        soc.on("friend-request"+userData?._id, data => {
+          console.log(data);
+        })
+      }
     }
     confSock()
   },[])
@@ -69,6 +72,7 @@ const People = () => {
       const { data } = response.data
       setUsers(data.users)
       setCurrentPage(data.page)
+      debugger
       const tt = Math.ceil(data.totalElement / data.limit)
       setTotalPages(tt)
       setOpen(false)
@@ -95,7 +99,7 @@ const People = () => {
   }
 
   const sendInviation = async (receiver)=>{
-    if (userData._id && socket) {
+    if (userData?._id && socket) {
       socket.emit('friend-request', {receiver}, ack => {
           console.log(ack);
         });
@@ -171,7 +175,7 @@ const People = () => {
                 </div>
                 <div className="row">
                   {users.map((user, index) => {
-                    if (userData._id === user._id) {
+                    if (userData?._id === user._id) {
                       return;
                     }
                     return (
@@ -181,11 +185,11 @@ const People = () => {
                               <h4>{user.fullName}</h4>
                               <div className="catagory">{user.role}</div>
                               {
-                                friendReq.find((a)=>a.reqId === user._id)
+                                friendReq?.find((a)=>a.reqId === user._id)
                                  ?
                                 <a>Sent</a>:
                                 (
-                                  userData.friends?.find((a)=>a === user._id)?
+                                  userData?.friends?.find((a)=>a === user._id)?
                                   <a>Friend</a>:
                                   <a onClick={()=>sendInviation(user)}>Add Friend</a>
                                 )
