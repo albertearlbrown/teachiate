@@ -69,6 +69,9 @@ export default function ComplexGrid({notification}) {
         case 'TO_JOIN_GROUP':
           setTitle(`${senderId.fullName} sent request to join group`);
           break;
+        case 'POST_LIKE':
+          setTitle(`${senderId.fullName} liked your post`);
+          break;
         default:
           setTitle(`${senderId.fullName} sent you a notification`);
       }

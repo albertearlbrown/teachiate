@@ -46,6 +46,12 @@ function MainMenu() {
           setMessage(data.message)
           setOpen(true)
         })
+        soc.on('like-post'+userData._id, data => {
+          console.log(data);
+          setNCount(data.count)
+          setMessage(data.message)
+          setOpen(true)
+        })
         window.addEventListener("beforeunload", ()=>{
           soc.emit("user-disconnected")
         });

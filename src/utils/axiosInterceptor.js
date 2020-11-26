@@ -1,6 +1,8 @@
 import {Auth} from "aws-amplify"
 import socketClient  from "socket.io-client";
 
+const baseUrl = process.env.NODE_ENV === 'development'?"http://localhost:4000":"https://api.teachiate.com"
+
 export async function addAuthorizationHeader(config){
   // add try catch for public routes
   try {
@@ -15,7 +17,7 @@ export async function addAuthorizationHeader(config){
   }
 }
 
-export async function configureSocket(baseURL){
+export async function configureSocket(baseURL = baseUrl){
   let socket = null;
   let extraHeaders = {}
   try {
