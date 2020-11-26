@@ -143,8 +143,9 @@ body {}
     font-weight: bold
 }
 .w-25 {
-    width: 25%;
+    width: 350px;
 }
+
 .join_now-part .content-box p {
     width: 800px;
     margin: 0 auto;

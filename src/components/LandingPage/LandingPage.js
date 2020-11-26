@@ -131,8 +131,8 @@ const LandingPage = () => {
                     <div className="content-box">
                         <p>Connect with us</p>
                         <div className="icon-box">
-                            <a href="#"><i className="fab fa-instagram"></i></a>
-                            <a href="#"><i className="fab fa-facebook-square"></i></a>
+                            <a href="https://www.instagram.com/Teachiate"><i className="fab fa-instagram"></i></a>
+                            <a href="https://www.facebook.com/Teachiate"><i className="fab fa-facebook-square"></i></a>
                         </div>
                     </div>
                 </div>
