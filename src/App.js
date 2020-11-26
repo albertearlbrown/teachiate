@@ -34,6 +34,7 @@ import { AuthStoreContext } from './Store/AuthStore';
 import Search from './pages/Search/Search';
 
 import { Auth, Hub } from 'aws-amplify';
+import LandingPage from './components/LandingPage/LandingPage';
 
 // axios configs
 const baseURL = process.env.NODE_ENV === 'development'?"http://localhost:4000":"https://api.teachiate.com"
@@ -127,10 +128,10 @@ function App () {
   }
 
 
-
+console.log(window.location)
   return (
       <Router>
-          <Header/>
+          {window.location.pathname!=='/' && <Header/>}
           {loading
             ?
             <div style={{height:700}}>
@@ -142,6 +143,9 @@ function App () {
             <div id="main">
               <Switch>
                 <Route path="/" exact>
+                  <LandingPage />
+                </Route>
+                <Route path="/index" exact>
                   <Home />
                 </Route>
                 <PrivateRoute path='/my-profile' component={Profile}/>
@@ -187,7 +191,7 @@ function App () {
               </Switch>
             </div>
           }
-          <Footer/>
+          {window.location.pathname!=='/' && <Footer/>}
       </Router>
   );
 }
