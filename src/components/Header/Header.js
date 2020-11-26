@@ -13,7 +13,7 @@ function Header() {
 
   const logoutUser = async (e) => {
     e.preventDefault();
-    await Auth.signOut({ global: true });
+    await Auth.signOut();
     window.location.replace("/");
   };
 
