@@ -4,15 +4,16 @@ import SearchBox from "../SearchBox/SearchBox";
 import Logo from "../Logo/Logo";
 import { Link } from "react-router-dom";
 import { AuthStoreContext } from "../../Store/AuthStore";
+import { Auth } from 'aws-amplify'
 
 function Header() {
   const { isAuthenicate, userData } = useContext(AuthStoreContext);
 
   useEffect(() => {}, []);
 
-  const logoutUser = (e) => {
+  const logoutUser = async (e) => {
     e.preventDefault();
-    localStorage.clear();
+    await Auth.signOut({ global: true });
     window.location.replace("/");
   };
 

@@ -48,9 +48,8 @@ const FriendsList = () => {
                       <img src={f.avatar || "assets/img/friend_request_Avtar_image_1.png"} alt="" />
                     </div>
                     <div className="friend-info-details">
-                      <a href="#">{f.fullName}</a>
-                      <p>{f.role ? `${f.role}`:""}</p>
-                      {/*<h4 className="active_status">Active Now</h4>*/}
+                      <a href="#">{f.fullName} <span>{f.role ? `(${f.role})`:""}</span></a>
+                      {f.online && <h4 className="active_status">Active Now</h4>}
                     </div>
                     <div className="clear" />
                   </div>

@@ -46,6 +46,9 @@ function MainMenu() {
           setMessage(data.message)
           setOpen(true)
         })
+        window.addEventListener("beforeunload", ()=>{
+          soc.emit("user-disconnected")
+        });
       }
     }
     confSock()
