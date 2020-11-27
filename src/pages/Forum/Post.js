@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import Moment from "react-moment";
 import axios from "axios";
 import { AuthStoreContext } from "../../Store/AuthStore";
+import { Link } from 'react-router-dom'
 import Swal from "sweetalert2";
 import { configureSocket } from "../../utils/axiosInterceptor"
 
@@ -85,9 +86,9 @@ function Posts({ post }) {
           </div>
 
           <div className="forum_col_content">
-            <a href="#" className="forum_title">
+            <Link to={`/posts/${post._id}`} className="forum_title">
               {post.title}
-            </a>
+            </Link>
             <p className="more">{post.description}</p>
             {post.tags.length > 0
               ? post.tags.map((tage) => (

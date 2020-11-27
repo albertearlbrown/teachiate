@@ -21,6 +21,7 @@ import People from './pages/People';
 import GroupStep1 from './pages/Group/Step1';
 import GroupStep2 from './pages/Group/Step2';
 import Notifications from './pages/NotificationsList/Notifications'
+import ForumPostPage from './pages/ForumPostPage/ForumPostPage'
 
 // Components
 import Header from './components/Header';
@@ -51,7 +52,6 @@ function App () {
     const sendSock = async ()=>{
       if (user._id) {
         let socket = await configureSocket(baseURL);
-        debugger
         if (socket) {
           socket.on('connection', () => {
               console.log(`I'm connected with the back-end`);
@@ -184,6 +184,7 @@ function App () {
                 </Route>
                 <PrivateRoute path='/notifications' component={Notifications}/>
                 <PrivateRoute path='/create-school-updates' component={CreateSchoolOpeningUpdates}/>
+                <PrivateRoute path='/posts/:id' component={ForumPostPage}/>
               </Switch>
             </div>
           }
