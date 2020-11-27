@@ -142,10 +142,15 @@ body {}
     color: #2f272A;
     font-weight: bold
 }
-.w-25 {
+.join-us-fields {
     width: 350px;
 }
-
+.color-green {
+    color: green;
+}
+.font18 {
+    font-size: 20px;
+}
 .join_now-part .content-box p {
     width: 800px;
     margin: 0 auto;

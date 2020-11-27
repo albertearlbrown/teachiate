@@ -1,4 +1,5 @@
-import React from 'react'
+import Axios from 'axios'
+import React, { useState } from 'react'
 
 // css files from/for the landing page
 import "./all.min.css"
@@ -7,6 +8,22 @@ import "./main.css"
 import "./normalize.css"
 
 const LandingPage = () => {
+    const [ userData, setUserData ] = useState({name:'', email:''})
+    const [ signUp, setSignUp ] = useState(false)
+
+    Axios.get("https://api.teachiate.com/visitors")
+    .then((resp)=>console.log("get visitors",resp))
+    .catch((err)=>console.log("get visitors",err))
+
+    const setVisitors = (e,data) => {
+        e.preventDefault()
+        Axios.post("https://api.teachiate.com/visitors", data)
+            .then((resp)=>(
+                resp.status===200 && setSignUp(true)
+            ))
+            .catch((err)=>console.log(err))
+    }
+
     return(
         <React.Fragment>
             <header className="header-part">
@@ -34,18 +51,26 @@ const LandingPage = () => {
                     <div className="content-box">
                         <h2>Join Now</h2>
                         <p className='h5'>Enter your name and email address to get an exclusive invitation to register to this social network platform</p>
-                        <div className="form-box">
+                        <div className="form-box font18">
+                            {
+                                signUp ?
+                                <p className=' font18'>
+                                    <i className="fas fa-check-circle color-green"></i>{"  "} 
+                                        Sign up for Newsletters successful, Thanks! 
+                                </p>
+                            :
                             <form>
-                                <div className="w-25">
-                                    <input type="text" name="name" placeholder="Full name" required />
+                                <div className="join-us-fields">
+                                    <input type="text" name="name" onChange={(e)=>setUserData({...userData, name:e.target.value})} placeholder="Full name" value={userData.name} required />
                                 </div>
-                                <div className="w-25">
-                                    <input type="email" name="email" placeholder="Email address" required />
+                                <div className="join-us-fields">
+                                    <input type="email" name="email" onChange={(e)=>setUserData({...userData, email:e.target.value})} placeholder="Email address" value={userData.email} required />
                                 </div>
                                 <div className="">
-                                    <button className="cust-btn">Subscribe</button>
+                                    <button onClick={(e)=>setVisitors(e,{fullName:userData.name, email:userData.email})} className="cust-btn">Subscribe</button>
                                 </div>
                             </form>
+                            }
                         </div>
                     </div>
                 </div>
@@ -110,17 +135,25 @@ const LandingPage = () => {
                         <h2>Join Now</h2>
                         <p className='h5'>Enter your name and email address to get an exclusive invitation to register to this social network platform</p>
                         <div className="form-box">
+                            {
+                                signUp ?
+                                <p className=' font18'>
+                                    <i className="fas fa-check-circle color-green"></i>{"  "} 
+                                        Sign up for Newsletters successful, Thanks! 
+                                </p>
+                            :
                             <form>
-                                <div className="w-25">
-                                    <input type="text" name="name" placeholder="Full name" required />
+                                <div className="join-us-fields">
+                                    <input type="text" name="name" onChange={(e)=>setUserData({...userData, name:e.target.value})} placeholder="Full name" value={userData.name} required />
                                 </div>
-                                <div className="w-25">
-                                    <input type="email" name="email" placeholder="Email address" required />
+                                <div className="join-us-fields">
+                                    <input type="email" name="email" onChange={(e)=>setUserData({...userData, email:e.target.value})} placeholder="Email address" value={userData.email} required />
                                 </div>
                                 <div className="">
-                                    <button className="cust-btn">Subscribe</button>
+                                    <button onClick={(e)=>setVisitors(e,{fullName:userData.name, email:userData.email})} className="cust-btn">Subscribe</button>
                                 </div>
                             </form>
+                            }
                         </div>
                     </div>
                 </div>
