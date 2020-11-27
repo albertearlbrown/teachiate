@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
+import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
@@ -137,6 +138,14 @@ export default function ComplexGrid({notification}) {
                     </Grid>
                   }
                 </>
+              }
+              {
+                notification.type === "POST_LIKE" &&
+                <Link to={`/posts/${notification.postId}`}>
+                  <Button variant="contained" color="primary">
+                    View Post
+                  </Button>
+                </Link>
               }
             </Grid>
           </Grid>
