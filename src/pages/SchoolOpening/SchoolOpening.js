@@ -267,15 +267,13 @@ const SchoolOpening = () => {
 
                             {loadPosts && state !== 'All' && city !== 'All'  ? (
                                 <div style={{height: '300px', overflow: 'scroll'}}>
-                                    <div>                                        
-                                        {posts
-                                        .filter(post => post.state === state && post.city === city)
-                                        .map(post => (
-                                            <div key={post._id}>
-                                                <DisplayPost posts={post}/>
-                                            </div>
-                                        ))}                                        
-                                    </div>
+                                    {posts
+                                    .filter(post => post.state === state && post.city === city)
+                                    .map(post => (
+                                        <div key={post._id}>
+                                            <DisplayPost posts={post}/>
+                                        </div>
+                                    ))}                                        
                                 </div>
                             ): null }                                                                   
 
