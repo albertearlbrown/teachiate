@@ -12644,6 +12644,18 @@ select {
     font-weight: 500;
     border-radius: 50px;
 }
+
+.trend_topics ul li p{
+    padding: 0 15px;
+    display: inline-block;
+    line-height: 41px;
+    background-color: #8899a7;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: 50px;
+}
 .left_listing .comm_se li {
     padding: 0 10px;
     background-color: transparent;
@@ -12710,6 +12722,19 @@ select {
     font-weight: 500;
     float: left;
     border-radius: 50px;
+}
+
+.forum_col_content span{
+    padding: 0 20px;
+    display: inline-block;
+    line-height: 30px;
+    background-color: #bec7cd;
+    color: #474a4c;
+    font-size: 14px;
+    font-weight: 500;
+    float: left;
+    border-radius: 50px;
+    cursor: pointer;
 }
 .comment_num{
     float: left;
@@ -14410,6 +14435,14 @@ h3.main_sec_title {
     line-height: 25px;
     font-size: 12px;
 }
+
+.forum_col_content a {
+    padding: 0 14px;
+    line-height: 25px;
+    font-size: 12px;
+    cursor: pointer;
+}
+
 .comment_num {
     font-size: 12px;
     line-height: 25px;

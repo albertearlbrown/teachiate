@@ -7,7 +7,7 @@ import Swal from "sweetalert2";
 import {FacebookShareButton, FacebookIcon, EmailShareButton, EmailIcon, TwitterShareButton, TwitterIcon} from "react-share";
 import { configureSocket } from "../../utils/axiosInterceptor"
 
-function Posts({ post }) {
+function Posts({ post, setTrendingTopic }) {
   const [comments, setComments] = useState([]);
   const [commentTextarea, setCommentTextarea] = useState("");
   const [isLiked, setLiked] = useState(false)
@@ -40,7 +40,6 @@ function Posts({ post }) {
       if (post.tags.length>0) {
         post.tags.map((tag) => (hashtag += `#${tag.label} `))
       }
-      debugger
       return setHashtags(hashtag)
     }
     getHashtags()
@@ -126,9 +125,9 @@ function Posts({ post }) {
             <p className="more">{post.description}</p>
             {post.tags.length > 0
               ? post.tags.map((tage) => (
-                  <a href="#" style={{ marginRight: "10px" }} key={tage.key}>
+                  <span onClick={()=>setTrendingTopic(tage.label)} style={{ marginRight: "10px" }} key={tage.key}>
                     #{tage.label}
-                  </a>
+                  </span>
                 ))
               : null}
             <div className="comment_num">

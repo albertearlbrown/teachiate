@@ -40,16 +40,17 @@ function Forum() {
 
     useEffect(() => {
         fetchPosts();
-    },[selectedCat, selectedSubCat]);
+    },[selectedCat, selectedSubCat, trendingTopic]);
 
     async function fetchPosts() {
+       debugger;
        setOpen(true)
        setPosts([])
        axios({
          type: 'get',
          url: `${baseUrl}/forum`,
          params: {
-           category: selectedCat,subcategory: selectedSubCat
+           category: selectedCat,subcategory: selectedSubCat, trendingTopic
          }
        }).then((response)=>{
          const { data } = response.data;
@@ -100,13 +101,13 @@ function Forum() {
                     <div className="trend_topics">
                     <h2>Trending Topics</h2>
                         <ul>
-                            <li><a href="#">#<span  onClick={(e) => setTrendingTopic(e.target.textContent.toLowerCase())}>Youth Process</span></a></li>
-                            <li><a href="#">#<span onClick={(e) => setTrendingTopic(e.target.textContent.toLowerCase())}>Motivation for Kids</span></a></li>
-                            <li><a href="#">#<span onClick={(e) => setTrendingTopic(e.target.textContent.toLowerCase())}>Teacher Appreciation</span></a></li>
-                            <li><a href="#">#<span onClick={(e) => setTrendingTopic(e.target.textContent.toLowerCase())}>Teachers</span></a></li>
-                            <li><a href="#">#<span  onClick={(e) => setTrendingTopic(e.target.textContent.toLowerCase())}>Parents</span></a></li>
-                            <li><a href="#">#<span onClick={(e) => setTrendingTopic(e.target.textContent.toLowerCase())}>Options for College and Beyond</span></a></li>
-                            <li><a href="#">#<span onClick={(e) => setTrendingTopic(e.target.textContent.toLowerCase())}>Teachers</span></a></li>
+                            <li><p>#<span  onClick={(e) => setTrendingTopic(e.target.textContent.toLowerCase())}>Youth Process</span></p></li>
+                            <li><p>#<span onClick={(e) => setTrendingTopic(e.target.textContent.toLowerCase())}>Motivation for Kids</span></p></li>
+                            <li><p>#<span onClick={(e) => setTrendingTopic(e.target.textContent.toLowerCase())}>Teacher Appreciation</span></p></li>
+                            <li><p>#<span onClick={(e) => setTrendingTopic(e.target.textContent.toLowerCase())}>Teachers</span></p></li>
+                            <li><p>#<span  onClick={(e) => setTrendingTopic(e.target.textContent.toLowerCase())}>Parents</span></p></li>
+                            <li><p>#<span onClick={(e) => setTrendingTopic(e.target.textContent.toLowerCase())}>Options for College and Beyond</span></p></li>
+                            <li><p>#<span onClick={(e) => setTrendingTopic(e.target.textContent.toLowerCase())}>Teachers</span></p></li>
                         </ul>
                     </div>
 
@@ -116,7 +117,7 @@ function Forum() {
                                 {
                                   posts.map((post, i)=>{
                                     return(
-                                      <Post post={post} key={post._id}/>
+                                      <Post post={post} key={post._id} setTrendingTopic={setTrendingTopic} />
                                     )
                                   })
                                 }
