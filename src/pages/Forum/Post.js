@@ -37,7 +37,7 @@ function Posts({ post }) {
       return setHashtags(hashtag)
     }
     getHashtags()
-  })
+  },[])
 
   useEffect(() => {
     setLiked(post.likes.includes(userData?._id))

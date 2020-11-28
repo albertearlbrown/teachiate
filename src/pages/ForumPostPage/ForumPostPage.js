@@ -4,6 +4,8 @@ import { AuthStoreContext } from '../../Store/AuthStore';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import calcalueDiffBetweenTwoDates from "../../utils/calculeDiffBetweenTwoDate"
 import { Link } from 'react-router-dom';
+import { configureSocket } from "../../utils/axiosInterceptor"
+import {FacebookShareButton, FacebookIcon, EmailShareButton, EmailIcon, TwitterShareButton, TwitterIcon} from "react-share";
 import axios from 'axios';
 
 const ForumPostPage = (props) => {
@@ -12,6 +14,28 @@ const ForumPostPage = (props) => {
   const [post, setPost] = useState(true)
   const [textareaComm, setCommentTextarea] = useState(null)
   const [currentUser, setCurrentUser] = useState(userData)
+  const [isLiked, setLiked] = useState(false)
+
+  const [active, setActive] = useState(false)
+  const [hashtags, setHashtags] = useState(false)
+
+  useEffect(()=>{
+    if (post._id) {
+      window.addEventListener('click', function(e){
+        if (document.getElementById('share_post_via'+post._id).contains(e.target)){
+          console.log("clicked in");
+          setActive(true)
+        } else{
+          console.log("clicked out");
+          setActive(false)
+        }
+      });
+    }
+  },[post])
+
+  useEffect(() => {
+
+  },[])
 
   useEffect(()=>{
     setCurrentUser(userData)
@@ -28,10 +52,30 @@ const ForumPostPage = (props) => {
     }).then((response)=>{
       const {data} = response.data
       setPost(data)
+      getHashtags(data)
       setLoading(false)
     }).catch(()=>{
       setLoading(false)
     })
+  }
+
+  const getHashtags = (p)=>{
+    let hashtag = ""
+    if (p.tags.length>0) {
+      p.tags.map((tag) => (hashtag += `#${tag.label} `))
+    }
+    debugger
+    return setHashtags(hashtag)
+  }
+
+
+  const likePost = async ()=>{
+    if (userData?._id) {
+      let socket = await configureSocket();
+      socket.emit('like-post', {postId: post._id}, (ack)=>{
+      })
+      setLiked(!isLiked)
+    }
   }
 
   const createComment = ()=>{
@@ -97,6 +141,77 @@ const ForumPostPage = (props) => {
                 <div className="forum_col_image">
                   <img src={post.image} alt="" />
                 </div>
+              </div>
+              <div className="comm_se">
+                <ul>
+                  <li>
+                    <p onClick={()=>likePost()}>
+                      <span>
+                        {isLiked?` ${post.likes.length - 1>0?`Liked with ${post.likes.length - 1} others`:'Liked'}`:`${post.likes.length} Like`}
+                        <i style={{marginLeft: 5}} className="fa fa-thumbs-o-up" aria-hidden="true"></i>
+                      </span>
+                    </p>
+                  </li>
+                  <li id="commentpost">
+                    <span>
+                      Comment <i className="fa fa-comment-o" aria-hidden="true"></i>
+                    </span>
+                  </li>
+                  <li id={"share_post_via"+post._id} className={active&&'active'}>
+                    <span>
+                      Share <i className="fa fa-share" aria-hidden="true"></i>
+                    </span>
+                    <div className="share_post_via">
+                      <ul>
+                        <li>
+                          <FacebookShareButton
+                            url={`${window.location.origin}/posts/${post._id}`}
+                            quote={post.title}
+                            hashtag={hashtags}
+                            disabledStyle
+                            >
+                              <span>
+                                <i className="fa fa-facebook-square">
+                                  <FacebookIcon size={16} />
+                                </i>
+                              </span>
+                              Facebook
+                          </FacebookShareButton>
+                        </li>
+                        <li>
+                          <EmailShareButton
+                            url={`${window.location.origin}/posts/${post._id}`}
+                            subject={post.title}
+                            body={`${post.description}`}
+                            disabledStyle
+                          >
+                            <span>
+                              <i className="fa fa-facebook-square">
+                                <EmailIcon size={16} />
+                              </i>
+                            </span>
+                            Email
+                          </EmailShareButton>
+                        </li>
+                        <li>
+                          <TwitterShareButton
+                            url={`${window.location.origin}/posts/${post._id}`}
+                            title={post.title}
+                            hashtag={hashtags}
+                            disabledStyle
+                          >
+                            <span>
+                              <i className="fa fa-facebook-square">
+                                <TwitterIcon size={16} />
+                              </i>
+                            </span>
+                            Twitter
+                          </TwitterShareButton>
+                        </li>
+                      </ul>
+                    </div>
+                  </li>
+                </ul>
               </div>
               <div className="cmnt_nmbr">{post.comments.length} Comments</div>
               {
