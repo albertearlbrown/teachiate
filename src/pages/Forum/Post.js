@@ -16,16 +16,23 @@ function Posts({ post }) {
   const { isAuthenicate, userData } = useContext(AuthStoreContext);
 
   useEffect(()=>{
-    window.addEventListener('click', function(e){
-      if (document.getElementById('share_post_via'+post._id).contains(e.target)){
-        console.log("clicked in");
-        setActive(true)
-      } else{
-        console.log("clicked out");
-        setActive(false)
+    try {
+      if (document.getElementById('share_post_via'+post._id)) {
+        window.addEventListener('click', function(e){
+          if (document.getElementById('share_post_via'+post._id)?.contains(e.target)){
+            console.log("clicked in");
+            setActive(true)
+          } else{
+            console.log("clicked out");
+            setActive(false)
+          }
+        });
       }
-    });
-  },[])
+    } catch (e) {
+      console.log("Warning");
+    }
+
+  },[post])
 
   useEffect(() => {
     const getHashtags = ()=>{

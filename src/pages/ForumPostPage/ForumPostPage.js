@@ -20,7 +20,7 @@ const ForumPostPage = (props) => {
   const [hashtags, setHashtags] = useState(false)
 
   useEffect(()=>{
-    if (post._id) {
+    if (post._id && document.getElementById('share_post_via'+post._id)) {
       window.addEventListener('click', function(e){
         if (document.getElementById('share_post_via'+post._id).contains(e.target)){
           console.log("clicked in");
