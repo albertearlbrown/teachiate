@@ -92,6 +92,17 @@ const ForumPostPage = (props) => {
     }).catch(()=>console.log("error"))
   }
 
+  const makePostTracked = (tracked)=>{
+    if (userData?._id) {
+      axios({
+        method:'post',
+        url: `/forum/${post._id}/tracked?tracked=${!tracked}`,
+      }).then((response)=>{
+        getPostInfos()
+      }).catch(()=>console.log("error"))
+    }
+  }
+
   if (loading) {
     return(
       <Backdrop open={true}>
@@ -119,9 +130,12 @@ const ForumPostPage = (props) => {
                 */}
             </div>
             <div className="blog_sec3">
-              <div className="star">
-                <img src={"/assets/img/star2.png"} alt="image" />
-              </div>
+              {
+                userData?._id &&
+                <div className="star" onClick={()=>makePostTracked(post.tracked.find(a=> a === userData._id))}>
+                  <img src={post.tracked.find(a=> a === userData._id)?"/assets/img/star.png":"/assets/img/star2.png"} alt="image" />
+                </div>
+              }
               <div className="blog_title">
                 <div className="title_img">
                   <img src={post.user.avatar || "/assets/img/user-account.png"} alt="image" />
