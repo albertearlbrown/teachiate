@@ -4,13 +4,40 @@ import axios from "axios";
 import { AuthStoreContext } from "../../Store/AuthStore";
 import { Link } from 'react-router-dom'
 import Swal from "sweetalert2";
+import {FacebookShareButton, FacebookIcon, EmailShareButton, EmailIcon, TwitterShareButton, TwitterIcon} from "react-share";
 import { configureSocket } from "../../utils/axiosInterceptor"
 
 function Posts({ post }) {
   const [comments, setComments] = useState([]);
   const [commentTextarea, setCommentTextarea] = useState("");
   const [isLiked, setLiked] = useState(false)
+  const [active, setActive] = useState(false)
+  const [hashtags, setHashtags] = useState(false)
   const { isAuthenicate, userData } = useContext(AuthStoreContext);
+
+  useEffect(()=>{
+    window.addEventListener('click', function(e){
+      if (document.getElementById('share_post_via'+post._id).contains(e.target)){
+        console.log("clicked in");
+        setActive(true)
+      } else{
+        console.log("clicked out");
+        setActive(false)
+      }
+    });
+  },[])
+
+  useEffect(() => {
+    const getHashtags = ()=>{
+      let hashtag = ""
+      if (post.tags.length>0) {
+        post.tags.map((tag) => (hashtag += `#${tag.label} `))
+      }
+      debugger
+      return setHashtags(hashtag)
+    }
+    getHashtags()
+  })
 
   useEffect(() => {
     setLiked(post.likes.includes(userData?._id))
@@ -129,35 +156,56 @@ function Posts({ post }) {
                 Comment <i className="fa fa-comment-o" aria-hidden="true"></i>
               </span>
             </li>
-            <li>
+            <li id={"share_post_via"+post._id} className={active&&'active'}>
               <span>
                 Share <i className="fa fa-share" aria-hidden="true"></i>
               </span>
               <div className="share_post_via">
                 <ul>
                   <li>
-                    <a href="#">
-                      <span>
-                        <i className="fa fa-facebook-square"></i>
-                      </span>
-                      Facebook
-                    </a>
+                    <FacebookShareButton
+                      url={`${window.location.origin}/posts/${post._id}`}
+                      quote={post.title}
+                      hashtag={hashtags}
+                      disabledStyle
+                      >
+                        <span>
+                          <i className="fa fa-facebook-square">
+                            <FacebookIcon size={16} />
+                          </i>
+                        </span>
+                        Facebook
+                    </FacebookShareButton>
                   </li>
                   <li>
-                    <a href="#">
+                    <EmailShareButton
+                      url={`${window.location.origin}/posts/${post._id}`}
+                      subject={post.title}
+                      body={`${post.description}`}
+                      disabledStyle
+                    >
                       <span>
-                        <i className="fa fa-twitter"></i>
+                        <i className="fa fa-facebook-square">
+                          <EmailIcon size={16} />
+                        </i>
+                      </span>
+                      Email
+                    </EmailShareButton>
+                  </li>
+                  <li>
+                    <TwitterShareButton
+                      url={`${window.location.origin}/posts/${post._id}`}
+                      title={post.title}
+                      hashtag={hashtags}
+                      disabledStyle
+                    >
+                      <span>
+                        <i className="fa fa-facebook-square">
+                          <TwitterIcon size={16} />
+                        </i>
                       </span>
                       Twitter
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <span>
-                        <i className="fa fa-instagram"></i>
-                      </span>
-                      Instagram
-                    </a>
+                    </TwitterShareButton>
                   </li>
                 </ul>
               </div>

@@ -2895,7 +2895,7 @@ input.wpcf7-not-valid,
 }
 
 .comm_se li:first-child {
-    text-align: left;
+    /* text-align: left; */
 }
 
 .comm_se a {
@@ -12058,6 +12058,12 @@ h3.main_sec_title{
     position: absolute;
     top: 30px;
     right: 0;
+}
+
+.share_post_via span{
+  left: 0;
+  position: absolute;
+  top: 3px;
 }
 .active .share_post_via{
     display: block;
