@@ -164,7 +164,7 @@ function Posts({ post }) {
             </li>
 
             <div className="commentpost_open active">
-              {post.comments.map((comment) => (
+              {post.comments.slice(0,2).map((comment) => (
                 <div className="blog_title margin_btm" key={comment._id}>
                   <div className="title_img">
                     <img
