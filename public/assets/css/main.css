@@ -10819,6 +10819,13 @@ blockquote {
     padding: 20px 30px;
     box-shadow: 0 5px 35px rgba(202,212,220,0.75);
 }
+.post_share_subcomment_area{
+    width: 100%;
+    display: inline-block;
+    background-color: #fff;
+    border-radius: 6px;
+    padding: 20px 30px;
+}
 .posted_avtar{
     width: 62px;
     height: 62px;
@@ -10974,7 +10981,7 @@ blockquote {
 .single_forum_post .blog_sec3{
     background-color: #fff;
 }
-.post_share.single_post_comment {
+.post_share_reply.single_post_comment {
     position: relative;
     top: -60px;
     background-color: #fff;

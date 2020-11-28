@@ -5,6 +5,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import calcalueDiffBetweenTwoDates from "../../utils/calculeDiffBetweenTwoDate"
 import { Link } from 'react-router-dom';
 import { configureSocket } from "../../utils/axiosInterceptor"
+import Moment from "react-moment";
 import {FacebookShareButton, FacebookIcon, EmailShareButton, EmailIcon, TwitterShareButton, TwitterIcon} from "react-share";
 import axios from 'axios';
 
@@ -15,9 +16,10 @@ const ForumPostPage = (props) => {
   const [textareaComm, setCommentTextarea] = useState(null)
   const [currentUser, setCurrentUser] = useState(userData)
   const [isLiked, setLiked] = useState(false)
-
+  const [showReplyTextArea, setShowReplyTextArea] = useState()
   const [active, setActive] = useState(false)
   const [hashtags, setHashtags] = useState(false)
+  const [textareaSubComm, setSubCommentTextarea] = useState(null)
 
   useEffect(()=>{
     if (post._id && document.getElementById('share_post_via'+post._id)) {
@@ -101,6 +103,22 @@ const ForumPostPage = (props) => {
         getPostInfos()
       }).catch(()=>console.log("error"))
     }
+  }
+
+  const createSubComment = (commentId)=>{
+    const data = {
+      content: textareaSubComm,
+      commentId
+    }
+    axios({
+      method:'post',
+      url: `/forum/${post._id}/subcomment`,
+      data
+    }).then((response)=>{
+      getPostInfos()
+      setSubCommentTextarea("")
+      setShowReplyTextArea(null)
+    }).catch(()=>console.log("error"))
   }
 
   if (loading) {
@@ -231,22 +249,65 @@ const ForumPostPage = (props) => {
               {
                 post.comments.map((comm)=>{
                   return (
-                    <div className="blog_title margin_btm">
-                      <div className="title_img">
-                        <img src={comm.user.avatar || "/assets/img/user-account.png"} alt="image" />
-                      </div>
-                      <div className="user_des">
-                        <h4>
-                          {comm.user.fullName} <span>({comm.user.role})</span>
-                        </h4>
-                        <p>
-                          {comm.content}{" "}
-                        </p>
-                        <div className="replaied">
-                          <div className="hour">{calcalueDiffBetweenTwoDates(new Date(comm.date))} ago</div>
-                          {/*<div>Replied</div>*/}
+                    <div>
+                      <div className="blog_title margin_btm">
+                        <div className="title_img">
+                          <img src={comm.user.avatar || "/assets/img/user-account.png"} alt="image" />
+                        </div>
+                        <div className="user_des">
+                          <h4>
+                            {comm.user.fullName} <span>({comm.user.role})</span>
+                          </h4>
+                          <p>
+                            {comm.content}{" "}
+                          </p>
+                          <div className="replaied">
+                            <div className="hour">{calcalueDiffBetweenTwoDates(new Date(comm.date))} ago</div>
+                            <div onClick={()=> setShowReplyTextArea(comm._id)}>Replied</div>
+                          </div>
                         </div>
                       </div>
+                      {
+                        comm.subComment.map((sub)=>(
+                          <div className="blog_title margin_right">
+                            <div className="title_img">
+                              <img src={sub.user.avatar || "/assets/img/katei-girl.png"} alt="" />
+                            </div>
+                            <div className="user_des">
+                              <h4>{sub.user.fullName} <span>({sub.user.role})</span></h4>
+                              <p>{sub.content}</p>
+                              <div className="replaied">
+                                <div className="hour">
+                                  <Moment fromNow>{sub.date}</Moment>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        ))
+                      }
+                      {
+                        showReplyTextArea === comm._id &&
+                        <div className="">
+                          <div className="post_share_subcomment_area">
+                            <div className="posted_avtar">
+                              <img src={currentUser.avatar || "/assets/img/user-account.png"} alt="image" />
+                            </div>
+                            <div className="post_share_field">
+                              <textarea
+                                placeholder="..."
+                                defaultValue={""}
+                                value={textareaSubComm}
+                                onChange={(e)=>setSubCommentTextarea(e.target.value)}
+                              />
+                              <div className="new">
+                              </div>
+                              <div className="share_option_right">
+                                <input type="submit" defaultValue="Submit" name onClick={()=>createSubComment(comm._id)} />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      }
                     </div>
                   )
                 })
@@ -259,27 +320,12 @@ const ForumPostPage = (props) => {
                 </div>
                 <div className="post_share_field">
                   <textarea
-                    placeholder="Sarah What’s are your mind?"
+                    placeholder="..."
                     defaultValue={""}
                     value={textareaComm}
                     onChange={(e)=>setCommentTextarea(e.target.value)}
                   />
                   <div className="new">
-                    <form>
-                      {
-                        /*
-                        <div className="form-group">
-                          <input type="checkbox" id="html5" />
-                          <label htmlFor="html5">
-                            <span>
-                              <img src="assets/img/noti_bell_icon.png" alt="image" />
-                            </span>{" "}
-                            Notify me of follow-up replies via email
-                          </label>
-                        </div>
-                        */
-                      }
-                    </form>
                   </div>
                   <div className="share_option_right">
                     <input type="submit" defaultValue="Submit" name onClick={()=>createComment()} />

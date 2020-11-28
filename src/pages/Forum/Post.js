@@ -219,6 +219,7 @@ function Posts({ post, setTrendingTopic }) {
 
             <div className="commentpost_open active">
               {post.comments.slice(0,2).map((comment) => (
+                <div key={comment.id}>
                 <div className="blog_title margin_btm" key={comment._id}>
                   <div className="title_img">
                     <img
@@ -242,6 +243,26 @@ function Posts({ post, setTrendingTopic }) {
                     </div>
                   </div>
                 </div>
+                {
+                  comment.subComment.slice(0,2).map((sub)=>(
+                    <div className="blog_title margin_right">
+                      <div className="title_img">
+                        <img src={sub.user.avatar || "assets/img/katei-girl.png"} alt="" />
+                      </div>
+                      <div className="user_des">
+                        <h4>{sub.user.fullName} <span>({sub.user.role})</span></h4>
+                        <p>{sub.content}</p>
+                        <div className="replaied">
+                          <div className="hour">
+                            <Moment fromNow>{sub.date}</Moment>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))
+                }
+                </div>
+
               ))}
 
               {comments
