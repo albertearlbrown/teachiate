@@ -268,7 +268,7 @@ const ForumPostPage = (props) => {
                         </div>
                       </div>
                       {
-                        comm.subComment.map((sub)=>(
+                        comm.subComment && comm.subComment?.map((sub)=>(
                           <div className="blog_title margin_right">
                             <div className="title_img">
                               <img src={sub.user.avatar || "/assets/img/katei-girl.png"} alt="" />
