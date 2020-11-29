@@ -8964,6 +8964,7 @@ blockquote {
 
   .profile-forum-details .tabbed-content2 .tabs2 li p {
     display: block;
+    cursor: pointer;
   }
 
   .profile-forum-details .tabbed-content2 .item2 {

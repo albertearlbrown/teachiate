@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ProfilNavBar = ({setView})=>{
+const ProfilNavBar = ({setView, view})=>{
   return(
     <div className="profile-nav">
         <ul className="clearfix">
@@ -32,7 +32,7 @@ const ProfilNavBar = ({setView})=>{
                 <p>Messages</p>
                 </a>
             </li>
-            <li className="active" onClick={()=>setView('friends')}>
+            <li className={view === "friends" && "active"}  onClick={()=>setView('friends')}>
                 <div className="profile-nav-icon">
                     <img src="assets/img/icon5.png" alt=""/>
                 </div>
@@ -59,12 +59,11 @@ const ProfilNavBar = ({setView})=>{
                 <p>Media</p>
                 </a>
             </li>
-            <li><a href="#">
-                <div className="profile-nav-icon">
-                    <img src="assets/img/icon9.png" alt=""/>
-                </div>
-                <p>Settings</p>
-                </a>
+            <li className={view === "settings" && "active"} onClick={()=>setView('settings')}>
+              <div className="profile-nav-icon">
+                  <img src="assets/img/icon9.png" alt=""/>
+              </div>
+              <p>Settings</p>
             </li>
         </ul>
     </div>

@@ -224,9 +224,8 @@ function Posts({ post, setTrendingTopic }) {
                   <div className="title_img">
                     <img
                       src={
-                        post.user.avatar === null
-                          ? "/assets/img/user-account.png"
-                          : post.user.avatar
+                        comment.user.avatar ||
+                           "/assets/img/user-account.png"
                       }
                       alt=""
                     />
@@ -247,7 +246,7 @@ function Posts({ post, setTrendingTopic }) {
                   comment.subComment.slice(0,2).map((sub)=>(
                     <div className="blog_title margin_right">
                       <div className="title_img">
-                        <img src={sub.user.avatar || "assets/img/katei-girl.png"} alt="" />
+                        <img src={sub.user.avatar || "/assets/img/katei-girl.png"} alt="" />
                       </div>
                       <div className="user_des">
                         <h4>{sub.user.fullName} <span>({sub.user.role})</span></h4>
