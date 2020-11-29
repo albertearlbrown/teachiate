@@ -263,7 +263,7 @@ const ForumPostPage = (props) => {
                           </p>
                           <div className="replaied">
                             <div className="hour">{calcalueDiffBetweenTwoDates(new Date(comm.date))} ago</div>
-                            <div onClick={()=> setShowReplyTextArea(comm._id)}>Replied</div>
+                            <div style={{cursor: "pointer"}} onClick={()=> setShowReplyTextArea(comm._id)}>{comm.subComment?.length > 0 ?"Replied":"Reply"}</div>
                           </div>
                         </div>
                       </div>
