@@ -4,19 +4,20 @@ const ProfilNavBar = ({setView, view})=>{
   return(
     <div className="profile-nav">
         <ul className="clearfix">
-            <li onClick={()=>setView('thoughts')}>
+            <li onClick={()=>setView('thoughts')} className={view === "thoughts" && "active"}>
                 <div className="profile-nav-icon">
                     <img src="assets/img/file.png" alt="" />
 
                 </div>
                 <p>Activity</p>
             </li>
-            <li><a href="#">
+            <li onClick={()=>setView('profilEdit')} className={view === "profilEdit" && "active"}>
+              <p href="#">
                 <div className="profile-nav-icon">
                     <img src="assets/img/icon2.png" alt=""/>
                 </div>
                 <p>Profile</p>
-                </a>
+              </p>
             </li>
             <li><a href="#">
                 <div className="profile-nav-icon">

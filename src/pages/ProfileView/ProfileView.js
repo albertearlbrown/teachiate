@@ -5,13 +5,14 @@ import ProfilNavBar from './NavBar'
 import ThoughtComponents from './ThoughtsComponents';
 import FriendsComponent from "./friendsComponent/index"
 import Settings from "./settings"
+import ProfilEdit from './profilEdit'
 
 const ProfileView = () => {
     const {userData} = useContext(AuthStoreContext);
 
     const [newAvatarFile, setNewAvatarFile] = useState(null);
     const [newProfileCover, setnewProfileCover] = useState(null);
-    const [currentView, setView] = useState('settings')
+    const [currentView, setView] = useState('thoughts')
 
     const changeProfileCover = async (e) => {
         e.preventDefault();
@@ -107,10 +108,11 @@ const ProfileView = () => {
                 {/* <!-- profile-left --> */}
                 <div className="profile-left">
                     <div className="profile-wrapper">
-                        <ProfilNavBar setView={setView} />
+                        <ProfilNavBar setView={setView} view={currentView} />
                         {currentView === 'thoughts' &&<ThoughtComponents />}
                         {currentView === 'friends' &&<FriendsComponent />}
                         {currentView === 'settings' &&<Settings />}
+                        {currentView === 'profilEdit' &&<ProfilEdit />}
                    </div>
                 </div>
             </div>
