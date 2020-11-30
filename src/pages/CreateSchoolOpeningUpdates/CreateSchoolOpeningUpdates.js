@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import { Redirect  } from 'react-router-dom';
 import axios from 'axios';
 import { AuthStoreContext } from '../../Store/AuthStore';
+import { database } from 'firebase';
 
 function CreateSchoolOpeningUpdates() {
     const {isAuthenicate, userData} = useContext(AuthStoreContext);  
@@ -37,6 +38,10 @@ function CreateSchoolOpeningUpdates() {
         setCity('All');
 
         if(e.target.value !== 'All') {
+            const selectedIndex = e.target.options.selectedIndex;
+            const stateCode = e.target.options[selectedIndex].getAttribute('data-key');        
+            const resp =  await axios.get(`/cities/${stateCode}`);
+            setCities([...resp.data.data]);            
             setLoadCities(true);
         }
         else {
@@ -54,7 +59,7 @@ function CreateSchoolOpeningUpdates() {
                 <div className='select'>
                     <select id="slct" onChange={stateHandler}>
                         <option value='All'>All States</option>
-                        {states.map(state =>  <option value={state.name} key={state.code} data-key={state.code}>{state.name}</option>)}
+                        {states.map(data =>  <option value={data.state} key={data.state_code} data-key={data.state_code}>{data.state}</option>)}
                     </select>
                 </div>
             </>
@@ -68,15 +73,11 @@ function CreateSchoolOpeningUpdates() {
                 <div className='select'>
                     <select id="slct" onChange={cityHandler}>
                         <option value='All'>Select a City</option>          
-                        {states.filter(s => s.name === state).map(state => (
-                            <>
-                                {state.cities.map(city => (
-                                    <>
-                                        <option value={city.name}>{city.name}</option>
-                                    </>
-                                ))}
-                            </>
-                        ))}             
+                            {cities.map(data => (
+                                <>
+                                    <option value={data.city}>{data.city}</option>
+                                </>
+                            ))}         
                     </select>
                 </div>
             </>
