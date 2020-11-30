@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from "axios";
 
-const ProfilEdit = ({setLoading, userData, setOpenNotification})=>{
+const ProfilEdit = ({setLoading, userData, setOpenNotification, setUserData})=>{
   const [day, setDay] = useState(null)
   const [year, setYear] = useState(null)
   const [month, setMonth] = useState(null)
@@ -52,8 +52,16 @@ const ProfilEdit = ({setLoading, userData, setOpenNotification})=>{
         role,
       }
     }).then(()=>{
+      axios.get('/users/me')
+      .then((res) => {
+        if(res.data.data) {
+          setUserData(res.data.data);
+        }
+        setLoading(false)
+      }).catch(()=>{
+        setLoading(false)
+      })
       setOpenNotification(true)
-      setLoading(false)
     }).catch(()=>setLoading(false))
   }
   return(

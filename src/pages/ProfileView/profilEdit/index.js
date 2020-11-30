@@ -7,7 +7,7 @@ import { AuthStoreContext } from "../../../Store/AuthStore";
 import Alert from '@material-ui/lab/Alert';
 
 const ProfilEdit = ()=>{
-  const { userData } = useContext(AuthStoreContext);
+  const { userData, setUserData } = useContext(AuthStoreContext);
   const [loading, setLoading] = useState(false)
   const [openNotification, setOpenNotification] = useState(false);
 
@@ -34,7 +34,7 @@ const ProfilEdit = ()=>{
             <li><a href="#about_me">About Me</a></li>
           </ul>
         </div>
-        <UpdateProfilInfo userData={userData} setLoading={setLoading} setOpenNotification={setOpenNotification}/>
+        <UpdateProfilInfo userData={userData} setUserData={setUserData} setLoading={setLoading} setOpenNotification={setOpenNotification}/>
       </section>
     </div>
   )
