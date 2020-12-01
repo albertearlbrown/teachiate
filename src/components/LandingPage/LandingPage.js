@@ -11,9 +11,9 @@ const LandingPage = () => {
     const [ userData, setUserData ] = useState({name:'', email:''})
     const [ signUp, setSignUp ] = useState(false)
 
-    Axios.get("https://api.teachiate.com/visitors")
-    .then((resp)=>console.log("get visitors",resp))
-    .catch((err)=>console.log("get visitors",err))
+    // Axios.get("https://api.teachiate.com/visitors")
+    // .then((resp)=>console.log("get visitors",resp))
+    // .catch((err)=>console.log("get visitors",err))
 
     const setVisitors = (e,data) => {
         e.preventDefault()
