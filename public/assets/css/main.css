@@ -4703,7 +4703,9 @@ img {
 .art_des p {
     padding-left: 10px;
 }
-
+.font-weight-bold {
+    font-weight: bold;
+}
 
 
 .blog_des p {
@@ -4840,7 +4842,9 @@ img {
     color: #fff;
     font-weight: 400;
 }
-
+.art_left_img {
+    max-width: 50px;
+}
 .art_left_img img {
 
     padding-right: 5px;
@@ -6347,7 +6351,15 @@ blockquote {
         width: 100%;
     }
 }
-
+.cursor-pointer {
+    cursor: pointer !important;
+}
+.sidebar-post-border {
+    padding-top: 15px;
+    border-bottom: 2px solid gray;
+    /* margin-top: auto ;
+    margin-bottom: auto ; */
+}
 .cta-inner {
     background: #418dd8;
     /* Old browsers */
@@ -15013,6 +15025,9 @@ h2.sec_title {
 }
 .margin_btm {
     padding-bottom: 0;
+}
+.margin_top_20 {
+    margin-top: 20px !important;
 }
 .blog_title .user_des p {
     font-size: 12px;

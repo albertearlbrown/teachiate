@@ -10,6 +10,7 @@ import axios from 'axios';
 import { AuthStoreContext } from '../../Store/AuthStore';
 import jwt_decode from "jwt-decode";
 import Swal from 'sweetalert2';
+import SidebarContent from '../../components/Sidebar/SidebarContents';
 
 const Home = () => {
 
@@ -398,33 +399,7 @@ const Home = () => {
                 </div>
 
                 <div className="blog_right">
-                    <div className="articles_title">
-                        <h2>Blog Articles</h2>
-                    </div>
-                    <div className="articles clearfix">
-                        <ul className="d-flex">
-                            <li>
-                                <div className="art_left_img"><img src="assets/img/article1.jpg" width="92px;" alt=""/></div>
-                                <div className="art_des">
-                                    <p>My struggle with homeschooling my youngins</p>
-                                </div>
-                            </li>
-                            <li>
-                                <div className="art_left_img"><img src="assets/img/article2.jpg" alt=""/></div>
-                                <div className="art_des">
-                                    <p>COVID19 has led to parents appreciating teachers more</p>
-                                </div>
-                            </li>
-                            <li>
-                                <div className="art_left_img"><img src="assets/img/article3.jpg" alt=""/></div>
-                                <div className="art_des">
-                                    <p>Teachers, like myself, getting used to virtual teaching</p>
-                                </div>
-                            </li>
-                        </ul>
-                        <a href="/" className="view_more">View More Articles</a>
-                    </div>
-
+                        <SidebarContent />
                     <div className="Recent_topics">
                         <div className="articles_title">
                             <h2>Recent Forum Topics</h2>
