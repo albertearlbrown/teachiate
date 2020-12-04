@@ -10,8 +10,14 @@ import sagas from './redux/sagas'
 import createSagaMiddleware from 'redux-saga'
 import * as serviceWorker from './serviceWorker';
 import awsconfig from './aws-exports.js'
+import {addAuthorizationHeader} from './utils/axiosInterceptor';
+import axios from 'axios';
 import Amplify from 'aws-amplify';
 Amplify.configure(awsconfig)
+
+const baseURL = process.env.NODE_ENV === 'development'?"http://localhost:4000":"https://api.teachiate.com"
+axios.defaults.baseURL = baseURL
+axios.interceptors.request.use(addAuthorizationHeader, e => Promise.reject(e));
 
 const sagaMiddleware = createSagaMiddleware()
 const middlewares = [sagaMiddleware]
