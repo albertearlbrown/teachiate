@@ -61,7 +61,7 @@ const Groups = () => {
       }
       return list;
     }
-
+    // console.log(groups)
     return (
         <>
           <Backdrop className={classes.backdrop} open={open} >
