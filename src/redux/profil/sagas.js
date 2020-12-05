@@ -9,19 +9,19 @@ export function* UPDATE_BACKGROUND_INFO({payload}){
     payload: { loading: true}
   })
   const response = yield call(profilApi.updateBackgroundInfo, payload)
-  if (response.success) {
+  if (response.status) {
     yield put({
       type: userActions.SET_STATE,
       payload: { currentUser: response.data}
     })
     yield put({
       type: actions.SET_STATE,
-      payload: { loading: true, openNotification: true}
+      payload: { loading: false, openNotification: true}
     })
   }else{
     yield put({
       type: actions.SET_STATE,
-      payload: { loading: true}
+      payload: { loading: false}
     })
   }
 }

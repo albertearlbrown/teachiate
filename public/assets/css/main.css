@@ -10520,6 +10520,13 @@ blockquote {
 .profile-forum-details .profile_edit .tabs2 ul li a:hover, .profile-forum-details .profile_edit .tabs2 ul li a.active {
     color: #00aeef;
 }
+
+.profile-forum-details .profile_edit .tabs2 ul li a:hover, .profile-forum-details .profile_edit .tabs2 ul li p.active {
+    color: #00aeef;
+}
+.profile_edit .tabs2 ul li p.active {
+    color: #00aeef;
+}
 .custom-select.who_can_see{
     float: right;
 }
