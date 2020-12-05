@@ -349,7 +349,7 @@ const Home = () => {
                                 {post
                                 .comments
                                 .map(comment => (
-                                    <div className="blog_title margin_btm">
+                                    <div key={comment.id} className="blog_title margin_btm">
                                         <div className="title_img">
                                             <img style={{borderRadius: '50%'}} src={comment.user.avatar === null ? '/assets/img/user-account.png'  : comment.user.avatar } alt=""/>
                                         </div>
@@ -399,38 +399,7 @@ const Home = () => {
                 </div>
 
                 <div className="blog_right">
-                        <SidebarContent />
-                    <div className="Recent_topics">
-                        <div className="articles_title">
-                            <h2>Recent Forum Topics</h2>
-                        </div>
-                        <div className="articles clearfix">
-                            <ul className="tag">
-                                <li><a href="/">covid education</a></li>
-                                <li><a href="/">What homeschooling activity do you enjoy?</a></li>
-                                <li><a href="/">Home school meet ups</a></li>
-                                <li><a href="/">Virtual classroom to replace classroom lecturing in future</a></li>
-                                <li><a href="/">Evaluating the effectiveness of distance learning</a></li>
-                            </ul>
-                            <a href="/" className="view_more">View More Articles</a>
-
-                        </div>
-                    </div>
-                    <div className="Recent_topics_form">
-                        <div className="articles_title">
-                            <h2>Recent Forums</h2>
-                        </div>
-                        <div className="articles clearfix">
-                            <ul className="tag">
-                                <li><a href="/">General Community Chat </a></li>
-                                <li><a href="/">Higher Education Chat </a></li>
-                                <li><a href="/">Parental Connection </a></li>
-                                <li><a href="/">Parents and Teachers Lounge </a></li>
-                                <li><a href="/">Teachers Lounge</a></li>
-                            </ul>
-                            <a href="/" className="view_more">View More Articles</a>
-                        </div>
-                    </div>
+                        <SidebarContent load={comments} />
                 </div>
             </div>
         </section>

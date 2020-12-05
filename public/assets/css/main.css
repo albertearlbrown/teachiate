@@ -4844,10 +4844,11 @@ img {
 }
 .art_left_img {
     max-width: 50px;
+    margin-right: 10px;
 }
 .art_left_img img {
 
-    padding-right: 5px;
+    /* padding-right: 5px; */
 }
 
 .view_more {
