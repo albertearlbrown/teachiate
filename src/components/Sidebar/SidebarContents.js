@@ -90,7 +90,7 @@ const SidebarContent = ({ load }) => {
                 <ul className="d-flex">
                     {
                         posts.data?.sort((a, b)=>(b.comments.length-a.comments.length) && (a.comments.length-a.likes.length))
-                            .filter(k=>k.user._id !== userData._id)
+                            // .filter(k=>userData && k.user._id !== userData._id)
                             .slice(0, 5)
                             .map(i=>(
                             <div key={i._id} className='cursor-pointer sidebar-post-border'>
