@@ -5,6 +5,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import { Formik } from 'formik';
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -16,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const BackgroundInfo = (props) => {
+const BackgroundInfo = ({curretUser}) => {
   const classes = useStyles();
   return (
     <div
@@ -25,92 +26,106 @@ const BackgroundInfo = (props) => {
       data-title="Background Info"
     >
       <div className="item-content2">
-        <div className="profile_edit_area">
-          <div className="profile_edit_col">
-            <div className="profile_edit_field only_name">
-              <p>Job Title</p>
-              <div className="only_field">
-                <input
-                  type="text"
-                  className="profile_edit_input"
-                  placeholder
-                  name
-                />
-              </div>
-            </div>
-          </div>
-          <div className="profile_edit_col">
-            <div className="profile_edit_field">
-              <p>Organization/School</p>
-              <FormControl variant="outlined" className={classes.formControl+" only_field"}>
-                <Select
-                  labelId="demo-simple-select-outlined-label"
-                  id="demo-simple-select-outlined"
-                  className={classes.selectEmpty}
-                >
-                  <MenuItem value="">
-                    <em>None</em>
-                  </MenuItem>
-                  <MenuItem value={'Parent'}>Parent</MenuItem>
-                  <MenuItem value={'Teacher'}>Teacher</MenuItem>
-                  <MenuItem value={'Student'}>Student</MenuItem>
-                  <MenuItem value={'General Educator'}>General Educator</MenuItem>
-                </Select>
-              </FormControl>
-              <div className="only_field">
-                <div className="custom-select">
-                  <select style={{ display: "none" }}>
-                    <option value={1}>Parent</option>
-                    <option value={2}>Teacher</option>
-                    <option value={3}>Student</option>
-                    <option value={3}>General Educator</option>
-                  </select>
-                  <div
-                    className="custom-select-active"
-                    data-select-index="custom-select13"
-                  >
-                    Parent
+      <Formik
+         initialValues={{ jobTitle: '', organization: '', website: '' }}
+         validate={values => {
+           const errors = {};
+           if (!values.email) {
+             errors.email = 'Required';
+           } else if (
+             !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
+           ) {
+             errors.email = 'Invalid email address';
+           }
+           return errors;
+         }}
+         onSubmit={values=>console.log(values)}
+       >
+         {({
+           values,
+           errors,
+           touched,
+           handleChange,
+           handleBlur,
+           handleSubmit,
+           isSubmitting,
+           /* and other goodies */
+         }) => (
+          <form onSubmit={(e)=>{
+            e.preventDefault()
+            console.log(values)
+          }}>
+            <div className="profile_edit_area">
+              <div className="profile_edit_col">
+                <div className="profile_edit_field only_name">
+                  <p>Job Title</p>
+                  <div className="only_field">
+                    <input
+                      type="text"
+                      className="profile_edit_input"
+                      placeholder
+                      name='jobTitle'
+                      onChange={handleChange}
+                      value={values.jobTitle}
+                    />
                   </div>
                 </div>
-
               </div>
-            </div>
-          </div>
-          <div className="profile_edit_col">
-            <div className="profile_edit_field only_name">
-              <p>Website</p>
-              <div className="only_field">
+              <div className="profile_edit_col">
+                <div className="profile_edit_field">
+                  <p>Organization/School</p>
+                  <FormControl variant="outlined" className={classes.formControl+" only_field"}>
+                    <Select
+                      labelId="demo-simple-select-outlined-label"
+                      id="demo-simple-select-outlined"
+                      className={classes.selectEmpty}
+                      name='organization'
+                      onChange={handleChange}
+                      value={values.organization}
+                    >
+                      <MenuItem value="">
+                        <em>None</em>
+                      </MenuItem>
+                      <MenuItem value={'Parent'}>Parent</MenuItem>
+                      <MenuItem value={'Teacher'}>Teacher</MenuItem>
+                      <MenuItem value={'Student'}>Student</MenuItem>
+                      <MenuItem value={'General Educator'}>General Educator</MenuItem>
+                    </Select>
+                  </FormControl>
+                </div>
+              </div>
+              <div className="profile_edit_col">
+                <div className="profile_edit_field only_name">
+                  <p>Website</p>
+                  <div className="only_field">
+                    <input
+                      type="text"
+                      className="profile_edit_input"
+                      placeholder
+                      name='website'
+                      onChange={handleChange}
+                      value={values.webSite}
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="profile_edit_col settings_form_col">
                 <input
-                  type="text"
-                  className="profile_edit_input"
-                  placeholder
-                  name
+                  type="submit"
+                  defaultValue="Save Changes"
+                  className="btn btn-primary"
                 />
               </div>
             </div>
-          </div>
-          <div className="profile_edit_col settings_form_col">
-            <input
-              type="submit"
-              defaultValue="Save Changes"
-              className="btn btn-primary"
-            />
-          </div>
-        </div>
-      </div>
-      <div className="custom-select-options is-active" data-select-head="custom-select13" >
-        <ul>
-          <li data-value={1} className="is-highlighted">Parent</li>
-          <li data-value={2}>Teacher</li>
-          <li data-value={3}>Student</li>
-          <li data-value={3}>General Educator</li>
-        </ul>
+          </form>
+        )}
+        </Formik>
       </div>
     </div>
   );
 };
 
 const mapStateToProps = state => {
-  return state
+  return {curretUser: state.users.currentUser}
 }
 export default connect(mapStateToProps)(BackgroundInfo);
