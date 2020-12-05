@@ -5,10 +5,12 @@ import Snackbar from '@material-ui/core/Snackbar';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { AuthStoreContext } from "../../../Store/AuthStore";
 import Alert from '@material-ui/lab/Alert';
+import BackgroundInfo from './BackgroundInfo'
 
 const ProfilEdit = ()=>{
   const { userData, setUserData } = useContext(AuthStoreContext);
   const [loading, setLoading] = useState(false)
+  const [view, setView] = useState('info')
   const [openNotification, setOpenNotification] = useState(false);
 
   return(
@@ -29,12 +31,23 @@ const ProfilEdit = ()=>{
         </Snackbar>
         <div className="tabs2">
           <ul>
-            <li><a href="#profile_info" className="active">Profile Info</a></li>
-            <li><a href="#background_info">Background Info</a></li>
-            <li><a href="#about_me">About Me</a></li>
+            <li onClick={()=>setView('info')}><p className={view ===' info' ? 'active':''}>Profile Info</p></li>
+            <li onClick={()=>setView('background_info')}><p className={view ===' background_info' ? 'active':''}>Background Info</p></li>
+            <li onClick={()=>setView('about')}><p className={view ===' about' ? 'active':''}>About Me</p></li>
           </ul>
         </div>
-        <UpdateProfilInfo userData={userData} setUserData={setUserData} setLoading={setLoading} setOpenNotification={setOpenNotification}/>
+        {view === 'info' &&
+          <UpdateProfilInfo
+            userData={userData}
+            setUserData={setUserData}
+            setLoading={setLoading}
+            setOpenNotification={setOpenNotification}
+            />
+        }
+        {
+          view === 'background_info' &&
+          <BackgroundInfo />
+        }
       </section>
     </div>
   )
