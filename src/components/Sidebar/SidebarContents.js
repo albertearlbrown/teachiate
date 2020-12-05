@@ -5,6 +5,7 @@ import { AuthStoreContext } from '../../Store/AuthStore';
 import { Avatar, Icon } from '@material-ui/core';
 import {posts} from '../../pages/Forum/Post';
 import { connect } from 'react-redux';
+import Moment from 'react-moment';
 
 
 function limitWords(textToLimit, wordLimit) {
@@ -29,17 +30,17 @@ const SidebarContent = (props) => {
     const [ sortedList, setSortedList ] = React.useState([])
     const [ groups, setGroups ] = React.useState([])
     const [ forums, setForums ] = React.useState([])
-    // const newFunc = async () => {
-    //     let socket = await configureSocket("https://api.teachiate.com/thoughts")
-    //     return (
-    //     // socket !== null && socket.then((data)=>console.log(data)).catch(err=>console.log("err", err))
-    //     socket&&socket.on("news", (data)=>(
-    //         data.status &&
-    //         setPosts(data.data)            
-    //     )))
-    // }
-    // newFunc()
- console.log("forum ",props)
+    
+    const sortPosts = (data) => {
+        let post = []
+        post = getPostsWithTodaysComments(data).length !== 0 ? post.concat(getPostsWithTodaysComments(data)): [...data]
+        // post = isAuthenicate ? data.filter(j=>userData.friends.includes(j.user._id)) : [...post]
+        console.log(post)
+        if(post.length < 5) return post.concat(data)
+        else if(post.length >=5) return post.sort((a, b)=>b.comments.length-a.comments.length) 
+    }  
+
+ console.log("forum ",posts.length!== 0 && new Date(posts.data[1].date).getDate()+"/"+new Date(posts.data[1].date).getMonth()+"/"+new Date(posts.data[1].date).getFullYear())
 
     React.useEffect(()=>{
         // socket&&socket.on("news", (data)=>(
@@ -87,6 +88,29 @@ const SidebarContent = (props) => {
     // }
     // groups.data?.groups?.map(i=>{return console.log("groups",i.members)})
     console.log(posts.data?.sort((a, b)=>b.comments.length-a.comments.length))
+    const getDate = (date) => {
+        let fullDate = ''
+        fullDate = date.length !== 0 ? new Date(date).getDate()+"/"+new Date(date).getMonth()+"/"+new Date(date).getFullYear():fullDate
+        return fullDate
+    }
+    const getToday = () => {
+        let today = new Date()
+        return today.getDate()+"/"+today.getMonth()+"/"+today.getFullYear()
+    }
+    const getPostsWithTodaysComments = (post) => {
+        let newArray = []
+        for (let index = 0; index < post.length; index++) {
+            let newComment = post[index].comments.filter(i=>getDate(i.date) === getToday())
+            if(newComment.length!==0){
+                newArray.push(post[index])
+            }
+        }
+        return newArray
+    }
+    const compareDateToArray = (post) => {
+        return post.filter(i=>getDate(i.date) === getToday())
+    }
+    console.log(posts.length!==0 && getPostsWithTodaysComments(posts.data))
     return(
         <React.Fragment>
             {/* POPULAR POSTS */}
@@ -96,10 +120,12 @@ const SidebarContent = (props) => {
             <div className="articles clearfix">
                 <ul className="d-flex">
                     {
-                        posts.data?.sort((a, b)=>(b.comments.length-a.comments.length) && (a.comments.length-a.likes.length))
-                            // .filter(k=>userData && k.user._id !== userData._id)
-                            .slice(0, 5)
-                            .map(i=>(
+                        // posts.data?.sort((a, b)=>(b.comments.length-a.comments.length) && (a.comments.length-a.likes.length))
+                        //     // .filter(k=>userData && k.user._id !== userData._id)
+                        //     .slice(0, 5)
+                        posts.length!==0 && sortPosts(posts.data)
+                        .slice(0, 5)
+                        .map(i=>(
                             <div key={i._id} className='cursor-pointer sidebar-post-border'>
                                 <li className='margin_top_20 cursor-pointer'>
                                     <div className="art_left_img my-auto"><img src={i.user?.avatar || "assets/img/article2.jpg"} width="92px;" alt=""/></div>
