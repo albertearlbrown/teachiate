@@ -1,16 +1,40 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { logger } from 'redux-logger'
+import { Provider } from 'react-redux'
+import { createStore, applyMiddleware, compose } from 'redux'
 import AuthStoreProvider from './Store/AuthStore';
 import App from './App';
+import reducers from './redux/reducers'
+import sagas from './redux/sagas'
+import createSagaMiddleware from 'redux-saga'
 import * as serviceWorker from './serviceWorker';
 import awsconfig from './aws-exports.js'
+import {addAuthorizationHeader} from './utils/axiosInterceptor';
+import axios from 'axios';
 import Amplify from 'aws-amplify';
 Amplify.configure(awsconfig)
 
+const baseURL = process.env.NODE_ENV === 'development'?"http://localhost:4000":"https://api.teachiate.com"
+axios.defaults.baseURL = baseURL
+axios.interceptors.request.use(addAuthorizationHeader, e => Promise.reject(e));
+
+const sagaMiddleware = createSagaMiddleware()
+const middlewares = [sagaMiddleware]
+
+if (process.env.NODE_ENV === 'development') {
+  middlewares.push(logger)
+}
+
+const store = createStore(reducers(), compose(applyMiddleware(...middlewares)))
+sagaMiddleware.run(sagas)
+
 ReactDOM.render(
-  <AuthStoreProvider>
-    <App />
-  </AuthStoreProvider>,
+  <Provider store={store}>
+    <AuthStoreProvider>
+      <App />
+    </AuthStoreProvider>
+  </Provider>,
   document.getElementById('root')
 );
 

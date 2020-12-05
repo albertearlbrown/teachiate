@@ -29,18 +29,11 @@ import Footer from './components/Footer';
 import SchoolOpening from './pages/SchoolOpening/SchoolOpening';
 
 // utils
-import {addAuthorizationHeader, configureSocket} from './utils/axiosInterceptor';
-
 import { AuthStoreContext } from './Store/AuthStore';
 import Search from './pages/Search/Search';
 
 import { Auth, Hub } from 'aws-amplify';
 import LandingPage from './components/LandingPage/LandingPage';
-
-// axios configs
-const baseURL = process.env.NODE_ENV === 'development'?"http://localhost:4000":"https://api.teachiate.com"
-axios.defaults.baseURL = baseURL
-axios.interceptors.request.use(addAuthorizationHeader, e => Promise.reject(e));
 
 function App () {
 
@@ -48,26 +41,6 @@ function App () {
   const { setIsAuthenicate, setUserData } = useContext(AuthStoreContext);
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState({});
-
-  useEffect(()=>{
-    const sendSock = async ()=>{
-      if (user._id) {
-        let socket = await configureSocket(baseURL);
-        if (socket) {
-          socket.on('connection', () => {
-              console.log(`I'm connected with the back-end`);
-            });
-          socket.emit('say-hay', user, ack => {
-            console.log(ack);
-          });
-          socket.on(user._id, data =>{
-            console.log(data);
-          })
-        }
-      }
-    }
-    sendSock()
-  }, [user])
 
   useEffect(() => {
     Hub.listen('auth', ({ payload: { event, data } }) => {
