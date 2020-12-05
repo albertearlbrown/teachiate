@@ -7,6 +7,8 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import { Formik } from 'formik';
 import TextField from '@material-ui/core/TextField';
+import profilActions from '../../../redux/profil/actions'
+
 import * as Yup from 'yup';
 
 
@@ -25,20 +27,41 @@ const schema = Yup.object().shape({
   jobTitle: Yup.string()
     .min(2, 'Too short')
     .max(50, 'Too Long'),
-  organization: Yup.string()
+  organisation: Yup.string()
     .min(2, 'Too short')
     .max(50, 'Too Long'),
-  website: Yup.string().matches(urlRegExp, 'url not valide')
+  website: Yup.string().url('url not valid'),
 })
 
-const BackgroundInfo = ({curretUser}) => {
+const BackgroundInfo = ({currentUser, dispatch, setLoading, loading, setOpenNotification, openNotification}) => {
   const classes = useStyles();
   const initialValues ={
-    ...curretUser
+    jobTitle: currentUser?.jobTitle || '',
+    organisation: currentUser?.organisation || '',
+    website: currentUser?.website || ''
   }
   const onSubmit = values => {
-    console.log(values);
+    dispatch({
+      type: profilActions.UPDATE_BACKGROUND_INFO,
+      payload: values
+    })
   }
+
+  useEffect(()=>{
+    debugger;
+    setLoading(loading)
+  },[loading])
+
+  useEffect(()=>{
+    if (openNotification) {
+      setOpenNotification(openNotification)
+      dispatch({
+        type: profilActions.SET_STATE,
+        payload: {openNotification: false}
+      })
+    }
+  }, [openNotification])
+
   return (
     <div
       id="background_info"
@@ -61,10 +84,7 @@ const BackgroundInfo = ({curretUser}) => {
            isSubmitting,
            /* and other goodies */
          }) => (
-          <form onSubmit={(e)=>{
-            e.preventDefault()
-            console.log(values)
-          }}>
+          <form onSubmit={handleSubmit}>
             <div className="profile_edit_area">
               <div className="profile_edit_col">
                 <div className="profile_edit_field only_name">
@@ -77,7 +97,7 @@ const BackgroundInfo = ({curretUser}) => {
                     <TextField
                       id="outlined-basic"
                       variant="outlined"
-                      error={errors.jobTitle}
+                      error={errors.jobTitle ? true : false}
                       className="profile_edit_input"
                       name='jobTitle'
                       onChange={handleChange}
@@ -93,25 +113,18 @@ const BackgroundInfo = ({curretUser}) => {
                   <FormControl
                     variant="outlined"
                     className={classes.formControl+" only_field"}
-                    error={errors.organization}
+                    error={errors.organisation}
                     >
-                    <Select
-                      labelId="demo-simple-select-outlined-label"
-                      id="demo-simple-select-outlined"
-                      className={classes.selectEmpty}
-                      name='organization'
+                    <TextField
+                      id="outlined-basic"
+                      variant="outlined"
+                      error={errors.organisation ? true : false}
+                      className="profile_edit_input"
+                      name='organisation'
                       onChange={handleChange}
-                      value={values.organization}
-                    >
-                      <MenuItem value="">
-                        <em>None</em>
-                      </MenuItem>
-                      <MenuItem value={'Parent'}>Parent</MenuItem>
-                      <MenuItem value={'Teacher'}>Teacher</MenuItem>
-                      <MenuItem value={'Student'}>Student</MenuItem>
-                      <MenuItem value={'General Educator'}>General Educator</MenuItem>
-                    </Select>
-                    {errors.organization && <FormHelperText>Error</FormHelperText>}
+                      value={values.organisation}
+                      helperText={errors.organisation}
+                      />
                   </FormControl>
                 </div>
               </div>
@@ -126,7 +139,7 @@ const BackgroundInfo = ({curretUser}) => {
                     <TextField
                       id="outlined-basic"
                       variant="outlined"
-                      error={errors.website}
+                      error={errors.website ? true : false}
                       name='website'
                       className="profile_edit_input"
                       onChange={handleChange}
@@ -153,6 +166,10 @@ const BackgroundInfo = ({curretUser}) => {
 };
 
 const mapStateToProps = state => {
-  return {curretUser: state.users.currentUser}
+  return {
+    currentUser: state.users.currentUser,
+    loading: state.profil.loading,
+    openNotification: state.profil.openNotification
+  }
 }
 export default connect(mapStateToProps)(BackgroundInfo);

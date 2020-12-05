@@ -43,7 +43,6 @@ function Forum() {
     },[selectedCat, selectedSubCat, trendingTopic]);
 
     async function fetchPosts() {
-       debugger;
        setOpen(true)
        setPosts([])
        axios({

@@ -46,7 +46,7 @@ const ProfilEdit = ()=>{
         }
         {
           view === 'background_info' &&
-          <BackgroundInfo />
+          <BackgroundInfo setLoading={setLoading}/>
         }
       </section>
     </div>

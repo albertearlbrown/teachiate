@@ -5,7 +5,6 @@ import SendInvationComponent from "./sendInvitation"
 
 function Step2() {
   const {newGroup, userData} = useContext(AuthStoreContext)
-  debugger
   const [months, setMonths] = useState(0)
   const [days, setDays] = useState(0)
   useEffect(()=>{
