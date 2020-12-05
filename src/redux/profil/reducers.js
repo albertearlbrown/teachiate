@@ -3,6 +3,8 @@ import actions from './actions'
 const initialState = {
   loading: false,
   currentUser: {},
+  notificationConfig: {},
+  showForm: false
 }
 
 export default function userReducer(state = initialState, action) {

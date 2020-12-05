@@ -11,3 +11,14 @@ export async function updateBackgroundInfo(data){
     return false;
   })
 }
+
+export async function getNotificationConfig(){
+  return axios({
+    method: 'get',
+    url: '/notifications',
+  }).then((res) => {
+    return res.data;
+  }).catch(()=>{
+    return false;
+  })
+}

@@ -26,8 +26,39 @@ export function* UPDATE_BACKGROUND_INFO({payload}){
   }
 }
 
+export function* GET_NOTIFICATION_CONFIGS(){
+  yield put({
+    type: actions.SET_STATE,
+    payload: {
+      showForm: false,
+      loading: true
+    }
+  })
+  const response = yield call(profilApi.getNotificationConfig)
+  if (response) {
+    yield put({
+      type: actions.SET_STATE,
+      payload: {
+        notificationConfig: response.data,
+        showForm: true,
+        loading: false,
+      }
+    })
+  }else{
+    yield put({
+      type: actions.SET_STATE,
+      payload: {
+        notificationConfig: {},
+        loading: false,
+        showForm: true,
+      }
+    })
+  }
+}
+
 export default function* rootSaga() {
   yield all([
     takeEvery(actions.UPDATE_BACKGROUND_INFO, UPDATE_BACKGROUND_INFO),
+    takeEvery(actions.GET_NOTIFICATION_CONFIGS, GET_NOTIFICATION_CONFIGS),
   ])
 }

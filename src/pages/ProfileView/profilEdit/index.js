@@ -13,7 +13,6 @@ const ProfilEdit = ()=>{
   const [loading, setLoading] = useState(false)
   const [view, setView] = useState('info')
   const [openNotification, setOpenNotification] = useState(false);
-  console.log(loading);
   return(
     <div className="profile-forum-details">
       <section className="tabbed-content2 profile_edit">
