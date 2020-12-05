@@ -22,3 +22,15 @@ export async function getNotificationConfig(){
     return false;
   })
 }
+
+export async function updateNotificationsConfig(data){
+  return axios({
+    method: 'put',
+    url: '/notifications/configure',
+    data
+  }).then(() => {
+    return true;
+  }).catch(()=>{
+    return false;
+  })
+}
