@@ -313,7 +313,7 @@ const Home = () => {
                     {load ?
                         postData
                         .map(post => (
-                            <div className="blog_sec1" key={post.id}>
+                            <div className="blog_sec1" key={post._id}>
                                 <div className="blog_title">
                                     <div className="title_img">
                                         <img src={post.avatar == null ? '/assets/img/user-account.png' : post.user.avatar } alt=""/>
@@ -349,7 +349,7 @@ const Home = () => {
                                 {post
                                 .comments
                                 .map(comment => (
-                                    <div key={comment.id} className="blog_title margin_btm">
+                                    <div key={comment._id} className="blog_title margin_btm">
                                         <div className="title_img">
                                             <img style={{borderRadius: '50%'}} src={comment.user.avatar === null ? '/assets/img/user-account.png'  : comment.user.avatar } alt=""/>
                                         </div>

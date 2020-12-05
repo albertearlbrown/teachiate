@@ -4,6 +4,7 @@ import { configureSocket } from '../../utils/axiosInterceptor';
 import { AuthStoreContext } from '../../Store/AuthStore';
 import { Avatar, Icon } from '@material-ui/core';
 import {posts} from '../../pages/Forum/Post';
+import { connect } from 'react-redux';
 
 
 function limitWords(textToLimit, wordLimit) {
@@ -22,7 +23,7 @@ function limitWords(textToLimit, wordLimit) {
     else return textToLimit;
 }
 
-const SidebarContent = ({ load }) => {
+const SidebarContent = (props) => {
     const { isAuthenicate, userData } = useContext(AuthStoreContext);
     const [ posts, setPosts ] = React.useState([])
     const [ sortedList, setSortedList ] = React.useState([])
@@ -38,7 +39,7 @@ const SidebarContent = ({ load }) => {
     //     )))
     // }
     // newFunc()
- console.log("forum ",posts)
+ console.log("forum ",props)
 
     React.useEffect(()=>{
         // socket&&socket.on("news", (data)=>(
@@ -46,31 +47,37 @@ const SidebarContent = ({ load }) => {
         //     setPosts(data.data)            
         // ))
         let posts
-        Axios.get("https://api.teachiate.com/thoughts")
-            .then((posts)=>(
-                posts.status &&
-                setPosts(posts.data)
-            ))
-            .catch((err)=>console.log("Posts Error", err))
-    },[load])
+        setInterval(() => {
+            Axios.get("https://api.teachiate.com/thoughts")
+                .then((posts)=>(
+                    posts.status &&
+                    setPosts(posts.data)
+                ))
+                .catch((err)=>console.log("Posts Error", err))      
+        }, 2000);
+    },[])
     React.useEffect(()=>{
         let posts
-        Axios.get("https://api.teachiate.com/group/list")
-            .then((groups)=>(
-                groups.status &&
-                setGroups(groups.data)
-            ))
-            .catch((err)=>console.log("groups Error", err))
-    },[load])
-    React.useEffect(()=>{
-        let posts
-        Axios.get("https://api.teachiate.com/forum")
-            .then((forums)=>(
-                forums.status &&
-                setForums(forums.data)
+        setInterval(() => {
+            Axios.get("https://api.teachiate.com/group/list")
+                .then((groups)=>(
+                    groups.status &&
+                    setGroups(groups.data)
                 ))
                 .catch((err)=>console.log("groups Error", err))
-            },[load])
+        }, 2000);
+    },[])
+    React.useEffect(()=>{
+        let posts
+        setInterval(() => {  
+            Axios.get("https://api.teachiate.com/forum")
+                .then((forums)=>(
+                    forums.status &&
+                    setForums(forums.data)
+                    ))
+                    .catch((err)=>console.log("groups Error", err))
+        }, 2000);
+            },[])
             
             console.log(isAuthenicate, userData)
     // const sortingList = () => {
@@ -95,12 +102,12 @@ const SidebarContent = ({ load }) => {
                             .map(i=>(
                             <div key={i._id} className='cursor-pointer sidebar-post-border'>
                                 <li className='margin_top_20 cursor-pointer'>
-                                    <div className="art_left_img"><img src={i.user?.avatar || "assets/img/article2.jpg"} width="92px;" alt=""/></div>
+                                    <div className="art_left_img my-auto"><img src={i.user?.avatar || "assets/img/article2.jpg"} width="92px;" alt=""/></div>
                                     <div className="">
                                         <span className='font-weight-bold'>{i.user.fullName}</span><br />
                                         <span className=''>{limitWords(i.content, 6)}</span>
                                     </div>
-                                    <div style={{marginLeft: "auto"}}>
+                                    <div className='ml-auto'>
                                     <nobr><Icon className="fa fa-comment" aria-hidden="true" />{i.comments.length}</nobr>
                                     </div>
                                     {/* <div className="">
@@ -127,12 +134,12 @@ const SidebarContent = ({ load }) => {
                             .map(i=>(
                             <div key={i._id} className='cursor-pointer sidebar-post-border'>
                                 <li className='margin_top_20 cursor-pointer'>
-                                    <div className="art_left_img"><img src={i.avatar || "assets/img/article2.jpg"} width="92px;" alt=""/></div>
+                                    <div className="art_left_img my-auto"><img src={i.avatar || "assets/img/article2.jpg"} width="92px;" alt=""/></div>
                                     <div className="">
                                         <span className='font-weight-bold'>{i.groupName}</span><br />
                                         <span className=''>{limitWords(i.description, 6)}</span>
                                     </div>
-                                    <div style={{marginLeft: "auto"}}>
+                                    <div className='ml-auto'>
                                         <Icon className='fa fa-users' /> {i.members.length}
                                     </div>
                                     {/* <div className="">
@@ -154,15 +161,19 @@ const SidebarContent = ({ load }) => {
                 <ul className="d-flex">
                     {
                         // .filter(j=>j.privacy==="PUBLIC")
-                        forums.data?.posts?.sort((a, b)=>((b.comments.length +b.likes.length)-(a.comments.length+a.likes.length)))
+                        forums.data?.posts?.sort((a, b)=>(b.comments.length-a.comments.length))
                             .slice(0, 5)
                             .map(i=>(
                             <div key={i._id} className='cursor-pointer sidebar-post-border'>
                                 <li className='margin_top_20 cursor-pointer'>
-                                    <div className="art_left_img"><img src={i.image || "assets/img/article2.jpg"} width="92px;" alt=""/></div>
-                                    <div className="">
+                                    <div className="art_left_img my-auto"><Avatar src={i.image || "assets/img/article2.jpg"}  alt=""/></div>
+                                    <div className="pr-2">
                                         <span className='font-weight-bold'>{i.title}</span><br />
                                         <span className=''>{limitWords(i.description, 6)}</span>
+                                    </div>
+                                    <div className='ml-auto my-auto'>
+                                        <nobr><Icon className="fa fa-comment" aria-hidden="true" />{i.comments.length}</nobr><br />
+                                        <nobr><Icon className='fa fa-thumbs-up' /> {i.likes.length}</nobr>
                                     </div>
                                     {/* <div className="">
                                     </div> */}
@@ -206,5 +217,9 @@ const SidebarContent = ({ load }) => {
         </React.Fragment>
     )
 }
-
-export default SidebarContent;
+const mapStateToProps = (state) => {
+    return {
+        ...state
+    }
+}
+export default connect(mapStateToProps)(SidebarContent);
