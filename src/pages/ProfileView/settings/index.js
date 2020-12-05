@@ -5,6 +5,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import Alert from '@material-ui/lab/Alert';
 import UpdatePassword from './UpdatePassword'
 import EmailNotification from './EmailNotifications'
+import SocialAccounts from './SocialAccounts'
 import { useSelector } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -19,11 +20,17 @@ const Settings = () => {
   const classes = useStyles();
   const [view, setView] = useState('password')
   const [loading, setLoading] = useState(false)
+  const [openNotification, setOpenNotification] = useState(false)
   const profil = useSelector(({profil}) => profil)
 
   useEffect(() => {
     setLoading(profil.loading)
   }, [profil.loading])
+
+  useEffect(()=>{
+    setOpenNotification(profil.openNotification)
+  })
+
   return (
     <div className="profile-forum-details">
       <Backdrop open={loading} className={classes.backdrop}>
@@ -31,7 +38,8 @@ const Settings = () => {
       </Backdrop>
       <Snackbar
         anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-        open={profil.openNotification}
+        open={openNotification}
+        onClose={()=>setOpenNotification(false)}
         autoHideDuration={5000}
       >
         <Alert severity="success">
@@ -43,6 +51,7 @@ const Settings = () => {
           <ul>
             <li onClick={()=>setView('password')}><p className={view === 'password' ?'active':''}>General</p></li>
             <li onClick={()=>setView('email')}><p className={view === 'email' ?'active':''}>Email</p></li>
+            <li onClick={()=>setView('social')}><p className={view === 'email' ?'active':''}>Social Accounts </p></li>
             {/*<li><p>Email </p></li>
               <li><a href="#Social">Social Accounts </a></li>
               <li><a href="#Profile">Profile Visibility</a></li>
@@ -53,7 +62,7 @@ const Settings = () => {
         </div>
         {view === 'password' && <UpdatePassword />}
         {view === 'email' && <EmailNotification setLoading={setLoading}/>}
-
+        {view === 'social' && <SocialAccounts setLoading={setLoading}/>}
       </section>
     </div>
   )
