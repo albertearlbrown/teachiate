@@ -6,6 +6,7 @@ import { Avatar, Icon } from '@material-ui/core';
 import {posts} from '../../pages/Forum/Post';
 import { connect } from 'react-redux';
 import Moment from 'react-moment';
+// import { io } from 'socket.io-client';
 
 
 function limitWords(textToLimit, wordLimit) {
@@ -29,18 +30,29 @@ const SidebarContent = (props) => {
     const [ posts, setPosts ] = React.useState([])
     const [ sortedList, setSortedList ] = React.useState([])
     const [ groups, setGroups ] = React.useState([])
-    const [ forums, setForums ] = React.useState([])
+    const [ forums, setForums ] = React.useState([])    
     
     const sortPosts = (data) => {
         let post = []
         post = getPostsWithTodaysComments(data).length !== 0 ? post.concat(getPostsWithTodaysComments(data)): [...data]
         // post = isAuthenicate ? data.filter(j=>userData.friends.includes(j.user._id)) : [...post]
-        console.log(post)
-        if(post.length < 5) return post.concat(data)
-        else if(post.length >=5) return post.sort((a, b)=>b.comments.length-a.comments.length) 
+        // console.log(post)
+        if(post.length < 5) {
+            // console.log("posts", post)
+            let today = [...post, ...data];
+            return today = [...new Set(today)]
+        }
+        if(post.length >=5) {
+            post.sort((a, b)=>b.comments.length-a.comments.length)
+            return post
+        } 
     }  
 
- console.log("forum ",posts.length!== 0 && new Date(posts.data[1].date).getDate()+"/"+new Date(posts.data[1].date).getMonth()+"/"+new Date(posts.data[1].date).getFullYear())
+//  console.log("forum ",posts.length!== 0 && new Date(posts.data[1].date).getDate()+"/"+new Date(posts.data[1].date).getMonth()+"/"+new Date(posts.data[1].date).getFullYear())
+// const newFunction = async () => {
+//     const socket = await configureSocket("https://api.teachiate.com/thoughts")
+//     console.log(socket)
+// }    
 
     React.useEffect(()=>{
         // socket&&socket.on("news", (data)=>(
@@ -55,7 +67,8 @@ const SidebarContent = (props) => {
                     setPosts(posts.data)
                 ))
                 .catch((err)=>console.log("Posts Error", err))      
-        }, 2000);
+        }, 5000);
+        // newFunction()
     },[])
     React.useEffect(()=>{
         let posts
@@ -66,7 +79,7 @@ const SidebarContent = (props) => {
                     setGroups(groups.data)
                 ))
                 .catch((err)=>console.log("groups Error", err))
-        }, 2000);
+        }, 5000);
     },[])
     React.useEffect(()=>{
         let posts
@@ -76,18 +89,9 @@ const SidebarContent = (props) => {
                     forums.status &&
                     setForums(forums.data)
                     ))
-                    .catch((err)=>console.log("groups Error", err))
-        }, 2000);
+                    .catch((err)=>console.log("forum Error", err))
+        }, 5000);
             },[])
-            
-            console.log(isAuthenicate, userData)
-    // const sortingList = () => {
-    //     // Most Comments
-    //     posts.data?.sort((a, b)=>b.comments.length-a.comments.length)
-
-    // }
-    // groups.data?.groups?.map(i=>{return console.log("groups",i.members)})
-    console.log(posts.data?.sort((a, b)=>b.comments.length-a.comments.length))
     const getDate = (date) => {
         let fullDate = ''
         fullDate = date.length !== 0 ? new Date(date).getDate()+"/"+new Date(date).getMonth()+"/"+new Date(date).getFullYear():fullDate
@@ -110,7 +114,7 @@ const SidebarContent = (props) => {
     const compareDateToArray = (post) => {
         return post.filter(i=>getDate(i.date) === getToday())
     }
-    console.log(posts.length!==0 && getPostsWithTodaysComments(posts.data))
+    // console.log(posts.length!==0 && getPostsWithTodaysComments(posts.data))
     return(
         <React.Fragment>
             {/* POPULAR POSTS */}
@@ -185,9 +189,9 @@ const SidebarContent = (props) => {
             </div>
             <div className="articles clearfix">
                 <ul className="d-flex">
-                    {
-                        // .filter(j=>j.privacy==="PUBLIC")
-                        forums.data?.posts?.sort((a, b)=>(b.comments.length-a.comments.length))
+                    {   
+                        forums.length!==0 && sortPosts(forums.data.posts)
+                        // forums.data?.posts?.sort((a, b)=>(b.comments.length-a.comments.length))
                             .slice(0, 5)
                             .map(i=>(
                             <div key={i._id} className='cursor-pointer sidebar-post-border'>
@@ -220,8 +224,7 @@ const SidebarContent = (props) => {
                 <ul className="d-flex">
                     {
                         // .filter(j=>j.privacy==="PUBLIC")
-                        forums.data?.posts?.sort((a, b)=>((b.comments.length +b.likes.length)-(a.comments.length+a.likes.length)))
-                            .slice(0, 5)
+                        forums.data?.posts?.slice(0, 5)
                             .map(i=>(
                             <div key={i._id} className='cursor-pointer sidebar-post-border'>
                                 <li className='margin_top_20 cursor-pointer'>
