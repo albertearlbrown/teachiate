@@ -21,13 +21,6 @@ const ProfilNavBar = ({setView, view})=>{
             </li>
             <li><a href="#">
                 <div className="profile-nav-icon">
-                    <img src="assets/img/icon3.png" alt=""/>
-                </div>
-                <p>Notifications</p>
-                </a>
-            </li>
-            <li><a href="#">
-                <div className="profile-nav-icon">
                     <img src="assets/img/icon4.png" alt=""/>
                 </div>
                 <p>Messages</p>

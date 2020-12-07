@@ -84,10 +84,22 @@ export function* UPDATE_NOTIFICATION_CONFIGS({payload}){
   }
 }
 
+export function* REMOVE_ACCOUNT({payload}){
+  yield put({
+    type: actions.SET_STATE,
+    payload: {
+      loading: true
+    }
+  })
+  yield call(profilApi.removeAccount)
+  window.location.reload()
+}
+
 export default function* rootSaga() {
   yield all([
     takeEvery(actions.UPDATE_BACKGROUND_INFO, UPDATE_BACKGROUND_INFO),
     takeEvery(actions.GET_NOTIFICATION_CONFIGS, GET_NOTIFICATION_CONFIGS),
     takeEvery(actions.UPDATE_NOTIFICATION_CONFIGS, UPDATE_NOTIFICATION_CONFIGS),
+    takeEvery(actions.REMOVE_ACCOUNT, REMOVE_ACCOUNT),
   ])
 }

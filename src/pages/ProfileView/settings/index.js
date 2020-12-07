@@ -6,6 +6,7 @@ import Alert from '@material-ui/lab/Alert';
 import UpdatePassword from './UpdatePassword'
 import EmailNotification from './EmailNotifications'
 import SocialAccounts from './SocialAccounts'
+import DeleteAccount from './DeleteAccount'
 import { useSelector } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -52,6 +53,7 @@ const Settings = () => {
             <li onClick={()=>setView('password')}><p className={view === 'password' ?'active':''}>General</p></li>
             <li onClick={()=>setView('email')}><p className={view === 'email' ?'active':''}>Email</p></li>
             <li onClick={()=>setView('social')}><p className={view === 'email' ?'active':''}>Social Accounts </p></li>
+            <li onClick={()=>setView('delete')}><p className={view === 'delete' ?'active':''}>Delete Accounts </p></li>
             {/*<li><p>Email </p></li>
               <li><a href="#Social">Social Accounts </a></li>
               <li><a href="#Profile">Profile Visibility</a></li>
@@ -63,6 +65,7 @@ const Settings = () => {
         {view === 'password' && <UpdatePassword />}
         {view === 'email' && <EmailNotification setLoading={setLoading}/>}
         {view === 'social' && <SocialAccounts setLoading={setLoading}/>}
+        {view === 'delete' && <DeleteAccount setLoading={setLoading} />}
       </section>
     </div>
   )

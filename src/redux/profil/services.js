@@ -34,3 +34,14 @@ export async function updateNotificationsConfig(data){
     return false;
   })
 }
+
+export async function removeAccount(){
+  return axios({
+    method: 'post',
+    url: '/users/remove-account'
+  }).then(()=>{
+    return true
+  }).catch((err)=>{
+    return false;
+  })
+}
