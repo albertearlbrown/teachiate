@@ -23,6 +23,19 @@ export async function getNotificationConfig(){
   })
 }
 
+export async function getUsers(page, name){
+  const size = 1000;
+  return axios({
+    url: `/users/all`,
+    method: 'get',
+    params:{ name, size }
+  }).then((response)=>{
+    return response.data.data.users
+  }).catch((e)=>{
+    return false
+  })
+}
+
 export async function updateNotificationsConfig(data){
   return axios({
     method: 'put',
@@ -43,5 +56,17 @@ export async function removeAccount(){
     return true
   }).catch((err)=>{
     return false;
+  })
+}
+
+export async function sendMessage(payload){
+  return axios({
+    url: `/messages/send`,
+    method: 'post',
+    data:payload
+  }).then((response)=>{
+    return true
+  }).catch((e)=>{
+    return false
   })
 }

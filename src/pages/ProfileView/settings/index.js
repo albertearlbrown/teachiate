@@ -30,7 +30,7 @@ const Settings = () => {
 
   useEffect(()=>{
     setOpenNotification(profil.openNotification)
-  })
+  },[])
 
   return (
     <div className="profile-forum-details">

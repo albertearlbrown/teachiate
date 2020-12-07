@@ -95,11 +95,71 @@ export function* REMOVE_ACCOUNT({payload}){
   window.location.reload()
 }
 
+export function* LOAD_ALL_USERS({payload}){
+  yield put({
+    type: actions.SET_STATE,
+    payload: {
+      loading: true
+    }
+  })
+  const response = yield call(profilApi.getUsers, payload?.name)
+  if (response) {
+    yield put({
+      type: actions.SET_STATE,
+      payload: {
+        loading: false,
+        sendToList: response
+      }
+    })
+  }else{
+    yield put({
+      type: actions.SET_STATE,
+      payload: {
+        notificationConfig: {},
+        loading: false,
+      }
+    })
+  }
+}
+
+export function* SEND_MESSAGE({payload}){
+  yield put({
+    type: actions.SET_STATE,
+    payload: {
+      loading: true
+    }
+  })
+  const response = yield call(profilApi.sendMessage, payload)
+  if (response) {
+    yield put({
+      type: actions.SET_STATE,
+      payload: {
+        loading: false,
+        notificationMessage: 'Message sent successfully',
+        notificationType: 'success',
+        openNotification: true,
+      }
+    })
+  }else{
+    yield put({
+      type: actions.SET_STATE,
+      payload: {
+        notificationMessage: 'Error occurred, please try later',
+        notificationType: 'error',
+        loading: false,
+        openNotification: true,
+      }
+    })
+  }
+}
+
 export default function* rootSaga() {
   yield all([
     takeEvery(actions.UPDATE_BACKGROUND_INFO, UPDATE_BACKGROUND_INFO),
     takeEvery(actions.GET_NOTIFICATION_CONFIGS, GET_NOTIFICATION_CONFIGS),
     takeEvery(actions.UPDATE_NOTIFICATION_CONFIGS, UPDATE_NOTIFICATION_CONFIGS),
     takeEvery(actions.REMOVE_ACCOUNT, REMOVE_ACCOUNT),
+    takeEvery(actions.LOAD_ALL_USERS, LOAD_ALL_USERS),
+    takeEvery(actions.SEND_MESSAGE, SEND_MESSAGE),
   ])
 }

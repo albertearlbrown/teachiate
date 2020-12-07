@@ -4,7 +4,8 @@ const initialState = {
   loading: false,
   currentUser: {},
   notificationConfig: {},
-  showForm: false
+  showForm: false,
+  sendToList: []
 }
 
 export default function userReducer(state = initialState, action) {
