@@ -81,6 +81,18 @@ export async function loadInboxMessage(payload){
   })
 }
 
+export async function loadSentMessage(payload){
+  return axios({
+    method: 'get',
+    url: '/messages/sent',
+    params: payload
+  }).then((response)=>{
+    return response.data
+  }).catch((err)=>{
+    return false;
+  })
+}
+
 export async function makeMessageStarred(id){
   return axios({
     method: 'put',
@@ -92,10 +104,11 @@ export async function makeMessageStarred(id){
   })
 }
 
-export async function removeMessage(id){
+export async function removeMessage(ids){
   return axios({
     method: 'delete',
-    url: '/messages/inbox/remove/'+id,
+    url: '/messages/inbox/remove',
+    data: ids
   }).then(()=>{
     return true
   }).catch((err)=>{

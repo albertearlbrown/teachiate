@@ -8,6 +8,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import ComposeMessage from './compose'
 import Inbox from './inbox'
 import Starred from './starred';
+import Sent from './sent'
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
@@ -39,6 +40,9 @@ const MessagesView = ()=>{
           type: profilActions.SET_STATE,
           payload: {openNotification: false}
         })
+        if (view === 'compose') {
+          setView('sent')
+        }
       }, 2000)
     }
   },[ profil.openNotification ])
@@ -70,6 +74,7 @@ const MessagesView = ()=>{
         {view === 'inbox' && <Inbox profil={profil} dispatch={dispatch} currentUser={users.currentUser} />}
         {view === 'compose' && <ComposeMessage profil={profil} dispatch={dispatch} currentUser={users.currentUser} />}
         {view === 'starred' && <Starred profil={profil} dispatch={dispatch} currentUser={users.currentUser} />}
+        {view === 'sent' && <Sent profil={profil} dispatch={dispatch} currentUser={users.currentUser} />}
       </section>
     </div>
   )

@@ -227,7 +227,7 @@ export function* REMOVE_MESSAGE({payload}){
       loading: true
     }
   })
-  const response = yield call(profilApi.removeMessage, payload.id)
+  const response = yield call(profilApi.removeMessage, payload.ids)
   if (response) {
     yield put({
       type: actions.SET_STATE,
@@ -239,7 +239,7 @@ export function* REMOVE_MESSAGE({payload}){
     })
     const {inboxPagination} = yield select(getProfilState)
     yield put({
-      type: actions.LOAD_INBOX_MESSAGES,
+      type: actions.LOAD_SENT_MESSAGES,
       payload: inboxPagination
     })
   } else{
@@ -255,6 +255,72 @@ export function* REMOVE_MESSAGE({payload}){
   }
 }
 
+export function* LOAD_SENT_MESSAGES({payload}){
+  yield put({
+    type: actions.SET_STATE,
+    payload: {
+      loading: true
+    }
+  })
+  const response = yield call(profilApi.loadSentMessage, payload)
+  if (response) {
+    yield put({
+      type: actions.SET_STATE,
+      payload: {
+        loading: false,
+        sent: response.messages,
+        sentPagination: {...payload, totalElements: response.totalElement },
+      }
+    })
+  }else{
+    yield put({
+      type: actions.SET_STATE,
+      payload: {
+        notificationMessage: 'Error occurred, please try later',
+        notificationType: 'error',
+        loading: false,
+        openNotification: true,
+      }
+    })
+  }
+}
+
+export function* REMOVE_SENT_MESSAGE({payload}){
+  yield put({
+    type: actions.SET_STATE,
+    payload: {
+      loading: true
+    }
+  })
+  const response = yield call(profilApi.makeMessageStarred, payload.id)
+  if (response) {
+    yield put({
+      type: actions.SET_STATE,
+      payload: {
+        notificationMessage: 'Message updated successfully',
+        notificationType: 'success',
+        openNotification: true,
+      }
+    })
+    const {sentPagination} = yield select(getProfilState)
+    yield put({
+      type: actions.LOAD_SENT_MESSAGES,
+      payload: sentPagination
+    })
+  } else{
+    yield put({
+      type: actions.SET_STATE,
+      payload: {
+        notificationMessage: 'Error occurred, please try later',
+        notificationType: 'error',
+        loading: false,
+        openNotification: true,
+      }
+    })
+  }
+}
+
+
 export default function* rootSaga() {
   yield all([
     takeEvery(actions.UPDATE_BACKGROUND_INFO, UPDATE_BACKGROUND_INFO),
@@ -266,5 +332,7 @@ export default function* rootSaga() {
     takeEvery(actions.LOAD_INBOX_MESSAGES, LOAD_INBOX_MESSAGES),
     takeEvery(actions.MAKE_MESSAGE_STARRED, MAKE_MESSAGE_STARRED),
     takeEvery(actions.REMOVE_MESSAGE, REMOVE_MESSAGE),
+    takeEvery(actions.LOAD_SENT_MESSAGES, LOAD_SENT_MESSAGES),
+    takeEvery(actions.REMOVE_SENT_MESSAGE, REMOVE_SENT_MESSAGE),
   ])
 }

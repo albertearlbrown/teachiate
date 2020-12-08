@@ -6,7 +6,8 @@ const initialState = {
   notificationConfig: {},
   showForm: false,
   sendToList: [],
-  inbox: []
+  inbox: [],
+  sent:[],
 }
 
 export default function userReducer(state = initialState, action) {

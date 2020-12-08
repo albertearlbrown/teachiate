@@ -77,7 +77,13 @@ export default function Notifications() {
           <div id="All" className="item2 active" data-title="All">
             <div className="item-content2">
               <div className="notification_area_inner">
-                {nList.map((not, i)=><NotificationsCard key={i} notification={not} />)}
+                {nList.map((not, i)=>{
+                  if (not.senderId) {
+                    return(
+                      <NotificationsCard key={i} notification={not} />
+                    )
+                  }
+                })}
               </div>
             </div>
           </div>

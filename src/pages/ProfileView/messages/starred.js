@@ -46,7 +46,7 @@ const Starred = ({profil, currentUser, dispatch}) => {
       </div>
       {
         profil.inbox.map((message) => (
-          <div className="notofication_col clearfix">
+          <div key={message._id} className="notofication_col clearfix">
             <div className="new">
               <form>
                 <div className="form-group">
