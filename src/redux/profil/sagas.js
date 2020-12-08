@@ -374,7 +374,42 @@ export function* REMOVE_SENT_MESSAGE_STARRED({payload}){
     })
     const {inboxPagination} = yield select(getProfilState)
     yield put({
-      type: actions.LOAD_SENT_MESSAGES,
+      type: actions.LOAD_INBOX_MESSAGES,
+      payload: inboxPagination
+    })
+  } else{
+    yield put({
+      type: actions.SET_STATE,
+      payload: {
+        notificationMessage: 'Error occurred, please try later',
+        notificationType: 'error',
+        loading: false,
+        openNotification: true,
+      }
+    })
+  }
+}
+
+export function* REMOVE_MESSAGE_STARRED({payload}){
+  yield put({
+    type: actions.SET_STATE,
+    payload: {
+      loading: true
+    }
+  })
+  const response = yield call(profilApi.removeStarMessage, payload.ids)
+  if (response) {
+    yield put({
+      type: actions.SET_STATE,
+      payload: {
+        notificationMessage: 'Messages unstarred successfully',
+        notificationType: 'success',
+        openNotification: true,
+      }
+    })
+    const {inboxPagination} = yield select(getProfilState)
+    yield put({
+      type: actions.LOAD_INBOX_MESSAGES,
       payload: inboxPagination
     })
   } else{
@@ -401,6 +436,7 @@ export default function* rootSaga() {
     takeEvery(actions.SEND_MESSAGE, SEND_MESSAGE),
     takeEvery(actions.LOAD_INBOX_MESSAGES, LOAD_INBOX_MESSAGES),
     takeEvery(actions.MAKE_MESSAGE_STARRED, MAKE_MESSAGE_STARRED),
+    takeEvery(actions.REMOVE_MESSAGE_STARRED, REMOVE_MESSAGE_STARRED),
     takeEvery(actions.REMOVE_MESSAGE, REMOVE_MESSAGE),
     takeEvery(actions.LOAD_SENT_MESSAGES, LOAD_SENT_MESSAGES),
     takeEvery(actions.REMOVE_SENT_MESSAGE, REMOVE_SENT_MESSAGE),

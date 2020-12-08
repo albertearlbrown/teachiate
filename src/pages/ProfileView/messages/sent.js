@@ -49,7 +49,7 @@ const Sent = ({profil, currentUser, dispatch}) => {
     const ids = [];
     selected.filter(a => ids.push(a._id))
     dispatch({
-      type: profilActions.MAKE_SENT_MESSAGE_STARRED,
+      type: profilActions.REMOVE_SENT_MESSAGE,
       payload: { ids }
     })
   }

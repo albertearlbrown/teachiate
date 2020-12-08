@@ -93,10 +93,11 @@ export async function loadSentMessage(payload){
   })
 }
 
-export async function makeMessageStarred(id){
+export async function makeMessageStarred(ids){
   return axios({
     method: 'put',
-    url: '/messages/inbox/starred/'+id,
+    url: '/messages/inbox/starred',
+    data: ids
   }).then(()=>{
     return true
   }).catch((err)=>{
@@ -145,6 +146,18 @@ export async function removeSentMessage(ids){
   return axios({
     method: 'delete',
     url: '/messages/sent/remove',
+    data: ids
+  }).then(()=>{
+    return true
+  }).catch((err)=>{
+    return false;
+  })
+}
+
+export async function removeStarMessage(ids){
+  return axios({
+    method: 'put',
+    url: '/messages/inbox/unstarred',
     data: ids
   }).then(()=>{
     return true

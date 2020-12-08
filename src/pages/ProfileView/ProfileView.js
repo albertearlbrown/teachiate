@@ -13,7 +13,7 @@ const ProfileView = () => {
 
     const [newAvatarFile, setNewAvatarFile] = useState(null);
     const [newProfileCover, setnewProfileCover] = useState(null);
-    const [currentView, setView] = useState('messages')
+    const [currentView, setView] = useState('thoughts')
 
     const changeProfileCover = async (e) => {
         e.preventDefault();
