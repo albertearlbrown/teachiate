@@ -70,6 +70,9 @@ export default function ComplexGrid({notification}) {
         case 'TO_JOIN_GROUP':
           setTitle(`${senderId.fullName} sent request to join group`);
           break;
+        case 'MESSAGE_RECEIVED':
+          setTitle(`${senderId.fullName} sent you a message`);
+          break;
         case 'POST_LIKE':
           setTitle(`${senderId.fullName} liked your post`);
           break;
@@ -144,6 +147,14 @@ export default function ComplexGrid({notification}) {
                 <Link to={`/posts/${notification.postId}`}>
                   <Button variant="contained" color="primary">
                     View Post
+                  </Button>
+                </Link>
+              }
+              {
+                notification.type === "MESSAGE_RECEIVED" &&
+                <Link to={`/my-profile`}>
+                  <Button variant="contained" color="primary">
+                    View Message
                   </Button>
                 </Link>
               }
