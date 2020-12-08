@@ -24,21 +24,15 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const schema = Yup.object().shape({
-  jobTitle: Yup.string()
+  about: Yup.string()
     .min(2, 'Too short')
-    .max(50, 'Too Long'),
-  organisation: Yup.string()
-    .min(2, 'Too short')
-    .max(50, 'Too Long'),
-  website: Yup.string().url('url not valid'),
+    .max(500, 'Too Long')
 })
 
-const BackgroundInfo = ({currentUser, dispatch, setLoading, loading, setOpenNotification, openNotification}) => {
+const AboutInfo = ({currentUser, dispatch, setLoading, loading, setOpenNotification, openNotification}) => {
   const classes = useStyles();
   const initialValues ={
-    jobTitle: currentUser?.jobTitle || '',
-    organisation: currentUser?.organisation || '',
-    website: currentUser?.website || ''
+    about: currentUser?.about || '',
   }
   const onSubmit = values => {
     dispatch({
@@ -87,63 +81,23 @@ const BackgroundInfo = ({currentUser, dispatch, setLoading, loading, setOpenNoti
             <div className="profile_edit_area">
               <div className="profile_edit_col">
                 <div className="profile_edit_field only_name">
-                  <p>Job Title</p>
+                  <p>Get to know me...</p>
                   <FormControl
                     variant="outlined"
                     className={classes.formControl+" only_field"}
-                    error={errors.jobTitle}
+                    error={errors.about}
                     >
                     <TextField
                       id="outlined-basic"
                       variant="outlined"
-                      error={errors.jobTitle ? true : false}
+                      error={errors.about ? true : false}
                       className="profile_edit_input"
-                      name='jobTitle'
+                      name='about'
+                      multiline
+                      rows={4}
                       onChange={handleChange}
-                      value={values.jobTitle}
-                      helperText={errors.jobTitle}
-                      />
-                  </FormControl>
-                </div>
-              </div>
-              <div className="profile_edit_col">
-                <div className="profile_edit_field">
-                  <p>Organization/School</p>
-                  <FormControl
-                    variant="outlined"
-                    className={classes.formControl+" only_field"}
-                    error={errors.organisation}
-                    >
-                    <TextField
-                      id="outlined-basic"
-                      variant="outlined"
-                      error={errors.organisation ? true : false}
-                      className="profile_edit_input"
-                      name='organisation'
-                      onChange={handleChange}
-                      value={values.organisation}
-                      helperText={errors.organisation}
-                      />
-                  </FormControl>
-                </div>
-              </div>
-              <div className="profile_edit_col">
-                <div className="profile_edit_field only_name">
-                  <p>Website</p>
-                  <FormControl
-                    variant="outlined"
-                    className={classes.formControl+" only_field"}
-                    error={errors.website}
-                    >
-                    <TextField
-                      id="outlined-basic"
-                      variant="outlined"
-                      error={errors.website ? true : false}
-                      name='website'
-                      className="profile_edit_input"
-                      onChange={handleChange}
-                      helperText={errors.website}
-                      value={values.website}
+                      value={values.about}
+                      helperText={errors.about}
                       />
                   </FormControl>
                 </div>
@@ -171,4 +125,4 @@ const mapStateToProps = state => {
     openNotification: state.profil.openNotification
   }
 }
-export default connect(mapStateToProps)(BackgroundInfo);
+export default connect(mapStateToProps)(AboutInfo);

@@ -19,19 +19,13 @@ const ProfilNavBar = ({setView, view})=>{
                 <p>Profile</p>
               </p>
             </li>
-            <li><a href="#">
-                <div className="profile-nav-icon">
-                    <img src="assets/img/icon3.png" alt=""/>
-                </div>
-                <p>Notifications</p>
-                </a>
-            </li>
-            <li><a href="#">
+            <li onClick={()=>setView('messages')} className={view === "messages" && "active"}>
+              <p href="#">
                 <div className="profile-nav-icon">
                     <img src="assets/img/icon4.png" alt=""/>
                 </div>
                 <p>Messages</p>
-                </a>
+              </p>
             </li>
             <li className={view === "friends" && "active"}  onClick={()=>setView('friends')}>
                 <div className="profile-nav-icon">

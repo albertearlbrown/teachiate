@@ -52,6 +52,11 @@ function MainMenu() {
           setMessage(data.message)
           setOpen(true)
         })
+        soc.on('message-received'+userData._id, data => {
+          setNCount(data.count)
+          setMessage(data.message)
+          setOpen(true)
+        })
         window.addEventListener("beforeunload", ()=>{
           soc.emit("user-disconnected")
         });

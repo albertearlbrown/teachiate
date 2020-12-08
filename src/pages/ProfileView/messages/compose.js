@@ -1,18 +1,14 @@
-import React, { useState, useEffect } from "react";
-import { connect } from 'react-redux'
+import React, {useEffect} from "react";
 import { makeStyles } from '@material-ui/core/styles';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
 import { Formik } from 'formik';
 import TextField from '@material-ui/core/TextField';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 import profilActions from '../../../redux/profil/actions'
 
 import * as Yup from 'yup';
 
 
-const urlRegExp = /(http:\/\/)|((https?):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/;
 const useStyles = makeStyles((theme) => ({
   formControl: {
     background: 'white',
@@ -24,42 +20,47 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const schema = Yup.object().shape({
-  jobTitle: Yup.string()
+  receiver: Yup.string().required('Required field')
     .min(2, 'Too short')
     .max(50, 'Too Long'),
-  organisation: Yup.string()
+  subject: Yup.string().required('Required field')
     .min(2, 'Too short')
-    .max(50, 'Too Long'),
-  website: Yup.string().url('url not valid'),
+    .max(250, 'Too Long'),
+  body: Yup.string()
+  .required('Required field')
+    .min(2, 'Too short')
+    .max(1000, 'Too Long'),
 })
 
-const BackgroundInfo = ({currentUser, dispatch, setLoading, loading, setOpenNotification, openNotification}) => {
+const ComposeMessage = ({profil, currentUser, dispatch}) => {
   const classes = useStyles();
+  const [value, setValue] = React.useState(null);
   const initialValues ={
-    jobTitle: currentUser?.jobTitle || '',
-    organisation: currentUser?.organisation || '',
-    website: currentUser?.website || ''
+    receiver: null,
+    subject: '',
+    body: ''
   }
   const onSubmit = values => {
     dispatch({
-      type: profilActions.UPDATE_BACKGROUND_INFO,
-      payload: values
+      type: profilActions.SEND_MESSAGE,
+      payload: {
+        ...values, receiver: value._id
+      }
     })
   }
 
   useEffect(()=>{
-    setLoading(true)
+    dispatch({
+      type: profilActions.LOAD_ALL_USERS,
+    })
   },[])
 
-  useEffect(()=>{
-    if (openNotification) {
-      setOpenNotification(openNotification)
-      dispatch({
-        type: profilActions.SET_STATE,
-        payload: {openNotification: false}
-      })
-    }
-  }, [openNotification])
+  const options = profil.sendToList.map((option) => {
+    return {
+      isFriend: !!currentUser.friends.find(a=> option._id === a),
+      ...option,
+    };
+  });
 
   return (
     <div
@@ -81,69 +82,88 @@ const BackgroundInfo = ({currentUser, dispatch, setLoading, loading, setOpenNoti
            handleBlur,
            handleSubmit,
            isSubmitting,
+           setFieldValue
            /* and other goodies */
          }) => (
           <form onSubmit={handleSubmit}>
             <div className="profile_edit_area">
               <div className="profile_edit_col">
                 <div className="profile_edit_field only_name">
-                  <p>Job Title</p>
+                  <p>Send To (username or friend's name)</p>
                   <FormControl
                     variant="outlined"
                     className={classes.formControl+" only_field"}
-                    error={errors.jobTitle}
+                    error={errors.receiver}
                     >
-                    <TextField
-                      id="outlined-basic"
-                      variant="outlined"
-                      error={errors.jobTitle ? true : false}
-                      className="profile_edit_input"
-                      name='jobTitle'
-                      onChange={handleChange}
-                      value={values.jobTitle}
-                      helperText={errors.jobTitle}
-                      />
+                    <Autocomplete
+                      id="grouped-demo"
+                      options={options.sort((a, b) => a.isFriend > b.isFriend)}
+                      groupBy={(option) => option.isFriend}
+                      getOptionLabel={(option) => {
+                        return `${option.fullName} (${option.email})`;
+                      }}
+                      blurOnSelect
+                      onChange={(event, newValue) => {
+                        setValue(newValue);
+                        setFieldValue('receiver', newValue?.fullName)
+                      }}
+                      renderInput={(params) =>
+                        <TextField
+                          {...params}
+                          className="profile_edit_input"
+                          id="outlined-basic"
+                          variant="outlined"
+                          name='receiver'
+                          onChange={handleChange}
+                          value={values.receiver}
+                          helperText={errors.receiver}
+                          error={errors.receiver ? true : false}
+                        />
+                      }
+                    />
                   </FormControl>
                 </div>
               </div>
               <div className="profile_edit_col">
                 <div className="profile_edit_field">
-                  <p>Organization/School</p>
+                  <p>Subject</p>
                   <FormControl
                     variant="outlined"
                     className={classes.formControl+" only_field"}
-                    error={errors.organisation}
+                    error={errors.subject}
                     >
                     <TextField
                       id="outlined-basic"
                       variant="outlined"
-                      error={errors.organisation ? true : false}
+                      error={errors.subject ? true : false}
                       className="profile_edit_input"
-                      name='organisation'
+                      name='subject'
                       onChange={handleChange}
-                      value={values.organisation}
-                      helperText={errors.organisation}
+                      value={values.subject}
+                      helperText={errors.subject}
                       />
                   </FormControl>
                 </div>
               </div>
               <div className="profile_edit_col">
                 <div className="profile_edit_field only_name">
-                  <p>Website</p>
+                  <p>Message</p>
                   <FormControl
                     variant="outlined"
                     className={classes.formControl+" only_field"}
-                    error={errors.website}
+                    error={errors.body}
                     >
                     <TextField
                       id="outlined-basic"
                       variant="outlined"
-                      error={errors.website ? true : false}
-                      name='website'
+                      error={errors.body ? true : false}
                       className="profile_edit_input"
+                      name='body'
+                      multiline
+                      rows={4}
                       onChange={handleChange}
-                      helperText={errors.website}
-                      value={values.website}
+                      value={values.body}
+                      helperText={errors.body}
                       />
                   </FormControl>
                 </div>
@@ -151,7 +171,7 @@ const BackgroundInfo = ({currentUser, dispatch, setLoading, loading, setOpenNoti
               <div className="profile_edit_col settings_form_col">
                 <input
                   type="submit"
-                  defaultValue="Save Changes"
+                  value="Send"
                   className="btn btn-primary"
                 />
               </div>
@@ -164,11 +184,5 @@ const BackgroundInfo = ({currentUser, dispatch, setLoading, loading, setOpenNoti
   );
 };
 
-const mapStateToProps = state => {
-  return {
-    currentUser: state.users.currentUser,
-    loading: state.profil.loading,
-    openNotification: state.profil.openNotification
-  }
-}
-export default connect(mapStateToProps)(BackgroundInfo);
+
+export default ComposeMessage;

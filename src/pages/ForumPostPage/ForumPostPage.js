@@ -66,7 +66,6 @@ const ForumPostPage = (props) => {
     if (p.tags.length>0) {
       p.tags.map((tag) => (hashtag += `#${tag.label} `))
     }
-    debugger
     return setHashtags(hashtag)
   }
 

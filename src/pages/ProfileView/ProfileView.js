@@ -6,6 +6,7 @@ import ThoughtComponents from './ThoughtsComponents';
 import FriendsComponent from "./friendsComponent/index"
 import Settings from "./settings"
 import ProfilEdit from './profilEdit'
+import MessagesView from './messages'
 
 const ProfileView = () => {
     const {userData} = useContext(AuthStoreContext);
@@ -48,8 +49,6 @@ const ProfileView = () => {
             }
         }
     }
-
-
 
     return (
         <>
@@ -113,6 +112,7 @@ const ProfileView = () => {
                         {currentView === 'friends' &&<FriendsComponent />}
                         {currentView === 'settings' &&<Settings />}
                         {currentView === 'profilEdit' &&<ProfilEdit />}
+                        {currentView === 'messages' &&<MessagesView />}
                    </div>
                 </div>
             </div>

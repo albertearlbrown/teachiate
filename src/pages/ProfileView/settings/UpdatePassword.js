@@ -18,7 +18,6 @@ const UpdatePassword = () => {
   const [showUpdatePassword, setShowUpdatePassword] = useState(false);
 
   const onUpdatePassword = async () => {
-    debugger;
     if ((newPassword !== confirmPassword) || !oldPassword || !newPassword) {
       setErrorMessage("Passwords not match, please try again")
       setError(true)

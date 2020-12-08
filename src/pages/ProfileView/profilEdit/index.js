@@ -6,13 +6,13 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { AuthStoreContext } from "../../../Store/AuthStore";
 import Alert from '@material-ui/lab/Alert';
 import BackgroundInfo from './BackgroundInfo'
+import AboutInfo from './AboutInfo'
 
 const ProfilEdit = ()=>{
   const { userData, setUserData } = useContext(AuthStoreContext);
   const [loading, setLoading] = useState(false)
   const [view, setView] = useState('info')
   const [openNotification, setOpenNotification] = useState(false);
-
   return(
     <div className="profile-forum-details">
       <section className="tabbed-content2 profile_edit">
@@ -46,7 +46,12 @@ const ProfilEdit = ()=>{
         }
         {
           view === 'background_info' &&
-          <BackgroundInfo />
+          <BackgroundInfo setLoading={setLoading} setOpenNotification={setOpenNotification}/>
+        }
+
+        {
+          view === 'about' &&
+          <AboutInfo setLoading={setLoading} setOpenNotification={setOpenNotification}/>
         }
       </section>
     </div>

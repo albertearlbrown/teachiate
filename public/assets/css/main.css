@@ -9902,6 +9902,18 @@ blockquote {
     display: block;
     background: #ffffff url(../img/arrow.png) 98% center no-repeat ;
 }
+
+.social_login li p {
+    padding: 15px 30px;
+    margin: 0;
+    font-size: 20px;
+    font-weight: 600;
+    color: #191b1c;
+    line-height: 24px;
+    background:#ffffff;
+    display: block;
+    background: #ffffff url(../img/arrow.png) 98% center no-repeat ;
+}
 .social_login li img {
     display: inline-block;
     vertical-align: middle;
@@ -10206,6 +10218,16 @@ blockquote {
 
     .social_login li a,
     .social_login li a:hover {
+        background-position: 92% center;
+    }
+
+    .social_login li p {
+        padding: 15px 20px;
+        font-size: 16px;
+    }
+
+    .social_login li p,
+    .social_login li p:hover {
         background-position: 92% center;
     }
 
@@ -10544,6 +10566,13 @@ blockquote {
     margin-top: 40px;
 }
 .profile-forum-details .profile_edit .tabs2 ul li a:hover, .profile-forum-details .profile_edit .tabs2 ul li a.active {
+    color: #00aeef;
+}
+
+.profile-forum-details .profile_edit .tabs2 ul li a:hover, .profile-forum-details .profile_edit .tabs2 ul li p.active {
+    color: #00aeef;
+}
+.profile_edit .tabs2 ul li p.active {
     color: #00aeef;
 }
 .custom-select.who_can_see{
@@ -14752,6 +14781,7 @@ ul.blog_search_col li {
 .notofication_col {
     padding: 12px 15px;
 }
+
 .notification_head {
     padding: 0 15px;
 }
@@ -15748,4 +15778,12 @@ h2.sec_title {
 
 .add_frnd button:hover {
     background: #00aeef;
+}
+
+.notofication_col .notif-actions .star {
+  cursor: pointer;
+  position: absolute;
+  top: 25px;
+  right: 173px;
+  z-index: 9;
 }
