@@ -6,6 +6,7 @@ import Alert from '@material-ui/lab/Alert';
 import profilActions from '../../../redux/profil/actions';
 import {useSelector, useDispatch} from 'react-redux';
 import ComposeMessage from './compose'
+import Inbox from './inbox'
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
@@ -65,7 +66,8 @@ const MessagesView = ()=>{
             <li onClick={()=>setView('compose')}><p className={view ===' compose' ? 'active':''}>Compose</p></li>
           </ul>
         </div>
-        <ComposeMessage profil={profil} dispatch={dispatch} currentUser={users.currentUser} />
+        {view === 'inbox' && <Inbox profil={profil} dispatch={dispatch} currentUser={users.currentUser} />}
+        {view === 'compose' && <ComposeMessage profil={profil} dispatch={dispatch} currentUser={users.currentUser} />}
       </section>
     </div>
   )

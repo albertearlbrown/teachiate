@@ -6,6 +6,7 @@ const actions = {
   REMOVE_ACCOUNT: 'profil/REMOVE_ACCOUNT',
   LOAD_ALL_USERS: 'profil/LOAD_ALL_USERS',
   SEND_MESSAGE: 'profil/SEND_MESSAGE',
+  LOAD_INBOX_MESSAGES: 'profil/LOAD_INBOX_MESSAGES',
 }
 
 export default actions

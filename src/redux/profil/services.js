@@ -68,3 +68,14 @@ export async function sendMessage(payload){
     });
   return true;
 }
+
+export async function loadInboxMessage(){
+  return axios({
+    method: 'get',
+    url: '/messages/inbox'
+  }).then((response)=>{
+    return response.data
+  }).catch((err)=>{
+    return false;
+  })
+}

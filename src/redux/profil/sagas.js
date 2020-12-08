@@ -153,6 +153,36 @@ export function* SEND_MESSAGE({payload}){
   }
 }
 
+export function* LOAD_INBOX_MESSAGES({payload}){
+  yield put({
+    type: actions.SET_STATE,
+    payload: {
+      loading: true
+    }
+  })
+  const response = yield call(profilApi.loadInboxMessage, payload)
+  if (response) {
+    yield put({
+      type: actions.SET_STATE,
+      payload: {
+        loading: false,
+        inbox: response.messages,
+        inboxPagination: {...payload, totalElements: response.totalElement },
+      }
+    })
+  }else{
+    yield put({
+      type: actions.SET_STATE,
+      payload: {
+        notificationMessage: 'Error occurred, please try later',
+        notificationType: 'error',
+        loading: false,
+        openNotification: true,
+      }
+    })
+  }
+}
+
 export default function* rootSaga() {
   yield all([
     takeEvery(actions.UPDATE_BACKGROUND_INFO, UPDATE_BACKGROUND_INFO),
@@ -161,5 +191,6 @@ export default function* rootSaga() {
     takeEvery(actions.REMOVE_ACCOUNT, REMOVE_ACCOUNT),
     takeEvery(actions.LOAD_ALL_USERS, LOAD_ALL_USERS),
     takeEvery(actions.SEND_MESSAGE, SEND_MESSAGE),
+    takeEvery(actions.LOAD_INBOX_MESSAGES, LOAD_INBOX_MESSAGES),
   ])
 }

@@ -14755,6 +14755,7 @@ ul.blog_search_col li {
 .notofication_col {
     padding: 12px 15px;
 }
+
 .notification_head {
     padding: 0 15px;
 }
@@ -15751,4 +15752,12 @@ h2.sec_title {
 
 .add_frnd button:hover {
     background: #00aeef;
+}
+
+.notofication_col .notif-actions .star {
+  cursor: pointer;
+  position: absolute;
+  top: 25px;
+  right: 173px;
+  z-index: 9;
 }
