@@ -104,10 +104,47 @@ export async function makeMessageStarred(id){
   })
 }
 
+export async function makeSentMessageStarred(ids){
+  return axios({
+    method: 'put',
+    url: '/messages/sent/starred',
+    data: ids
+  }).then(()=>{
+    return true
+  }).catch((err)=>{
+    return false;
+  })
+}
+
+export async function removeStarSentMessage(ids){
+  return axios({
+    method: 'put',
+    url: '/messages/sent/unstarred',
+    data: ids
+  }).then(()=>{
+    return true
+  }).catch((err)=>{
+    return false;
+  })
+}
+
+
 export async function removeMessage(ids){
   return axios({
     method: 'delete',
     url: '/messages/inbox/remove',
+    data: ids
+  }).then(()=>{
+    return true
+  }).catch((err)=>{
+    return false;
+  })
+}
+
+export async function removeSentMessage(ids){
+  return axios({
+    method: 'delete',
+    url: '/messages/sent/remove',
     data: ids
   }).then(()=>{
     return true

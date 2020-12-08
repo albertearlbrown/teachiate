@@ -13,10 +13,10 @@ const Sent = ({profil, currentUser, dispatch}) => {
       payload: { page }
     })
   }
-  const makeMessageStarred = (id)=>{
+  const makeMessageStarred = (message)=>{
     dispatch({
-      type: profilActions.MAKE_MESSAGE_STARRED,
-      payload: {id}
+      type: message.starredBySender ? profilActions.REMOVE_SENT_MESSAGE_STARRED: profilActions.MAKE_SENT_MESSAGE_STARRED,
+      payload: {ids: [message._id]}
     })
   }
 
@@ -26,6 +26,7 @@ const Sent = ({profil, currentUser, dispatch}) => {
       payload: { ids }
     })
   }
+
   const selectMessage = message => {
     const index = selected.findIndex((a) => a._id === message._id);
     debugger;
@@ -36,27 +37,45 @@ const Sent = ({profil, currentUser, dispatch}) => {
       setSelected([...selected, message])
     }
   }
+
   const selectAll = ()=>{
     selected.length > 0 ? setSelected([]):setSelected(profil.sent)
   }
 
-  useEffect(()=>{
-    console.log(selected);
-  }, [selected])
-
   const removeBulk = ()=>{
+    if (selected.length === 0) {
+      return
+    }
     const ids = [];
     selected.filter(a => ids.push(a._id))
     dispatch({
-      type: profilActions.REMOVE_MESSAGE,
+      type: profilActions.MAKE_SENT_MESSAGE_STARRED,
       payload: { ids }
     })
   }
 
   const addStar = ()=>{
+    if (selected.length === 0) {
+      return
+    }
     const ids = [];
     selected.filter(a => ids.push(a._id))
-    console.log(ids);
+    dispatch({
+      type: profilActions.MAKE_SENT_MESSAGE_STARRED,
+      payload: { ids }
+    })
+  }
+
+  const removeStar = ()=>{
+    if (selected.length === 0) {
+      return
+    }
+    const ids = [];
+    selected.filter(a => ids.push(a._id))
+    dispatch({
+      type: profilActions.REMOVE_SENT_MESSAGE_STARRED,
+      payload: { ids }
+    })
   }
 
   return(
@@ -73,7 +92,7 @@ const Sent = ({profil, currentUser, dispatch}) => {
         <ul>
           <li onClick={()=>removeBulk()}>Delete</li>
           <li onClick={()=> addStar()}>Add Star</li>
-          <li>Remove Star</li>
+          <li onClick={()=> removeStar()}>Remove Star</li>
         </ul>
       </div>
       {
@@ -89,16 +108,16 @@ const Sent = ({profil, currentUser, dispatch}) => {
             </div>
             <div className="notofication_avtar_col">
               <div className="notofication_avtar_image">
-                <img src={message.sender?.avatar || "assets/img/katei-girl.png"} alt="avatar" />
+                <img src={message.receiver?.avatar || "assets/img/katei-girl.png"} alt="avatar" />
               </div>
             </div>
             <div className="notification_info">
-              <h3><span>{message.sender?.fullName} <h4><Moment fromNow>{message.date}</Moment></h4> </span></h3>
+              <h3><span>{message.receiver?.fullName} <h4><Moment fromNow>{message.date}</Moment></h4> </span></h3>
               <h4>Subject: {message.subject}</h4>
               <h4>message: {message.message}</h4>
             </div>
             <div className="notif-actions">
-              <div className="star" onClick={()=>makeMessageStarred(message._id)}>
+              <div className="star" onClick={()=>makeMessageStarred(message)}>
                 <img src={message.starredBySender?"/assets/img/star.png":"/assets/img/star2.png"} alt="starred" />
               </div>
               <div className="noti_del" onClick={()=>removeMessage([message._id])}>Delete</div>

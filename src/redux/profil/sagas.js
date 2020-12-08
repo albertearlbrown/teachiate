@@ -192,7 +192,7 @@ export function* MAKE_MESSAGE_STARRED({payload}){
       loading: true
     }
   })
-  const response = yield call(profilApi.makeMessageStarred, payload.id)
+  const response = yield call(profilApi.makeMessageStarred, payload.ids)
   if (response) {
     yield put({
       type: actions.SET_STATE,
@@ -292,12 +292,12 @@ export function* REMOVE_SENT_MESSAGE({payload}){
       loading: true
     }
   })
-  const response = yield call(profilApi.makeMessageStarred, payload.id)
+  const response = yield call(profilApi.removeSentMessage, payload.ids)
   if (response) {
     yield put({
       type: actions.SET_STATE,
       payload: {
-        notificationMessage: 'Message updated successfully',
+        notificationMessage: 'Messages removed successfully',
         notificationType: 'success',
         openNotification: true,
       }
@@ -306,6 +306,76 @@ export function* REMOVE_SENT_MESSAGE({payload}){
     yield put({
       type: actions.LOAD_SENT_MESSAGES,
       payload: sentPagination
+    })
+  } else{
+    yield put({
+      type: actions.SET_STATE,
+      payload: {
+        notificationMessage: 'Error occurred, please try later',
+        notificationType: 'error',
+        loading: false,
+        openNotification: true,
+      }
+    })
+  }
+}
+
+export function* MAKE_SENT_MESSAGE_STARRED({payload}){
+  yield put({
+    type: actions.SET_STATE,
+    payload: {
+      loading: true
+    }
+  })
+  const response = yield call(profilApi.makeSentMessageStarred, payload.ids)
+  if (response) {
+    yield put({
+      type: actions.SET_STATE,
+      payload: {
+        notificationMessage: 'Message starred successfully',
+        notificationType: 'success',
+        openNotification: true,
+      }
+    })
+    const {inboxPagination} = yield select(getProfilState)
+    yield put({
+      type: actions.LOAD_SENT_MESSAGES,
+      payload: inboxPagination
+    })
+  } else{
+    yield put({
+      type: actions.SET_STATE,
+      payload: {
+        notificationMessage: 'Error occurred, please try later',
+        notificationType: 'error',
+        loading: false,
+        openNotification: true,
+      }
+    })
+  }
+}
+
+export function* REMOVE_SENT_MESSAGE_STARRED({payload}){
+  yield put({
+    type: actions.SET_STATE,
+    payload: {
+      loading: true
+    }
+  })
+  const response = yield call(profilApi.removeStarSentMessage, payload.ids)
+  if (response) {
+    yield put({
+      type: actions.SET_STATE,
+      payload: {
+        notificationMessage: 'Messages unstarred successfully',
+        notificationType: 'success',
+        openNotification: true,
+      }
+    })
+    const {inboxPagination} = yield select(getProfilState)
+    yield put({
+      type: actions.LOAD_SENT_MESSAGES,
+      payload: inboxPagination
     })
   } else{
     yield put({
@@ -334,5 +404,7 @@ export default function* rootSaga() {
     takeEvery(actions.REMOVE_MESSAGE, REMOVE_MESSAGE),
     takeEvery(actions.LOAD_SENT_MESSAGES, LOAD_SENT_MESSAGES),
     takeEvery(actions.REMOVE_SENT_MESSAGE, REMOVE_SENT_MESSAGE),
+    takeEvery(actions.MAKE_SENT_MESSAGE_STARRED, MAKE_SENT_MESSAGE_STARRED),
+    takeEvery(actions.REMOVE_SENT_MESSAGE_STARRED, REMOVE_SENT_MESSAGE_STARRED),
   ])
 }
