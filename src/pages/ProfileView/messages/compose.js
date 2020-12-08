@@ -20,13 +20,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const schema = Yup.object().shape({
-  recieverId: Yup.string().required('Required field')
+  receiver: Yup.string().required('Required field')
     .min(2, 'Too short')
     .max(50, 'Too Long'),
   subject: Yup.string().required('Required field')
     .min(2, 'Too short')
     .max(250, 'Too Long'),
-  message: Yup.string()
+  body: Yup.string()
   .required('Required field')
     .min(2, 'Too short')
     .max(1000, 'Too Long'),
@@ -36,15 +36,15 @@ const ComposeMessage = ({profil, currentUser, dispatch}) => {
   const classes = useStyles();
   const [value, setValue] = React.useState(null);
   const initialValues ={
-    recieverId: null,
+    receiver: null,
     subject: '',
-    message: ''
+    body: ''
   }
   const onSubmit = values => {
     dispatch({
       type: profilActions.SEND_MESSAGE,
       payload: {
-        ...values, recieverId: value._id
+        ...values, receiver: value._id
       }
     })
   }
@@ -93,7 +93,7 @@ const ComposeMessage = ({profil, currentUser, dispatch}) => {
                   <FormControl
                     variant="outlined"
                     className={classes.formControl+" only_field"}
-                    error={errors.recieverId}
+                    error={errors.receiver}
                     >
                     <Autocomplete
                       id="grouped-demo"
@@ -105,7 +105,7 @@ const ComposeMessage = ({profil, currentUser, dispatch}) => {
                       blurOnSelect
                       onChange={(event, newValue) => {
                         setValue(newValue);
-                        setFieldValue('recieverId', newValue?.fullName)
+                        setFieldValue('receiver', newValue?.fullName)
                       }}
                       renderInput={(params) =>
                         <TextField
@@ -113,11 +113,11 @@ const ComposeMessage = ({profil, currentUser, dispatch}) => {
                           className="profile_edit_input"
                           id="outlined-basic"
                           variant="outlined"
-                          name='recieverId'
+                          name='receiver'
                           onChange={handleChange}
-                          value={values.recieverId}
-                          helperText={errors.recieverId}
-                          error={errors.recieverId ? true : false}
+                          value={values.receiver}
+                          helperText={errors.receiver}
+                          error={errors.receiver ? true : false}
                         />
                       }
                     />
@@ -151,19 +151,19 @@ const ComposeMessage = ({profil, currentUser, dispatch}) => {
                   <FormControl
                     variant="outlined"
                     className={classes.formControl+" only_field"}
-                    error={errors.message}
+                    error={errors.body}
                     >
                     <TextField
                       id="outlined-basic"
                       variant="outlined"
-                      error={errors.message ? true : false}
+                      error={errors.body ? true : false}
                       className="profile_edit_input"
-                      name='message'
+                      name='body'
                       multiline
                       rows={4}
                       onChange={handleChange}
-                      value={values.message}
-                      helperText={errors.message}
+                      value={values.body}
+                      helperText={errors.body}
                       />
                   </FormControl>
                 </div>

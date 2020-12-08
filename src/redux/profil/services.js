@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { configureSocket } from "../../utils/axiosInterceptor"
 
 export async function updateBackgroundInfo(data){
   return axios({
@@ -60,13 +61,10 @@ export async function removeAccount(){
 }
 
 export async function sendMessage(payload){
-  return axios({
-    url: `/messages/send`,
-    method: 'post',
-    data:payload
-  }).then((response)=>{
-    return true
-  }).catch((e)=>{
-    return false
-  })
+  const socket = await configureSocket()
+  const { receiver, body, subject} = payload
+  socket.emit('message-sent', { receiver, body, subject}, ack => {
+      console.log(ack);
+    });
+  return true;
 }
