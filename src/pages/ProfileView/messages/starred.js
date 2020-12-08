@@ -2,20 +2,15 @@ import React, {useEffect} from 'react';
 import profilActions from '../../../redux/profil/actions'
 import Moment from "react-moment";
 
-const Inbox = ({profil, currentUser, dispatch}) => {
+const Starred = ({profil, currentUser, dispatch}) => {
   useEffect(()=>{
     loadInboxMessage()
   }, [])
+
   const loadInboxMessage = (page = 1) => {
     dispatch({
       type: profilActions.LOAD_INBOX_MESSAGES,
-      payload: { page }
-    })
-  }
-  const makeMessageStarred = (id)=>{
-    dispatch({
-      type: profilActions.MAKE_MESSAGE_STARRED,
-      payload: {id}
+      payload: { page, starred: true }
     })
   }
 
@@ -25,6 +20,14 @@ const Inbox = ({profil, currentUser, dispatch}) => {
       payload: { id }
     })
   }
+
+  const makeMessageStarred = (id)=>{
+    dispatch({
+      type: profilActions.MAKE_MESSAGE_STARRED,
+      payload: {id}
+    })
+  }
+
   return(
     <div className="notification_area_inner">
       <div className="notification_head clearfix">
@@ -76,4 +79,4 @@ const Inbox = ({profil, currentUser, dispatch}) => {
   )
 }
 
-export default Inbox;
+export default Starred;

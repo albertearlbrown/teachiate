@@ -1,7 +1,9 @@
-import { all, takeEvery, put, call } from 'redux-saga/effects';
+import { all, takeEvery, put, call, select } from 'redux-saga/effects';
 import * as profilApi from './services';
 import actions from './actions'
 import userActions from '../users/actions'
+
+const getProfilState = state => state.profil
 
 export function* UPDATE_BACKGROUND_INFO({payload}){
   yield put({
@@ -183,6 +185,76 @@ export function* LOAD_INBOX_MESSAGES({payload}){
   }
 }
 
+export function* MAKE_MESSAGE_STARRED({payload}){
+  yield put({
+    type: actions.SET_STATE,
+    payload: {
+      loading: true
+    }
+  })
+  const response = yield call(profilApi.makeMessageStarred, payload.id)
+  if (response) {
+    yield put({
+      type: actions.SET_STATE,
+      payload: {
+        notificationMessage: 'Message updated successfully',
+        notificationType: 'success',
+        openNotification: true,
+      }
+    })
+    const {inboxPagination} = yield select(getProfilState)
+    yield put({
+      type: actions.LOAD_INBOX_MESSAGES,
+      payload: inboxPagination
+    })
+  } else{
+    yield put({
+      type: actions.SET_STATE,
+      payload: {
+        notificationMessage: 'Error occurred, please try later',
+        notificationType: 'error',
+        loading: false,
+        openNotification: true,
+      }
+    })
+  }
+}
+
+export function* REMOVE_MESSAGE({payload}){
+  yield put({
+    type: actions.SET_STATE,
+    payload: {
+      loading: true
+    }
+  })
+  const response = yield call(profilApi.removeMessage, payload.id)
+  if (response) {
+    yield put({
+      type: actions.SET_STATE,
+      payload: {
+        notificationMessage: 'Message removed successfully',
+        notificationType: 'success',
+        openNotification: true,
+      }
+    })
+    const {inboxPagination} = yield select(getProfilState)
+    yield put({
+      type: actions.LOAD_INBOX_MESSAGES,
+      payload: inboxPagination
+    })
+  } else{
+    yield put({
+      type: actions.SET_STATE,
+      payload: {
+        notificationMessage: 'Error occurred, please try later',
+        notificationType: 'error',
+        loading: false,
+        openNotification: true,
+      }
+    })
+  }
+}
+
 export default function* rootSaga() {
   yield all([
     takeEvery(actions.UPDATE_BACKGROUND_INFO, UPDATE_BACKGROUND_INFO),
@@ -192,5 +264,7 @@ export default function* rootSaga() {
     takeEvery(actions.LOAD_ALL_USERS, LOAD_ALL_USERS),
     takeEvery(actions.SEND_MESSAGE, SEND_MESSAGE),
     takeEvery(actions.LOAD_INBOX_MESSAGES, LOAD_INBOX_MESSAGES),
+    takeEvery(actions.MAKE_MESSAGE_STARRED, MAKE_MESSAGE_STARRED),
+    takeEvery(actions.REMOVE_MESSAGE, REMOVE_MESSAGE),
   ])
 }

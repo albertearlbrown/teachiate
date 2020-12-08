@@ -7,6 +7,7 @@ import profilActions from '../../../redux/profil/actions';
 import {useSelector, useDispatch} from 'react-redux';
 import ComposeMessage from './compose'
 import Inbox from './inbox'
+import Starred from './starred';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
@@ -58,16 +59,17 @@ const MessagesView = ()=>{
             {profil.notificationMessage}
           </Alert>
         </Snackbar>
-        <div className="tabs2">
+        <div className="tabs2" style={{marginBottom: 20}}>
           <ul>
-            <li onClick={()=>setView('inbox')}><p className={view ===' inbox' ? 'active':''}>Inbox</p></li>
-            <li onClick={()=>setView('starred')}><p className={view ===' starred' ? 'active':''}>Starred</p></li>
-            <li onClick={()=>setView('sent')}><p className={view ===' sent' ? 'active':''}>Sent</p></li>
-            <li onClick={()=>setView('compose')}><p className={view ===' compose' ? 'active':''}>Compose</p></li>
+            <li onClick={()=>setView('inbox')}><p className={view ==='inbox' ? 'active':''}>Inbox</p></li>
+            <li onClick={()=>setView('starred')}><p className={view ==='starred' ? 'active':''}>Starred</p></li>
+            <li onClick={()=>setView('sent')}><p className={view ==='sent' ? 'active':''}>Sent</p></li>
+            <li onClick={()=>setView('compose')}><p className={view ==='compose' ? 'active':''}>Compose</p></li>
           </ul>
         </div>
         {view === 'inbox' && <Inbox profil={profil} dispatch={dispatch} currentUser={users.currentUser} />}
         {view === 'compose' && <ComposeMessage profil={profil} dispatch={dispatch} currentUser={users.currentUser} />}
+        {view === 'starred' && <Starred profil={profil} dispatch={dispatch} currentUser={users.currentUser} />}
       </section>
     </div>
   )

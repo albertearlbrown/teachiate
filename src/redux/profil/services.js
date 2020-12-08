@@ -69,12 +69,35 @@ export async function sendMessage(payload){
   return true;
 }
 
-export async function loadInboxMessage(){
+export async function loadInboxMessage(payload){
   return axios({
     method: 'get',
-    url: '/messages/inbox'
+    url: '/messages/inbox',
+    params: payload
   }).then((response)=>{
     return response.data
+  }).catch((err)=>{
+    return false;
+  })
+}
+
+export async function makeMessageStarred(id){
+  return axios({
+    method: 'put',
+    url: '/messages/inbox/starred/'+id,
+  }).then(()=>{
+    return true
+  }).catch((err)=>{
+    return false;
+  })
+}
+
+export async function removeMessage(id){
+  return axios({
+    method: 'delete',
+    url: '/messages/inbox/remove/'+id,
+  }).then(()=>{
+    return true
   }).catch((err)=>{
     return false;
   })
