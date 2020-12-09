@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import PageTitle from '../../components/PageTitle';
 import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Moment from "react-moment";
 import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios';
 
@@ -92,8 +93,13 @@ const Groups = () => {
                         <div className="col-md-3 col-sm-6 col-xs-12">
                             <div className="group_des text-center">
                                 <img className={classes.cover} src={group.avatar||'assets/img/g1.png'} alt=""/>
-                                <h4>{group.groupName}{/*<span>created 2 weeks</span>*/}</h4>
-                                <div className="catagory"><a href="/">{group.privacy === 'PUBLIC'? 'Public Group':'Private Group'}</a></div>
+                                <h4>{group.groupName}</h4>
+                                <div className="catagory">
+                                  <a href="#">
+                                    {group.privacy === 'PUBLIC'? 'Public Group':'Private Group'}
+                                    <span>created <Moment fromNow>{group.creationDate}</Moment></span>
+                                  </a>
+                                </div>
                             </div>
                         </div>
                       )

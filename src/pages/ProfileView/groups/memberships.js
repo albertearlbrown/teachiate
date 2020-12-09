@@ -32,7 +32,7 @@ const Sent = ({ profil, currentUser, dispatch }) => {
                   </div>
                   <div className="group-info-details">
                     <h3>{group.groupName}</h3>
-                    <h4><Moment fromNow>{group.date}</Moment></h4>
+                    <h4><Moment fromNow>{group.creationDate}</Moment></h4>
                     <ul>
                       <li>
                         <p>{group.privacy === 'PRIVATE' ? 'Private Group':'Public Group'}</p>
