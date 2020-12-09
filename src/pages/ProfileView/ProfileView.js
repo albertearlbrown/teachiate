@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import { AuthStoreContext } from '../../Store/AuthStore';
 import ProfilNavBar from './NavBar'
@@ -14,7 +14,7 @@ const ProfileView = () => {
 
     const [newAvatarFile, setNewAvatarFile] = useState(null);
     const [newProfileCover, setnewProfileCover] = useState(null);
-    const [currentView, setView] = useState('groups')
+    const [currentView, setView] = useState('thoughts')
 
     const changeProfileCover = async (e) => {
         e.preventDefault();
