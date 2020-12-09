@@ -48,13 +48,15 @@ const ProfilNavBar = ({setView, view})=>{
                 <p> Groups</p>
               </p>
             </li>
-            <li><a href="#">
-                <div className="profile-nav-icon">
-                    <img src="assets/img/icon7.png" alt=""/>
-                </div>
-                <p>Forums</p>
-                </a>
-            </li>
+            {/*
+              <li><a href="#">
+                  <div className="profile-nav-icon">
+                      <img src="assets/img/icon7.png" alt=""/>
+                  </div>
+                  <p>Forums</p>
+                  </a>
+              </li>
+              */}
             <li><a href="#">
                 <div className="profile-nav-icon">
                     <img src="assets/img/icon8.png" alt=""/>
