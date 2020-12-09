@@ -7,13 +7,14 @@ import FriendsComponent from "./friendsComponent/index"
 import Settings from "./settings"
 import ProfilEdit from './profilEdit'
 import MessagesView from './messages'
+import GroupsView from './groups';
 
 const ProfileView = () => {
     const {userData} = useContext(AuthStoreContext);
 
     const [newAvatarFile, setNewAvatarFile] = useState(null);
     const [newProfileCover, setnewProfileCover] = useState(null);
-    const [currentView, setView] = useState('thoughts')
+    const [currentView, setView] = useState('groups')
 
     const changeProfileCover = async (e) => {
         e.preventDefault();
@@ -113,6 +114,7 @@ const ProfileView = () => {
                         {currentView === 'settings' &&<Settings />}
                         {currentView === 'profilEdit' &&<ProfilEdit />}
                         {currentView === 'messages' &&<MessagesView />}
+                        {currentView === 'groups' &&<GroupsView />}
                    </div>
                 </div>
             </div>

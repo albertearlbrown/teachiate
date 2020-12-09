@@ -425,6 +425,33 @@ export function* REMOVE_MESSAGE_STARRED({payload}){
   }
 }
 
+export function* LOAD_MY_GROUPS({payload}){
+  yield put({
+    type: actions.SET_STATE,
+    payload: {
+      loading: true
+    }
+  })
+  const response = yield call(profilApi.getMyGroups, payload.page, payload?.name)
+  if (response) {
+    yield put({
+      type: actions.SET_STATE,
+      payload: {
+        loading: false,
+        groups: response.groups,
+        inboxPagination: {...payload, totalElements: response.totalElement },
+      }
+    })
+  }else{
+    yield put({
+      type: actions.SET_STATE,
+      payload: {
+        notificationConfig: {},
+        loading: false,
+      }
+    })
+  }
+}
 
 export default function* rootSaga() {
   yield all([
@@ -442,5 +469,6 @@ export default function* rootSaga() {
     takeEvery(actions.REMOVE_SENT_MESSAGE, REMOVE_SENT_MESSAGE),
     takeEvery(actions.MAKE_SENT_MESSAGE_STARRED, MAKE_SENT_MESSAGE_STARRED),
     takeEvery(actions.REMOVE_SENT_MESSAGE_STARRED, REMOVE_SENT_MESSAGE_STARRED),
+    takeEvery(actions.LOAD_MY_GROUPS, LOAD_MY_GROUPS),
   ])
 }

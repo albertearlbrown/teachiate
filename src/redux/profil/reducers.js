@@ -8,6 +8,7 @@ const initialState = {
   sendToList: [],
   inbox: [],
   sent:[],
+  groups: []
 }
 
 export default function userReducer(state = initialState, action) {
