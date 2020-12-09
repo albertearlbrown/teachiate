@@ -351,7 +351,7 @@ const SchoolOpening = () => {
                                         {communitiesFeed                                        
                                         .map(post => (
                                             <div key={post.id}>
-                                                <CommunityFeed  posts={post}/>     
+                                                <CommunityFeed posts={post}/>     
                                             </div>
                                         ))}     
                                     </div>

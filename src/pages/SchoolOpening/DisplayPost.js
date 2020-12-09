@@ -45,14 +45,14 @@ function DisplayPost({posts}) {
         <> 
             <div className='blog_sec4'>
                 <div className='opeing_list'>
-                    <div className="blog_title"  key={posts.id}>
+                    <div className="blog_title">
                     <div className="title_img"><img src="assets/img/admin-img.png" alt=""/></div>
                     <div className="user_des">
                         <h4>{posts.user.fullName} ({posts.user.role})</h4>
                         <p>{posts.state} | USA </p>
                     </div>
                     <div className="time"> <Moment fromNow>{posts.date}</Moment></div>
-                    <div class="star_icon"><i class="fa fa-star-o" aria-hidden="true"></i></div>
+                    <div className="star_icon"><i className="fa fa-star-o" aria-hidden="true"></i></div>
                 </div>
                 
                 {posts.filepath !== null ? (
@@ -71,10 +71,8 @@ function DisplayPost({posts}) {
 
                 <div className="opening_flex">
                     <div className="locaton">
-                        <p>
-                            <i className="fa fa-map-marker" aria-hidden="true"></i> 
-                                State: <span>{posts.state}</span> </p>
-                            <p>City: <span>{posts.city}</span></p>
+                        <p><i className="fa fa-map-marker" aria-hidden="true"></i> State: <span>{posts.state}</span></p>
+                        <p>City: <span>{posts.city}</span></p>
                     </div>
                     <div className="bbc_news">
                         <p><a href={posts.source}>Source</a></p>
@@ -100,7 +98,7 @@ function DisplayPost({posts}) {
                     </ul>                
                 </div>
 
-                {posts.comments.map(comment => (
+                {/* {posts.comments.map(comment => (
                     <div className="blog_title" key={comment._id}>
                         <div className="title_img">
                             <img className='img-circle' src={comment.user.avatar === null ? '/assets/img/user-account.png' : comment.user.avatar } alt=""/>
@@ -117,9 +115,9 @@ function DisplayPost({posts}) {
                             </div>
                         </div>
                     </div>
-                ))}
+                ))} */}
 
-                {comments
+                {/* {comments
                 .filter(comment => comment.post === posts._id)
                 .map(comment => (
                     <div className="blog_title" key={comment._id}>
@@ -134,7 +132,7 @@ function DisplayPost({posts}) {
                             </div>
                         </div>
                     </div> 
-                ))}               
+                ))}                */}
 
                 {isAuthenicate ? (
                     <>
