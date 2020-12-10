@@ -98,7 +98,7 @@ function DisplayPost({posts}) {
                     </ul>                
                 </div>
 
-                {/* {posts.comments.map(comment => (
+                {posts.comments.map(comment => (
                     <div className="blog_title" key={comment._id}>
                         <div className="title_img">
                             <img className='img-circle' src={comment.user.avatar === null ? '/assets/img/user-account.png' : comment.user.avatar } alt=""/>
@@ -115,9 +115,9 @@ function DisplayPost({posts}) {
                             </div>
                         </div>
                     </div>
-                ))} */}
+                ))}
 
-                {/* {comments
+                {comments
                 .filter(comment => comment.post === posts._id)
                 .map(comment => (
                     <div className="blog_title" key={comment._id}>
@@ -132,7 +132,7 @@ function DisplayPost({posts}) {
                             </div>
                         </div>
                     </div> 
-                ))}                */}
+                ))}               
 
                 {isAuthenicate ? (
                     <>

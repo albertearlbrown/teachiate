@@ -35,7 +35,7 @@ function DisplayPost({posts}) {
 
     return (
         <> 
-        <div className='blog_sec1'>
+        <div className='blog_sec1' key={posts._id}>
             <div className="blog_title">
                 <div className="title_img">
                         <img src="assets/img/admin-img.png" alt=""/>
@@ -81,25 +81,48 @@ function DisplayPost({posts}) {
                                 </span></a></li>
                         <li> <a href="#"> <span>Report <i className="fa fa-exclamation-triangle" aria-hidden="true"></i></span></a></li>
                     </ul>                
-                </div>
-                    
+                </div>                    
 
-                {posts.comments.length > 0 &&  posts.comments.map(comment => (
-                    <div className="blog_title" key={comment._id}>
-                        <div className="title_img">
-                            {/* <img className='img-circle' src={comment.user.avatar === null ? '/assets/img/user-account.png' : comment.user.avatar } alt=""/> */}
-                        </div>
-                        <div className="user_des">
-                            {/* <h4>{comment.user.fullName} <span>({comment.user.role})</span></h4> */}
-                            <p>{comment.content}</p>
-                            <div className="replaied">
-                                <div className="hour">
-                                <Moment fromNow>
-                                    {/* {comment.date} */}
-                                </Moment>
-                                </div> 
+                {posts.comments
+                .map(comment => (
+                    <div>
+                        <div className="blog_title" key={comment._id}>
+                            <div className="title_img">
+                                <img className='img-circle' src={comment.user.avatar === null ? '/assets/img/user-account.png'  : comment.user.avatar } alt=""/>
+                            </div>
+                            <div className="user_des">
+                                <h4>{comment.user.fullName} <span>({comment.user.role})</span></h4>
+                                <p>{comment.content}</p>
+                                <div className="replaied">                                    
+                                    <div className="hour">
+                                    <Moment fromNow>
+                                        {comment.date}
+                                    </Moment>
+                                    </div> 
+                                    {comment.replies.length > 0 ? <div>Replied</div> : null}
+                                </div>
                             </div>
                         </div>
+
+                        {comment.replies.map(reply => (           
+                            <div className="blog_title margin_right" key={reply._id}>                                
+                                <div className="title_img">
+                                    <img className='img-circle' src={reply.user.avatar === null ? '/assets/img/user-account.png'  : reply.user.avatar } alt=""/>
+                                </div>
+                                <div className="user_des">
+                                    <h4>{reply.user.fullName} <span>({reply.user.role})</span></h4>
+                                    <p>{reply.content}</p>
+                                    <div className="replaied">
+                                        <div class="hour">
+                                            <Moment fromNow>
+                                                {reply.date}
+                                            </Moment>                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> 
+                        ))}     
+                                      
                     </div>
                 ))}
 
