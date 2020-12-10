@@ -100,8 +100,6 @@ function App () {
         console.log('Not signed in')});
   }
 
-
-console.log(window.location)
   return (
       <Router>
           {window.location.pathname!=='/' && <Header/>}
