@@ -4,13 +4,14 @@ import Moment from "react-moment";
 
 const Inbox = ({profil, currentUser, dispatch}) => {
   const [selected, setSelected] = useState([])
+  const [searchText, setSearchText] = useState()
   useEffect(()=>{
     loadInboxMessage()
   }, [])
-  const loadInboxMessage = (page = 1) => {
+  const loadInboxMessage = (page = 1, search = null) => {
     dispatch({
       type: profilActions.LOAD_INBOX_MESSAGES,
-      payload: { page }
+      payload: { page, search }
     })
   }
   const makeMessageStarred = (message)=>{
@@ -78,55 +79,68 @@ const Inbox = ({profil, currentUser, dispatch}) => {
     })
   }
 
+  const onSearch = () => {
+    loadInboxMessage(1, searchText)
+  }
+
   return(
-    <div className="notification_area_inner">
-      <div className="notification_head clearfix">
-        <div className="new">
-          <form>
-            <div className="form-group">
-              <input type="checkbox" id="html" checked={selected.length === profil.inbox.length} onChange={()=>selectAll(profil.inbox)} />
-              <label htmlFor="html" />
-            </div>
-          </form>
+    <>
+      <div className="profile-forum-search forums_inner_page">
+        <div className="search_flex">
+          <input onChange={(e) => setSearchText(e.target.value)} type="search" placeholder="Search" className="form-control" />
+          <button className="search_btn" type="submit" onClick={()=>onSearch()}><img src="assets/img/search-icon.png" alt /></button>
         </div>
-        <ul>
-        <li onClick={()=>removeBulk()}>Delete</li>
-        <li onClick={()=> addStar()}>Add Star</li>
-        <li onClick={()=> removeStar()}>Remove Star</li>
-        </ul>
       </div>
-      {
-        profil.inbox.map((message) => (
-          <div className="notofication_col clearfix">
-            <div className="new">
-              <form>
-                <div className="form-group">
-                  <input type="checkbox" id="noti_select" checked={selected.findIndex((a)=> a._id === message._id)>=0}/>
-                  <label htmlFor="noti_select" onClick={()=> selectMessage(message)} />
-                </div>
-              </form>
-            </div>
-            <div className="notofication_avtar_col">
-              <div className="notofication_avtar_image">
-                <img src={message.sender?.avatar || "assets/img/katei-girl.png"} alt="avatar" />
+      <div className="notification_area_inner">
+        <div className="notification_head clearfix">
+          <div className="new">
+            <form>
+              <div className="form-group">
+                <input type="checkbox" id="html" checked={selected.length === profil.inbox.length} onChange={()=>selectAll(profil.inbox)} />
+                <label htmlFor="html" />
               </div>
-            </div>
-            <div className="notification_info">
-              <h3><span>{message.sender?.fullName} <h4><Moment fromNow>{message.date}</Moment></h4> </span></h3>
-              <h4>Subject: {message.subject}</h4>
-              <h4>message: {message.message}</h4>
-            </div>
-            <div className="notif-actions">
-              <div className="star" onClick={()=>makeMessageStarred(message)}>
-                <img src={message.starredByReceiver?"/assets/img/star.png":"/assets/img/star2.png"} alt="starred" />
-              </div>
-              <div className="noti_del" onClick={()=>removeMessage([message._id])}>Delete</div>
-            </div>
+            </form>
           </div>
-        ))
-      }
-      {/*<div className="pager">Viewing 1 - 4 of 4</div>*/}
-    </div>
+          <ul>
+          <li onClick={()=>removeBulk()}>Delete</li>
+          <li onClick={()=> addStar()}>Add Star</li>
+          <li onClick={()=> removeStar()}>Remove Star</li>
+          </ul>
+        </div>
+        {
+          profil.inbox.map((message) => (
+            <div className="notofication_col clearfix">
+              <div className="new">
+                <form>
+                  <div className="form-group">
+                    <input type="checkbox" id="noti_select" checked={selected.findIndex((a)=> a._id === message._id)>=0}/>
+                    <label htmlFor="noti_select" onClick={()=> selectMessage(message)} />
+                  </div>
+                </form>
+              </div>
+              <div className="notofication_avtar_col">
+                <div className="notofication_avtar_image">
+                  <img src={message.sender?.avatar || "assets/img/katei-girl.png"} alt="avatar" />
+                </div>
+              </div>
+              <div className="notification_info">
+                <h3><span>{message.sender?.fullName} <h4><Moment fromNow>{message.date}</Moment></h4> </span></h3>
+                <h4>Subject: {message.subject}</h4>
+                <h4>message: {message.message}</h4>
+              </div>
+              <div className="notif-actions">
+                <div className="star" onClick={()=>makeMessageStarred(message)}>
+                  <img src={message.starredByReceiver?"/assets/img/star.png":"/assets/img/star2.png"} alt="starred" />
+                </div>
+                <div className="noti_del" onClick={()=>removeMessage([message._id])}>Delete</div>
+              </div>
+            </div>
+          ))
+        }
+        {/*<div className="pager">Viewing 1 - 4 of 4</div>*/}
+      </div>
+      <div className="pager">Viewing 1 - {profil.inboxPagination.totalElements} of {profil.inboxPagination.totalElements}</div>
+    </>
   )
 }
 
