@@ -12,7 +12,7 @@ const ProfilNavBar = ({setView, view})=>{
                 <p>Activity</p>
             </li>
             <li onClick={()=>setView('profilEdit')} className={view === "profilEdit" && "active"}>
-              <p href="#">
+              <p>
                 <div className="profile-nav-icon">
                     <img src="assets/img/icon2.png" alt=""/>
                 </div>
@@ -20,7 +20,7 @@ const ProfilNavBar = ({setView, view})=>{
               </p>
             </li>
             <li onClick={()=>setView('messages')} className={view === "messages" && "active"}>
-              <p href="#">
+              <p>
                 <div className="profile-nav-icon">
                     <img src="assets/img/icon4.png" alt=""/>
                 </div>
@@ -40,13 +40,23 @@ const ProfilNavBar = ({setView, view})=>{
                 <p> Groups</p>
                 </a>
             </li>
-            <li><a href="#">
+            <li onClick={()=>setView('groups')} className={view === "messages" && "groups"}>
+              <p>
                 <div className="profile-nav-icon">
-                    <img src="assets/img/icon7.png" alt=""/>
+                    <img src="assets/img/icon6.png" alt=""/>
                 </div>
-                <p>Forums</p>
-                </a>
+                <p> Groups</p>
+              </p>
             </li>
+            {/*
+              <li><a href="#">
+                  <div className="profile-nav-icon">
+                      <img src="assets/img/icon7.png" alt=""/>
+                  </div>
+                  <p>Forums</p>
+                  </a>
+              </li>
+              */}
             <li><a href="#">
                 <div className="profile-nav-icon">
                     <img src="assets/img/icon8.png" alt=""/>

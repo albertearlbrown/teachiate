@@ -12344,6 +12344,7 @@ select {
 }
 .short label{
     float: left;
+    margin-bottom: 0;
 }
 
 .register_field_col option {

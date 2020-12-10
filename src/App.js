@@ -105,9 +105,9 @@ function App () {
           {window.location.pathname!=='/' && <Header/>}
           {loading
             ?
-            <div style={{height:700}}>
+            <div style={{height:700, zIndex: 1000}}>
             <Backdrop open={true}>
-              <CircularProgress style={{width: 250, height: 250}} color="inherit" />
+              <CircularProgress color="inherit" />
             </Backdrop>
             </div>
             :

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import { AuthStoreContext } from '../../Store/AuthStore';
 import ProfilNavBar from './NavBar'
@@ -7,6 +7,7 @@ import FriendsComponent from "./friendsComponent/index"
 import Settings from "./settings"
 import ProfilEdit from './profilEdit'
 import MessagesView from './messages'
+import GroupsView from './groups';
 
 const ProfileView = () => {
     const {userData} = useContext(AuthStoreContext);
@@ -113,6 +114,7 @@ const ProfileView = () => {
                         {currentView === 'settings' &&<Settings />}
                         {currentView === 'profilEdit' &&<ProfilEdit />}
                         {currentView === 'messages' &&<MessagesView />}
+                        {currentView === 'groups' &&<GroupsView />}
                    </div>
                 </div>
             </div>
