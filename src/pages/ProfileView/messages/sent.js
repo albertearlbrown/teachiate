@@ -23,7 +23,7 @@ const Sent = ({profil, currentUser, dispatch}) => {
 
   const removeMessage = (ids) => {
     dispatch({
-      type: profilActions.REMOVE_MESSAGE,
+      type: profilActions.REMOVE_SENT_MESSAGE,
       payload: { ids }
     })
   }
@@ -136,7 +136,7 @@ const Sent = ({profil, currentUser, dispatch}) => {
             </div>
           ))
         }
-        <div className="pager">Viewing 1 - {profil.inboxPagination.totalElements} of {profil.inboxPagination.totalElements}</div>
+        <div className="pager">Viewing 1 - {profil.sentPagination.totalElements} of {profil.sentPagination.totalElements}</div>
       </div>
     </>
   )
