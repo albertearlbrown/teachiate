@@ -40,14 +40,6 @@ const ProfilNavBar = ({setView, view})=>{
                 <p> Groups</p>
                 </a>
             </li>
-            <li onClick={()=>setView('groups')} className={view === "messages" && "groups"}>
-              <p>
-                <div className="profile-nav-icon">
-                    <img src="assets/img/icon6.png" alt=""/>
-                </div>
-                <p> Groups</p>
-              </p>
-            </li>
             {/*
               <li><a href="#">
                   <div className="profile-nav-icon">
@@ -57,7 +49,8 @@ const ProfilNavBar = ({setView, view})=>{
                   </a>
               </li>
               */}
-            <li><a href="#">
+            <li>
+              <a href="#">
                 <div className="profile-nav-icon">
                     <img src="assets/img/icon8.png" alt=""/>
                 </div>
