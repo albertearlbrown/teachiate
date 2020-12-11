@@ -2,7 +2,6 @@ import React, { useState, useEffect, useContext } from 'react';
 import Moment from 'react-moment';
 import axios from 'axios';
 import { AuthStoreContext } from '../../Store/AuthStore';
-import Swal from 'sweetalert2';
 
 function DisplayPost({posts}) {
 
@@ -30,12 +29,6 @@ function DisplayPost({posts}) {
 
         if(resp.data.success) {
             
-            Swal.fire({
-                title: 'Good job!',
-                text: 'Your comment successfully posted',
-                icon : 'success'
-            });
-
             const result  = comments.concat(resp.data.data);
             setComments([...result]);        
         }        
@@ -99,21 +92,44 @@ function DisplayPost({posts}) {
                 </div>
 
                 {posts.comments.map(comment => (
-                    <div className="blog_title" key={comment._id}>
-                        <div className="title_img">
-                            <img className='img-circle' src={comment.user.avatar === null ? '/assets/img/user-account.png' : comment.user.avatar } alt=""/>
-                        </div>
-                        <div className="user_des">
-                            <h4>{comment.user.fullName} <span>({comment.user.role})</span></h4>
-                            <p>{comment.content}</p>
-                            <div className="replaied">
-                                <div className="hour">
-                                <Moment fromNow>
-                                    {comment.date}
-                                </Moment>
-                                </div> 
+                    <div>
+                        <div className="blog_title" key={comment._id}>
+                            <div className="title_img">
+                                <img className='img-circle' src={comment.user.avatar === null ? '/assets/img/user-account.png' : comment.user.avatar } alt=""/>
+                            </div>
+                            <div className="user_des">
+                                <h4>{comment.user.fullName} <span>({comment.user.role})</span></h4>
+                                <p>{comment.content}</p>
+                                <div className="replaied">
+                                    <div className="hour">
+                                    <Moment fromNow>
+                                        {comment.date}
+                                    </Moment>
+                                    </div> 
+                                    {comment.replies.length > 0 ? <div>Replied</div> : null}
+                                </div>
                             </div>
                         </div>
+
+                        {comment.replies.map(reply => (           
+                            <div className="blog_title margin_right" key={reply._id}>                                
+                                <div className="title_img">
+                                    <img className='img-circle' src={reply.user.avatar === null ? '/assets/img/user-account.png'  : reply.user.avatar } alt=""/>
+                                </div>
+                                <div className="user_des">
+                                    <h4>{reply.user.fullName} <span>({reply.user.role})</span></h4>
+                                    <p>{reply.content}</p>
+                                    <div className="replaied">
+                                        <div class="hour">
+                                            <Moment fromNow>
+                                                {reply.date}
+                                            </Moment>                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> 
+                        ))} 
+
                     </div>
                 ))}
 
