@@ -170,7 +170,7 @@ function App () {
                 <Route exact path="/forum">
                     <Forum/>
                 </Route>
-                <Route path="/search-result">
+                <Route path="/search">
                   <Search/>
                 </Route>
                 <Route path="/forum/:id">

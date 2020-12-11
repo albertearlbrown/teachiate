@@ -69,7 +69,7 @@ function Header() {
               )}
 
             <div className="search-icon hidden-md-down">
-              <Link to="/search-result">
+              <Link to="/search">
                 <i className="icon-search"></i>
               </Link>
             </div>
