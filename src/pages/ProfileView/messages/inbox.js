@@ -139,7 +139,7 @@ const Inbox = ({profil, currentUser, dispatch}) => {
         }
         {/*<div className="pager">Viewing 1 - 4 of 4</div>*/}
       </div>
-      <div className="pager">Viewing 1 - {profil.inboxPagination.totalElements} of {profil.inboxPagination.totalElements}</div>
+      {profil.inboxPagination.totalElements &&<div className="pager">Viewing 1 - {profil.inboxPagination.totalElements} of {profil.inboxPagination.totalElements}</div>}
     </>
   )
 }

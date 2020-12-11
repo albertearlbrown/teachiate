@@ -136,7 +136,7 @@ const Sent = ({profil, currentUser, dispatch}) => {
             </div>
           ))
         }
-        <div className="pager">Viewing 1 - {profil.sentPagination.totalElements} of {profil.sentPagination.totalElements}</div>
+        {profil.sentPagination.totalElements &&<div className="pager">Viewing 1 - {profil.sentPagination.totalElements} of {profil.sentPagination.totalElements}</div>}
       </div>
     </>
   )
