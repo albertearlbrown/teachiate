@@ -598,16 +598,16 @@ function openForm() {
 		document.getElementById("myForm").style.display = "none";
 	}
 
-FX.Click = {
-	init: function() {
-		$(".search-icon").click(function(){
-			$(".search-div ").slideToggle();
-			$(".search-icon").toggleClass("search-cross-icon");
-		})
+// FX.Click = {
+// 	init: function() {
+// 		$(".search-icon").click(function(){
+// 			$(".search-div ").slideToggle();
+// 			$(".search-icon").toggleClass("search-cross-icon");
+// 		})
 		
-	}
+// 	}
 	
-};
+// };
 
 
 
@@ -615,8 +615,8 @@ $(".open-button").click(function(){
 	$(".search-div").css("display" , "none");
 })
 		
-$(".search-icon").click(function(){
-	$(".form-popup").css("display" , "none");
-})
+// $(".search-icon").click(function(){
+// 	$(".form-popup").css("display" , "none");
+// })
 
 

@@ -6,7 +6,8 @@ import { Link } from 'react-router-dom'
 import Swal from "sweetalert2";
 import { configureSocket } from "../../utils/axiosInterceptor"
 
-function Posts({ post }) {
+function Posts({ post, isCommentShown }) {
+  const [commentsVisible, setCommentsVisible] = useState(isCommentShown)
   const [comments, setComments] = useState([]);
   const [commentTextarea, setCommentTextarea] = useState("");
   const [isLiked, setLiked] = useState(false)
@@ -125,7 +126,7 @@ function Posts({ post }) {
               </p>
             </li>
             <li id="commentpost">
-              <span>
+              <span onClick={() => {setCommentsVisible(commentsVisible ? false : true)}}>
                 Comment <i className="fa fa-comment-o" aria-hidden="true"></i>
               </span>
             </li>
@@ -163,7 +164,7 @@ function Posts({ post }) {
               </div>
             </li>
 
-            <div className="commentpost_open active">
+            <div className={`commentpost_open ${commentsVisible ? "active" : ''}`}>
               {post.comments.map((comment) => (
                 <div className="blog_title margin_btm" key={comment._id}>
                   <div className="title_img">

@@ -1,370 +1,276 @@
-import React, {useEffect} from 'react'
+import React, { useState, useEffect, useContext } from 'react'
+import Post from '../Forum/Post';
+import Backdrop from '@material-ui/core/Backdrop';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import { makeStyles } from '@material-ui/core/styles';
+import { AuthStoreContext } from '../../Store/AuthStore';
+import { configureSocket } from "../../utils/axiosInterceptor"
+import axios from 'axios';
+
+const baseUrl = "https://api.teachiate.com"
+
+const useStyles = makeStyles((theme) => ({
+  backdrop: {
+    zIndex: theme.zIndex.drawer + 1,
+    color: '#fff',
+  },
+  text: {
+    top: "50px",
+    position: "relative",
+    left: "-50px"
+  },
+  cover: {
+    width: 73,
+    height: 73,
+    borderRadius: '50%'
+  }
+}));
 
 function Search() {
-    useEffect(() => {
+  const { userData } = useContext(AuthStoreContext);
+  const [posts, setPosts] = useState([]);
+  const classes = useStyles();
+  const [groups, setGroups] = useState([])
+  const [users, setUsers] = useState([])
+  const [totalPages, setTotalPages] = useState(0)
+  const [open, setOpen] = useState(false)
+  const [searchValue, setSearchValue] = useState(null)
+  const [currentPage, setCurrentPage] = useState(0)
+  const [sort, setSort] = useState('date')
+  const [role, setNewRole] = useState('');
+  const [socket, setSocket] = useState(null)
+  const [friendReq, setFriendReq] = useState(userData?.friendReq)
+  const [tag, setTags] = useState('All')
 
-    }, []);
-    
-    return (
-        <>
-        <section className="search_result">
-            <div className="container">
-                <div className="search_result_info">
-                    <div className="search_result_details">
-                        <h2>Search results for</h2>
-                        <h3>Antoine Jackson</h3>
-                    </div>                    
-                    <div className="search-content">
-                        <input type="text" placeholder="Search"/>
-                        <input type="submit" value="Search"/>
-                    </div>
-                </div>
-                <div className="search_select">
-                    <ul>
-                        <li className="active"><a href="#">All</a></li>
-                        <li><a href="#">People</a></li>
-                        <li><a href="#">Forums</a></li>
-                        <li><a href="#">Groups</a></li>
-                        <li><a href="#">Blogs</a></li>
-                    </ul>
-                </div>
-                <div className="search_result_area">
-                    <div className="search_result_col">
-                        <div className="rslt_title">People</div>
-                        <div className="search_result_col_area">
-                            <ul className="search_col">
-                                <li>
-                                     <div className="add_frnd text-center">
-                                        <img src="/assets/img/m1.png" alt=""/>
-                                        <h4>Albert Brown</h4>
-                                        <div className="catagory">Parent<span>6 hours ago</span></div>
-                                        <a href="#" className="meseage_only">Message</a>
-                                    </div>
-                                </li>
-                                <li>
-                                     <div className="add_frnd text-center">
-                                        <img src="/assets/img/m1.png" alt=""/>
-                                        <h4>Albert Brown</h4>
-                                        <div className="catagory">Parent<span>6 hours ago</span></div>
-                                        <a href="#" className="meseage_only">Message</a>
-                                    </div>
-                                </li>
-                                <li>
-                                     <div className="add_frnd text-center">
-                                        <img src="/assets/img/m2.png" alt=""/>
-                                        <h4>Albert Brown</h4>
-                                        <div className="catagory">Parent<span>6 hours ago</span></div>
-                                        <a href="#">Add Friend</a>
-                                    </div>
-                                </li>
-                                <li>
-                                     <div className="add_frnd text-center">
-                                        <img src="/assets/img/m3.png" alt=""/>
-                                        <h4>Albert Brown</h4>
-                                        <div className="catagory">Parent<span>6 hours ago</span></div>
-                                        <a href="#">Add Friend</a>
-                                    </div>
-                                </li>
-                                <li>
-                                     <div className="add_frnd text-center">
-                                        <img src="/assets/img/m15.png" alt=""/>
-                                        <h4>Albert Brown</h4>
-                                        <div className="catagory">Parent<span>6 hours ago</span></div>
-                                        <a href="#">Add Friend</a>
-                                    </div>
-                                </li>
-                                <li>
-                                     <div className="add_frnd text-center">
-                                        <img src="/assets/img/m5.png" alt=""/>
-                                        <h4>Albert Brown</h4>
-                                        <div className="catagory">Parent<span>6 hours ago</span></div>
-                                        <a href="#">Add Friend</a>
-                                    </div>
-                                </li>
-                                <li>
-                                     <div className="add_frnd text-center">
-                                        <img src="/assets/img/m6.png" alt=""/>
-                                        <h4>Albert Brown</h4>
-                                        <div className="catagory">Parent<span>6 hours ago</span></div>
-                                        <a href="#">Add Friend</a>
-                                    </div>
-                                </li>
-                                <li>
-                                     <div className="add_frnd text-center">
-                                        <img src="/assets/img/m7.png" alt=""/>
-                                        <h4>Albert Brown</h4>
-                                        <div className="catagory">Parent<span>6 hours ago</span></div>
-                                        <a href="#">Add Friend</a>
-                                    </div>
-                                </li>
-                            </ul>
-                            <a href="#" className="view_more_search">View All</a>
-                            
-                        </div>
-                    </div>
-                    <div className="search_result_col">
-                        <div className="rslt_title">Forums</div>
-                        <div className="search_result_col_area">
-                            <ul className="forum_search_col">
-                                <li>
-                                    <div className="forum_search_item">
-                                        <div className="forum_user_info">
-                                            <div className="forum_col_avatar"><img src="/assets/img/forum_col_avatar_1.png" alt=""/></div>
-                                            <div className="forum_avtar_info">
-                                                <h2>Antoine Jackson<span>(Teacher)</span></h2>
-                                                <h3>Higher Education Chat</h3>
-                                            </div>
-                                            <div className="forum_col_content">
-                                                <a href="#" className="forum_title">This forum community is created to assist and encourage each parent as they pursue..</a>
-                                                <p className="more">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions</p>
-                                                <a href="#">#Youth Progress</a>
-                                                <div className="comment_num">2 Comments</div>
-                                                <div className="post_time">1 Month Ago</div>
-                                            </div>
-                                        </div>
-                                        <div className="comm_se">
-                                            <ul>
-                                                <li><a href="#"> <span>like <i className="fa fa-thumbs-o-up" aria-hidden="true"></i></span></a></li>
-                                                <li id="commentpost">
-                                                    <span>Comment <i className="fa fa-comment-o" aria-hidden="true"></i></span>
-                                                </li>
-                                                <li><span>Share <i className="fa fa-share" aria-hidden="true"> 
-                                                    </i></span>
-                                                    <div className="share_post_via">
-                                                        <ul>
-                                                            <li><a href="#"><span><i className="fa fa-facebook-square"></i></span>Facebook</a></li>
-                                                            <li><a href="#"><span><i className="fa fa-twitter"></i></span>Twitter</a></li>
-                                                            <li><a href="#"><span><i className="fa fa-instagram"></i></span>Instagram</a></li>
-                                                        </ul>
-                                                    </div>
-                                                </li>
-                                                <div className="commentpost_open">
-                                                        <div className="blog_title margin_btm">
-                                                            <div className="title_img"><img src="/assets/img/katei-re.png" alt=""/></div>
-                                                            <div className="user_des">
-                                                                <h4>Katie Knapp <span>(Parent)</span></h4>
-                                                                <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution. </p>
-                                                                <div className="replaied">
-                                                                    <div className="hour">12 Hours ago</div>
-                                                                    <a href="#">Reply</a>
-                                                                    <div>Replied</div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div className="blog_title margin_right">
-                                                            <div className="title_img"><img src="/assets/img/katei-girl.png" alt=""/></div>
-                                                            <div className="user_des">
-                                                                <h4>Katie Knapp <span>(Parent)</span></h4>
-                                                                <p>Readable content of a page when looking at its layout. The point of using Lorem .</p>
-                                                                <div className="replaied">
-                                                                    <div className="hour">12 Hours ago</div>
-                                                                    <a href="#">Reply</a>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div className="post_share single_post_comment">
-                                                                <div className="post_share_area">
-                                                                    <div className="posted_avtar"><img src="/assets/img/g4.png" alt=""/></div>
-                                                                    <div className="post_share_field">
-                                                                        <textarea placeholder="Sarah What’s are your mind?"></textarea>
-                                                                        <div className="share_option_right">
-                                                                            <input type="submit" value="Submit" name=""/>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>                  
-                                                        </div>
-                                                </div>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div className="forum_search_item">
-                                        <div className="forum_user_info">
-                                            <div className="forum_col_avatar"><img src="/assets/img/forum_col_avatar_1.png" alt=""/></div>
-                                            <div className="forum_avtar_info">
-                                                <h2>Antoine Jackson<span>(Teacher)</span></h2>
-                                                <h3>Higher Education Chat</h3>
-                                            </div>
-                                            <div className="forum_col_content">
-                                                <a href="#" className="forum_title">This forum community is created to assist and encourage each parent as they pursue..</a>
-                                                
-                                                <p className="more">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions</p>
-                                                <a href="#">#Youth Progress</a>
-                                                <div className="comment_num">2 Comments</div>
-                                                <div className="post_time">1 Month Ago</div>
-                                            </div>
-                                        </div>
-                                        <div className="comm_se">
-                                            <ul>
-                                                <li><a href="#"> <span>like <i className="fa fa-thumbs-o-up" aria-hidden="true"></i></span></a></li>
-                                                <li id="commentpost">
-                                                    <span>Comment <i className="fa fa-comment-o" aria-hidden="true"></i></span>
-                                                </li>
-                                                <li><span>Share <i className="fa fa-share" aria-hidden="true"> 
-                                                    </i></span>
-                                                    <div className="share_post_via">
-                                                        <ul>
-                                                            <li><a href="#"><span><i className="fa fa-facebook-square"></i></span>Facebook</a></li>
-                                                            <li><a href="#"><span><i className="fa fa-twitter"></i></span>Twitter</a></li>
-                                                            <li><a href="#"><span><i className="fa fa-instagram"></i></span>Instagram</a></li>
-                                                        </ul>
-                                                    </div>
-                                                </li>
-                                                <div className="commentpost_open">
-                                                        <div className="blog_title margin_btm">
-                                                            <div className="title_img"><img src="/assets/img/katei-re.png" alt=""/></div>
-                                                            <div className="user_des">
-                                                                <h4>Katie Knapp <span>(Parent)</span></h4>
-                                                                <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution. </p>
-                                                                <div className="replaied">
-                                                                    <div className="hour">12 Hours ago</div>
-                                                                    <a href="#">Reply</a>
-                                                                    <div>Replied</div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div className="blog_title margin_right">
-                                                            <div className="title_img"><img src="/assets/img/katei-girl.png" alt=""/></div>
-                                                            <div className="user_des">
-                                                                <h4>Katie Knapp <span>(Parent)</span></h4>
-                                                                <p>Readable content of a page when looking at its layout. The point of using Lorem .</p>
-                                                                <div className="replaied">
-                                                                    <div className="hour">12 Hours ago</div>
-                                                                    <a href="#">Reply</a>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div className="post_share single_post_comment">
-                                                                <div className="post_share_area">
-                                                                    <div className="posted_avtar"><img src="/assets/img/g4.png" alt=""/></div>
-                                                                    <div className="post_share_field">
-                                                                        <textarea placeholder="Sarah What’s are your mind?"></textarea>
-                                                                        <div className="share_option_right">
-                                                                            <input type="submit" value="Submit" name=""/>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>                  
-                                                        </div>
-                                                </div>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                            <a href="#" className="view_more_search">View All</a>                            
-                        </div>
-                    </div>
-                    <div className="search_result_col">
-                        <div className="rslt_title">Groups</div>
-                        <div className="search_result_col_area">
-                            <ul className="search_col">
-                                <li>
-                                    <div className="group_des text-center">
-                                        <img src="/assets/img/g1.png" alt=""/>
-                                        <h4>Test group</h4>
-                                        <div className="catagory"><a href="#">Public Group<span>created 2 weeks</span></a></div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div className="group_des text-center">
-                                        <img src="/assets/img/g2.png" alt=""/>
-                                        <h4>Test group</h4>
-                                        <div className="catagory"><a href="#">Public Group<span>created 2 weeks</span></a></div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div className="group_des text-center">
-                                        <img src="/assets/img/g3.png" alt=""/>
-                                        <h4>Test group</h4>
-                                        <div className="catagory"><a href="#">Public Group<span>created 2 weeks</span></a></div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div className="group_des text-center">
-                                        <img src="/assets/img/g4.png" alt=""/>
-                                        <h4>Test group</h4>
-                                        <div className="catagory"><a href="#">Public Group<span>created 2 weeks</span></a></div>
-                                    </div>
-                                </li>
-                            </ul>
-                            <a href="#" className="view_more_search">View All</a>                            
-                        </div>
-                    </div>
-                    <div className="search_result_col">
-                        <div className="rslt_title">Blogs</div>
-                        <div className="search_result_col_area">
-                            <div className="box_search_slide">
-                                <ul className="blog_search_col">
-                                    <li>
-                                        <div className="blog_search_item">
-                                            <div className="blog_img_sec"><img src="/assets/img/blog2.jpg" alt=""/></div>
-                                            <div className="list_flex">
-                                                <div className="name">
-                                                    <p>Rita Koroso</p>
-                                                </div>
-                                                <div className="comment_time">
-                                                    <p>No Comments | May 11, 2020</p>
-                                                </div>
-                                            </div>
-                                            <div className="blog_title_h4">
-                                                <a href="#"><h3>Teachers, like myself, getting used to virtual teaching</h3></a>
-                                            </div>
-                                            <div className="blog_des_p">
-                                                <p>My Experience with my kids during COVID Homeschooling I am a single mother and have </p>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div className="blog_search_item">
-                                            <div className="blog_img_sec"><img src="/assets/img/blog1.jpg" alt=""/></div>
-                                            <div className="list_flex">
-                                                <div className="name">
-                                                    <p>Rita Koroso</p>
-                                                </div>
-                                                <div className="comment_time">
-                                                    <p>No Comments | May 11, 2020</p>
-                                                </div>
-                                            </div>
-                                            <div className="blog_title_h4">
-                                                <a href="#"><h3>Teachers, like myself, getting used to virtual teaching</h3></a>
-                                            </div>
-                                            <div className="blog_des_p">
-                                                <p>My Experience with my kids during COVID Homeschooling I am a single mother and have </p>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div className="blog_search_item">
-                                            <div className="blog_img_sec"><img src="/assets/img/blog1.jpg" alt=""/></div>
-                                            <div className="list_flex">
-                                                <div className="name">
-                                                    <p>Rita Koroso</p>
-                                                </div>
-                                                <div className="comment_time">
-                                                    <p>No Comments | May 11, 2020</p>
-                                                </div>
-                                            </div>
-                                            <div className="blog_title_h4">
-                                                <a href="#"><h3>Teachers, like myself, getting used to virtual teaching</h3></a>
-                                                
-                                            </div>
-                                            <div className="blog_des_p">
-                                                <p>My Experience with my kids during COVID Homeschooling I am a single mother and have </p>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                            
-                            <a href="#" className="view_more_search">View All</a>                            
-                        </div>
-                    </div>
-                </div>
+  useEffect(() => {
+    const confSock = async () => {
+      let soc = await configureSocket(baseUrl)
+      setSocket(soc)
+      debugger
+      if (soc) {
+        soc.on("friend-request" + userData?._id, data => {
+          console.log(data);
+        })
+      }
+    }
+    confSock()
+  }, [])
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, []);
+
+  const getUsers = async (page) => {
+    setOpen(true)
+    axios({
+      url: `${baseUrl}/users/all`,
+      method: 'get',
+      params: { page, sort, role, name: searchValue }
+    }).then((response) => {
+      const { data } = response.data
+      setUsers(data.users)
+      setCurrentPage(data.page)
+      debugger
+      const tt = Math.ceil(data.totalElement / data.limit)
+      setTotalPages(tt)
+      setOpen(false)
+    }).catch((e) => {
+      setOpen(false)
+      console.log(e)
+    })
+  }
+
+  const getUserPagination = () => {
+    const list = [];
+    for (let i = 1; i <= totalPages; i++) {
+      list.push(<li className={currentPage === "" + i ? "selected" : ""}><span onClick={() => getUsers(i)}>{i}</span></li>)
+    }
+    return list
+  }
+
+  const getGroups = async (page) => {
+    setOpen(true)
+    axios({
+      url: `${baseUrl}/group/list`,
+      method: 'get',
+      params: { page, name: searchValue }
+    }).then((response) => {
+      const { data } = response.data
+      setGroups(data.groups)
+      const tt = Math.ceil(data.totalElement / data.limit)
+      setTotalPages(tt)
+      setOpen(false)
+    }).catch((e) => {
+      setOpen(false)
+      console.log(e);
+    })
+  }
+
+  const getGroupPagination = () => {
+    const list = [];
+    for (let i = 1; i <= totalPages; i++) {
+      list.push(<li><span onClick={() => getGroups(i)}>{i}</span></li>)
+    }
+    return list;
+  }
+
+  const sendInviation = async (receiver) => {
+    if (userData?._id && socket) {
+      socket.emit('friend-request', { receiver }, ack => {
+        console.log(ack);
+      });
+      const friendReq1 = [...friendReq, { reqId: receiver._id }]
+      setFriendReq(friendReq1)
+    }
+  }
+
+  const getPosts = async () => {
+    setOpen(true)
+    setPosts([])
+    axios({
+      type: 'get',
+      url: `${baseUrl}/forum`,
+      params: {
+        category: null, subcategory: null
+      }
+    }).then((response) => {
+      const { data } = response.data;
+      setPosts(data.posts)
+      setOpen(false)
+    }).catch(err => {
+      setOpen(false)
+      console.log(err)
+    })
+  }
+
+  const filterSearchResult = () => {
+    getPosts(1)
+    getGroups(1)
+    getUsers(1)
+  }
+  return (
+    <>
+      <Backdrop className={classes.backdrop} open={open} >
+        <CircularProgress color="inherit" />
+        <div className={classes.text}>Loading</div>
+      </Backdrop>
+      <section className="search_result">
+        <div className="container">
+          <div className="search_result_info">
+            <div className="search_result_details">
+              <h2>Search results for</h2>
+              <h3>{searchValue}</h3>
             </div>
-        </section>
-        </>
-    )    
+            <div className="search-content">
+              <input type="text" placeholder="Search" onChange={e => setSearchValue(e.target.value)} />
+              <input type="submit" value="Search" onClick={() => filterSearchResult()} />
+            </div>
+          </div>
+          <div className="search_select">
+            <ul>
+              <li className={tag === 'All' ? "active" : ''}><a onClick={() => setTags('All')}>All</a></li>
+              <li className={tag === 'People' ? "active" : ''}><a onClick={() => setTags('People')}>People</a></li>
+              <li className={tag === 'Forums' ? "active" : ''}><a onClick={() => setTags('Forums')}>Forums</a></li>
+              <li className={tag === 'Groups' ? "active" : ''}><a onClick={() => setTags('Groups')}>Groups</a></li>
+              <li className={tag === 'Blogs' ? "active" : ''}><a onClick={() => setTags('Blogs')}>Blogs</a></li>
+            </ul>
+          </div>
+          <div className="search_result_area">
+            {(tag === 'All' || tag === 'People') && <div className="search_result_col">
+              <div className="rslt_title">People</div>
+              <div className="search_result_col_area">
+                <ul className="search_col">
+                  {users.map((user, index) => {
+                    if (userData?._id === user._id) {
+                      return;
+                    }
+                    return (
+                      <li>
+                        <div className="add_frnd text-center">
+                          <img src={user.avatar || "assets/img/m1.png"} alt="" />
+                          <h4>{user.fullName}</h4>
+                          <div className="catagory">{user.role}</div>
+                          {
+                            friendReq?.find((a) => a.reqId === user._id)
+                              ?
+                              <a className="meseage_only">Message</a> :
+                              (
+                                userData?.friends?.find((a) => a === user._id) ?
+                                  <a>Friend</a> :
+                                  <a onClick={() => sendInviation(user)}>Add Friend</a>
+                              )
+                          }
+                        </div>
+                      </li>
+                    )
+                  })}
+
+                </ul>
+                <ul className="pagination clearfix">
+                  {getUserPagination()}
+                </ul>
+                <a onClick={() => getUsers(1)} className="view_more_search">View All</a>
+
+              </div>
+            </div>
+            }
+            {(tag === 'All' || tag === 'Forums') && <div className="search_result_col">
+              <div className="rslt_title">Forums</div>
+              <div className="search_result_col_area">
+                <ul className="forum_search_col">
+                  {
+                    posts.map((post, i) => {
+                      return (
+                        <Post post={post} key={post._id} />
+                      )
+                    })
+                  }
+                </ul>
+                <a onClick={() => getPosts()} className="view_more_search">View All</a>
+              </div>
+            </div>
+            }
+            {(tag === 'All' || tag === 'Groups') && <div className="search_result_col">
+              <div className="rslt_title">Groups</div>
+              <div className="search_result_col_area">
+                <ul className="search_col">
+                  {groups.map((group, index) => {
+                    return (
+                      <li>
+                        <div className="group_des text-center">
+                          <img className={classes.cover} src={group.avatar || 'assets/img/g1.png'} alt="" />
+                          <h4>{group.groupName}{/*<span>created 2 weeks</span>*/}</h4>
+                          <div className="catagory"><a href="/">{group.privacy === 'PUBLIC' ? 'Public Group' : 'Private Group'}</a></div>
+                        </div>
+                      </li>
+                    )
+                  })}
+                </ul>
+                <ul className="pagination clearfix">
+                  {getGroupPagination()}
+                </ul>
+                <a onClick={() => getGroups(1)} className="view_more_search">View All</a>
+              </div>
+            </div>
+            }
+            {(tag === 'All' || tag === 'Blogs') && <div className="search_result_col">
+              <div className="rslt_title">Blogs</div>
+              <div className="search_result_col_area">
+                <div className="box_search_slide">
+                  <ul className="blog_search_col">
+
+                  </ul>
+                </div>
+
+                <a href="#" className="view_more_search">View All</a>
+              </div>
+            </div>
+            }
+          </div>
+        </div>
+      </section>
+    </>
+  )
 }
 
 

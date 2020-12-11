@@ -9,7 +9,7 @@ import { Auth } from 'aws-amplify'
 function Header() {
   const { isAuthenicate, userData } = useContext(AuthStoreContext);
 
-  useEffect(() => {}, []);
+  useEffect(() => { }, []);
 
   const logoutUser = async (e) => {
     e.preventDefault();
@@ -55,26 +55,27 @@ function Header() {
                 </div>
               </>
             ) : (
-              <>
-                <div className="my_account">
-                  <Link to="/login">
-                    <img
-                      src="/assets/img/user-account.png"
-                      alt="My Account Icon"
-                    />
-                  </Link>
-                  <Link to="/login">My Account</Link>
-                </div>
-              </>
-            )}
+                <>
+                  <div className="my_account">
+                    <Link to="/login">
+                      <img
+                        src="/assets/img/user-account.png"
+                        alt="My Account Icon"
+                      />
+                    </Link>
+                    <Link to="/login">My Account</Link>
+                  </div>
+                </>
+              )}
 
             <div className="search-icon hidden-md-down">
-              <i className="icon-search"></i>
+              <Link to="/search-result">
+                <i className="icon-search"></i>
+              </Link>
             </div>
             <MainMenu />
           </div>
         </div>
-        <SearchBox />
       </header>
     </>
   );
