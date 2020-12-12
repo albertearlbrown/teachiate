@@ -8,6 +8,7 @@ const initialState = {
   sendToList: [],
   inbox: [],
   sent:[],
+  redirectToMessagesList: false
 }
 
 export default function userReducer(state = initialState, action) {

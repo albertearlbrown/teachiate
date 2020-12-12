@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
@@ -9,6 +9,7 @@ import Button from '@material-ui/core/Button';
 import axios from 'axios';
 import { configureSocket } from "../../utils/axiosInterceptor"
 import { AuthStoreContext } from "../../Store/AuthStore";
+import profilActions from '../../redux/profil/actions'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -41,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 const baseUrl = process.env.NODE_ENV === 'development'?"http://localhost:4000":"https://api.teachiate.com"
 
-export default function ComplexGrid({notification}) {
+export default function ComplexGrid({notification, redirectToMessagesList, dispatch}) {
   const { isAuthenicate, userData } = useContext(AuthStoreContext);
   const classes = useStyles();
   const [title, setTitle ] = useState("")
@@ -103,6 +104,17 @@ export default function ComplexGrid({notification}) {
     })
   }
 
+  const onRedirect = () => {
+    dispatch({
+      type: profilActions.SET_STATE,
+      payload: {redirectToMessagesList: true}
+    })
+  }
+
+  if (redirectToMessagesList) {
+    return <Redirect  to={`/my-profile`} />
+  }
+
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
@@ -152,11 +164,9 @@ export default function ComplexGrid({notification}) {
               }
               {
                 notification.type === "MESSAGE_RECEIVED" &&
-                <Link to={`/my-profile`}>
-                  <Button variant="contained" color="primary">
+                  <Button onClick={() => onRedirect()} style={{width: 210}} variant="contained" color="primary">
                     View Message
                   </Button>
-                </Link>
               }
             </Grid>
           </Grid>
