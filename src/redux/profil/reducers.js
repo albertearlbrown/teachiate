@@ -10,7 +10,8 @@ const initialState = {
   sent:[],
   groups: [],
   inboxPagination: {},
-  sentPagination: {}
+  sentPagination: {},
+  redirectToMessagesList: false
 }
 
 export default function userReducer(state = initialState, action) {

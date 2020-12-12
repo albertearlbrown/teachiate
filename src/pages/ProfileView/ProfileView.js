@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import axios from 'axios';
 import { AuthStoreContext } from '../../Store/AuthStore';
 import ProfilNavBar from './NavBar'
@@ -8,13 +8,25 @@ import Settings from "./settings"
 import ProfilEdit from './profilEdit'
 import MessagesView from './messages'
 import GroupsView from './groups';
+import { connect } from 'react-redux';
+import profilActions from '../../redux/profil/actions'
 
-const ProfileView = () => {
+const ProfileView = ({redirectToMessagesList, dispatch}) => {
     const {userData} = useContext(AuthStoreContext);
 
     const [newAvatarFile, setNewAvatarFile] = useState(null);
     const [newProfileCover, setnewProfileCover] = useState(null);
     const [currentView, setView] = useState('thoughts')
+
+    useEffect(()=>{
+      if (redirectToMessagesList) {
+        setView('messages')
+        dispatch({
+          type: profilActions.SET_STATE,
+          payload: { redirectToMessagesList: false}
+        })
+      }
+    }, [redirectToMessagesList])
 
     const changeProfileCover = async (e) => {
         e.preventDefault();
@@ -122,5 +134,8 @@ const ProfileView = () => {
         </>
     )
 };
+const mapStateToProps = state => {
+  return state.profil
+}
 
-export default ProfileView;
+export default connect(mapStateToProps)(ProfileView);

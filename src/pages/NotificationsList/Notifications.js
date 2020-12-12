@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { connect } from 'react-redux'
 import axios from "axios";
 import Backdrop from "@material-ui/core/Backdrop";
 import CircularProgress from "@material-ui/core/CircularProgress";
@@ -22,7 +23,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Notifications() {
+const Notifications = (props) => {
+  console.log(props);
   const classes = useStyles();
   const [loading, setLoading] = useState(true);
   const [nList, setNList] = useState([]);
@@ -80,7 +82,7 @@ export default function Notifications() {
                 {nList.map((not, i)=>{
                   if (not.senderId) {
                     return(
-                      <NotificationsCard key={i} notification={not} />
+                      <NotificationsCard key={i} notification={not} redirectToMessagesList={props.redirectToMessagesList} dispatch={props.dispatch}/>
                     )
                   }
                 })}
@@ -92,3 +94,9 @@ export default function Notifications() {
     </div>
   );
 }
+
+const mapStateToProps = state => {
+  return state.profil
+}
+
+export default connect(mapStateToProps)(Notifications);
