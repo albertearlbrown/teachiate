@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react'
+import { Link } from "react-router-dom";
 import Post from '../Forum/Post';
 import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -34,7 +35,8 @@ function Search() {
   const [users, setUsers] = useState([])
   const [totalPages, setTotalPages] = useState(0)
   const [open, setOpen] = useState(false)
-  const [searchValue, setSearchValue] = useState(null)
+  const [searchValue, setSearchValue] = useState('')
+  const [searchValueClone, cloneSearchValue] = useState('')
   const [currentPage, setCurrentPage] = useState(0)
   const [sort, setSort] = useState('date')
   const [role, setNewRole] = useState('');
@@ -159,11 +161,11 @@ function Search() {
           <div className="search_result_info">
             <div className="search_result_details">
               <h2>Search results for</h2>
-              <h3>{searchValue}</h3>
+              <h3>{searchValueClone}</h3>
             </div>
             <div className="search-content">
-              <input type="text" placeholder="Search" onChange={e => setSearchValue(e.target.value)} />
-              <input type="submit" value="Search" onClick={() => filterSearchResult()} />
+              <input type="text" placeholder="Search" onChange={e => {cloneSearchValue(''); setSearchValue(e.target.value)}} />
+              <input type="submit" value="Search" onClick={() => {cloneSearchValue(searchValue); filterSearchResult()}} />
             </div>
           </div>
           <div className="search_select">
@@ -181,6 +183,7 @@ function Search() {
               <div className="search_result_col_area">
                 <ul className="search_col">
                   {users.map((user, index) => {
+                    if (index >= 8) { return; }
                     if (userData?._id === user._id) {
                       return;
                     }
@@ -206,10 +209,9 @@ function Search() {
                   })}
 
                 </ul>
-                <ul className="pagination clearfix">
-                  {getUserPagination()}
-                </ul>
-                <a onClick={() => getUsers(1)} className="view_more_search">View All</a>
+                <Link to='/people'>
+                  <a className="view_more_search">View All</a>
+                </Link>
 
               </div>
             </div>
@@ -220,13 +222,17 @@ function Search() {
                 <ul className="forum_search_col">
                   {
                     posts.map((post, i) => {
+                      if (i >= 2) { return; }
+
                       return (
                         <Post post={post} key={post._id} />
                       )
                     })
                   }
                 </ul>
-                <a onClick={() => getPosts()} className="view_more_search">View All</a>
+                <Link to='/forum'>
+                  <a className="view_more_search">View All</a>
+                </Link>
               </div>
             </div>
             }
@@ -235,6 +241,7 @@ function Search() {
               <div className="search_result_col_area">
                 <ul className="search_col">
                   {groups.map((group, index) => {
+                    if (index >= 4) { return; }
                     return (
                       <li>
                         <div className="group_des text-center">
@@ -246,10 +253,10 @@ function Search() {
                     )
                   })}
                 </ul>
-                <ul className="pagination clearfix">
-                  {getGroupPagination()}
-                </ul>
-                <a onClick={() => getGroups(1)} className="view_more_search">View All</a>
+                
+                <Link to='/groups'>
+                  <a className="view_more_search">View All</a>
+                </Link>
               </div>
             </div>
             }

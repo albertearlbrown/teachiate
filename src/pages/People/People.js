@@ -7,7 +7,7 @@ import { AuthStoreContext } from '../../Store/AuthStore';
 import { configureSocket } from "../../utils/axiosInterceptor"
 import axios from 'axios';
 
-const baseUrl = process.env.NODE_ENV === 'development'?"http://localhost:4000":"https://api.teachiate.com"
+const baseUrl = process.env.NODE_ENV === 'development' ? "http://localhost:4000" : "https://api.teachiate.com"
 
 const useStyles = makeStyles((theme) => ({
   backdrop: {
@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
     position: "relative",
     left: "-50px"
   },
-  cover:{
+  cover: {
     width: 73,
     height: 73,
     borderRadius: '50%'
@@ -40,35 +40,42 @@ const People = () => {
   const [socket, setSocket] = useState(null)
   const [friendReq, setFriendReq] = useState(userData?.friendReq)
 
-  useEffect(()=>{
-    getUsers(1)
-  },[])
+  const query = new URLSearchParams(window.location.search)
+  useEffect(() => {
+    const showAllSearchValue = query.get('viewall')
+    setSearchValue(showAllSearchValue)
+    showAllSearchValue && getUsers(1)
+  }, [window.location.search])
 
-  useEffect(()=>{
+  useEffect(() => {
     getUsers(1)
-  },[sort, role])
+  }, [])
 
-  useEffect(()=>{
-    const confSock = async ()=>{
+  useEffect(() => {
+    getUsers(1)
+  }, [sort, role])
+
+  useEffect(() => {
+    const confSock = async () => {
       let soc = await configureSocket(baseUrl);
       setSocket(soc)
       debugger
       if (soc) {
-        soc.on("friend-request"+userData?._id, data => {
+        soc.on("friend-request" + userData?._id, data => {
           console.log(data);
         })
       }
     }
     confSock()
-  },[])
+  }, [])
 
   const getUsers = async (page) => {
     setOpen(true)
     axios({
       url: `/users/all`,
       method: 'get',
-      params:{ page, sort,role, name: searchValue}
-    }).then((response)=>{
+      params: { page, sort, role, name: searchValue }
+    }).then((response) => {
       const { data } = response.data
       setUsers(data.users)
       setCurrentPage(data.page)
@@ -76,7 +83,7 @@ const People = () => {
       const tt = Math.ceil(data.totalElement / data.limit)
       setTotalPages(tt)
       setOpen(false)
-    }).catch((e)=>{
+    }).catch((e) => {
       setOpen(false)
       console.log(e);
     })
@@ -85,7 +92,7 @@ const People = () => {
   const getPagination = () => {
     const list = [];
     for (let i = 1; i <= totalPages; i++) {
-      list.push(<li className={currentPage === ""+i?"selected":""}><span onClick={()=>getUsers(i)}>{i}</span></li>)
+      list.push(<li className={currentPage === "" + i ? "selected" : ""}><span onClick={() => getUsers(i)}>{i}</span></li>)
     }
     return list;
   }
@@ -93,120 +100,120 @@ const People = () => {
   const setRole = e => {
     if (e === role) {
       setNewRole(null)
-    }else{
+    } else {
       setNewRole(e)
     }
   }
 
-  const sendInviation = async (receiver)=>{
+  const sendInviation = async (receiver) => {
     if (userData?._id && socket) {
-      socket.emit('friend-request', {receiver}, ack => {
-          console.log(ack);
-        });
-        const friendReq1 = [...friendReq, {reqId: receiver._id}]
-        setFriendReq(friendReq1)
+      socket.emit('friend-request', { receiver }, ack => {
+        console.log(ack);
+      });
+      const friendReq1 = [...friendReq, { reqId: receiver._id }]
+      setFriendReq(friendReq1)
     }
   }
 
   return (
-      <>
-        <Backdrop className={classes.backdrop} open={open} >
-          <CircularProgress color="inherit" />
-          <div className={classes.text}>Loading</div>
-        </Backdrop>
-        <PageTitle title='Teachiate Members'/>
-        <section className="inner_content people_content">
-            <div className="container">
-                <div className="row">
-                    <div className="col-md-9 col-sm-8">
-                        <h3 className="main_sec_title">All Members</h3>
-                    </div>
-                    <div className="col-md-3 col-sm-4">
-                    <div className="short profile_short">
-                      <label>Sort by:</label>
-                      <div className="select">
-                        <select name="slct" id="slct" value={sort} onChange={e=>setSort(e.target.value)}>
-                          <option value={"date"}>Date</option>
-                          <option value={"fullName"}>Name</option>
-                          <option value={"location"}>Location</option>
-                          <option value={"organisation"}>Organisation</option>
-                          <option value={"role"}>User Type</option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="row">
-                    <div className="col-md-12">
-                        <div className="search_flex text-center">
-                            <input onChange={e=>setSearchValue(e.target.value)} type="search" placeholder="Search" className="form-control"/>
-                            <button onClick={()=>getUsers(1)} className="search_btn" type="button">
-                                <img src="assets/img/search-icon.png" alt=""/>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <div className="row">
-                  <div className="register_field_col">
-                      <p>Type of User</p>
-                      <div  className="choose_field">
-                      <p>
-                          <input type="checkbox" id="test1" checked={role === 'Parent'} name="radio-group" value="Parent" onChange={(e) => setRole(e.target.value)}/>
-                          <label htmlFor="test1">Parent</label>
-                      </p>
-                      <p>
-                          <input type="checkbox" id="test2" checked={role === 'Teacher'} name="radio-group" value="Teacher" onChange={(e) => setRole(e.target.value)}/>
-                          <label htmlFor="test2">Teacher</label>
-                      </p>
-                      <p>
-                          <input type="checkbox" id="test3" checked={role === 'Student'} name="radio-group" value="Student" onChange={(e) => setRole(e.target.value)}/>
-                          <label htmlFor="test3">Student</label>
-                      </p>
-                      <p>
-                          <input type="checkbox" id="test4" checked={role === 'General Education'} name="radio-group" value="General Education" onChange={(e) => setRole(e.target.value)}/>
-                          <label htmlFor="test4">General Educator</label>
-                      </p>
-                      <p>
-                          <input type="checkbox" id="test5" checked={role === 'Admin'} name="radio-group" value="Admin" onChange={(e) => setRole(e.target.value)}/>
-                          <label htmlFor="test5">Admin</label>
-                      </p>
-                      </div>
-                  </div>
-                </div>
-                <div className="row">
-                  {users.map((user, index) => {
-                    if (userData?._id === user._id) {
-                      return;
-                    }
-                    return (
-                      <div key={index} className="col-md-3 col-sm-6 col-xs-12">
-                          <div className="add_frnd text-center">
-                              <img src={user.avatar || "assets/img/m1.png"} alt=""/>
-                              <h4>{user.fullName}</h4>
-                              <div className="catagory">{user.role}</div>
-                              {
-                                friendReq?.find((a)=>a.reqId === user._id)
-                                 ?
-                                <a>Sent</a>:
-                                (
-                                  userData?.friends?.find((a)=>a === user._id)?
-                                  <a>Friend</a>:
-                                  <a onClick={()=>sendInviation(user)}>Add Friend</a>
-                                )
-                              }
-                          </div>
-                      </div>
-                    )
-                  })}
-
-                </div>
-                <ul className="pagination clearfix">
-                    {getPagination()}
-                </ul>
+    <>
+      <Backdrop className={classes.backdrop} open={open} >
+        <CircularProgress color="inherit" />
+        <div className={classes.text}>Loading</div>
+      </Backdrop>
+      <PageTitle title='Teachiate Members' />
+      <section className="inner_content people_content">
+        <div className="container">
+          <div className="row">
+            <div className="col-md-9 col-sm-8">
+              <h3 className="main_sec_title">All Members</h3>
             </div>
-        </section>
-      </>
-    )
+            <div className="col-md-3 col-sm-4">
+              <div className="short profile_short">
+                <label>Sort by:</label>
+                <div className="select">
+                  <select name="slct" id="slct" value={sort} onChange={e => setSort(e.target.value)}>
+                    <option value={"date"}>Date</option>
+                    <option value={"fullName"}>Name</option>
+                    <option value={"location"}>Location</option>
+                    <option value={"organisation"}>Organisation</option>
+                    <option value={"role"}>User Type</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-md-12">
+              <div className="search_flex text-center">
+                <input onChange={e => setSearchValue(e.target.value)} type="search" placeholder="Search" className="form-control" value={searchValue}/>
+                <button onClick={() => getUsers(1)} className="search_btn" type="button">
+                  <img src="assets/img/search-icon.png" alt="" />
+                </button>
+              </div>
+            </div>
+          </div>
+          <div className="row">
+            <div className="register_field_col">
+              <p>Type of User</p>
+              <div className="choose_field">
+                <p>
+                  <input type="checkbox" id="test1" checked={role === 'Parent'} name="radio-group" value="Parent" onChange={(e) => setRole(e.target.value)} />
+                  <label htmlFor="test1">Parent</label>
+                </p>
+                <p>
+                  <input type="checkbox" id="test2" checked={role === 'Teacher'} name="radio-group" value="Teacher" onChange={(e) => setRole(e.target.value)} />
+                  <label htmlFor="test2">Teacher</label>
+                </p>
+                <p>
+                  <input type="checkbox" id="test3" checked={role === 'Student'} name="radio-group" value="Student" onChange={(e) => setRole(e.target.value)} />
+                  <label htmlFor="test3">Student</label>
+                </p>
+                <p>
+                  <input type="checkbox" id="test4" checked={role === 'General Education'} name="radio-group" value="General Education" onChange={(e) => setRole(e.target.value)} />
+                  <label htmlFor="test4">General Educator</label>
+                </p>
+                <p>
+                  <input type="checkbox" id="test5" checked={role === 'Admin'} name="radio-group" value="Admin" onChange={(e) => setRole(e.target.value)} />
+                  <label htmlFor="test5">Admin</label>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="row">
+            {users.map((user, index) => {
+              if (userData?._id === user._id) {
+                return;
+              }
+              return (
+                <div key={index} className="col-md-3 col-sm-6 col-xs-12">
+                  <div className="add_frnd text-center">
+                    <img src={user.avatar || "assets/img/m1.png"} alt="" />
+                    <h4>{user.fullName}</h4>
+                    <div className="catagory">{user.role}</div>
+                    {
+                      friendReq?.find((a) => a.reqId === user._id)
+                        ?
+                        <a>Sent</a> :
+                        (
+                          userData?.friends?.find((a) => a === user._id) ?
+                            <a>Friend</a> :
+                            <a onClick={() => sendInviation(user)}>Add Friend</a>
+                        )
+                    }
+                  </div>
+                </div>
+              )
+            })}
+
+          </div>
+          <ul className="pagination clearfix">
+            {getPagination()}
+          </ul>
+        </div>
+      </section>
+    </>
+  )
 };
 
 export default People;
