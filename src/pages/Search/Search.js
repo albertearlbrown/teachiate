@@ -43,6 +43,10 @@ function Search() {
   const [socket, setSocket] = useState(null)
   const [friendReq, setFriendReq] = useState(userData?.friendReq)
   const [tag, setTags] = useState('All')
+  const [showAllPoeple, setShowAllPeople] = useState(false)
+  const [showAllForums, setShowAllForums] = useState(false)
+  const [showAllGroups, setShowAllGroups] = useState(false)
+  const [showAllBlogs, setShowAllBlogs] = useState(false)
 
   useEffect(() => {
     const confSock = async () => {
@@ -149,6 +153,10 @@ function Search() {
     getPosts(1)
     getGroups(1)
     getUsers(1)
+    setShowAllPeople(false)
+    setShowAllGroups(false)
+    setShowAllForums(false)
+    setShowAllBlogs(false)
   }
   return (
     <>
@@ -164,8 +172,8 @@ function Search() {
               <h3>{searchValueClone}</h3>
             </div>
             <div className="search-content">
-              <input type="text" placeholder="Search" onChange={e => {cloneSearchValue(''); setSearchValue(e.target.value)}} />
-              <input type="submit" value="Search" onClick={() => {cloneSearchValue(searchValue); filterSearchResult()}} />
+              <input type="text" placeholder="Search" onChange={e => { cloneSearchValue(''); setSearchValue(e.target.value) }} />
+              <input type="submit" value="Search" onClick={() => { cloneSearchValue(searchValue); filterSearchResult() }} />
             </div>
           </div>
           <div className="search_select">
@@ -183,7 +191,7 @@ function Search() {
               <div className="search_result_col_area">
                 <ul className="search_col">
                   {users.map((user, index) => {
-                    if (index >= 8) { return; }
+                    if (!showAllPoeple && index >= 8) { return; }
                     if (userData?._id === user._id) {
                       return;
                     }
@@ -209,9 +217,13 @@ function Search() {
                   })}
 
                 </ul>
-                <Link to='/people'>
-                  <a className="view_more_search">View All</a>
-                </Link>
+                {
+                  showAllPoeple &&
+                  <ul className="pagination clearfix">
+                    {getUserPagination()}
+                  </ul>
+                }
+                <a onClick={() => setShowAllPeople(true)} className="view_more_search">View All</a>
 
               </div>
             </div>
@@ -222,7 +234,7 @@ function Search() {
                 <ul className="forum_search_col">
                   {
                     posts.map((post, i) => {
-                      if (i >= 2) { return; }
+                      if (!showAllForums && i >= 2) { return; }
 
                       return (
                         <Post post={post} key={post._id} />
@@ -230,9 +242,13 @@ function Search() {
                     })
                   }
                 </ul>
-                <Link to='/forum'>
-                  <a className="view_more_search">View All</a>
-                </Link>
+                {
+                  showAllForums &&
+                  <ul className="pagination clearfix">
+                    {/* {getGroupPagination()} */}
+                  </ul>
+                }
+                <a onClick={() => setShowAllForums(true)} className="view_more_search">View All</a>
               </div>
             </div>
             }
@@ -241,7 +257,7 @@ function Search() {
               <div className="search_result_col_area">
                 <ul className="search_col">
                   {groups.map((group, index) => {
-                    if (index >= 4) { return; }
+                    if (!showAllGroups && index >= 4) { return; }
                     return (
                       <li>
                         <div className="group_des text-center">
@@ -253,10 +269,13 @@ function Search() {
                     )
                   })}
                 </ul>
-                
-                <Link to='/groups'>
-                  <a className="view_more_search">View All</a>
-                </Link>
+                {
+                  showAllGroups &&
+                  <ul className="pagination clearfix">
+                    {getGroupPagination()}
+                  </ul>
+                }
+                <a onClick={() => setShowAllGroups(true)} className="view_more_search">View All</a>
               </div>
             </div>
             }
