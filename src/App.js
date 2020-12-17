@@ -22,6 +22,7 @@ import GroupStep1 from './pages/Group/Step1';
 import GroupStep2 from './pages/Group/Step2';
 import Notifications from './pages/NotificationsList/Notifications'
 import ForumPostPage from './pages/ForumPostPage/ForumPostPage'
+import GroupProfile from './pages/GroupProfile/GroupProfile'
 
 // Components
 import Header from './components/Header';
@@ -132,10 +133,10 @@ function App () {
                 <Route path="/forgot-password">
                   <PasswordForgot/>
                 </Route>
-                <Route path="/groups">
+                <Route exact path="/groups">
                   <Groups />
                 </Route>
-                <Route path="/people">
+                <Route exact path="/people">
                   <People/>
                 </Route>
                 <Route path="/opening-school-in-covid-siutation">
@@ -157,6 +158,7 @@ function App () {
                 <Route path="/create-group-step-2">
                   <GroupStep2/>
                 </Route>
+                <Route exact path='/groups/:id' component={GroupProfile} />
                 <PrivateRoute path='/notifications' component={Notifications}/>
                 <PrivateRoute path='/create-school-updates' component={CreateSchoolOpeningUpdates}/>
                 <PrivateRoute path='/posts/:id' component={ForumPostPage}/>
