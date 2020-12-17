@@ -169,7 +169,7 @@ export async function removeStarMessage(ids){
 export async function getMyGroups(page, name){
   return axios({
     method: 'get',
-    url: '/group/my-groups',
+    url: '/group/mygroups',
     params: {page, name}
   }).then((res) => {
     return res.data;

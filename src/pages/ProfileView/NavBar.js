@@ -33,12 +33,11 @@ const ProfilNavBar = ({setView, view})=>{
                 </div>
                 <p> Friends</p>
             </li>
-            <li><a href="#">
+            <li className={view === "groups" && "active"}  onClick={()=>setView('groups')}>
                 <div className="profile-nav-icon">
                     <img src="assets/img/icon6.png" alt=""/>
                 </div>
                 <p> Groups</p>
-                </a>
             </li>
             {/*
               <li><a href="#">
