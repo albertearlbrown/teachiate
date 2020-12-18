@@ -7,6 +7,12 @@ const WhatsNew = () => {
   const groups = useSelector((state)=> state.groups)
   const dispatch = useDispatch()
 
+  useEffect(() => {
+    if (groups.action === groupActions.CREATE_NEW_POST) {
+      setPost('')
+    }
+  }, [groups.action])
+
   const createNewPost = () => {
     dispatch({
       type: groupActions.CREATE_NEW_POST,

@@ -23,7 +23,6 @@ export async function getGroupPosts(id) {
 }
 
 export async function createNewPost({ payload }) {
-  debugger
   const { id, image, content } = payload;
   return axios({
     method: "post",
