@@ -1,7 +1,17 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import Moment from "react-moment";
 
 const GroupDescription = ({group}) => {
-  console.log(group);
+  const [admins, setAdmins] = useState([])
+  useEffect(()=>{
+    const findAdmins = ()=>{
+      if (group.members) {
+        const filter = group.members.filter((a)=> a.isAdmin === true)
+        setAdmins(filter)
+      }
+    }
+    findAdmins()
+  },[group])
   return (
     <section className="profile-banner-section profile_view">
       <div className="container-fluid">
@@ -38,27 +48,19 @@ const GroupDescription = ({group}) => {
             </div>
             <div className="avatar-status">
               <h3>{group.privacy === 'PRIVATE' ? 'Private': 'Public'}</h3>
-              <h5>94 Members</h5>
-              <h6>Created 5 Months Ago</h6>
+              <h5>{group.members?.length ? `${group.members?.length} Members`:'0 Members'}</h5>
+              <h6>Created <Moment fromNow>{group.creationDate}</Moment></h6>
               <div className="group-touch_area">
                 <p>Group Admins:</p>
                 <div className="admins_view">
                   <ul>
+                    {admins.map(ad =>
                     <li>
                       <a href="#">
-                        <img src="assets/img/group_admin_1.png" alt />
+                        <img src={ad?.memberId?.avatar||"/assets/img/group_admin_1.png"} alt />
                       </a>
                     </li>
-                    <li>
-                      <a href="#">
-                        <img src="assets/img/katei-knapp.png" alt />
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <img src="assets/img/katei-girl.png" alt />
-                      </a>
-                    </li>
+                    )}
                   </ul>
                 </div>
                 <div className="grp_extra_btn">
