@@ -178,11 +178,11 @@ function Search() {
           </div>
           <div className="search_select">
             <ul>
-              <li className={tag === 'All' ? "active" : ''}><a onClick={() => setTags('All')}>All</a></li>
-              <li className={tag === 'People' ? "active" : ''}><a onClick={() => setTags('People')}>People</a></li>
-              <li className={tag === 'Forums' ? "active" : ''}><a onClick={() => setTags('Forums')}>Forums</a></li>
-              <li className={tag === 'Groups' ? "active" : ''}><a onClick={() => setTags('Groups')}>Groups</a></li>
-              <li className={tag === 'Blogs' ? "active" : ''}><a onClick={() => setTags('Blogs')}>Blogs</a></li>
+              <li style={{cursor: "pointer"}} className={tag === 'All' ? "active" : ''}><a onClick={() => setTags('All')}>All</a></li>
+              <li style={{cursor: "pointer"}} className={tag === 'People' ? "active" : ''}><a onClick={() => setTags('People')}>People</a></li>
+              <li style={{cursor: "pointer"}} className={tag === 'Forums' ? "active" : ''}><a onClick={() => setTags('Forums')}>Forums</a></li>
+              <li style={{cursor: "pointer"}} className={tag === 'Groups' ? "active" : ''}><a onClick={() => setTags('Groups')}>Groups</a></li>
+              <li style={{cursor: "pointer"}} className={tag === 'Blogs' ? "active" : ''}><a onClick={() => setTags('Blogs')}>Blogs</a></li>
             </ul>
           </div>
           <div className="search_result_area">
@@ -223,7 +223,7 @@ function Search() {
                     {getUserPagination()}
                   </ul>
                 }
-                <a onClick={() => setShowAllPeople(true)} className="view_more_search">View All</a>
+                <a style={{cursor: "pointer"}} onClick={() => setShowAllPeople(true)} className="view_more_search">View All</a>
 
               </div>
             </div>
@@ -248,7 +248,7 @@ function Search() {
                     {/* {getGroupPagination()} */}
                   </ul>
                 }
-                <a onClick={() => setShowAllForums(true)} className="view_more_search">View All</a>
+                <a style={{cursor: "pointer"}} onClick={() => setShowAllForums(true)} className="view_more_search">View All</a>
               </div>
             </div>
             }
@@ -275,7 +275,7 @@ function Search() {
                     {getGroupPagination()}
                   </ul>
                 }
-                <a onClick={() => setShowAllGroups(true)} className="view_more_search">View All</a>
+                <a style={{cursor: "pointer"}} onClick={() => setShowAllGroups(true)} className="view_more_search">View All</a>
               </div>
             </div>
             }
@@ -288,7 +288,7 @@ function Search() {
                   </ul>
                 </div>
 
-                <a href="#" className="view_more_search">View All</a>
+                <a style={{cursor: "pointer"}} href="#" className="view_more_search">View All</a>
               </div>
             </div>
             }
