@@ -2,7 +2,8 @@ import actions from './actions'
 
 const initialState = {
   loading: false,
-  group: {}
+  group: {},
+  posts: []
 }
 
 export default function groupReducer(state = initialState, action) {
