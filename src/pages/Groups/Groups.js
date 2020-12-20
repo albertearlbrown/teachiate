@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import PageTitle from '../../components/PageTitle';
+import { Link } from 'react-router-dom'
 import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Moment from "react-moment";
@@ -95,10 +96,10 @@ const Groups = () => {
                                 <img className={classes.cover} src={group.avatar||'assets/img/g1.png'} alt=""/>
                                 <h4>{group.groupName}</h4>
                                 <div className="catagory">
-                                  <a href="#">
+                                  <Link to={`/groups/${group._id}`}>
                                     {group.privacy === 'PUBLIC'? 'Public Group':'Private Group'}
                                     <span>created <Moment fromNow>{group.creationDate}</Moment></span>
-                                  </a>
+                                  </Link>
                                 </div>
                             </div>
                         </div>
