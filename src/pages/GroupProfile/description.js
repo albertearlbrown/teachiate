@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
 import {FacebookShareButton, FacebookIcon, EmailShareButton, EmailIcon, TwitterShareButton, TwitterIcon} from "react-share";
 import Moment from "react-moment";
+import groupActions from '../../redux/groups/actions';
+import axios from 'axios'
 
-const GroupDescription = ({group, isMember, currentUser}) => {
+const GroupDescription = ({group, isMember, currentUser, dispatch}) => {
   const [admins, setAdmins] = useState([])
   const [active, setActive] = useState(false)
   const [isAdmin, setIsAdmin] = useState(false)
+  const [membershipType, setMembershipType] = useState('none')
 
   useEffect(()=>{
     try {
@@ -27,15 +30,64 @@ const GroupDescription = ({group, isMember, currentUser}) => {
 
   useEffect(()=>{
     const findAdmins = ()=>{
+      debugger;
       if (group.members) {
         const filter = group.members.filter((a)=> a.isAdmin === true)
         const find = filter.find(a => a.memberId._id === currentUser._id)
         setIsAdmin(find ? true: false);
+        if (group.members.find((a)=> a.memberId._id === currentUser._id)) {
+          setMembershipType('member')
+        }else if (group.requests.find((a)=> a.member === currentUser._id)) {
+          setMembershipType('waiting')
+        }else {
+          setMembershipType('none')
+        }
         setAdmins(filter)
       }
     }
     findAdmins()
   },[group])
+
+  const sendInviation = () => {
+    axios({
+      method: 'post',
+      url: `/group/${group._id}/invitation/send`,
+      data: { userId: currentUser._id }
+    }).then(()=>{
+      dispatch({
+        type: groupActions.LOAD_GROUP,
+        payload: {id: group._id }
+      })
+    }).catch(()=>{
+      console.log("error");
+    })
+  }
+  const leaveGroup = () => {
+    axios({
+      method: 'post',
+      url: `/group/${group._id}/invitation/leave`,
+      data: { userId: currentUser._id }
+    }).then(()=>{
+      window.location.reload()
+    }).catch(()=>{
+      console.log("error");
+    })
+  }
+  const cancelInvitation = () => {
+    axios({
+      method: 'post',
+      url: `/group/${group._id}/invitation/cancel`,
+      data: { userId: currentUser._id }
+    }).then(()=>{
+      dispatch({
+        type: groupActions.LOAD_GROUP,
+        payload: {id: group._id }
+      })
+    }).catch(()=>{
+      console.log("error");
+    })
+  }
+
   return (
     <section className="profile-banner-section profile_view">
       <div className="container-fluid">
@@ -90,7 +142,13 @@ const GroupDescription = ({group, isMember, currentUser}) => {
                 <div className="grp_extra_btn">
                   <ul>
                     <li>
-                      {!isAdmin &&<p >{isMember ?'Leave Group':'Join Group'}</p>}
+                      {!isAdmin &&
+                        <>
+                          {membershipType === 'member' && <p onClick={()=>leaveGroup()}>Leave Group</p>}
+                          {membershipType === 'none' && <p onClick={()=>sendInviation()}>Join Group</p>}
+                          {membershipType === 'waiting' && <p onClick={()=>cancelInvitation()}>Cancel Invitation</p>}
+                        </>
+                      }
                     </li>
                     <li>
                       <a href="#">Report</a>

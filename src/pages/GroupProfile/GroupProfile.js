@@ -90,7 +90,7 @@ const GroupProfile = (props) => {
           {groups.notificationMessage}
         </Alert>
       </Snackbar>
-      <GroupDescription group={groups.group} setShowSection={setShowSection} isMember={isMember} currentUser={currentUser} />
+      <GroupDescription dispatch={dispatch} group={groups.group} setShowSection={setShowSection} isMember={isMember} currentUser={currentUser} />
       {
         showSection &&
         <section className="profile-details clearfix">
