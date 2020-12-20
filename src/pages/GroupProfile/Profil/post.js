@@ -143,7 +143,7 @@ const Post = ({post, group, currentUser, dispatch}) => {
                     <li>
                       <FacebookShareButton
                         url={`${window.location.origin}/groups/${group._id}`}
-                        quote={post.title}
+                        quote={post.content}
                         hashtag={"#teachiate"}
                         disabledStyle
                         >
@@ -158,8 +158,8 @@ const Post = ({post, group, currentUser, dispatch}) => {
                     <li>
                       <EmailShareButton
                         url={`${window.location.origin}/groups/${group._id}`}
-                        subject={post.title}
-                        body={`${post.description}`}
+                        subject={`${currentUser.fullName} shared with you a post from teachiate`}
+                        body={`${post.content}`}
                         disabledStyle
                       >
                         <span>
@@ -173,7 +173,7 @@ const Post = ({post, group, currentUser, dispatch}) => {
                     <li>
                       <TwitterShareButton
                         url={`${window.location.origin}/groups/${group._id}`}
-                        title={post.title}
+                        title={post.content}
                         hashtag={"#teachiate"}
                         disabledStyle
                       >
