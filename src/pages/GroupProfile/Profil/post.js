@@ -226,7 +226,7 @@ const Post = ({post, group, currentUser, dispatch}) => {
               </div>
             ))
           }
-          <p style={{cursor: 'pointer'}} onClick={()=>setNOF(numberOfComments + 8)}>Load more comments</p>
+          {post.comments.length > numberOfComments && <p style={{cursor: 'pointer'}} onClick={()=>setNOF(numberOfComments + 8)}>Load more comments</p>}
           {
             showTextAreaComm &&
             <div className="post_share single_post_comment">

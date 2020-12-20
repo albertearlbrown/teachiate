@@ -97,7 +97,7 @@ const GroupProfile = (props) => {
           <div className="container">
           <div className="profile-wrapper">
             <NavBar setView={setView} view={view}/>
-            {view === 'profile' &&<ProfileComponent />}
+            {view === 'profile' &&<ProfileComponent currentUser={currentUser} />}
             {view === 'members' &&<Members currentUser={currentUser} dispatch={dispatch} group={groups.group} />}
             {view === 'invite' &&<Invites currentUser={currentUser} dispatch={dispatch} group={groups.group} />}
           </div>

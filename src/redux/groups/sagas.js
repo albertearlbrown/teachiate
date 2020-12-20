@@ -30,7 +30,7 @@ export function* CREATE_NEW_POST({ payload }) {
     type: actions.SET_STATE,
     payload: { loading: true },
   });
-  const response = yield call(groupApi.likePost, { payload });
+  const response = yield call(groupApi.createNewPost, { payload });
   if (response) {
     const { page, group } = yield select(getGroupState);
     yield put({
