@@ -30,18 +30,9 @@ export function* CREATE_NEW_POST({ payload }) {
     type: actions.SET_STATE,
     payload: { loading: true },
   });
-  const response = yield call(groupApi.createNewPost, { payload });
+  const response = yield call(groupApi.likePost, { payload });
   if (response) {
     const { page, group } = yield select(getGroupState);
-    yield put({
-      type: actions.SET_STATE,
-      payload: {
-        notificationMessage: "Post created successfully",
-        notificationType: "success",
-        openNotification: true,
-        action: actions.CREATE_NEW_POST,
-      },
-    });
     yield put({
       type: actions.GET_GROUP_POST,
       payload: {
@@ -92,10 +83,97 @@ export function* GET_GROUP_POST({ payload }) {
   }
 }
 
+export function* LIKE_POST({ payload }) {
+  yield put({
+    type: actions.SET_STATE,
+    payload: { loading: true },
+  });
+  const response = yield call(groupApi.likePost, { payload });
+  if (response) {
+    const { page, group } = yield select(getGroupState);
+    yield put({
+      type: actions.GET_GROUP_POST,
+      payload: {
+        id: group._id,
+        page: page,
+      },
+    });
+  } else {
+    yield put({
+      type: actions.SET_STATE,
+      payload: {
+        notificationMessage: "Error occurred, please try later",
+        notificationType: "error",
+        loading: false,
+        openNotification: true,
+      },
+    });
+  }
+}
+
+export function* MAKE_POST_TRACKED({ payload }) {
+  yield put({
+    type: actions.SET_STATE,
+    payload: { loading: true },
+  });
+  const response = yield call(groupApi.makePostTracked, { payload });
+  if (response) {
+    const { page, group } = yield select(getGroupState);
+    yield put({
+      type: actions.GET_GROUP_POST,
+      payload: {
+        id: group._id,
+        page: page,
+      },
+    });
+  } else {
+    yield put({
+      type: actions.SET_STATE,
+      payload: {
+        notificationMessage: "Error occurred, please try later",
+        notificationType: "error",
+        loading: false,
+        openNotification: true,
+      },
+    });
+  }
+}
+
+export function* CREATE_POST_COMMENT({ payload }) {
+  yield put({
+    type: actions.SET_STATE,
+    payload: { loading: true },
+  });
+  const response = yield call(groupApi.createComment, { payload });
+  if (response) {
+    const { page, group } = yield select(getGroupState);
+    yield put({
+      type: actions.GET_GROUP_POST,
+      payload: {
+        id: group._id,
+        page: page,
+      },
+    });
+  } else {
+    yield put({
+      type: actions.SET_STATE,
+      payload: {
+        notificationMessage: "Error occurred, please try later",
+        notificationType: "error",
+        loading: false,
+        openNotification: true,
+      },
+    });
+  }
+}
+
 export default function* rootSaga() {
   yield all([
     takeEvery(actions.LOAD_GROUP, LOAD_GROUP),
     takeEvery(actions.CREATE_NEW_POST, CREATE_NEW_POST),
     takeEvery(actions.GET_GROUP_POST, GET_GROUP_POST),
+    takeEvery(actions.LIKE_POST, LIKE_POST),
+    takeEvery(actions.MAKE_POST_TRACKED, MAKE_POST_TRACKED),
+    takeEvery(actions.CREATE_POST_COMMENT, CREATE_POST_COMMENT),
   ]);
 }

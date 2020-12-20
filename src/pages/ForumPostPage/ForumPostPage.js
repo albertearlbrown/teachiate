@@ -35,10 +35,6 @@ const ForumPostPage = (props) => {
     }
   },[post])
 
-  useEffect(() => {
-
-  },[])
-
   useEffect(()=>{
     setCurrentUser(userData)
   },[userData])
