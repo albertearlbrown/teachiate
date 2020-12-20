@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import {FacebookShareButton, FacebookIcon, EmailShareButton, EmailIcon, TwitterShareButton, TwitterIcon} from "react-share";
 import groupActions from "../../../redux/groups/actions";
 import Moment from "react-moment";
 
@@ -7,6 +7,22 @@ const Post = ({post, group, currentUser, dispatch}) => {
 
   const [textareaComm, setCommentTextarea] = useState()
   const [showTextAreaComm, setShowTextAreaComm] = useState(false)
+  const [active, setActive] = useState(false)
+  const [numberOfComments, setNOF] = useState(1)
+
+  useEffect(()=>{
+    if (post._id && document.getElementById('share_post_via'+post._id)) {
+      window.addEventListener('click', function(e){
+        if (document.getElementById('share_post_via'+post._id).contains(e.target)){
+          console.log("clicked in");
+          setActive(true)
+        } else{
+          console.log("clicked out");
+          setActive(false)
+        }
+      });
+    }
+  },[post])
 
   const likePost = (post) => {
     dispatch({
@@ -116,13 +132,62 @@ const Post = ({post, group, currentUser, dispatch}) => {
                 </span>
               </p>
             </li>
-            <li>
-              <a href="#">
+            <li id={"share_post_via"+post._id} className={active&&'active'}>
+              <p >
                 {" "}
                 <span>
                   Share <i className="fa fa-share" aria-hidden="true" />
                 </span>
-              </a>
+                <div className="share_post_via">
+                  <ul>
+                    <li>
+                      <FacebookShareButton
+                        url={`${window.location.origin}/groups/${group._id}`}
+                        quote={post.title}
+                        hashtag={"#teachiate"}
+                        disabledStyle
+                        >
+                          <span>
+                            <i className="fa fa-facebook-square">
+                              <FacebookIcon size={16} />
+                            </i>
+                          </span>
+                          Facebook
+                      </FacebookShareButton>
+                    </li>
+                    <li>
+                      <EmailShareButton
+                        url={`${window.location.origin}/groups/${group._id}`}
+                        subject={post.title}
+                        body={`${post.description}`}
+                        disabledStyle
+                      >
+                        <span>
+                          <i className="fa fa-facebook-square">
+                            <EmailIcon size={16} />
+                          </i>
+                        </span>
+                        Email
+                      </EmailShareButton>
+                    </li>
+                    <li>
+                      <TwitterShareButton
+                        url={`${window.location.origin}/groups/${group._id}`}
+                        title={post.title}
+                        hashtag={"#teachiate"}
+                        disabledStyle
+                      >
+                        <span>
+                          <i className="fa fa-facebook-square">
+                            <TwitterIcon size={16} />
+                          </i>
+                        </span>
+                        Twitter
+                      </TwitterShareButton>
+                    </li>
+                  </ul>
+                </div>
+              </p>
             </li>
             <li>
               {" "}
@@ -138,8 +203,9 @@ const Post = ({post, group, currentUser, dispatch}) => {
               </a>
             </li>
           </ul>
+
           {
-            post.comments.map(comm=>(
+            post.comments.sort((a,b)=>a.date >= b.date ? -1:1).slice(0, numberOfComments).map(comm=>(
               <div>
                 <div className="blog_title margin_btm">
                   <div className="title_img">
@@ -160,6 +226,7 @@ const Post = ({post, group, currentUser, dispatch}) => {
               </div>
             ))
           }
+          <p style={{cursor: 'pointer'}} onClick={()=>setNOF(numberOfComments + 8)}>Load more comments</p>
           {
             showTextAreaComm &&
             <div className="post_share single_post_comment">
