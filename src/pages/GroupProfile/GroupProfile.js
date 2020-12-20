@@ -8,6 +8,7 @@ import GroupDescription from "./description";
 import NavBar from './navbar';
 import ProfileComponent from './Profil';
 import Members from './members'
+import Invites from './invite'
 import { useSelector, useDispatch } from "react-redux";
 import groupActions from '../../redux/groups/actions'
 
@@ -98,7 +99,7 @@ const GroupProfile = (props) => {
             <NavBar setView={setView} view={view}/>
             {view === 'profile' &&<ProfileComponent />}
             {view === 'members' &&<Members currentUser={currentUser} dispatch={dispatch} group={groups.group} />}
-
+            {view === 'invite' &&<Invites currentUser={currentUser} dispatch={dispatch} group={groups.group} />}
           </div>
           </div>
         </section>
