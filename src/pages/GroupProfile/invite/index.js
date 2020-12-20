@@ -52,13 +52,29 @@ const Invites = ({ group, dispatch, currentUser }) => {
     })
   }
 
+  const cancelInvitation = (userId) => {
+    axios({
+      method: 'post',
+      url: `/group/${group._id}/invitation/cancel`,
+      data: { userId }
+    }).then(()=>{
+      dispatch({
+        type: groupActions.LOAD_GROUP,
+        payload: {id: group._id }
+      })
+      getUsers(currentPage)
+    }).catch(()=>{
+      console.log("error");
+    })
+  }
+
   const isMember = (id)=>{
     if (members.find( m => m.memberId._id === id)) {
       return null;
     }else if (requests.find(a=>a.member === id && a.type === 'SENT')) {
       return(
         <div className="friend-links">
-          <p className="btn btn-secondary">
+          <p onClick={()=> cancelInvitation(id)} className="btn btn-secondary">
             Cancel Invitation
           </p>
         </div>
