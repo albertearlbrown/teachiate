@@ -20,9 +20,16 @@ const useStyles = makeStyles((theme) => ({
 const GroupProfile = (props) => {
   const classes = useStyles()
   const groupId = props.match?.params?.id
-  const groups = useSelector((state)=> state.groups)
+  const { groups, currentUser } = useSelector((state) => {
+    return {
+      groups: state.groups,
+      currentUser: state.users.currentUser,
+    };
+  });
   const dispatch = useDispatch();
   const [openNotification, setOpenNotification] = useState(false)
+  const [showSection, setShowSection] = useState(false)
+  const [isMember, setIsMember] = useState(false)
 
   useEffect(() => {
     dispatch({
@@ -30,6 +37,20 @@ const GroupProfile = (props) => {
       payload: {id: groupId }
     })
   },[])
+
+  useEffect(()=>{
+    const {group} = groups;
+    if (group.members) {
+      const member = group.members.find(a=>a.memberId._id === currentUser._id)
+      if (member) {
+        setIsMember(true)
+        setShowSection(true)
+      }
+      if (group.privacy === 'PRIVATE' && !member) {
+        setShowSection(false)
+      }
+    }
+  }, [groups.group.groupName])
 
   useEffect(()=>{
     if (groups.openNotification) {
@@ -66,15 +87,18 @@ const GroupProfile = (props) => {
           {groups.notificationMessage}
         </Alert>
       </Snackbar>
-      <GroupDescription group={groups.group} />
-      <section className="profile-details clearfix">
-        <div className="container">
-        <div className="profile-wrapper">
-          <NavBar />
-          <ProfileComponent />
-        </div>
-        </div>
-      </section>
+      <GroupDescription group={groups.group} setShowSection={setShowSection} isMember={isMember} currentUser={currentUser} />
+      {
+        showSection &&
+        <section className="profile-details clearfix">
+          <div className="container">
+          <div className="profile-wrapper">
+            <NavBar />
+            <ProfileComponent />
+          </div>
+          </div>
+        </section>
+      }
     </div>
   );
 };

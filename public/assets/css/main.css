@@ -11582,6 +11582,32 @@ ul.made_accnt li a:hover{
 .grp_extra_btn ul li:last-child:hover a{
     background-color: #a2322b;
 }
+
+.grp_extra_btn ul li p{
+    width: 175px;
+    display: inline-block;
+    border-radius: 50px;
+    line-height: 51px;
+    font-size: 18px;
+    font-weight: 500;
+    color: #fff;
+    transition: all ease-in-out 0.3s;
+    text-align: center;
+}
+
+.grp_extra_btn ul li:first-child p{
+    background-color: #00aeef;
+}
+.grp_extra_btn ul li:last-child p{
+    background-color: #cb5049;
+}
+.grp_extra_btn ul li:first-child:hover p{
+    background-color: #08406f;
+}
+.grp_extra_btn ul li:last-child:hover p{
+    background-color: #a2322b;
+}
+
 .profile_view .avatar-upload-section {
     height: 205px;
 }

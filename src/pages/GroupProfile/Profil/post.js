@@ -209,7 +209,7 @@ const Post = ({post, group, currentUser, dispatch}) => {
               <div>
                 <div className="blog_title margin_btm">
                   <div className="title_img">
-                    <img src={comm.user.avatar || "/assets/img/user-account.png"} alt="image" />
+                    <img src={comm.user.avatar || "/assets/img/user-account.png"} alt="avatar" />
                   </div>
                   <div className="user_des">
                     <h4>
@@ -232,7 +232,7 @@ const Post = ({post, group, currentUser, dispatch}) => {
             <div className="post_share single_post_comment">
               <div className="post_share_area">
                 <div className="posted_avtar">
-                  <img src={currentUser.avatar || "/assets/img/user-account.png"} alt="image" />
+                  <img src={currentUser.avatar || "/assets/img/user-account.png"} alt="avatar" />
                 </div>
                 <div className="post_share_field">
                   <textarea

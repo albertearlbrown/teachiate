@@ -146,12 +146,12 @@ const ForumPostPage = (props) => {
               {
                 userData?._id &&
                 <div className="star" onClick={()=>makePostTracked(post.tracked.find(a=> a === userData._id))}>
-                  <img src={post.tracked.find(a=> a === userData._id)?"/assets/img/star.png":"/assets/img/star2.png"} alt="image" />
+                  <img src={post.tracked.find(a=> a === userData._id)?"/assets/img/star.png":"/assets/img/star2.png"} alt="avatar" />
                 </div>
               }
               <div className="blog_title">
                 <div className="title_img">
-                  <img src={post.user.avatar || "/assets/img/user-account.png"} alt="image" />
+                  <img src={post.user.avatar || "/assets/img/user-account.png"} alt="avatar" />
                 </div>
                 <div className="user_des">
                   <h4>
@@ -247,7 +247,7 @@ const ForumPostPage = (props) => {
                     <div>
                       <div className="blog_title margin_btm">
                         <div className="title_img">
-                          <img src={comm.user.avatar || "/assets/img/user-account.png"} alt="image" />
+                          <img src={comm.user.avatar || "/assets/img/user-account.png"} alt="avatar" />
                         </div>
                         <div className="user_des">
                           <h4>
@@ -285,7 +285,7 @@ const ForumPostPage = (props) => {
                         <div className="">
                           <div className="post_share_subcomment_area">
                             <div className="posted_avtar">
-                              <img src={currentUser.avatar || "/assets/img/user-account.png"} alt="image" />
+                              <img src={currentUser.avatar || "/assets/img/user-account.png"} alt="avatar" />
                             </div>
                             <div className="post_share_field">
                               <textarea
@@ -311,7 +311,7 @@ const ForumPostPage = (props) => {
             <div className="post_share single_post_comment">
               <div className="post_share_area">
                 <div className="posted_avtar">
-                  <img src={currentUser.avatar || "/assets/img/user-account.png"} alt="image" />
+                  <img src={currentUser.avatar || "/assets/img/user-account.png"} alt="avatar" />
                 </div>
                 <div className="post_share_field">
                   <textarea

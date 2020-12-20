@@ -1,8 +1,25 @@
 import React, { useEffect, useState } from "react";
+import {FacebookShareButton, FacebookIcon, EmailShareButton, EmailIcon, TwitterShareButton, TwitterIcon} from "react-share";
 import Moment from "react-moment";
 
-const GroupDescription = ({group}) => {
+const GroupDescription = ({group, isMember, currentUser}) => {
   const [admins, setAdmins] = useState([])
+  const [active, setActive] = useState(false)
+
+  useEffect(()=>{
+    if (group._id && document.getElementById('share_post_via'+group._id)) {
+      window.addEventListener('click', function(e){
+        if (document.getElementById('share_post_via'+group._id).contains(e.target)){
+          console.log("clicked in");
+          setActive(true)
+        } else{
+          console.log("clicked out");
+          setActive(false)
+        }
+      });
+    }
+  },[group])
+
   useEffect(()=>{
     const findAdmins = ()=>{
       if (group.members) {
@@ -66,43 +83,72 @@ const GroupDescription = ({group}) => {
                 <div className="grp_extra_btn">
                   <ul>
                     <li>
-                      <a href="#">Leave Group</a>
+                      <p >{isMember ?'Leave Group':'Join Group'}</p>
                     </li>
                     <li>
                       <a href="#">Report</a>
                     </li>
                   </ul>
-                  <div className="share_group">
-                    <div className="share_group_open">
-                      <ul>
-                        <li>
-                          <a href="#">
-                            <span>
-                              <i className="fa fa-facebook-square" />
-                            </span>
-                            Facebook
-                          </a>
-                        </li>
-                        <li>
-                          <a href="#">
-                            <span>
-                              <i className="fa fa-twitter" />
-                            </span>
-                            Twitter
-                          </a>
-                        </li>
-                        <li>
-                          <a href="#">
-                            <span>
-                              <i className="fa fa-instagram" />
-                            </span>
-                            Instagram
-                          </a>
-                        </li>
-                      </ul>
+                  <div className="comm_se" style={{width: 200, padding: 0}}>
+                    <div id={"share_post_via"+group._id} className={active&&'active'}>
+                      <p>
+                        <span>
+                          <div className="share_group"></div>
+                        </span>
+                      </p>
+                      <div className={"share_post_via "}>
+                        <ul>
+                          <li>
+                            <FacebookShareButton
+                              url={`${window.location.origin}/groups/${group._id}`}
+                              quote={group.groupName}
+                              hashtag={"#teachiate"}
+                              disabledStyle
+                              >
+                                <span>
+                                  <i className="fa fa-facebook-square">
+                                    <FacebookIcon size={16} />
+                                  </i>
+                                </span>
+                                Facebook
+                            </FacebookShareButton>
+                          </li>
+                          <li>
+                            <EmailShareButton
+                              url={`${window.location.origin}/groups/${group._id}`}
+                              subject={`${currentUser.fullName} shared with you a group (${group.groupName}) from teachiate`}
+                              body={`${group.content}`}
+                              disabledStyle
+                            >
+                              <span>
+                                <i className="fa fa-facebook-square">
+                                  <EmailIcon size={16} />
+                                </i>
+                              </span>
+                              Email
+                            </EmailShareButton>
+                          </li>
+                          <li>
+                            <TwitterShareButton
+                              url={`${window.location.origin}/groups/${group._id}`}
+                              title={group.groupName}
+                              hashtag={"#teachiate"}
+                              disabledStyle
+                            >
+                              <span>
+                                <i className="fa fa-facebook-square">
+                                  <TwitterIcon size={16} />
+                                </i>
+                              </span>
+                              Twitter
+                            </TwitterShareButton>
+                          </li>
+                        </ul>
+                      </div>
                     </div>
                   </div>
                 </div>
+
               </div>
               <div className="clear" />
             </div>
@@ -111,10 +157,7 @@ const GroupDescription = ({group}) => {
         <div className="group_short_info">
           <h2>Description:</h2>
           <p>
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s, when an unknown printer took a galley of type
-            and scrambled it to make a type.
+            {group.description}
           </p>
         </div>
         {/* avatar-upload */}
