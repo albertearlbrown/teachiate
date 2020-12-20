@@ -69,7 +69,7 @@ const Invites = ({ group, dispatch, currentUser }) => {
   }
 
   const isMember = (id)=>{
-    if (members.find( m => m.memberId._id === id)) {
+    if (members.find( m => m.memberId?._id === id)) {
       return null;
     }else if (requests.find(a=>a.member === id && a.type === 'SENT')) {
       return(

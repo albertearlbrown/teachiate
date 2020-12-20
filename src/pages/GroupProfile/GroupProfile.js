@@ -44,7 +44,7 @@ const GroupProfile = (props) => {
   useEffect(()=>{
     const {group} = groups;
     if (group.members) {
-      const member = group.members.find(a=>a.memberId._id === currentUser._id)
+      const member = group.members.find(a=>a.memberId?._id === currentUser._id)
       if (member) {
         setIsMember(true)
         setShowSection(true)

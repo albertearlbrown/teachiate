@@ -5,7 +5,8 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import Alert from '@material-ui/lab/Alert';
 import profilActions from '../../../redux/profil/actions';
 import {useSelector, useDispatch} from 'react-redux';
-import Inbox from './memberships'
+import Groups from './memberships'
+import Invitations from './invitations'
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
@@ -63,10 +64,11 @@ const MessagesView = ()=>{
         <div className="tabs2" style={{marginBottom: 20}}>
           <ul>
             <li onClick={()=>setView('memberships')}><p className={view ==='memberships' ? 'active':''}>Memberships</p></li>
-            <li onClick={()=>setView('invitations')}><p className={view ==='starred' ? 'active':''}>Invitations</p></li>
+            <li onClick={()=>setView('invitations')}><p className={view ==='invitations' ? 'active':''}>Invitations</p></li>
           </ul>
         </div>
-        {view === 'memberships' && <Inbox profil={profil} dispatch={dispatch} currentUser={users.currentUser} />}
+        {view === 'memberships' && <Groups profil={profil} dispatch={dispatch} currentUser={users.currentUser} />}
+        {view === 'invitations' && <Invitations profil={profil} dispatch={dispatch} currentUser={users.currentUser} />}
         {/*
           {view === 'invitations' && <ComposeMessage profil={profil} dispatch={dispatch} currentUser={users.currentUser} />}
           */}

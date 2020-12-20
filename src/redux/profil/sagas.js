@@ -453,6 +453,33 @@ export function* LOAD_MY_GROUPS({payload}){
   }
 }
 
+export function* LOAD_INVITATION_GROUPS({payload}){
+  yield put({
+    type: actions.SET_STATE,
+    payload: {
+      loading: true
+    }
+  })
+  const response = yield call(profilApi.getInvitationsGroups, payload.page, payload?.name)
+  if (response) {
+    yield put({
+      type: actions.SET_STATE,
+      payload: {
+        loading: false,
+        groupInvitations: response.groups,
+      }
+    })
+  }else{
+    yield put({
+      type: actions.SET_STATE,
+      payload: {
+        notificationConfig: {},
+        loading: false,
+      }
+    })
+  }
+}
+
 export default function* rootSaga() {
   yield all([
     takeEvery(actions.UPDATE_BACKGROUND_INFO, UPDATE_BACKGROUND_INFO),
@@ -470,5 +497,6 @@ export default function* rootSaga() {
     takeEvery(actions.MAKE_SENT_MESSAGE_STARRED, MAKE_SENT_MESSAGE_STARRED),
     takeEvery(actions.REMOVE_SENT_MESSAGE_STARRED, REMOVE_SENT_MESSAGE_STARRED),
     takeEvery(actions.LOAD_MY_GROUPS, LOAD_MY_GROUPS),
+    takeEvery(actions.LOAD_INVITATION_GROUPS, LOAD_INVITATION_GROUPS),
   ])
 }

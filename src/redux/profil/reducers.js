@@ -11,7 +11,8 @@ const initialState = {
   groups: [],
   inboxPagination: {},
   sentPagination: {},
-  redirectToMessagesList: false
+  redirectToMessagesList: false,
+  groupInvitations: []
 }
 
 export default function userReducer(state = initialState, action) {

@@ -177,3 +177,15 @@ export async function getMyGroups(page, name){
     return false;
   })
 }
+
+export async function getInvitationsGroups(page, name){
+  return axios({
+    method: 'get',
+    url: '/group/groups/invitations',
+    params: {page, name}
+  }).then((res) => {
+    return res.data;
+  }).catch(()=>{
+    return false;
+  })
+}
