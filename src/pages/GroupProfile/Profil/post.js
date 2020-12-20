@@ -13,7 +13,7 @@ const Post = ({post, group, currentUser, dispatch}) => {
   useEffect(()=>{
     if (post._id && document.getElementById('share_post_via'+post._id)) {
       window.addEventListener('click', function(e){
-        if (document.getElementById('share_post_via'+post._id).contains(e.target)){
+        if (document.getElementById('share_post_via'+post._id)?.contains(e.target)){
           console.log("clicked in");
           setActive(true)
         } else{

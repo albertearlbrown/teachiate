@@ -7,6 +7,7 @@ import Alert from '@material-ui/lab/Alert';
 import GroupDescription from "./description";
 import NavBar from './navbar';
 import ProfileComponent from './Profil';
+import Members from './members'
 import { useSelector, useDispatch } from "react-redux";
 import groupActions from '../../redux/groups/actions'
 
@@ -29,6 +30,7 @@ const GroupProfile = (props) => {
   const dispatch = useDispatch();
   const [openNotification, setOpenNotification] = useState(false)
   const [showSection, setShowSection] = useState(false)
+  const [view, setView] = useState('profile')
   const [isMember, setIsMember] = useState(false)
 
   useEffect(() => {
@@ -93,8 +95,10 @@ const GroupProfile = (props) => {
         <section className="profile-details clearfix">
           <div className="container">
           <div className="profile-wrapper">
-            <NavBar />
-            <ProfileComponent />
+            <NavBar setView={setView} view={view}/>
+            {view === 'profile' &&<ProfileComponent />}
+            {view === 'members' &&<Members currentUser={currentUser} dispatch={dispatch} group={groups.group} />}
+
           </div>
           </div>
         </section>
