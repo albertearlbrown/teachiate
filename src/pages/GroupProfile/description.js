@@ -5,18 +5,23 @@ import Moment from "react-moment";
 const GroupDescription = ({group, isMember, currentUser}) => {
   const [admins, setAdmins] = useState([])
   const [active, setActive] = useState(false)
+  const [isAdmin, setIsAdmin] = useState(false)
 
   useEffect(()=>{
-    if (group._id && document.getElementById('share_post_via'+group._id)) {
-      window.addEventListener('click', function(e){
-        if (document.getElementById('share_post_via'+group._id).contains(e.target)){
-          console.log("clicked in");
-          setActive(true)
-        } else{
-          console.log("clicked out");
-          setActive(false)
-        }
-      });
+    try {
+      if (group._id && document.getElementById('share_post_via'+group._id)) {
+        window.addEventListener('click', function(e){
+          if (document.getElementById('share_post_via'+group._id)?.contains(e.target)){
+            console.log("clicked in");
+            setActive(true)
+          } else{
+            console.log("clicked out");
+            setActive(false)
+          }
+        });
+      }
+    } catch (e) {
+      console.log(e);
     }
   },[group])
 
@@ -24,6 +29,8 @@ const GroupDescription = ({group, isMember, currentUser}) => {
     const findAdmins = ()=>{
       if (group.members) {
         const filter = group.members.filter((a)=> a.isAdmin === true)
+        const find = filter.find(a => a.memberId._id === currentUser._id)
+        setIsAdmin(find ? true: false);
         setAdmins(filter)
       }
     }
@@ -83,7 +90,7 @@ const GroupDescription = ({group, isMember, currentUser}) => {
                 <div className="grp_extra_btn">
                   <ul>
                     <li>
-                      <p >{isMember ?'Leave Group':'Join Group'}</p>
+                      {!isAdmin &&<p >{isMember ?'Leave Group':'Join Group'}</p>}
                     </li>
                     <li>
                       <a href="#">Report</a>
