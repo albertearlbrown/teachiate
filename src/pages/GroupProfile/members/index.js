@@ -1,13 +1,34 @@
 import React, { useState, useEffect} from "react";
+import { configureSocket } from "../../../utils/axiosInterceptor"
 
 const Members = ({group, dispatch, currentUser}) => {
   const { members } = group
+  const [socket, setSocket] = useState(null)
   const [membersList, setList] = useState(members)
   const [search, setSearch] = useState('')
+
+  useEffect(()=>{
+    const confSock = async ()=>{
+      let soc = await configureSocket();
+      setSocket(soc)
+    }
+    confSock()
+  },[])
 
   const setSubmit = () => {
     const filter = members.filter(a => a.memberId.fullName.includes(search))
     setList(filter)
+  }
+
+  const sendInviation = async (receiver)=>{
+    if (currentUser?._id && socket) {
+      socket.emit('friend-request', {receiver}, ack => {
+          console.log(ack);
+        });
+        setTimeout(()=>{
+          setSubmit(1)
+        }, 2000)
+    }
   }
 
   return (
@@ -49,10 +70,22 @@ const Members = ({group, dispatch, currentUser}) => {
                 <div className="clear" />
               </div>
               <div className="friend-links">
-                {currentUser.friends.indexOf(member.memberId._id)>=0 &&
-                  <a href="#" className="btn btn-primary">
-                    Add Friend
-                  </a>
+                {currentUser._id !== member.memberId._id &&
+                  <>
+                    {currentUser.friends.indexOf(member.memberId._id)>=0 ?
+                      <a className="btn btn-primary">
+                        Friend
+                      </a>
+                  :
+                  (
+                    currentUser.friendsReq.indexOf(member.memberId._id)>=0 ?
+                    <a className="btn btn-primary">
+                      Sent
+                    </a>:
+                    <a className="btn btn-primary" onClick={()=>sendInviation(member)}>Add Friend</a>
+                  )
+                }
+                  </>
                 }
               </div>
             </div>

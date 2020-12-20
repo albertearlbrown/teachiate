@@ -127,22 +127,10 @@ const Invites = ({ group, dispatch, currentUser }) => {
           </div>
           */}
         <div className="search_flex">
-          <input type="search" placeholder="Search" className="form-control" />
-          <button className="search_btn" type="submit">
+          <input onChange={e=>setSearchValue(e.target.value)} type="search" placeholder="Search" className="form-control" />
+          <button onClick={()=>getUsers(1)} className="search_btn" type="submit">
             <img src="/assets/img/search-icon.png" alt="avatar" />
           </button>
-        </div>
-        <div className="choose_invitation">
-          <ul>
-            <li>John Smith</li>
-            <li>Nargess Demarco</li>
-          </ul>
-          <input
-            type="submit"
-            defaultValue="Send Invitations"
-            className="invitation_send_btn"
-            name
-          />
         </div>
         <div className="friends_inner_details clearfix">
           {/* friends_inner_details_col */}
