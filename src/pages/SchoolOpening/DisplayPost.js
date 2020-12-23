@@ -34,9 +34,19 @@ function DisplayPost({posts}) {
         }        
     }
 
+    const colors = () => {
+        if(posts.user.role === 'Admin') {
+            return 'blog_sec1';
+        }
+
+        else if(posts.user.role === 'Student') {
+            return 'blog_sec2';
+        }
+    }    
+
     return (
         <> 
-            <div className='blog_sec4'>
+            <div className={colors()} key={posts._id}>
                 <div className='opeing_list'>
                     <div className="blog_title">
                     <div className="title_img"><img src="assets/img/admin-img.png" alt=""/></div>
