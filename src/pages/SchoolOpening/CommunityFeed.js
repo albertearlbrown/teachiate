@@ -41,6 +41,9 @@ function DisplayPost({posts}) {
         else if(posts.user.role === 'Student') {
             return 'blog_sec2';
         }
+        else {
+            return 'blog_sec3';            
+        }
     }
 
     return (

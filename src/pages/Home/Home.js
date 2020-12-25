@@ -187,6 +187,20 @@ const Home = () => {
     }
 
 
+    const colors = (role) => {
+        if(role === 'Admin') {
+            return 'blog_sec1';
+        }
+
+        else if(role === 'Student') {
+            return 'blog_sec2';
+        }
+        
+        else {
+            return 'blog_sec3';            
+        }
+    }  
+
     return (
         <>
         {isAuthenicate ? <div className='mt-lg-5'></div> : <Banner/> }
@@ -313,7 +327,7 @@ const Home = () => {
                     {load ?
                         postData
                         .map(post => (
-                            <div className="blog_sec1" key={post._id}>
+                            <div className={colors(post.user.role)} key={post._id}>
                                 <div className="blog_title">
                                     <div className="title_img">
                                         <img src={post.avatar == null ? '/assets/img/user-account.png' : post.user.avatar } alt=""/>
