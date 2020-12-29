@@ -18,7 +18,7 @@ const toBase64 = file => new Promise((resolve, reject) => {
 const useStyles = makeStyles((theme) => ({
   backdrop: {
     zIndex: theme.zIndex.drawer + 1,
-    color: '#fff',
+    color: "#fff",
   },
   text: {
     top: "50px",
