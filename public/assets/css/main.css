@@ -2816,6 +2816,17 @@ input.wpcf7-not-valid,
     columns: #fff;
 }
 
+.group_des_category {
+    color: #326087;
+    font-weight: 600;
+    font-size: 14px;
+    display: flex;
+    flex-direction: column;
+}
+.group_des:hover .category span{
+    columns: #fff;
+}
+
 .groups .form-control {
     width: 100%;
     background: #fff;

@@ -18,7 +18,7 @@ const Posts = () => {
       type: groupActions.GET_GROUP_POST,
       payload: { id: groups.group._id },
     });
-  }, []);
+  }, [groups.group._id]);
 
   return (
     <>
