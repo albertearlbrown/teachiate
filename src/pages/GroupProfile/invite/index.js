@@ -8,7 +8,7 @@ const Invites = ({ group, dispatch, currentUser }) => {
   const [membersList, setList] = useState(members);
   const [search, setSearch] = useState("");
   const [users, setUsers] = useState([])
-  const [totalPages, setTotalPages] = useState(0)
+  const [totalPages, setTotalPages] = useState(1)
   const [open, setOpen] = useState(false)
   const [searchValue, setSearchValue] = useState(null)
   const [currentPage, setCurrentPage] = useState(0)
@@ -20,15 +20,13 @@ const Invites = ({ group, dispatch, currentUser }) => {
   const getUsers = async (page) => {
     setOpen(true)
     axios({
-      url: `/users/all`,
+      url: `/users/friends`,
       method: 'get',
       params:{ page, sort, name: searchValue}
     }).then((response)=>{
-      const { data } = response.data
-      setUsers(data.users)
-      setCurrentPage(data.page)
-      const tt = Math.ceil(data.totalElement / data.limit)
-      setTotalPages(tt)
+      const { friends } = response.data
+      setUsers(friends)
+      setCurrentPage(page)
       setOpen(false)
     }).catch((e)=>{
       setOpen(false)
