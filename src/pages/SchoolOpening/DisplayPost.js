@@ -127,10 +127,9 @@ function DisplayPost({posts}) {
                         {comment.replies.map(reply => (           
                             <div className="blog_title margin_right" key={reply._id}>                                
                                 <div className="title_img">
-                                    <img className='img-circle' src={reply.user.avatar === null ? '/assets/img/user-account.png'  : reply.user.avatar } alt=""/>
-                                </div>
+                                    <img className='img-circle' src={reply.user?.avatar === undefined && reply.user?.avatar === null  ? '/assets/img/user-account.png'  : reply.user?.avatar } alt=""/>                                </div>
                                 <div className="user_des">
-                                    <h4>{reply.user.fullName} <span>({reply.user.role})</span></h4>
+                                    <h4>{reply.user?.fullName} <span>{reply.user?.role}</span></h4>
                                     <p>{reply.content}</p>
                                     <div className="replaied">
                                         <div class="hour">
