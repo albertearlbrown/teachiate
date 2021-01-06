@@ -44,6 +44,7 @@ const GroupProfile = (props) => {
   useEffect(()=>{
     const {group} = groups;
     if (group.members) {
+      debugger
       const member = group.members.find(a=>a.memberId?._id === currentUser._id)
       if (member) {
         setIsMember(true)
@@ -52,8 +53,11 @@ const GroupProfile = (props) => {
       if (group.privacy === 'PRIVATE' && !member) {
         setShowSection(false)
       }
+    }else {
+      setShowSection(false)
+      setIsMember(false)
     }
-  }, [groups.group.groupName])
+  }, [groups.group._id])
 
   useEffect(()=>{
     if (groups.openNotification) {
