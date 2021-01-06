@@ -10,6 +10,7 @@ import axios from 'axios';
 import { AuthStoreContext } from '../../Store/AuthStore';
 import jwt_decode from "jwt-decode";
 import Swal from 'sweetalert2';
+import SidebarContent from '../../components/Sidebar/SidebarContents';
 
 const Home = () => {
 
@@ -186,6 +187,20 @@ const Home = () => {
     }
 
 
+    const colors = (role) => {
+        if(role === 'Admin') {
+            return 'blog_sec1';
+        }
+
+        else if(role === 'Student') {
+            return 'blog_sec2';
+        }
+        
+        else {
+            return 'blog_sec3';            
+        }
+    }  
+
     return (
         <>
         {isAuthenicate ? <div className='mt-lg-5'></div> : <Banner/> }
@@ -246,7 +261,7 @@ const Home = () => {
                     {newPost
                     .reverse()
                     .map(post => (
-                            <div className="blog_sec1" key={post.id}>
+                        <div className="blog_sec1" key={post.id}>
                             <div className="blog_title">
                                 <div className="title_img">
                                     <img src={post.user.avatar === null ? '/assets/img/user-account.png' : post.user.avatar } alt=""/>
@@ -312,7 +327,7 @@ const Home = () => {
                     {load ?
                         postData
                         .map(post => (
-                            <div className="" key={post.id}>
+                            <div className={colors(post.user.role)} key={post._id}>
                                 <div className="blog_title">
                                     <div className="title_img">
                                         <img src={post.avatar == null ? '/assets/img/user-account.png' : post.user.avatar } alt=""/>
@@ -348,7 +363,7 @@ const Home = () => {
                                 {post
                                 .comments
                                 .map(comment => (
-                                    <div className="blog_title margin_btm">
+                                    <div key={comment._id} className="blog_title margin_btm">
                                         <div className="title_img">
                                             <img style={{borderRadius: '50%'}} src={comment.user.avatar === null ? '/assets/img/user-account.png'  : comment.user.avatar } alt=""/>
                                         </div>
@@ -398,64 +413,7 @@ const Home = () => {
                 </div>
 
                 <div className="blog_right">
-                    <div className="articles_title">
-                        <h2>Blog Articles</h2>
-                    </div>
-                    <div className="articles clearfix">
-                        <ul className="d-flex">
-                            <li>
-                                <div className="art_left_img"><img src="assets/img/article1.jpg" width="92px;" alt=""/></div>
-                                <div className="art_des">
-                                    <p>My struggle with homeschooling my youngins</p>
-                                </div>
-                            </li>
-                            <li>
-                                <div className="art_left_img"><img src="assets/img/article2.jpg" alt=""/></div>
-                                <div className="art_des">
-                                    <p>COVID19 has led to parents appreciating teachers more</p>
-                                </div>
-                            </li>
-                            <li>
-                                <div className="art_left_img"><img src="assets/img/article3.jpg" alt=""/></div>
-                                <div className="art_des">
-                                    <p>Teachers, like myself, getting used to virtual teaching</p>
-                                </div>
-                            </li>
-                        </ul>
-                        <a href="/" className="view_more">View More Articles</a>
-                    </div>
-
-                    <div className="Recent_topics">
-                        <div className="articles_title">
-                            <h2>Recent Forum Topics</h2>
-                        </div>
-                        <div className="articles clearfix">
-                            <ul className="tag">
-                                <li><a href="/">covid education</a></li>
-                                <li><a href="/">What homeschooling activity do you enjoy?</a></li>
-                                <li><a href="/">Home school meet ups</a></li>
-                                <li><a href="/">Virtual classroom to replace classroom lecturing in future</a></li>
-                                <li><a href="/">Evaluating the effectiveness of distance learning</a></li>
-                            </ul>
-                            <a href="/" className="view_more">View More Articles</a>
-
-                        </div>
-                    </div>
-                    <div className="Recent_topics_form">
-                        <div className="articles_title">
-                            <h2>Recent Forums</h2>
-                        </div>
-                        <div className="articles clearfix">
-                            <ul className="tag">
-                                <li><a href="/">General Community Chat </a></li>
-                                <li><a href="/">Higher Education Chat </a></li>
-                                <li><a href="/">Parental Connection </a></li>
-                                <li><a href="/">Parents and Teachers Lounge </a></li>
-                                <li><a href="/">Teachers Lounge</a></li>
-                            </ul>
-                            <a href="/" className="view_more">View More Articles</a>
-                        </div>
-                    </div>
+                        <SidebarContent load={comments} />
                 </div>
             </div>
         </section>

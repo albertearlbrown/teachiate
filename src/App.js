@@ -22,6 +22,7 @@ import GroupStep1 from './pages/Group/Step1';
 import GroupStep2 from './pages/Group/Step2';
 import Notifications from './pages/NotificationsList/Notifications'
 import ForumPostPage from './pages/ForumPostPage/ForumPostPage'
+import GroupProfile from './pages/GroupProfile/GroupProfile'
 
 // Components
 import Header from './components/Header';
@@ -29,17 +30,11 @@ import Footer from './components/Footer';
 import SchoolOpening from './pages/SchoolOpening/SchoolOpening';
 
 // utils
-import {addAuthorizationHeader, configureSocket} from './utils/axiosInterceptor';
-
 import { AuthStoreContext } from './Store/AuthStore';
 import Search from './pages/Search/Search';
 
 import { Auth, Hub } from 'aws-amplify';
-
-// axios configs
-const baseURL = process.env.NODE_ENV === 'development'?"http://localhost:4000":"https://api.teachiate.com"
-axios.defaults.baseURL = baseURL
-axios.interceptors.request.use(addAuthorizationHeader, e => Promise.reject(e));
+import LandingPage from './components/LandingPage/LandingPage';
 
 function App () {
 
@@ -47,26 +42,6 @@ function App () {
   const { setIsAuthenicate, setUserData } = useContext(AuthStoreContext);
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState({});
-
-  useEffect(()=>{
-    const sendSock = async ()=>{
-      if (user._id) {
-        let socket = await configureSocket(baseURL);
-        if (socket) {
-          socket.on('connection', () => {
-              console.log(`I'm connected with the back-end`);
-            });
-          socket.emit('say-hay', user, ack => {
-            console.log(ack);
-          });
-          socket.on(user._id, data =>{
-            console.log(data);
-          })
-        }
-      }
-    }
-    sendSock()
-  }, [user])
 
   useEffect(() => {
     Hub.listen('auth', ({ payload: { event, data } }) => {
@@ -126,22 +101,23 @@ function App () {
         console.log('Not signed in')});
   }
 
-
-
   return (
       <Router>
-          <Header/>
+          {window.location.pathname!=='/' && <Header/>}
           {loading
             ?
-            <div style={{height:700}}>
+            <div style={{height:700, zIndex: 1000}}>
             <Backdrop open={true}>
-              <CircularProgress style={{width: 250, height: 250}} color="inherit" />
+              <CircularProgress color="inherit" />
             </Backdrop>
             </div>
             :
             <div id="main">
               <Switch>
                 <Route path="/" exact>
+                  <LandingPage />
+                </Route>
+                <Route path="/index" exact>
                   <Home />
                 </Route>
                 <PrivateRoute path='/my-profile' component={Profile}/>
@@ -157,10 +133,10 @@ function App () {
                 <Route path="/forgot-password">
                   <PasswordForgot/>
                 </Route>
-                <Route path="/groups">
+                <Route exact path="/groups">
                   <Groups />
                 </Route>
-                <Route path="/people">
+                <Route exact path="/people">
                   <People/>
                 </Route>
                 <Route path="/opening-school-in-covid-siutation">
@@ -182,13 +158,14 @@ function App () {
                 <Route path="/create-group-step-2">
                   <GroupStep2/>
                 </Route>
+                <Route exact path='/groups/:id' component={GroupProfile} />
                 <PrivateRoute path='/notifications' component={Notifications}/>
                 <PrivateRoute path='/create-school-updates' component={CreateSchoolOpeningUpdates}/>
                 <PrivateRoute path='/posts/:id' component={ForumPostPage}/>
               </Switch>
             </div>
           }
-          <Footer/>
+          {window.location.pathname!=='/' && <Footer/>}
       </Router>
   );
 }

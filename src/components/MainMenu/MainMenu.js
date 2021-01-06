@@ -52,6 +52,11 @@ function MainMenu() {
           setMessage(data.message)
           setOpen(true)
         })
+        soc.on('message-received'+userData._id, data => {
+          setNCount(data.count)
+          setMessage(data.message)
+          setOpen(true)
+        })
         window.addEventListener("beforeunload", ()=>{
           soc.emit("user-disconnected")
         });
@@ -83,7 +88,7 @@ function MainMenu() {
            <div className="page-header_main-menu">
                 <nav className="nav-primary">
                     <ul className="menu-main-navigation menu clearfix">
-                        <li className="menu-item-has-children"><Link to="/">Home</Link></li>
+                        <li className="menu-item-has-children"><Link to="/index">Home</Link></li>
                         <li className="menu-item-has-children"><Link to="/opening-school-in-covid-siutation">School Opening</Link></li>
                         <li className="menu-item-has-children"><Link to="/groups">Groups</Link></li>
                         <li className="menu-item-has-children"><Link to="/people">People</Link></li>
