@@ -52,7 +52,7 @@ function Search() {
     const confSock = async () => {
       let soc = await configureSocket(baseUrl)
       setSocket(soc)
-      debugger
+      
       if (soc) {
         soc.on("friend-request" + userData?._id, data => {
           console.log(data);
@@ -76,7 +76,7 @@ function Search() {
       const { data } = response.data
       setUsers(data.users)
       setCurrentPage(data.page)
-      debugger
+      
       const tt = Math.ceil(data.totalElement / data.limit)
       setTotalPages(tt)
       setOpen(false)

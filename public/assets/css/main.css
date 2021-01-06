@@ -360,7 +360,7 @@ h4,
 
 p {
     margin: 0;
-    padding: 0 0 25px;
+    padding: 0 0;
     font-family: 'Poppins', sans-serif;
 
 
@@ -2878,9 +2878,11 @@ input.wpcf7-not-valid,
     display: inline-block;
 }
 .comm_se ul {
-    margin-left: 0;
+    display: inline-block;
+    width: 100%;
+    /* margin-left: 0;
     justify-content: space-between;
-    display: flex;
+    display: flex; */
 }
 
 .comm_se li {
@@ -13467,6 +13469,10 @@ ul.forum_search_col {
     width: 100%;
     display: inline-block;
 }
+ul.forum_search_col ul li {
+    float: left;
+    width: 33.3%;
+}
 ul.forum_search_col li {
     float: left;
     width: 50%;
@@ -13535,8 +13541,9 @@ ul.blog_search_col li{
     width: 100%;
     display: inline-block;
 }
-.forum_search_col .comm_se li{
-    width: unset;
+.forum_search_col .comm_se ui li{
+    width: 33.33%;
+    float: left;
 }
 .blog_search_col.slick-initialized .slick-list{
     padding-right: 100px;
