@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import {FacebookShareButton, FacebookIcon, EmailShareButton, EmailIcon, TwitterShareButton, TwitterIcon} from "react-share";
 import Moment from "react-moment";
+import Helmet from "react-helmet";
 import groupActions from '../../redux/groups/actions';
 import axios from 'axios'
 
@@ -89,6 +90,23 @@ const GroupDescription = ({group, isMember, currentUser, dispatch}) => {
 
   return (
     <section className="profile-banner-section profile_view">
+      <Helmet>
+        {/* General tags */}
+        <title>{group.name}</title>
+        <meta name="description" content={group.description} />
+        {/* OpenGraph tags */}
+        <meta name="og:url" content={window.location.href} />
+        <meta name="og:title" content={group.name} />
+        <meta name="og:description" content={group.description} />
+        <meta name="og:image" content={group.cover} />
+        <meta name="og:type" content="website" />
+        <meta name="fb:app_id" content={"1640321232815333"} />
+        {/* Twitter Card tags */}
+        <meta name="twitter:title" content={group.title} />
+        <meta name="twitter:description" content={group.description} />
+        <meta name="twitter:image" content={group.cover} />
+        <meta name="twitter:card" content="summary" />
+      </Helmet>
       <div className="container-fluid">
         {/* profile-banner */}
         <div className="profile-banner">
