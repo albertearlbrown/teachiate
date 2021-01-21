@@ -30,7 +30,6 @@ const GroupDescription = ({group, isMember, currentUser, dispatch}) => {
 
   useEffect(()=>{
     const findAdmins = ()=>{
-      debugger;
       if (group.members) {
         const filter = group.members.filter((a)=> a.isAdmin === true)
         const find = filter.find(a => a.memberId._id === currentUser._id)
