@@ -54,7 +54,7 @@ function DisplayPost({posts, ...props}) {
         
         if(resp.data.success) {
             console.log(resp)
-            props.handleReplyComment(postId, commentId, resp.data.replyCommentObj)
+            props.handleReplyComment(postId, commentId, resp.data.data)
         }
         // window.scrollTo(100, 0);   
 
@@ -166,14 +166,14 @@ function DisplayPost({posts, ...props}) {
                         {comment.replies.map(reply => (           
                             <div className="blog_title margin_right" key={reply._id}>                                
                                 <div className="title_img">
-                                    <img className='img-circle' src={reply.user?.avatar === undefined && reply.user?.avatar === null  ? '/assets/img/user-account.png'  : reply.user?.avatar } alt=""/>                                
+                                    <img className='img-circle' src={(reply.user?.avatar === null)  ? '/assets/img/user-account.png'  : reply.user?.avatar } alt=""/>                                
                                     </div>
 
                                 <div className="user_des">
                                     <h4>{reply.user?.fullName} <span>{reply.user?.role}</span></h4>
                                     <p>{reply.content}</p>
                                     <div className="replaied">
-                                        <div class="hour">
+                                        <div className="hour">
                                             <Moment fromNow>
                                                 {reply.date}
                                             </Moment>                                            

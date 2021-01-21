@@ -119,7 +119,7 @@ function SendInvationComponent() {
                             <div onClick={()=>cancelInvation(user)} className="btn btn-secondary ">
                               Cancel Invitation
                             </div>:
-                            <div class="friend-links btn btn-primary" onClick={()=> addToInvite(user)}>
+                            <div className="friend-links btn btn-primary" onClick={()=> addToInvite(user)}>
                                 Add To Invite
                             </div>
                         }
