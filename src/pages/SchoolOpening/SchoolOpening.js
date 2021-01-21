@@ -8,8 +8,10 @@ import axios from 'axios';
 import DisplayPost from './DisplayPost';
 import { AuthStoreContext } from '../../Store/AuthStore';
 import CommunityFeed from './CommunityFeed';
+import { connect } from 'react-redux';
 
-const SchoolOpening = () => {
+const SchoolOpening = (props) => {
+    const { communityFeeds, schoolOpeningUpdates } = props.schoolOpening
     const {isAuthenicate, userData} = useContext(AuthStoreContext);    
     const [selectFileUploadProgress, setSelectedFileUploadProgress]  = useState(0);
     const [selectFileUploadStart, setSelectFileUploadStart]  = useState(false);  
@@ -39,10 +41,9 @@ const SchoolOpening = () => {
     const [loadCommunitiesFeed, setLoadCommunitiesFeed] = useState(false);
 
     useEffect(() => {
-        window.scrollTo(0, 0);
+        // window.scrollTo(0, 0);
         async function fetchUpdates() {
-            const resp =  await axios.get('/school-opening-updates');
-            const feed = resp.data.data;
+            const feed = schoolOpeningUpdates;
             setPosts([...feed]);
             setLoadPosts(true);   
         }
@@ -54,9 +55,8 @@ const SchoolOpening = () => {
         }   
 
         async function fetchCommunitiesFeed() {
-            const resp = await axios.get('/communities-feed');
-            if(resp.data.success) {
-                const feed = resp.data.data;
+            if(communityFeeds.length !== 0) {
+                const feed = communityFeeds;
                 setCommunitiesFeed(feed);
                 setLoadCommunitiesFeed(true);
             }
@@ -65,7 +65,7 @@ const SchoolOpening = () => {
         fetchStates();
         fetchUpdates();
         fetchCommunitiesFeed();
-     }, []);
+     }, [communityFeeds, schoolOpeningUpdates]);
      
 
      const stateHandler = async (e) => {
@@ -186,7 +186,9 @@ const SchoolOpening = () => {
           </Box>
         );
     }    
-
+    // console.log('The Props', props)
+    // console.log('The cOMM', communityFeeds)
+    // console.log('new Post', newPost)
     return (
         <>
             <div id="main">
@@ -240,7 +242,7 @@ const SchoolOpening = () => {
                             {loadPosts && state === 'All' & city === 'All' ? (
                                 <div style={{height: '300px', overflow: 'scroll'}}>
                                     <div>                                        
-                                        {posts
+                                        {schoolOpeningUpdates
                                         .map(post => (
                                             <div key={post._id}>
                                                 <DisplayPost posts={post}/>
@@ -253,7 +255,7 @@ const SchoolOpening = () => {
                             {loadPosts && state !== 'All' && city === 'All' ? ( 
                                 <div style={{height: '300px', overflow: 'scroll'}}>
                                     <div>                                        
-                                        {posts
+                                        {schoolOpeningUpdates
                                         .filter(post => post.state === state)
                                         .map(post => (
                                             <div key={post._id}>
@@ -267,7 +269,7 @@ const SchoolOpening = () => {
 
                             {loadPosts && state !== 'All' && city !== 'All'  ? (
                                 <div style={{height: '300px', overflow: 'scroll'}}>
-                                    {posts
+                                    {schoolOpeningUpdates
                                     .filter(post => post.state === state && post.city === city)
                                     .map(post => (
                                         <div key={post._id}>
@@ -344,14 +346,14 @@ const SchoolOpening = () => {
                                     <div>                                        
                                        {newPost.map(post => (
                                            <div key={post._id}>
-                                                <CommunityFeed posts={post}/>
+                                                <CommunityFeed {...props} posts={post}/>
                                            </div>
                                        ))}
 
-                                        {communitiesFeed                                        
+                                        {communityFeeds.length !== 0 && communityFeeds                                     
                                         .map(post => (
                                             <div key={post._id}>
-                                                <CommunityFeed posts={post}/>     
+                                                <CommunityFeed {...props} posts={post}/>     
                                             </div>
                                         ))}     
                                     </div>
@@ -430,5 +432,8 @@ const SchoolOpening = () => {
         </>
     )
 };
-
-export default SchoolOpening;
+const mapStateToProps = state => {
+    return state
+  }
+  
+export default connect(mapStateToProps)(SchoolOpening);

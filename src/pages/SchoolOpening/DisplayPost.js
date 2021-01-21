@@ -2,25 +2,28 @@ import React, { useState, useEffect, useContext } from 'react';
 import Moment from 'react-moment';
 import axios from 'axios';
 import { AuthStoreContext } from '../../Store/AuthStore';
+import { ReplyComment } from './ReplyComment';
+import actions from '../../redux/schoolOpening/actions';
+import { connect } from 'react-redux';
 
-function DisplayPost({posts}) {
+function DisplayPost({posts, ...props}) {
 
     const [comments, setComments] = useState([]);
     const [commentTextarea, setCommentTextarea] = useState('');
     const {isAuthenicate, userData} = useContext(AuthStoreContext);
+    const token = localStorage.getItem('jwt_token');
+
+    const config = {
+        headers: {
+            'authorization': `Bearer ${token}`
+        }
+    };
 
     const postCommentHandler = async (e) => {
         e.preventDefault();
         setCommentTextarea('');
         const id = e.target[0].value;
         const content = e.target[1].value;
-        const token = localStorage.getItem('jwt_token');
-
-        const config = {
-            headers: {
-                'authorization': `Bearer ${token}`
-            }
-        };
         const data = {
             content: content
         };          
@@ -33,7 +36,43 @@ function DisplayPost({posts}) {
             setComments([...result]);        
         }        
     }
+    const replyCommentHandler = async (e, postId, commentId) => {
+        e.preventDefault()
+        const id = e.target[0].value;
+        const content = e.target[1].value;
+        const token = localStorage.getItem('jwt_token');
+        
+        const config = {
+            headers: {
+                'authorization': `Bearer ${token}`
+            }
+        };
+        const data = {
+            content: content
+        }; 
+        const resp = await axios.post(`/school-opening-updates/${postId}/comments/${commentId}`, data, config); 
+        
+        if(resp.data.success) {
+            console.log(resp)
+            props.handleReplyComment(postId, commentId, resp.data.replyCommentObj)
+        }
+        // window.scrollTo(100, 0);   
 
+        else if(posts.user.role === 'Student') {
+            return 'blog_sec2';
+        }
+    }
+    // React.useEffect(
+    //     ()=>{
+    //         axios.post(
+    //             '/school-opening-updates/5fb9583784aa613b844a26f7/comments/5fbdc1bc46b8f31ca50a5476',
+    //             {content:"Hi"}, 
+    //             config
+    //             )
+    //         .then((data)=>console.log('replyComment', data)).catch((err)=>console.log("replyComment err", err))
+    //     },
+    //     []
+    // )
     const colors = () => {
         if(posts.user.role === 'Admin') {
             return 'blog_sec1';
@@ -127,7 +166,9 @@ function DisplayPost({posts}) {
                         {comment.replies.map(reply => (           
                             <div className="blog_title margin_right" key={reply._id}>                                
                                 <div className="title_img">
-                                    <img className='img-circle' src={reply.user?.avatar === undefined && reply.user?.avatar === null  ? '/assets/img/user-account.png'  : reply.user?.avatar } alt=""/>                                </div>
+                                    <img className='img-circle' src={reply.user?.avatar === undefined && reply.user?.avatar === null  ? '/assets/img/user-account.png'  : reply.user?.avatar } alt=""/>                                
+                                    </div>
+
                                 <div className="user_des">
                                     <h4>{reply.user?.fullName} <span>{reply.user?.role}</span></h4>
                                     <p>{reply.content}</p>
@@ -141,7 +182,17 @@ function DisplayPost({posts}) {
                                 </div>
                             </div> 
                         ))} 
-
+                            {isAuthenicate ?
+                                <ReplyComment comment={comment} posts={posts} replyCommentHandler={replyCommentHandler} />
+                                // <div className="direct_cmnt_area reply_cmnt_area ml-auto" style={{marginBottom: '50px'}}>
+                                //     <form  onSubmit={(e)=>replyCommentHandler(e, posts._id, comment._id)}>
+                                //         <input type='hidden' name='though_id'  value={posts._id}/>
+                                //         <textarea placeholder="Reply to comment" value={replyCommentArea} onChange={ (e) => setReplyCommentArea(e.target.value)} name='textarea'></textarea>
+                                //         <input type="submit" value="Post"/>
+                                //     </form>
+                                // </div>
+                                :null
+                            }
                     </div>
                 ))}
 
@@ -178,5 +229,26 @@ function DisplayPost({posts}) {
         </>
     )
 }
-
-export default DisplayPost;
+const mapDispatchToProps = (dispatch, props) => {
+    return {
+        handleReplyComment:(id, commentId, data)=>dispatch({
+            type:actions.REPLY_COMMENT_SCHOOL,
+            payload:{
+                id,
+                commentId,
+                data:data
+            }
+    }),
+    handleNewComment:(id, data)=>dispatch({
+        type:actions.NEW_COMMENT,
+        payload:{
+            id,
+            data
+        }
+    })
+}
+}
+const mapStateToProps = (state) => {
+    return state
+}
+export default connect(mapStateToProps, mapDispatchToProps)(DisplayPost)

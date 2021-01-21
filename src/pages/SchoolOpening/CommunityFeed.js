@@ -2,12 +2,20 @@ import React, { useState, useEffect, useContext } from 'react';
 import Moment from 'react-moment';
 import axios from 'axios';
 import { AuthStoreContext } from '../../Store/AuthStore';
+import { connect } from 'react-redux';
+import actions from '../../redux/schoolOpening/actions';
+import { ReplyComment } from './ReplyComment';
 
-function DisplayPost({posts}) {
 
+function DisplayPost(props) {
+    const { posts, dispatch } = props
     const [comments, setComments] = useState([]);
     const [commentTextarea, setCommentTextarea] = useState('');
     const {isAuthenicate, userData} = useContext(AuthStoreContext);
+
+    useEffect(()=>{
+
+    }, [comments])
 
     const postCommentHandler = async (e) => {
         e.preventDefault();
@@ -29,26 +37,39 @@ function DisplayPost({posts}) {
 
         if(resp.data.success) {            
             const result  = comments.concat(resp.data.data);
+            props.handleNewComment(id, resp.data.data)
             setComments([...result]);        
-        }        
-    }
-
-    const colors = () => {
-        if(posts.user.role === 'Admin') {
-            return 'blog_sec1';
         }
+        // window.scrollTo(100, 0);        
+    }
+    const replyCommentHandler = async (e, postId, commentId) => {
+        e.preventDefault()
+        const id = e.target[0].value;
+        const content = e.target[1].value;
+        const token = localStorage.getItem('jwt_token');
+        
+        const config = {
+            headers: {
+                'authorization': `Bearer ${token}`
+            }
+        };
+        const data = {
+            content: content
+        }; 
+        const resp = await axios.post(`/communities-feed/${postId}/comments/${commentId}`, data, config); 
+        
+        if(resp.data.success) {
+            props.handleReplyComment(postId, commentId, data)
+        }
+        // window.scrollTo(100, 0);   
 
         else if(posts.user.role === 'Student') {
             return 'blog_sec2';
         }
-        else {
-            return 'blog_sec3';            
-        }
     }
-
     return (
         <> 
-        <div className={colors()}  key={posts._id}>
+        <div className='blog_sec1' key={posts._id}>
             <div className="blog_title">
                 <div className="title_img">
                         <img src="assets/img/admin-img.png" alt=""/>
@@ -116,30 +137,42 @@ function DisplayPost({posts}) {
                                 </div>
                             </div>
                         </div>
-
-                        {comment.replies.map(reply => (           
-                            <div className="blog_title margin_right" key={reply._id}>                                
-                                <div className="title_img">
-                                    <img className='img-circle' src={reply.user.avatar === null ? '/assets/img/user-account.png'  : reply.user.avatar } alt=""/>
-                                </div>
-                                <div className="user_des">
-                                    <h4>{reply.user.fullName} <span>({reply.user.role})</span></h4>
-                                    <p>{reply.content}</p>
-                                    <div className="replaied">
-                                        <div class="hour">
-                                            <Moment fromNow>
-                                                {reply.date}
-                                            </Moment>                                            
+                        <div>
+                            {
+                                comment.replies.map(reply => (           
+                                <div className="blog_title margin_right" key={reply._id}>                                
+                                    <div className="title_img">
+                                        <img className='img-circle' src={reply.user.avatar === null ? '/assets/img/user-account.png'  : reply.user.avatar } alt=""/>
+                                    </div>
+                                    <div className="user_des">
+                                        <h4>{reply.user.fullName} <span>({reply.user.role})</span></h4>
+                                        <p>{reply.content}</p>
+                                        <div className="replaied">
+                                            <div className="hour">
+                                                <Moment fromNow>
+                                                    {reply.date}
+                                                </Moment>                                            
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div> 
-                        ))}     
-                                      
+                                </div> 
+                            ))
+                        }     
+                            {isAuthenicate ?
+                                <ReplyComment comment={comment} posts={posts} replyCommentHandler={replyCommentHandler} />
+                                // <div className="direct_cmnt_area reply_cmnt_area ml-auto" style={{marginBottom: '50px'}}>
+                                //     <form  onSubmit={(e)=>replyCommentHandler(e, posts._id, comment._id)}>
+                                //         <input type='hidden' name='though_id'  value={posts._id}/>
+                                //         <textarea placeholder="Reply to comment" value={replyCommentArea} onChange={ (e) => setReplyCommentArea(e.target.value)} name='textarea'></textarea>
+                                //         <input type="submit" value="Post"/>
+                                //     </form>
+                                // </div>
+                                :null
+                            }
+                        </div>
                     </div>
                 ))}
-
-                {comments
+                {/* {comments
                 .filter(comment => comment.post === posts._id)
                 .map(comment => (
                     <div className="blog_title" key={comment._id}>
@@ -153,15 +186,23 @@ function DisplayPost({posts}) {
                                 <div className="hour"><Moment fromNow>{comment.date}</Moment></div>
                             </div>
                         </div>
+                        <div className="direct_cmnt_area reply_cmnt_area ml-auto" style={{marginBottom: '50px'}}>
+                            <form  onSubmit={(e)=>replyCommentHandler(e, posts._id, comment._id)}>
+                                <input type='hidden' name='though_id'  value={posts._id}/>
+                                <textarea placeholder="Reply to comment" value={replyCommentArea} onChange={ (e) => setReplyCommentArea(e.target.value)} name='textarea'></textarea>
+                                <input type="submit" value="Post"/>
+                            </form>
+                        </div>  
                     </div> 
-                ))} 
+                ))}  */}
 
                 {isAuthenicate ? (
                     <>
+                    <hr />
                     <div className="direct_cmnt_area" style={{marginBottom: '50px'}}>
                         <form onSubmit={postCommentHandler}>
                             <input type='hidden' name='though_id' value={posts._id}/>
-                            <textarea placeholder="write a comment" value={commentTextarea} onChange={ (e) => setCommentTextarea(e.target.value)} name='textarea'></textarea>
+                            <textarea placeholder="write a new comment" value={commentTextarea} onChange={ (e) => setCommentTextarea(e.target.value)} name='textarea'></textarea>
                             <input type="submit" value="Post"/>
                         </form>
                     </div>                                     
@@ -171,5 +212,31 @@ function DisplayPost({posts}) {
         </>
     )
 }
-
-export default DisplayPost;
+const mapDispatchToProps = (dispatch, props) => {
+    return {
+        handleReplyComment:(id, commentId, data)=>dispatch({
+            type:actions.REPLY_COMMENT,
+            payload:{
+                id,
+                commentId,
+                data:{
+                    _id:new Date().toTimeString(),
+                    user:props.users.currentUser,
+                    content:data.content,
+                    date:new Date().getTime()
+                }
+            }
+    }),
+    handleNewComment:(id, data)=>dispatch({
+        type:actions.NEW_COMMENT,
+        payload:{
+            id,
+            data
+        }
+    })
+}
+}
+const mapStateToProps = (state) => {
+    return state
+}
+export default connect(mapStateToProps, mapDispatchToProps)(DisplayPost)
