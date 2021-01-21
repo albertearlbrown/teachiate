@@ -139,7 +139,7 @@ function App () {
                 <Route exact path="/people">
                   <People/>
                 </Route>
-                <Route path="/opening-school-in-covid-siutation">
+                <Route path="/community">
                   <SchoolOpening/>
                 </Route>
                 <PrivateRoute path="/forum-create-post" component={ForumCreatePost}/>

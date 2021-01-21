@@ -10,7 +10,7 @@ export const ReplyComment = ({comment, posts, replyCommentHandler}) => {
         <div className="direct_cmnt_area reply_cmnt_area ml-auto" style={{marginBottom: '50px'}}>
             <form  onSubmit={(e)=>handleReplyComment(e)}>
                 <input type='hidden' name='though_id'  value={posts._id}/>
-                <textarea placeholder="Reply to comment" style={{maxWidth:'75%'}} value={replyCommentArea} onChange={ (e) => setReplyCommentArea(e.target.value)} name='textarea'></textarea>
+                <textarea placeholder="Reply to comment" style={{width:'75%'}} value={replyCommentArea} onChange={ (e) => setReplyCommentArea(e.target.value)} name='textarea'></textarea>
                 <input type="submit" value="Post"/>
             </form>
         </div>

@@ -195,7 +195,7 @@ const SchoolOpening = (props) => {
                 <section className="blog profile_mt clearfix">
                     <div className="container">                        
                         <div className="opening_sec">
-                            <h2>COVID-19 School Update Page</h2>
+                            <h2>Community</h2>
                         </div>                        
                         
                         <div className="opening_search_form">

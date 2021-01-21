@@ -4,6 +4,7 @@ const actions = {
     LOAD_COMMUNITY_FEEDS: 'LOAD_COMMUNITY_FEEDS',
     NEW_COMMENT: 'NEW_COMMENT',
     REPLY_COMMENT: 'REPLY_COMMENT',
+    REPLY_COMMENT_SCHOOL: 'REPLY_COMMENT_SCHOOL',
   }
   
   export default actions
