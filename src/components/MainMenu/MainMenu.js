@@ -89,7 +89,7 @@ function MainMenu() {
                 <nav className="nav-primary">
                     <ul className="menu-main-navigation menu clearfix">
                         <li className="menu-item-has-children"><Link to="/index">Home</Link></li>
-                        <li className="menu-item-has-children"><Link to="/community">School Opening</Link></li>
+                        <li className="menu-item-has-children"><Link to="/community">Community</Link></li>
                         <li className="menu-item-has-children"><Link to="/groups">Groups</Link></li>
                         <li className="menu-item-has-children"><Link to="/people">People</Link></li>
                         <li className="menu-item-has-children"><Link to="/forum">Forum</Link></li>
