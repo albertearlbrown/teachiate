@@ -227,7 +227,7 @@ const SchoolOpening = (props) => {
 
                             <div className="post_sec">                                
                                 <div className="contribute">                                    
-                                    <Link to="/create-school-updates">{isAuthenicate && userData.role === 'admin' ? 'Create School Update' : 'Contribute Information'}</Link>
+                                    <Link to="/community">{isAuthenicate && userData.role === 'admin' ? 'Create School Update' : 'Contribute Information'}</Link>
                                 </div>
                             </div>                        
 

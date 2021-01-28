@@ -110,7 +110,7 @@ function CreateSchoolOpeningUpdates() {
             state,
             city                
         }            
-        const finalResp = await axios.post('/school-opening-updates', postData, {
+        const finalResp = await axios.post('/community', postData, {
             headers: {
             'authorization': `Bearer ${token}`
             }
