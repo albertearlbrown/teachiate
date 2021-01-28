@@ -30,7 +30,7 @@ function DisplayPost({posts, ...props}) {
             content: content
         };          
 
-        const resp = await axios.post(`/school-opening-updates/${id}/comments`, data, config); 
+        const resp = await axios.post(`/community/${id}/comments`, data, config); 
 
         if(resp.data.success) {
             
@@ -52,7 +52,7 @@ function DisplayPost({posts, ...props}) {
         const data = {
             content: content
         }; 
-        const resp = await axios.post(`/school-opening-updates/${postId}/comments/${commentId}`, data, config); 
+        const resp = await axios.post(`/community/${postId}/comments/${commentId}`, data, config); 
         
         if(resp.data.success) {
             console.log(resp)
