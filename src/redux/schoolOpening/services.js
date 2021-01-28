@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export async function getSchoolOpeningUpdates(){
-  return axios.get('/school-opening-updates')
+  return axios.get('/community')
   .then((res) => {
     return res.data;
   }).catch(()=>{
@@ -30,7 +30,7 @@ export async function replyComment(id, commentId, comment){
 export async function replyCommentSchoolUpdates(id, commentId, comment){
   return axios({
     method: 'post',
-    url: `/school-opening-updates/${id}/comments/${commentId}`,
+    url: `/community/${id}/comments/${commentId}`,
     data: comment
   }).then(()=>{
     return true

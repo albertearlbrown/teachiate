@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import PrivateRoute from './components/PrivateRoute';
 import Backdrop from '@material-ui/core/Backdrop';
+import 'react-toastify/dist/ReactToastify.min.css'
 import CircularProgress from '@material-ui/core/CircularProgress';
 import axios from 'axios';
 

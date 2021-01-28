@@ -4,10 +4,12 @@ import axios from 'axios';
 import { AuthStoreContext } from '../../Store/AuthStore';
 import { ReplyComment } from './ReplyComment';
 import actions from '../../redux/schoolOpening/actions';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
+import Swal from 'sweetalert2';
 
 function DisplayPost({posts, ...props}) {
 
+    const dispatch = useDispatch()
     const [comments, setComments] = useState([]);
     const [commentTextarea, setCommentTextarea] = useState('');
     const {isAuthenicate, userData} = useContext(AuthStoreContext);
@@ -61,6 +63,42 @@ function DisplayPost({posts, ...props}) {
         else if(posts.user.role === 'Student') {
             return 'blog_sec2';
         }
+    }
+    const controlLikeButton = (id) => {
+        const token = localStorage.getItem('jwt_token');
+        const config = {
+            headers: {
+                'authorization': `Bearer ${token}`
+            }
+        };
+        axios.post(`/community/${id}/likes/`, config)
+        .then(()=>{
+            dispatch({
+                type:actions.LIKE_COMMUNITY_POST,
+                payload:{
+                    id,
+                    userId:userData._id
+                }
+            })
+        })     
+    }
+    const reportPost = (id) => {
+        const token = localStorage.getItem('jwt_token');
+        const config = {
+            headers: {
+                'authorization': `Bearer ${token}`
+            }
+        };
+        axios.post(`/community/${id}/reports/`, {report_id:id}, config)
+        .then(()=>{
+            Swal.fire({
+                title: 'Post Reported',
+                text: 'Your Report is send to the Admin we will review and take action accordingly! Thanks for your feedback',
+                icon: 'success',
+                // confirmButtonText: 'Cool'
+              })
+          })
+        
     }
     // React.useEffect(
     //     ()=>{
@@ -129,17 +167,27 @@ function DisplayPost({posts, ...props}) {
                         <div className="flower"><img src="assets/img/flower.svg" alt=""/><span>{posts.total_comments}</span></div>
                     </a>
                     <a href="#">
-                        <div className="love"><img src="assets/img/love.svg" alt=""/><span>{posts.total_likes}</span></div>
+                        <div className="love"><img src="assets/img/love.svg" alt=""/><span>{posts?.likes?.length}</span></div>
                     </a>
                 </div>                                          
 
                 <div className="comm_se">
                     <ul>
-                        <li><a href="#"> <span>like <i className="fa fa-thumbs-o-up" aria-hidden="true"></i></span></a></li>
+                        <li>
+                            <span onClick={()=>controlLikeButton(posts._id)}>
+                                {posts.likes.includes(userData._id) ? "Liked" : 'Like'} 
+                                <i className="fa fa-thumbs-o-up" aria-hidden="true"></i>
+                            </span>
+                        </li>
                         <li> <a href="#"> <span>Comment <i className="fa fa-comment-o" aria-hidden="true"></i></span></a></li>
                         <li> <a href="#"> <span>Share <i className="fa fa-share" aria-hidden="true"></i>
                                 </span></a></li>
-                        <li> <a href="#"> <span>Report <i className="fa fa-exclamation-triangle" aria-hidden="true"></i></span></a></li>
+                        <li> 
+                            <span onClick={()=>reportPost(posts._id)}>
+                                Report 
+                                <i className="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                            </span>
+                        </li>
                     </ul>                
                 </div>
 

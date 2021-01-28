@@ -2,21 +2,24 @@ import React, { useState, useEffect, useContext } from 'react';
 import Moment from 'react-moment';
 import axios from 'axios';
 import { AuthStoreContext } from '../../Store/AuthStore';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import actions from '../../redux/schoolOpening/actions';
 import { ReplyComment } from './ReplyComment';
+import { toast } from 'react-toastify';
+import Swal from 'sweetalert2';
 
 
 function DisplayPost(props) {
-    const { posts, dispatch } = props
+    const { posts } = props
     const [comments, setComments] = useState([]);
     const [commentTextarea, setCommentTextarea] = useState('');
     const {isAuthenicate, userData} = useContext(AuthStoreContext);
+    const dispatch = useDispatch()
 
     useEffect(()=>{
 
     }, [comments])
-
+    console.log('userData',userData)
     const postCommentHandler = async (e) => {
         e.preventDefault();
         setCommentTextarea('');
@@ -67,6 +70,43 @@ function DisplayPost(props) {
             return 'blog_sec2';
         }
     }
+    const controlLikeButton = (id) => {
+        const token = localStorage.getItem('jwt_token');
+        const config = {
+            headers: {
+                'authorization': `Bearer ${token}`
+            }
+        };
+        axios.post(`/communities-feed/${id}/likes/`, config)
+        .then(()=>{
+            dispatch({
+                type:actions.LIKE_FEED_POST,
+                payload:{
+                    id,
+                    userId:userData._id
+                }
+            })
+        })     
+    }
+    const reportPost = (id) => {
+        const token = localStorage.getItem('jwt_token');
+        const config = {
+            headers: {
+                'authorization': `Bearer ${token}`
+            }
+        };
+        axios.post(`/communities-feed/${id}/reports/`, {report_id:id}, config)
+        .then(()=>{
+            Swal.fire({
+                title: 'Post Reported',
+                text: 'Your Report is send to the Admin we will review and take action accordingly! Thanks for your feedback',
+                icon: 'success',
+                // confirmButtonText: 'Cool'
+              })
+          })
+        
+    }
+
     return (
         <> 
         <div className='blog_sec1' key={posts._id}>
@@ -103,17 +143,27 @@ function DisplayPost(props) {
                         </div>                    
                     </a>
                     <a href="#">
-                        <div className="love"><img src="assets/img/love.svg" alt=""/><span>{posts.total_likes}</span></div>
+                        <div className="love"><img src="assets/img/love.svg" alt=""/><span>{posts?.likes?.length}</span></div>
                     </a>
                 </div>                                          
 
                 <div className="comm_se">
                     <ul>
-                        <li><a href="#"> <span>like <i className="fa fa-thumbs-o-up" aria-hidden="true"></i></span></a></li>
+                        <li>
+                            <span onClick={()=>controlLikeButton(posts._id)}>
+                                {posts.likes.includes(userData._id) ? "Liked" : 'Like'} 
+                                <i className="fa fa-thumbs-o-up" aria-hidden="true"></i>
+                            </span>
+                        </li>
                         <li> <a href="#"> <span>Comment <i className="fa fa-comment-o" aria-hidden="true"></i></span></a></li>
                         <li> <a href="#"> <span>Share <i className="fa fa-share" aria-hidden="true"></i>
                                 </span></a></li>
-                        <li> <a href="#"> <span>Report <i className="fa fa-exclamation-triangle" aria-hidden="true"></i></span></a></li>
+                        <li> 
+                            <span onClick={()=>reportPost(posts._id)}>
+                                Report 
+                                <i className="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                            </span>
+                       </li>
                     </ul>                
                 </div>                    
 
