@@ -158,10 +158,14 @@ const SchoolOpening = (props) => {
             }
         }               
 
-        const data = {
+        //youthtech
+       const data = {
             content,
-            image
+            image,
+            city,
+            state
         }
+        //youthtech
 
         const token = localStorage.getItem('jwt_token');
 
@@ -347,7 +351,7 @@ const SchoolOpening = (props) => {
                                 </div>                    
                             ) : null}                            
 
-                            {loadCommunitiesFeed ? (          
+                            {/* {loadCommunitiesFeed ? (          
                                 <div style={{height: '1000px', overflow: 'scroll'}}>
                                     <div>                                        
                                        {newPost.map(post => (
@@ -364,7 +368,68 @@ const SchoolOpening = (props) => {
                                         ))}     
                                     </div>
                                 </div>                                                                                        
+                            ): null } */}
+                            {/* youthtech */}
+                            {loadCommunitiesFeed && state === 'All' & city === 'All' ? (
+                                <div style={{height: '1000px', overflow: 'scroll'}}>
+                                    <div>                                        
+                                        {newPost.map(post => (
+                                            <div key={post._id}>
+                                                    <CommunityFeed {...props} posts={post}/>
+                                            </div>
+                                        ))}
+
+                                        {communityFeeds.length !== 0 && communityFeeds                                     
+                                        .map(post => (
+                                            <div key={post._id}>
+                                                <CommunityFeed {...props} posts={post}/>     
+                                            </div>
+                                        ))}     
+                                    </div>
+                                </div>                                                                                        
                             ): null }
+
+                            {loadCommunitiesFeed && state !== 'All' && city === 'All' ? ( 
+                                <div style={{height: '1000px', overflow: 'scroll'}}>
+                                    <div>                                        
+                                        {newPost
+                                        .filter(post => post.state === state)
+                                        .map(post => (
+                                            <div key={post._id}>
+                                                <CommunityFeed {...props} posts={post}/>
+                                            </div>
+                                        ))}
+                                        {communityFeeds.length !== 0 && communityFeeds
+                                        .filter(post => post.state === state)                                  
+                                        .map(post => (
+                                            <div key={post._id}>
+                                                <CommunityFeed {...props} posts={post}/>     
+                                            </div>
+                                        ))}                                        
+                                    </div>
+                                </div>                                
+                            ) : null}
+
+
+                            {loadCommunitiesFeed && state !== 'All' && city !== 'All'  ? (
+                                <div style={{height: '1000px', overflow: 'scroll'}}>
+                                    {newPost
+                                    .filter(post => post.state === state && post.city === city)
+                                    .map(post => (
+                                        <div key={post._id}>
+                                            <CommunityFeed {...props} posts={post}/>
+                                        </div>
+                                    ))}
+                                    {communityFeeds.length !== 0 && communityFeeds
+                                        .filter(post => post.state === state)                                  
+                                        .map(post => (
+                                            <div key={post._id}>
+                                                <CommunityFeed {...props} posts={post}/>     
+                                            </div>
+                                    ))}                                    
+                                </div>
+                            ): null }   
+                            {/* youthtech */}
                         </div>
 
                         <div className="blog_right">
