@@ -205,7 +205,7 @@ const SchoolOpening = (props) => {
                 <section className="blog profile_mt clearfix">
                     <div className="container">                        
                         <div className="opening_sec">
-                            <h2>Community</h2>
+                            <h2>Community Page</h2>
                         </div>                        
                         
                         <div className="opening_search_form">
