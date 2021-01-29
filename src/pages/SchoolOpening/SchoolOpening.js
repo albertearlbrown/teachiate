@@ -71,11 +71,17 @@ const SchoolOpening = (props) => {
      const stateHandler = async (e) => {
         setState(e.target.value);
         setCity('All');
+        const token = localStorage.getItem('jwt_token');
 
+        const config = {
+            headers: {
+                'authorization': `Bearer ${token}`
+            }
+        };
         if(e.target.value !== 'All') {
             const selectedIndex = e.target.options.selectedIndex;
             const stateCode = e.target.options[selectedIndex].getAttribute('data-key');        
-            const resp =  await axios.get(`/cities/${stateCode}`);
+            const resp =  await axios.post(`/cities/`, {state:stateCode}, config);
             setCities([...resp.data.data]);
             setLoadCities(true);
         }
