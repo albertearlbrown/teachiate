@@ -60,7 +60,7 @@ const Post = ({post, group, currentUser, dispatch}) => {
         <div className="blog_title">
           <div className="title_img">
             <img
-              src={post.user.avatar || "/assets/img/user_icon.png"}
+              src={post.user.avatar || "/assets/img/user-account.png"}
               alt="avatar"
             />
           </div>
@@ -68,13 +68,6 @@ const Post = ({post, group, currentUser, dispatch}) => {
             <h4>
               {post.user.fullName} <span>({post.user.role})</span>
             </h4>
-            <p>
-              posted an update in the group{" "}
-              <span>
-                {group.groupName}{" "}
-                <img src="/assets/img/user_icon.png" alt="group-logo" />
-              </span>{" "}
-            </p>
           </div>
           <div className="time">
             <Moment fromNow>{post.date}</Moment>

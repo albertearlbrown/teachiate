@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import PrivateRoute from './components/PrivateRoute';
 import Backdrop from '@material-ui/core/Backdrop';
+import 'react-toastify/dist/ReactToastify.min.css'
 import CircularProgress from '@material-ui/core/CircularProgress';
 import axios from 'axios';
 
@@ -139,7 +140,7 @@ function App () {
                 <Route exact path="/people">
                   <People/>
                 </Route>
-                <Route path="/opening-school-in-covid-siutation">
+                <Route path="/community">
                   <SchoolOpening/>
                 </Route>
                 <PrivateRoute path="/forum-create-post" component={ForumCreatePost}/>

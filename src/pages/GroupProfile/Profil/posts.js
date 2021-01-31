@@ -18,21 +18,23 @@ const Posts = () => {
       type: groupActions.GET_GROUP_POST,
       payload: { id: groups.group._id },
     });
-  }, []);
+  }, [groups.group._id]);
 
   return (
     <>
       <div className="profile-forum-search forums_inner_page">
         <div className="short profile_short">
-          <label>Sort by:</label>
-          <div className="select">
-            {/*
-              <select name="slct" id="slct">
-                <option value={1}>Last Active</option>
-                <option value={2}>Last Active</option>
-              </select>
-              */}
-          </div>
+          {
+            /*
+            <label>Sort by:</label>
+            <div className="select">
+                <select name="slct" id="slct">
+                  <option value={1}>Last Active</option>
+                  <option value={2}>Last Active</option>
+                </select>
+            </div>
+            */
+          }
         </div>
       </div>
 

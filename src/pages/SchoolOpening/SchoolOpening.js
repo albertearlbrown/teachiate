@@ -8,8 +8,10 @@ import axios from 'axios';
 import DisplayPost from './DisplayPost';
 import { AuthStoreContext } from '../../Store/AuthStore';
 import CommunityFeed from './CommunityFeed';
+import { connect } from 'react-redux';
 
-const SchoolOpening = () => {
+const SchoolOpening = (props) => {
+    const { communityFeeds, schoolOpeningUpdates } = props.schoolOpening
     const {isAuthenicate, userData} = useContext(AuthStoreContext);    
     const [selectFileUploadProgress, setSelectedFileUploadProgress]  = useState(0);
     const [selectFileUploadStart, setSelectFileUploadStart]  = useState(false);  
@@ -39,10 +41,9 @@ const SchoolOpening = () => {
     const [loadCommunitiesFeed, setLoadCommunitiesFeed] = useState(false);
 
     useEffect(() => {
-        window.scrollTo(0, 0);
+        // window.scrollTo(0, 0);
         async function fetchUpdates() {
-            const resp =  await axios.get('/school-opening-updates');
-            const feed = resp.data.data;
+            const feed = schoolOpeningUpdates;
             setPosts([...feed]);
             setLoadPosts(true);   
         }
@@ -54,9 +55,8 @@ const SchoolOpening = () => {
         }   
 
         async function fetchCommunitiesFeed() {
-            const resp = await axios.get('/communities-feed');
-            if(resp.data.success) {
-                const feed = resp.data.data;
+            if(communityFeeds.length !== 0) {
+                const feed = communityFeeds;
                 setCommunitiesFeed(feed);
                 setLoadCommunitiesFeed(true);
             }
@@ -65,17 +65,23 @@ const SchoolOpening = () => {
         fetchStates();
         fetchUpdates();
         fetchCommunitiesFeed();
-     }, []);
+     }, [communityFeeds, schoolOpeningUpdates]);
      
 
      const stateHandler = async (e) => {
         setState(e.target.value);
         setCity('All');
+        const token = localStorage.getItem('jwt_token');
 
+        const config = {
+            headers: {
+                'authorization': `Bearer ${token}`
+            }
+        };
         if(e.target.value !== 'All') {
             const selectedIndex = e.target.options.selectedIndex;
             const stateCode = e.target.options[selectedIndex].getAttribute('data-key');        
-            const resp =  await axios.get(`/cities/${stateCode}`);
+            const resp =  await axios.post(`/cities/`, {state:stateCode}, config);
             setCities([...resp.data.data]);
             setLoadCities(true);
         }
@@ -152,10 +158,14 @@ const SchoolOpening = () => {
             }
         }               
 
-        const data = {
+        //youthtech
+       const data = {
             content,
-            image
+            image,
+            city,
+            state
         }
+        //youthtech
 
         const token = localStorage.getItem('jwt_token');
 
@@ -186,14 +196,16 @@ const SchoolOpening = () => {
           </Box>
         );
     }    
-
+    // console.log('The Props', props)
+    // console.log('The cOMM', communityFeeds)
+    // console.log('new Post', newPost)
     return (
         <>
             <div id="main">
                 <section className="blog profile_mt clearfix">
                     <div className="container">                        
                         <div className="opening_sec">
-                            <h2>COVID-19 School Update Page</h2>
+                            <h2>Community Page</h2>
                         </div>                        
                         
                         <div className="opening_search_form">
@@ -225,7 +237,7 @@ const SchoolOpening = () => {
 
                             <div className="post_sec">                                
                                 <div className="contribute">                                    
-                                    <Link to="/create-school-updates">{isAuthenicate && userData.role === 'admin' ? 'Create School Update' : 'Contribute Information'}</Link>
+                                    <Link to="/community">{isAuthenicate && userData.role === 'admin' ? 'Create School Update' : 'Contribute Information'}</Link>
                                 </div>
                             </div>                        
 
@@ -240,7 +252,7 @@ const SchoolOpening = () => {
                             {loadPosts && state === 'All' & city === 'All' ? (
                                 <div style={{height: '300px', overflow: 'scroll'}}>
                                     <div>                                        
-                                        {posts
+                                        {schoolOpeningUpdates
                                         .map(post => (
                                             <div key={post._id}>
                                                 <DisplayPost posts={post}/>
@@ -253,7 +265,7 @@ const SchoolOpening = () => {
                             {loadPosts && state !== 'All' && city === 'All' ? ( 
                                 <div style={{height: '300px', overflow: 'scroll'}}>
                                     <div>                                        
-                                        {posts
+                                        {schoolOpeningUpdates
                                         .filter(post => post.state === state)
                                         .map(post => (
                                             <div key={post._id}>
@@ -267,7 +279,7 @@ const SchoolOpening = () => {
 
                             {loadPosts && state !== 'All' && city !== 'All'  ? (
                                 <div style={{height: '300px', overflow: 'scroll'}}>
-                                    {posts
+                                    {schoolOpeningUpdates
                                     .filter(post => post.state === state && post.city === city)
                                     .map(post => (
                                         <div key={post._id}>
@@ -339,24 +351,85 @@ const SchoolOpening = () => {
                                 </div>                    
                             ) : null}                            
 
-                            {loadCommunitiesFeed ? (          
+                            {/* {loadCommunitiesFeed ? (          
                                 <div style={{height: '1000px', overflow: 'scroll'}}>
                                     <div>                                        
                                        {newPost.map(post => (
                                            <div key={post._id}>
-                                                <CommunityFeed posts={post}/>
+                                                <CommunityFeed {...props} posts={post}/>
                                            </div>
                                        ))}
 
-                                        {communitiesFeed                                        
+                                        {communityFeeds.length !== 0 && communityFeeds                                     
                                         .map(post => (
                                             <div key={post._id}>
-                                                <CommunityFeed posts={post}/>     
+                                                <CommunityFeed {...props} posts={post}/>     
+                                            </div>
+                                        ))}     
+                                    </div>
+                                </div>                                                                                        
+                            ): null } */}
+                            {/* youthtech */}
+                            {loadCommunitiesFeed && state === 'All' & city === 'All' ? (
+                                <div style={{height: '1000px', overflow: 'scroll'}}>
+                                    <div>                                        
+                                        {newPost.map(post => (
+                                            <div key={post._id}>
+                                                    <CommunityFeed {...props} posts={post}/>
+                                            </div>
+                                        ))}
+
+                                        {communityFeeds.length !== 0 && communityFeeds                                     
+                                        .map(post => (
+                                            <div key={post._id}>
+                                                <CommunityFeed {...props} posts={post}/>     
                                             </div>
                                         ))}     
                                     </div>
                                 </div>                                                                                        
                             ): null }
+
+                            {loadCommunitiesFeed && state !== 'All' && city === 'All' ? ( 
+                                <div style={{height: '1000px', overflow: 'scroll'}}>
+                                    <div>                                        
+                                        {newPost
+                                        .filter(post => post.state === state)
+                                        .map(post => (
+                                            <div key={post._id}>
+                                                <CommunityFeed {...props} posts={post}/>
+                                            </div>
+                                        ))}
+                                        {communityFeeds.length !== 0 && communityFeeds
+                                        .filter(post => post.state === state)                                  
+                                        .map(post => (
+                                            <div key={post._id}>
+                                                <CommunityFeed {...props} posts={post}/>     
+                                            </div>
+                                        ))}                                        
+                                    </div>
+                                </div>                                
+                            ) : null}
+
+
+                            {loadCommunitiesFeed && state !== 'All' && city !== 'All'  ? (
+                                <div style={{height: '1000px', overflow: 'scroll'}}>
+                                    {newPost
+                                    .filter(post => post.state === state && post.city === city)
+                                    .map(post => (
+                                        <div key={post._id}>
+                                            <CommunityFeed {...props} posts={post}/>
+                                        </div>
+                                    ))}
+                                    {communityFeeds.length !== 0 && communityFeeds
+                                        .filter(post => post.state === state)                                  
+                                        .map(post => (
+                                            <div key={post._id}>
+                                                <CommunityFeed {...props} posts={post}/>     
+                                            </div>
+                                    ))}                                    
+                                </div>
+                            ): null }   
+                            {/* youthtech */}
                         </div>
 
                         <div className="blog_right">
@@ -430,5 +503,8 @@ const SchoolOpening = () => {
         </>
     )
 };
-
-export default SchoolOpening;
+const mapStateToProps = state => {
+    return state
+  }
+  
+export default connect(mapStateToProps)(SchoolOpening);
